@@ -29,5 +29,17 @@ Tenho experiência na área de Ciência da Computação, tendo como principais l
 <a href="https://instagram.com/rogeriorag" target="_blank"><img alt="Instagram" title="Instagram" height="32" width="32" src="assets/instagram.svg" target="_blank"></a>
 <!--<a href="https://www.twitch.tv/seu-usuário-aqui" target="_blank"><img src="https://img.shields.io/badge/Twitch-9146FF?style=for-the-badge&logo=twitch&logoColor=white" target="_blank"></a>-->
 <a href="https://twitter.com/rogeriorag" target="_blank"><img alt="Twitter" title="Twitter" height="32" width="32" src="assets/twitter.svg"></a>
+<a href="https://utfpr-br.academia.edu/Rog%C3%A9rioGon%C3%A7alves" target="_blank"><img alt="Academia" title="Academia" height="32" width="32" src="assets/academia.svg"></a>
+<a href="http://www.facebook.com/rogerio.rag" target="_blank"><img alt="Facebook" title="Facebook" height="32" width="32" src="assets/facebook.svg"></a>
+<a href="https://scholar.google.com/citations?hl=pt-BR&amp;user=_WU2RvQAAAAJ" target="_blank"><img alt="Google Scholar" title="Google Scholar" height="32" width="32" src="assets/scholar.svg"></a>
+<a href="http://www.researcherid.com/rid/A-4771-2016" target="_blank"><img alt="ResearcherID" title="ResearcherID" height="32" width="32" src="assets/researcherid.svg"></a>
+<a href="https://www.scopus.com/authid/detail.uri?authorId=57191413432" target="_blank"><img alt="Scopus" title="Scopus" height="32" width="32" src="assets/scopus.svg"></a>
+<a href="https://www.researchgate.net/profile/Rogerio-Goncalves-8" target="_blank"><img alt="ResearchGate" title="ResearchGate" height="32" width="32" src="assets/researchgate.svg"></a>
+<a href="https://www.webofscience.com/wos/author/record/IUO-8485-2023" target="_blank"><img alt="Web of Science" title="Web of Science" height="32" width="32" src="assets/webofscience.jpg"></a>
+<a href="https://en.wikipedia.org/wiki/User:Rogerio.rag" target="_blank"><img alt="Wikipedia" title="wikipedia" height="32" width="32" src="assets/wikipedia.svg"></a>
+<a href="https://pt.slideshare.net/rogerio.rag" target="_blank"><img alt="SlideShare" title="SlideShare" height="32" width="32" src="assets/slideshare.svg"></a>
+<a href="https://t.me/rogerioag" target="_blank"><img alt="Telegram" title="Telegram" height="32" width="32" src="assets/telegram.svg"></a>
+<a href="https://medium.com/@rogerio.rag" target="_blank"><img alt="Medium" title="Medium" height="32" width="32" src="assets/medium.svg"></a>
+<a href="https://open.spotify.com/user/rogerio.rag" target="_blank"><img alt="Spotify" title="Spotify" height="32" width="32" src="assets/spotify.svg"></a>
 
 </div>
