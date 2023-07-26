@@ -41,5 +41,5 @@ Tenho experiência na área de Ciência da Computação, tendo como principais l
 <a href="https://t.me/rogerioag" target="_blank"><img alt="Telegram" title="Telegram" height="32" width="32" src="assets/telegram.svg"></a>
 <a href="https://medium.com/@rogerio.rag" target="_blank"><img alt="Medium" title="Medium" height="32" width="32" src="assets/medium.svg"></a>
 <a href="https://open.spotify.com/user/rogerio.rag" target="_blank"><img alt="Spotify" title="Spotify" height="32" width="32" src="assets/spotify.svg"></a>
-
+<a href="https://about.me/rogeriogoncalves" target="_blank"><img alt="About.me" title="About.me" height="32" width="32" src="assets/about.me.svg"></a>
 </div>
