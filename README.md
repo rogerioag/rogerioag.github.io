@@ -4,7 +4,7 @@ Doutor em Ciência da Computação pelo Programa de Pós-Graduação em Ciência
 
 ## Interesses
 
-Tenho experiência na área de Ciência da Computação, tendo como principais linhas de pesquisa e de interesse Arquitetura de Computadores, Computação Paralela, Computação Heterogênea, Compiladores e _Runtimes_ voltados para Computação Paralela como `OpenMP` e `CUDA`. Sou um iniciante na área de _Blockchain_, buscando temas para pesquisa e desenvolvimento de aplicações.
+Tenho experiência na área de Ciência da Computação, tendo como principais linhas de pesquisa e de interesse Arquitetura de Computadores, Computação Paralela, Computação Heterogênea, Compiladores e _Runtimes_ voltados para Computação Paralela como `OpenMP` e `CUDA`. Estou explorando a área de _Blockchain_, buscando temas para pesquisa e desenvolvimento de aplicações.
 
 ## Atividade
 
