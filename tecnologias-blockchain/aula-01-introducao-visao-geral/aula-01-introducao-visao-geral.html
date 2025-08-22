@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Introdução às Tecnologias Blockchain – Tecnologias Blockchain e suas Aplicações</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" rel="next">
+<link href="../index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-04eba2f631388346a9723070acb13413.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/rogerioag/ecp-minicursos" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bem-vindo</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aula 03 - Prática sobre <em>Ethereum Virtual Machine (EVM)</em></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aula 04 - Instalando o Cliente Ethereum</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">2</span> Introdução</a>
+  <ul class="collapse">
+  <li><a href="#olá" id="toc-olá" class="nav-link" data-scroll-target="#olá"><span class="header-section-number">2.1</span> Olá</a></li>
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link" data-scroll-target="#objetivos"><span class="header-section-number">2.2</span> Objetivos</a></li>
+  <li><a href="#interesse-no-termo-blockchain-ao-longo-do-tempo" id="toc-interesse-no-termo-blockchain-ao-longo-do-tempo" class="nav-link" data-scroll-target="#interesse-no-termo-blockchain-ao-longo-do-tempo"><span class="header-section-number">2.3</span> Interesse no termo “blockchain” ao longo do tempo</a></li>
+  <li><a href="#como-um-blockchain-funciona" id="toc-como-um-blockchain-funciona" class="nav-link" data-scroll-target="#como-um-blockchain-funciona"><span class="header-section-number">2.4</span> Como um Blockchain funciona</a></li>
+  <li><a href="#definição-de-blockchain" id="toc-definição-de-blockchain" class="nav-link" data-scroll-target="#definição-de-blockchain"><span class="header-section-number">2.5</span> Definição de Blockchain</a></li>
+  <li><a href="#como-a-tecnologia-blockchain-foi-desenvolvida" id="toc-como-a-tecnologia-blockchain-foi-desenvolvida" class="nav-link" data-scroll-target="#como-a-tecnologia-blockchain-foi-desenvolvida"><span class="header-section-number">2.6</span> Como a Tecnologia Blockchain foi desenvolvida</a></li>
+  <li><a href="#visão-arquitetural-de-um-blockchain" id="toc-visão-arquitetural-de-um-blockchain" class="nav-link" data-scroll-target="#visão-arquitetural-de-um-blockchain"><span class="header-section-number">2.7</span> Visão Arquitetural de um Blockchain</a></li>
+  <li><a href="#estrutura-genérica-de-um-blockchain" id="toc-estrutura-genérica-de-um-blockchain" class="nav-link" data-scroll-target="#estrutura-genérica-de-um-blockchain"><span class="header-section-number">2.8</span> Estrutura Genérica de um Blockchain</a></li>
+  <li><a href="#estrutura-genérica-de-um-bloco" id="toc-estrutura-genérica-de-um-bloco" class="nav-link" data-scroll-target="#estrutura-genérica-de-um-bloco"><span class="header-section-number">2.9</span> Estrutura Genérica de um bloco</a></li>
+  <li><a href="#benefícios-e-limitações-de-um-blockchain" id="toc-benefícios-e-limitações-de-um-blockchain" class="nav-link" data-scroll-target="#benefícios-e-limitações-de-um-blockchain"><span class="header-section-number">2.10</span> Benefícios e Limitações de um Blockchain</a></li>
+  <li><a href="#características-principais" id="toc-características-principais" class="nav-link" data-scroll-target="#características-principais"><span class="header-section-number">2.11</span> Características Principais</a></li>
+  </ul></li>
+  <li><a href="#bitcoin" id="toc-bitcoin" class="nav-link" data-scroll-target="#bitcoin"><span class="header-section-number">3</span> Bitcoin</a>
+  <ul class="collapse">
+  <li><a href="#bitcoin-1" id="toc-bitcoin-1" class="nav-link" data-scroll-target="#bitcoin-1"><span class="header-section-number">3.1</span> Bitcoin</a></li>
+  <li><a href="#bitcoin-na-perspectiva-de-usuário" id="toc-bitcoin-na-perspectiva-de-usuário" class="nav-link" data-scroll-target="#bitcoin-na-perspectiva-de-usuário"><span class="header-section-number">3.2</span> Bitcoin na perspectiva de usuário&nbsp;</a></li>
+  <li><a href="#chaves-criptográficas" id="toc-chaves-criptográficas" class="nav-link" data-scroll-target="#chaves-criptográficas"><span class="header-section-number">3.3</span> Chaves Criptográficas&nbsp;</a></li>
+  <li><a href="#não-perder-as-chaves-é-importante" id="toc-não-perder-as-chaves-é-importante" class="nav-link" data-scroll-target="#não-perder-as-chaves-é-importante"><span class="header-section-number">3.4</span> Não perder as chaves é importante</a></li>
+  <li><a href="#script" id="toc-script" class="nav-link" data-scroll-target="#script"><span class="header-section-number">3.5</span> Script</a></li>
+  <li><a href="#opcodes" id="toc-opcodes" class="nav-link" data-scroll-target="#opcodes"><span class="header-section-number">3.6</span> Opcodes</a></li>
+  <li><a href="#uma-visualização-da-blockchain-do-bitcoin" id="toc-uma-visualização-da-blockchain-do-bitcoin" class="nav-link" data-scroll-target="#uma-visualização-da-blockchain-do-bitcoin"><span class="header-section-number">3.7</span> Uma Visualização da Blockchain do Bitcoin</a></li>
+  <li><a href="#bloco-genesis" id="toc-bloco-genesis" class="nav-link" data-scroll-target="#bloco-genesis"><span class="header-section-number">3.8</span> Bloco Genesis</a></li>
+  <li><a href="#a-carteira-de-satoshi" id="toc-a-carteira-de-satoshi" class="nav-link" data-scroll-target="#a-carteira-de-satoshi"><span class="header-section-number">3.9</span> A carteira de Satoshi</a></li>
+  </ul></li>
+  <li><a href="#mas-afinal-quem-é-satoshi-nakamoto" id="toc-mas-afinal-quem-é-satoshi-nakamoto" class="nav-link" data-scroll-target="#mas-afinal-quem-é-satoshi-nakamoto"><span class="header-section-number">4</span> Mas afinal, quem é Satoshi Nakamoto?</a>
+  <ul class="collapse">
+  <li><a href="#quem-é-satoshi-nakamoto" id="toc-quem-é-satoshi-nakamoto" class="nav-link" data-scroll-target="#quem-é-satoshi-nakamoto"><span class="header-section-number">4.1</span> Quem é Satoshi Nakamoto?</a></li>
+  <li><a href="#tamanho-do-blockchain-do-bitcoin" id="toc-tamanho-do-blockchain-do-bitcoin" class="nav-link" data-scroll-target="#tamanho-do-blockchain-do-bitcoin"><span class="header-section-number">4.2</span> Tamanho do Blockchain do Bitcoin</a></li>
+  <li><a href="#consumo-de-energia" id="toc-consumo-de-energia" class="nav-link" data-scroll-target="#consumo-de-energia"><span class="header-section-number">4.3</span> Consumo de Energia</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">4.4</span> Leitura Recomendada</a></li>
+  <li><a href="#projetos-de-pesquisa" id="toc-projetos-de-pesquisa" class="nav-link" data-scroll-target="#projetos-de-pesquisa"><span class="header-section-number">4.5</span> Projetos de Pesquisa</a></li>
+  <li><a href="#projetos-de-extensão" id="toc-projetos-de-extensão" class="nav-link" data-scroll-target="#projetos-de-extensão"><span class="header-section-number">4.6</span> Projetos de Extensão</a></li>
+  <li><a href="#grupo-estudos" id="toc-grupo-estudos" class="nav-link" data-scroll-target="#grupo-estudos"><span class="header-section-number">4.7</span> Grupo Estudos</a></li>
+  <li><a href="#leitura-recomendada-1" id="toc-leitura-recomendada-1" class="nav-link" data-scroll-target="#leitura-recomendada-1"><span class="header-section-number">4.8</span> Leitura Recomendada</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">4.9</span> <em>Word Cloud</em></a></li>
+  </ul></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">5</span> Referências</a>
+  <ul class="collapse">
+  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">5.1</span> Referências</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></h1>
+<p class="subtitle lead">Visão Geral</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    Blockchain é uma tecnologia nova e considerada revolucionária e disruptiva, sendo até mesmo comparada, quanto ao impacto, ao surgimento da Internet. Nesta aula serão apresentados conceitos e alguns fundamentos básicos relacionadas à Tecnologia Blockchain. Nesta aula é apresentada uma Visão Geral sobre rede <strong>Ethereum</strong>, componentes do Ecossistema <em>Ethereum</em>, a <em>Ethereum Virtual Machine (EVM)</em> e Contratos Nativos. Além disso, uma perspectiva do usuário é apresentada, mostrando a estrutura dos blocos do <em>blockchain</em> da <em>Ethereum</em>, <em>Wallets</em> e <em>softwares</em> clientes, nós e mineradores, ferramentas e <code>APIs</code>, protocolos e Linguagens de Programação Suportados.
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="introdução" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Introdução</h1>
+<section id="olá" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="olá"><span class="header-section-number">2.1</span> Olá</h2>
+<p>[columns]</p>
+<p>[column=0.4]</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/foto.jpg" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Rogério Gonçalves (RAG)</figcaption>
+</figure>
+</div>
+<p>[column=0.6]</p>
+<p>Doutor em Ciência da Computação, é professor na UTFPR - Campus Campo Mourão. É revisor do journal Springer Computing e de algumas conferências. <strong>Interesse em:</strong> Computação Paralela, Computação Heterogênea, Compiladores e Runtimes para Computação Paralela e Tecnologias Blockchain.</p>
+<p>[/columns]</p>
+<!--
+## Ministrante
+
+[columns]
+
+[column=0.4]
+
+![Rogério Gonçalves (RAG)](figuras/foto.jpg){width=70%}
+
+[column=0.6]
+
+Doutor em Ciência da Computação, é professor na UTFPR - Campus Campo Mourão. É revisor do journal Springer Computing e de algumas conferências. 
+__Interesse em:__ Arquitetura de Computadores, Computação Paralela, Computação Heterogênea, Compiladores e Runtimes e Tecnologias Blockchain.
+
+[/columns]
+
+
+[exampleblock]{Ementa}
+
+Introdução às Tecnologias Blockchain. Smart Contracts. Ethereum e Solidity. Ferramentas de Desenvolvimento e Frameworks. Redes de Testes e Clientes. Introdução a Web3. Tokenização.
+
+[/exampleblock]
+
+[alertblock]{Pré-requisitos}
+
+Saber um pouco de _JavaScript_.
+
+[/alertblock]
+
+-->
+</section>
+<section id="objetivos" class="level2 allowframebreaks" data-number="2.2">
+<h2 class="allowframebreaks anchored" data-number="2.2" data-anchor-id="objetivos"><span class="header-section-number">2.2</span> Objetivos</h2>
+<ul>
+<li>Apresentação de uma Visão Geral sobre o Ecossistema de Tecnologias relacionadas a <strong>Blockchain</strong>. Surgimento e contexto histórico vinculado ao <em>Bitcoin</em>. Mas o foco principal está na rede <strong>Ethereum</strong> e componentes do seu Ecossistema. Falaremos um pouco sobre a <em>Ethereum Virtual Machine (EVM)</em> e Contratos Inteligentes. Além disso, uma perspectiva do usuário é apresentada, mostrando a estrutura dos blocos do <em>blockchain</em> da <em>Ethereum</em>, <em>Wallets</em> e <em>softwares</em> clientes, nós e mineradores, ferramentas e <code>APIs</code>, protocolos e Linguagens de Programação Suportados.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/visao-geral-disciplina.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Ideia Geral da Disciplina</figcaption>
+</figure>
+</div>
+</section>
+<section id="interesse-no-termo-blockchain-ao-longo-do-tempo" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="interesse-no-termo-blockchain-ao-longo-do-tempo"><span class="header-section-number">2.3</span> Interesse no termo “blockchain” ao longo do tempo</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/interesse-termo-blockchain-2008-01-01-a-2025-06-16.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>Pesquisas sobre o termo “blockchain” <a href="https://trends.google.com/trends/explore?date=2008-01-01%202025-06-16&amp;q=blockchain&amp;hl=pt-BR">Fonte: Google Trends</a></figcaption>
+</figure>
+</div>
+</section>
+<section id="como-um-blockchain-funciona" class="level2 allowframebreaks" data-number="2.4">
+<h2 class="allowframebreaks anchored" data-number="2.4" data-anchor-id="como-um-blockchain-funciona"><span class="header-section-number">2.4</span> Como um Blockchain funciona</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="figuras/funcionamento-blockchain.pdf" class="img-fluid" style="width:100.0%"></p>
+<figcaption>Funcionamento de um Blockchain</figcaption>
+</figure>
+</div>
+</section>
+<section id="definição-de-blockchain" class="level2 allowframebreaks fragile" data-number="2.5">
+<h2 class="allowframebreaks fragile anchored" data-number="2.5" data-anchor-id="definição-de-blockchain"><span class="header-section-number">2.5</span> Definição de Blockchain</h2>
+<p>[alertblock]{Definição de Gosh}</p>
+<p><em>A blockchain is a digital distributed ledger, where transactions are stored in blocks linked to each other with a singly linked list. A block contains a link pointing to its predecessor. New blocks can be appended to the head of a blockchain. Existing blocks cannot be modified or deleted.</em></p>
+<p>[/alertblock]</p>
+<p>[alertblock]{Definição de Layman}</p>
+<p><em>Blockchain is an ever-growing, secure, shared recordkeeping system in which each user of the data holds a copy of the records, which can only be updated if all parties involved in a transaction agree to update.</em></p>
+<!-- 
+Blockchain é um sistema de manutenção de registros compartilhado, seguro e em constante crescimento, no qual cada usuário dos dados detém uma cópia dos registros, que só podem ser atualizados se todas as partes envolvidas em uma transação concordarem em atualizar.
+-->
+<p>[/alertblock]</p>
+<p>[alertblock]{Definição Técnica}</p>
+<p><em>Blockchain is a peer-to-peer distributed ledger that is cryptographically-secure, append-only, immutable (extremely hard to change), and updateable only via consensus or agreement among peers.</em></p>
+<!-- 
+Blockchain é um livro-razão distribuído ponto a ponto que é criptograficamente seguro, somente anexo, imutável (extremamente difícil de alterar) e atualizável apenas por consenso ou acordo entre os pares.
+-->
+<p>[/alertblock]</p>
+<p>[framebreak]</p>
+<ul>
+<li><em>Peer-to-peer</em></li>
+<li><em>Distributed Ledger</em> (livro-razão distribuído)</li>
+<li><em>Criptograficamente Seguro</em></li>
+<li><em>Append Only</em> (Permitido somente anexar novos blocos)</li>
+<li>Atualizável via consenso dos pares.</li>
+</ul>
+</section>
+<section id="como-a-tecnologia-blockchain-foi-desenvolvida" class="level2 allowframebreaks" data-number="2.6">
+<h2 class="allowframebreaks anchored" data-number="2.6" data-anchor-id="como-a-tecnologia-blockchain-foi-desenvolvida"><span class="header-section-number">2.6</span> Como a Tecnologia Blockchain foi desenvolvida</h2>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<p><strong>1950s</strong> – Hash functions</p>
+<p><strong>1970s</strong> – Merkle trees - hashes in a tree structure</p>
+<p><strong>1970s</strong> <em>continued</em> – Research in distributed systems, consensus, state machine replication</p>
+<p><strong>1980s</strong> – Hash chains for secure logins</p>
+<p><strong>1990s</strong> – <em>e-Cash for e-payments</em></p>
+<p>[column=0.5]</p>
+<p><strong>1991</strong> – Secure timestamping of digital documents.</p>
+<p><strong>1992</strong> – Hashcash idea to combat junk emails</p>
+<p><strong>1994</strong> – S/KEY application for Unix login.</p>
+<p><strong>1997/2002</strong> – <em>Hashcash</em></p>
+<p><strong>2008/2009</strong> – Bitcoin (the first blockchain)</p>
+<p>[/columns]</p>
+</section>
+<section id="visão-arquitetural-de-um-blockchain" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="visão-arquitetural-de-um-blockchain"><span class="header-section-number">2.7</span> Visão Arquitetural de um Blockchain</h2>
+<p><embed src="figuras/visao-arquitetural-blockchain.pdf" class="img-fluid"></p>
+</section>
+<section id="estrutura-genérica-de-um-blockchain" class="level2 allowframebreaks" data-number="2.8">
+<h2 class="allowframebreaks anchored" data-number="2.8" data-anchor-id="estrutura-genérica-de-um-blockchain"><span class="header-section-number">2.8</span> Estrutura Genérica de um Blockchain</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="figuras/estrutura-generica-blockchain.pdf" class="img-fluid" style="width:100.0%"></p>
+<figcaption>Estrutura Genérica de um Blockchain</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/estrutura-blockchain.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>Organização Blockchain</figcaption>
+</figure>
+</div>
+<ul>
+<li>Para evitar <em>overhead</em>, os registros são agrupados em blocos. Os registros em um bloco são organizados em uma estrutura de árvore chamada de <code>Merkle tree</code> [Merkle 1989] para acesso mais rápido.</li>
+</ul>
+</section>
+<section id="estrutura-genérica-de-um-bloco" class="level2 allowframebreaks" data-number="2.9">
+<h2 class="allowframebreaks anchored" data-number="2.9" data-anchor-id="estrutura-genérica-de-um-bloco"><span class="header-section-number">2.9</span> Estrutura Genérica de um bloco</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="figuras/estrutura-generica-de-bloco.pdf" class="img-fluid" style="width:60.0%"></p>
+<figcaption>Estrutura de um Bloco</figcaption>
+</figure>
+</div>
+<!--
+
+## Elementos Genéricos de um Blockchain {.allowframebreaks}
+
+* Endereços
+* Contas
+* Transações
+* Blocos
+* Redes _Peer-to-peer_
+* Scripting ou Linguagens de Programação
+* Virtual machines
+* Máquinas de Estado
+* Nós (nodes)
+* Contratos Inteligentes _(Smart contracts)_
+
+-->
+</section>
+<section id="benefícios-e-limitações-de-um-blockchain" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="benefícios-e-limitações-de-um-blockchain"><span class="header-section-number">2.10</span> Benefícios e Limitações de um Blockchain</h2>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<p><strong>Benefícios</strong></p>
+<p>Descentralização</p>
+<p>Transparência</p>
+<p>Confiança</p>
+<p>Imutabilidade</p>
+<p>Alta disponibilidade</p>
+<p>Altamente Seguro</p>
+<p>Simplificação de paradigmas atuais</p>
+<p>Transações rápidas</p>
+<!--Cost saving-->
+<p>[column=0.5]</p>
+<p><strong>Limitações</strong></p>
+<p>Escalabilidade</p>
+<p>Adaptabilidade</p>
+<p>Regulação</p>
+<p>Tecnologia Relativamente Imatura (Ainda)</p>
+<p>Privacidade</p>
+<p>[/columns]</p>
+</section>
+<section id="características-principais" class="level2 allowframebreaks" data-number="2.11">
+<h2 class="allowframebreaks anchored" data-number="2.11" data-anchor-id="características-principais"><span class="header-section-number">2.11</span> Características Principais</h2>
+<ul>
+<li><p>Consenso Distribuído</p></li>
+<li><p>Verificação de Transações</p></li>
+<li><p>Plataforma para <em>smart contracts</em></p></li>
+<li><p>Transferência de valores entre pares</p></li>
+<li><p>Generação de criptomoedas</p></li>
+<li><p>Provedor de Segurança</p></li>
+<li><p>Imutabilidade</p></li>
+<li><p>Unicidade ou singularidade (Uniqueness)</p></li>
+</ul>
+<!--
+
+## Leitura Recomendada
+\normalsize
+
+[alertblock]{Leitura Recomendada}
+
+__Capítulo 1: Blockchain 101__
+
+**Livro**: [IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.](https://search.ebscohost.com/login.aspx?direct=true&db=e000xww&AN=1789486&lang=pt-br&site=eds-live&scope=site&ebv=EB&ppid=pp_8)
+
+[/alertblock]
+
+-->
+</section>
+</section>
+<section id="bitcoin" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Bitcoin</h1>
+<section id="bitcoin-1" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="bitcoin-1"><span class="header-section-number">3.1</span> Bitcoin</h2>
+<ul>
+<li>Surgiu em <span class="math inline">\(2008/2009\)</span>, sendo a primeira rede <em>Blockchain</em>.</li>
+<li>Rede voltada para a Criptomoeda – <code>Bitcoin (BTC)</code>.</li>
+</ul>
+</section>
+<section id="bitcoin-na-perspectiva-de-usuário" class="level2 allowframebreaks fragile" data-number="3.2">
+<h2 class="allowframebreaks fragile anchored" data-number="3.2" data-anchor-id="bitcoin-na-perspectiva-de-usuário"><span class="header-section-number">3.2</span> Bitcoin na perspectiva de usuário&nbsp;</h2>
+<ul>
+<li>Passos de como enviar e receber pagamentos:
+<ul>
+<li>A transação começa com um remetente assinando a transação com sua chave privada.&nbsp;</li>
+<li>A transação é serializada para que possa ser transmitida pela rede.</li>
+<li>A transação é transmitida para a rede.</li>
+<li>Mineradores que escutam transações pegam a transação.</li>
+<li>A transação é verificada quanto à sua legitimidade pelos mineradores.</li>
+<li>A transação é adicionada ao bloco candidato/proposto para mineração.</li>
+<li>Uma vez minerado, o resultado é transmitido para todos os nós da rede <em>Bitcoin</em>.</li>
+<li>Normalmente, neste momento, os usuários aguardam até seis confirmações para serem recebidas antes que uma transação seja considerada final; no entanto, uma transação pode ser considerada final na etapa anterior.</li>
+<li>As confirmações servem como um mecanismo adicional para garantir que haja probabilidade muito baixa de uma transação ser revertida, mas, caso contrário, uma vez que um bloco minerado seja finalizado e anunciado, as transações dentro desse bloco serão finais nesse ponto.</li>
+</ul></li>
+</ul>
+</section>
+<section id="chaves-criptográficas" class="level2 allowframebreaks" data-number="3.3">
+<h2 class="allowframebreaks anchored" data-number="3.3" data-anchor-id="chaves-criptográficas"><span class="header-section-number">3.3</span> Chaves Criptográficas&nbsp;</h2>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<ul>
+<li><em>Private keys</em> na rede <code>Bitcoin</code>
+<ul>
+<li>Private keys são usadas para assinar digitalmente transações, comprovando a propriedade dos <em>bitcoins</em>.</li>
+</ul></li>
+<li><em>Public keys</em> na rede <code>Bitcoin</code>&nbsp;
+<ul>
+<li>As chaves públicas são usadas pelos nós para verificar se a transação foi realmente assinada com a chave privada correspondente.</li>
+</ul></li>
+<li><em>Endereços na rede Bitcoin</em>
+<ul>
+<li>Um endereço <code>Bitcoin</code> é criado pegando a chave pública correspondente de uma chave privada e fazendo <em>hash</em> duas vezes, primeiro com o algoritmo <code>SHA256</code> e depois com <code>RIPEMD160</code>.</li>
+</ul></li>
+<li>Endereços Bitcoin são codificados usando <strong>Base58Check</strong>.</li>
+</ul>
+<p>[column=0.5]</p>
+<p><embed src="figuras/qrcode-bitcoin-address.pdf" class="img-fluid"></p>
+<p>[/columns]</p>
+<!-- 
+## Geração de Endereços no Bitcoin {.allowframebreaks}
+
+* Para gerar um endereço no __Bitcoin__, é usado um processo de $11$ etapas:
+
+![](figuras/bitcoin-address-generation.pdf){width=90%}
+
+## Transações {.allowframebreaks}
+
+* A user/sender sends a transaction using wallet software or some other interface. 
+* The transaction is signed using the sender's private key. 
+* The transaction is broadcasted to the Bitcoin network using a flooding algorithm. 
+* Mining nodes (miners) who are listening for the transactions verify and include this transaction in the next lock to be mined.
+* Next, the mining starts. 
+* Finally, the confirmations start to appear in the receiver's wallet. 
+
+## Estrutura de dados de uma Transação {.allowframebreaks}
+
+![](figuras/transaction-data-sctruture.pdf){width=100%}
+
+## Estrutura de dados de uma Transação – entradas e saídas {.allowframebreaks}
+
+![](figuras/transaction-data-sctruture-inouts.pdf){width=90%}
+
+-->
+</section>
+<section id="não-perder-as-chaves-é-importante" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="não-perder-as-chaves-é-importante"><span class="header-section-number">3.4</span> Não perder as chaves é importante</h2>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<p><img src="figuras/james-howells-01.png" class="img-fluid"></p>
+<p>[column=0.5]</p>
+<p><img src="figuras/james-howells.jpg" class="img-fluid"></p>
+<p>[/columns]</p>
+<p><a href="https://br.ign.com/tech/141577/news/durante-12-anos-ele-procurou-seu-disco-rigido-com-770-milhoes-de-euros-em-bitcoin-em-um-lixao-hoje-s">O Bitcoin Enterrado: A Caça ao Tesouro de James Howells na Vida Real</a></p>
+</section>
+<section id="script" class="level2 allowframebreaks" data-number="3.5">
+<h2 class="allowframebreaks anchored" data-number="3.5" data-anchor-id="script"><span class="header-section-number">3.5</span> Script</h2>
+<ul>
+<li>Linguagem simples baseada em pilha usada para descrever como os <em>bitcoins</em> podem ser gastos ou transferidos.</li>
+<li>Avaliada da esquerda para a direita usando uma pilha <em>Last in, First Out (LIFO)</em>.</li>
+<li>Composta por dois componentes: elementos e operações.</li>
+<li>Scripts usam vários <em>opcodes</em> para definir suas operações.</li>
+</ul>
+</section>
+<section id="opcodes" class="level2 allowframebreaks" data-number="3.6">
+<h2 class="allowframebreaks anchored" data-number="3.6" data-anchor-id="opcodes"><span class="header-section-number">3.6</span> Opcodes</h2>
+<ul>
+<li>Aqui estão alguns exemplos de alguns <em>opcodes</em> úteis usados ​​na linguagem <code>Script</code> no <em>blockchain</em> do <code>Bitcoin</code>.</li>
+</ul>
+<p><embed src="figuras/opcodes.pdf" class="img-fluid"></p>
+<!--
+
+## P2PKH script execution  {.allowframebreaks}
+
+* P2PKH is the most commonly used transaction type and is used to send transactions to Bitcoin addresses.
+
+![](figuras/p2pkh-execution.pdf)
+
+## Validação de Transações {.allowframebreaks}
+
+During validation, the following are checked:
+
+* That transaction inputs are previously unspent. This validation step prevents double-spending by verifying that the transaction inputs have not already been spent by someone else.
+
+* That the sum of the transaction outputs is not more than the total sum of the transaction inputs. However, both input and output sums can be the same, or the sum of the input (total value) could be more than the total value of the outputs. This check ensures that no new bitcoins are created out of thin air. 
+
+* That that the digital signatures are valid, which ensures that the script is valid.
+
+-->
+<!--
+
+## Blocos {.allowframebreaks}
+
+* A estrutura de um Bloco Bitcoin é mostrado na tabela:
+
+![](figuras/bitcoin-bloco.pdf){width=100%}
+
+[framebreak]
+
+* A estrutura do cabeçalho de um bloco:
+
+![](figuras/bitcoin-bloco-header.pdf){width=100%}
+
+-->
+</section>
+<section id="uma-visualização-da-blockchain-do-bitcoin" class="level2 allowframebreaks" data-number="3.7">
+<h2 class="allowframebreaks anchored" data-number="3.7" data-anchor-id="uma-visualização-da-blockchain-do-bitcoin"><span class="header-section-number">3.7</span> Uma Visualização da Blockchain do Bitcoin</h2>
+<p><embed src="figuras/bitcoin-blockchain.pdf" class="img-fluid" style="width:100.0%"></p>
+</section>
+<section id="bloco-genesis" class="level2 allowframebreaks fragile" data-number="3.8">
+<h2 class="allowframebreaks fragile anchored" data-number="3.8" data-anchor-id="bloco-genesis"><span class="header-section-number">3.8</span> Bloco Genesis</h2>
+<p>[alertblock]{Bloco Genesis}</p>
+<p>O Bloco Genesis ou bloco <span class="math inline">\(\#0\)</span> foi <em>hardcoded</em> (codificado) por suas características especiais: ele é o único que não aponta para nenhum bloco anterior. No seu <em>hash</em> foi encriptado o bloco junto com a mensagem <em>“The Times 03/Jan/2009 Chancellor on brink of second bailout for banks”</em>, manchete do jornal naquele dia. Além de servir como prova datada, a manchete escolhida representa justamente uma crítica ao sistema bancário.</p>
+<p>[/alertblock]</p>
+<p>[framebreak]</p>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<p><img src="figuras/thetimes03-01-2009-1.jpg" class="img-fluid"></p>
+<p>[column=0.5]</p>
+<p><img src="figuras/genesis-block-github.png" class="img-fluid"></p>
+<p><strong>Fonte:</strong> <a href="https://github.com/bitcoin/bitcoin/blob/master/src/chainparams.cpp">https://github.com/bitcoin/bitcoin/blob/master/src/chainparams.cpp</a></p>
+<p>[/columns]</p>
+<p>[framebreak]</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode .c++ code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">/**</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * Build the genesis block. Note that the output of its generation</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * transaction cannot be spent since it did not originally exist in the</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * database.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"> *</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"> * CBlock(hash=000000000019d6, ver=1, hashPrevBlock=00000000000000, hashMerkleRoot=4a5e1e, nTime=1231006505, nBits=1d00ffff, nNonce=2083236893, vtx=1)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"> *   CTransaction(hash=4a5e1e, ver=1, vin.size=1, vout.size=1, nLockTime=0)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"> *     CTxIn(COutPoint(000000, -1), coinbase 04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"> *     CTxOut(nValue=50.00000000, scriptPubKey=0x5F1DF16B2B704C8A578D0B)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"> *   vMerkleTree: 4a5e1e</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="at">static</span> CBlock CreateGenesisBlock<span class="op">(</span><span class="dt">uint32_t</span> nTime<span class="op">,</span> <span class="dt">uint32_t</span> nNonce<span class="op">,</span> <span class="dt">uint32_t</span> nBits<span class="op">,</span> <span class="dt">int32_t</span> nVersion<span class="op">,</span> </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> CAmount<span class="op">&amp;</span> genesisReward<span class="op">)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">const</span> <span class="dt">char</span><span class="op">*</span> pszTimestamp <span class="op">=</span> <span class="st">"The Times 03/Jan/2009 Chancellor on brink of second bailout for banks"</span><span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">const</span> CScript genesisOutputScript <span class="op">=</span> CScript<span class="op">()</span> <span class="op">&lt;&lt;</span> ParseHex<span class="op">(</span><span class="st">"04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f"</span><span class="op">)</span> <span class="op">&lt;&lt;</span> OP_CHECKSIG<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> CreateGenesisBlock<span class="op">(</span>pszTimestamp<span class="op">,</span> genesisOutputScript<span class="op">,</span> nTime<span class="op">,</span> nNonce<span class="op">,</span> nBits<span class="op">,</span> nVersion<span class="op">,</span> genesisReward<span class="op">);</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>[framebreak]</p>
+</section>
+<section id="a-carteira-de-satoshi" class="level2 allowframebreaks" data-number="3.9">
+<h2 class="allowframebreaks anchored" data-number="3.9" data-anchor-id="a-carteira-de-satoshi"><span class="header-section-number">3.9</span> A carteira de Satoshi</h2>
+<ul>
+<li>Carteira: <a href="https://blockchair.com/bitcoin/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"><code>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</code></a></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/carteira-satoshi-2024.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption><a href="https://www.blockchain.com/btc/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Essa primeira transação foi incluída no <strong>bloco #0</strong>, sob o <em>hash</em> <a href="https://whatsonchain.com/tx/4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</a>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/blockchain-com-tx-4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption><a href="https://www.blockchain.com/btc/tx/4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/blockchain-com-tx-4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b-2024.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption><a href="https://www.blockchain.com/btc/tx/4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/carteira-de-satoshi-1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa-2024.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption><a href="https://whatsonchain.com/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa?limit=10&amp;offset=1160">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Detalhes da Transação:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/block-0-transaction-4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption><a href="https://whatsonchain.com/tx/4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b">4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b</a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<!--
+
+* Scripts
+  
+![](figuras/block-0-transaction-4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b-scripts.png){width=90%}
+
+[framebreak]
+
+* `JSON`
+
+![](figuras/block-0-transaction-4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b-json.png){width=90%}
+
+[framebreak]
+
+-->
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/carteira-satoshi-21-11-2023.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Saldo em 21/11/2023</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/carteira-satoshi-13-08-2024.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Saldo em 13/08/2024</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/carteira-satoshi-21-11-2023-02.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Saldo em 21/11/2023 <a href="https://www.blockchain.com/explorer/addresses/BTC/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa">Fonte: blockchain.com</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/carteira-satoshi-13-08-2024-blockchain.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Saldo em 13/08/2024 <a href="https://www.blockchain.com/explorer/addresses/BTC/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa">Fonte: blockchain.com</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/carteira-satoshi-16-06-2025-blockchain.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Saldo em 16/06/2025 <a href="https://www.blockchain.com/explorer/addresses/BTC/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa">Fonte: blockchain.com</a></figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="mas-afinal-quem-é-satoshi-nakamoto" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Mas afinal, quem é Satoshi Nakamoto?</h1>
+<section id="quem-é-satoshi-nakamoto" class="level2 allowframebreaks fragile" data-number="4.1">
+<h2 class="allowframebreaks fragile anchored" data-number="4.1" data-anchor-id="quem-é-satoshi-nakamoto"><span class="header-section-number">4.1</span> Quem é Satoshi Nakamoto?</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/elon-musk-not-satoshi.png" class="img-fluid figure-img"></p>
+<figcaption>Elon Musk <a href="https://arquivo.canaltech.com.br/curiosidades/elon-musk-afirma-em-tweet-que-ele-nao-e-criador-dos-bitcoins-104">Fonte: CanalTech</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/dorian-nakamoto.png" class="img-fluid figure-img"></p>
+<figcaption>Dorian Nakamoto <a href="https://livecoins.com.br/ha-8-anos-revista-expos-vida-de-satoshi-nakamoto-e-foi-processada/">Fonte: Livecoins</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/linus-satoshi-01.png" class="img-fluid figure-img"></p>
+<figcaption>Linus Torvalds <a href="https://livecoins.com.br/criador-do-linux-diz-ser-satoshi-nakamoto/">Fonte: Livecoins</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/linus-satoshi-02.png" class="img-fluid figure-img"></p>
+<figcaption>Linus Torvalds <a href="https://cointelegraph.com.br/news/linux-creator-goes-back-and-says-hes-not-satoshi-nakamoto">Fonte: cointelegraph</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/steve-jobs-satoshi.png" class="img-fluid figure-img"></p>
+<figcaption>Steve Jobs <a href="https://exame.com/future-of-money/steve-jobs-e-apontado-como-criador-do-bitcoin-apos-documento-ser-encontrado-em-computadores-da-apple/">Fonte: Exame 10/04/2023</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/craig-wright.png" class="img-fluid figure-img"></p>
+<figcaption>Craig Wright <a href="https://www-bbc-com.translate.goog/news/articles/c74x0j47gz8o?_x_tr_sl=en&amp;_x_tr_tl=pt&amp;_x_tr_hl=pt&amp;_x_tr_pto=tc&amp;_x_tr_hist=true">Fonte: BBC 19/12/2024</a></figcaption>
+</figure>
+</div>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/video-quem-e-satoshi.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://www.youtube.com/watch?v=sZCjbjOtc-o">Vídeo</a></figcaption>
+</figure>
+</div>
+<p>[column=0.5]</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/quem-e-satoshi-01.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://youtu.be/sZCjbjOtc-o?t=133">Vídeo</a></figcaption>
+</figure>
+</div>
+<p>[/columns]</p>
+<p>Lista de suspeitos no decorrer da história: <a href="https://www.infomoney.com.br/perfil/satoshi-nakamoto/" class="uri">https://www.infomoney.com.br/perfil/satoshi-nakamoto/</a></p>
+<!--
+## Blocos Obsoletos e Orfãos {.allowframebreaks}
+
+* Blocos obsoletos existem em uma cadeia mais curta, a partir da qual a cadeia principal progrediu.
+* Os blocos pais de blocos órfãos são desconhecidos.
+
+![](figuras/bitcoin-blockchain-stale-orphan-blocks.pdf)
+
+-->
+</section>
+<section id="tamanho-do-blockchain-do-bitcoin" class="level2 allowframebreaks" data-number="4.2">
+<h2 class="allowframebreaks anchored" data-number="4.2" data-anchor-id="tamanho-do-blockchain-do-bitcoin"><span class="header-section-number">4.2</span> Tamanho do Blockchain do Bitcoin</h2>
+<ul>
+<li>O <em>Blockchain</em> do <em>Bitcoin</em> tinha em <strong>October 29, 2017</strong>, aproximadamente: <span class="math inline">\(139GB\)</span></li>
+</ul>
+<p><embed src="figuras/bitcoin-blockchain-size-oct-2017.pdf" class="img-fluid" style="width:75.0%"></p>
+<p>[framebreak]</p>
+<ul>
+<li>A figura mostra a evolução de <strong>Aug 2017</strong> para <strong>Jul 2020</strong>. Aproximandamente, <span class="math inline">\(286 GB\)</span>.</li>
+</ul>
+<p><embed src="figuras/bitcoin-blockchain-size-aug-2017-jul-2020.pdf" class="img-fluid" style="width:60.0%"></p>
+<p>[framebreak]</p>
+<ul>
+<li>A figura mostra a evolução de <strong>Jan 2009</strong> para <strong>Set 2022</strong>. Aproximandamente, <span class="math inline">\(426.7 GB\)</span>.</li>
+</ul>
+<p><embed src="figuras/bitcoin-blockchain-size-set-2022.pdf" class="img-fluid" style="width:75.0%"></p>
+<ul>
+<li><p>Fonte: <a href="https://www.blockchain.com/charts/blocks-size">https://www.blockchain.com/charts/blocks-size</a></p></li>
+<li><p>Tamanho em 14/04/2023: <span class="math inline">\(472.9 GB\)</span></p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-blockchain-size-14-04-2023.png" class="img-fluid figure-img"></p>
+<figcaption>Tamanho em 14/04/2023 <a href="https://ycharts.com/indicators/bitcoin_blockchain_size">Fonte: ycharts</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Tamanho em 09/08/2023: <span class="math inline">\(502.06 GB\)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-blockchain-size-09-08-2023.png" class="img-fluid figure-img"></p>
+<figcaption>Tamanho em 09/08/2023 <a href="https://ycharts.com/indicators/bitcoin_blockchain_size">Fonte: ycharts</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Tamanho em 21/11/2023: <span class="math inline">\(527.47 GB\)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-blockchain-size-21-11-2023.png" class="img-fluid figure-img"></p>
+<figcaption>Tamanho em 21/11/2023 <a href="https://ycharts.com/indicators/bitcoin_blockchain_size">Fonte: ycharts</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Tamanho em 13/08/2024: <span class="math inline">\(592.72 GB\)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-blockchain-size-13-08-2024.png" class="img-fluid figure-img"></p>
+<figcaption>Tamanho em 13/08/2024 <a href="https://ycharts.com/indicators/bitcoin_blockchain_size">Fonte: ycharts</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Tamanho em 16/12/2024: <span class="math inline">\(622.77 GB\)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-blockchain-size-16-12-2024.png" class="img-fluid figure-img"></p>
+<figcaption>Tamanho em 16/12/2024 <a href="https://ycharts.com/indicators/bitcoin_blockchain_size">Fonte: ycharts</a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Tamanho em 16/06/2025: <span class="math inline">\(665.07 GB\)</span></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-blockchain-size-16-06-2025.png" class="img-fluid figure-img"></p>
+<figcaption>Tamanho em 16/06/2025 <a href="https://ycharts.com/indicators/bitcoin_blockchain_size">Fonte: ycharts</a></figcaption>
+</figure>
+</div>
+</section>
+<section id="consumo-de-energia" class="level2 allowframebreaks" data-number="4.3">
+<h2 class="allowframebreaks anchored" data-number="4.3" data-anchor-id="consumo-de-energia"><span class="header-section-number">4.3</span> Consumo de Energia</h2>
+<ul>
+<li>Pico em Janeiro de 2022: <span class="math inline">\(204.5~TWh\)</span> por ano.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-energy-consumpti-16-04-2023.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Consumo de Energia <a href="https://digiconomist.net/bitcoin-energy-consumption">Fonte: digiconomist</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Em 21/11/2023: <span class="math inline">\(137.68~TWh\)</span> por ano.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-energy-consumpti-21-11-2023.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Consumo de Energia <a href="https://digiconomist.net/bitcoin-energy-consumption">Fonte: digiconomist</a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Em 13/08/2024: <span class="math inline">\(172.26~TWh\)</span> por ano.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-energy-consumpti-13-08-2024.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Consumo de Energia <a href="https://digiconomist.net/bitcoin-energy-consumption">Fonte: digiconomist</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Em 16/12/2024: <span class="math inline">\(175.87~TWh\)</span> por ano.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-energy-consumpti-16-12-2024.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Consumo de Energia <a href="https://digiconomist.net/bitcoin-energy-consumption">Fonte: digiconomist</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Em 16/06/2025: <span class="math inline">\(175.87~TWh\)</span> por ano.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/bitcoin-energy-consumpti-16-06-2025.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Consumo de Energia <a href="https://digiconomist.net/bitcoin-energy-consumption">Fonte: digiconomist</a></figcaption>
+</figure>
+</div>
+<p>Artigo: <a href="https://www.cell.com/patterns/fulltext/S2666-3899(22)00265-3">“Cryptocurrencies on the road to sustainability: Ethereum paving the way for Bitcoin”</a> (December 2022); <em>Bitcoin’s biggest competitor, Ethereum, has reduced its electrical energy requirement by at least 99.84% by changing its method of production.</em></p>
+<!-- 
+## Mineração {.allowframebreaks}
+
+[columns]
+
+[column=0.5]
+
+* Sincronização com a rede
+* Validação de Transações
+* Validação de Bloco
+* Criação de novo bloco
+* Executar a _Proof of Work (PoW)_
+* Buscar Recompensa
+
+[column=0.5]
+
+![](figuras/mineracao.pdf)
+
+[/columns]
+
+## Mining systems 
+
+![](figuras/sistemas-mineracao.pdf)
+
+-->
+</section>
+<section id="leitura-recomendada" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">4.4</span> Leitura Recomendada</h2>
+<p>[alertblock]{Leitura Recomendada}</p>
+<p><strong>Capítulo 5/6: Introduction Bitcoin</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_129">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p>[/alertblock]</p>
+</section>
+<section id="projetos-de-pesquisa" class="level2 allowframebreaks" data-number="4.5">
+<h2 class="allowframebreaks anchored" data-number="4.5" data-anchor-id="projetos-de-pesquisa"><span class="header-section-number">4.5</span> Projetos de Pesquisa</h2>
+<p><strong>Título:</strong> <em>Estudo Exploratório De Técnicas E Mecanismos Para Paralelização Automática E Offloading De Código Em Sistemas Heterogêneos (Pa-Code-Offload).</em></p>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p><em>Pesquisa em Computação Paralela.</em></p>
+</blockquote>
+</blockquote>
+<p><strong>Título:</strong> <em>Investigação sobre Infraestrutura e Suporte ao Desenvolvimento de Aplicações utilizando Tecnologias Blockchain (PRO-BLOCKCHAIN).</em></p>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p><em>Pesquisa em Tecnologias Blockchain</em>.</p>
+</blockquote>
+</blockquote>
+</section>
+<section id="projetos-de-extensão" class="level2 allowframebreaks" data-number="4.6">
+<h2 class="allowframebreaks anchored" data-number="4.6" data-anchor-id="projetos-de-extensão"><span class="header-section-number">4.6</span> Projetos de Extensão</h2>
+<p><strong>Título:</strong> <em>Escola de Computação Paralela (ECP 2024).</em></p>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p><em>Preparar e ministrar minicursos em temas de Computação Paralela.</em></p>
+</blockquote>
+</blockquote>
+<p><strong>Título:</strong> <em>Academia Blockchain.</em></p>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p><em>Preparar e ministrar minicursos relacionados às Tecnologias Blockchain.</em></p>
+</blockquote>
+</blockquote>
+</section>
+<section id="grupo-estudos" class="level2 allowframebreaks" data-number="4.7">
+<h2 class="allowframebreaks anchored" data-number="4.7" data-anchor-id="grupo-estudos"><span class="header-section-number">4.7</span> Grupo Estudos</h2>
+<p><code>GEDVAC: Grupo de Estudos sobre Desempenho, máquinas Virtuais, Arquitetura de computadores e Compiladores da UTFPR-CM.</code></p>
+</section>
+<section id="leitura-recomendada-1" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="leitura-recomendada-1"><span class="header-section-number">4.8</span> Leitura Recomendada</h2>
+<p>[alertblock]{Leitura Recomendada}</p>
+<p><strong>Capítulo 11: Ethereum 101</strong></p>
+<p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_276">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p><strong>Capítulo 12: Futher Ethereum</strong></p>
+<p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_310">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p>[/alertblock]</p>
+</section>
+<section id="word-cloud" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">4.9</span> <em>Word Cloud</em></h2>
+<p><img src="figuras/palestra-introducao-visao-geral-blockchain.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
+</section>
+</section>
+<section id="referências" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Referências</h1>
+<section id="referências-1" class="level2 fragile allowframebreaks" data-number="5.1">
+<h2 class="fragile allowframebreaks anchored" data-number="5.1" data-anchor-id="referências-1"><span class="header-section-number">5.1</span> Referências</h2>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/ecp-minicursos");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link" aria-label="Bem-vindo">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Bem-vindo</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="pagination-link" aria-label="Aula 03 - Prática sobre _Ethereum Virtual Machine (EVM)_">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aula 03 - Prática sobre <em>Ethereum Virtual Machine (EVM)</em></span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
