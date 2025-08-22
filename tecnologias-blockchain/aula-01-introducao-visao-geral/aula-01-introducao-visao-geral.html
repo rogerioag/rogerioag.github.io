@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -66,6 +85,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" rel="next">
 <link href="../index.html" rel="prev">
+<link href="../images/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -74,7 +94,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-04eba2f631388346a9723070acb13413.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-31072f9ed96e24c019159c695a8da794.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -161,7 +181,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/rogerioag/ecp-minicursos" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/rogerioag/tecnologias-blockchain" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -226,53 +246,48 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+    <h2 id="toc-title">Sumário</h2>
    
   <ul>
-  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">2</span> Introdução</a>
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link active" data-scroll-target="#objetivos"><span class="header-section-number">1.1</span> Objetivos</a></li>
+  <li><a href="#interesse-no-termo-blockchain-ao-longo-do-tempo" id="toc-interesse-no-termo-blockchain-ao-longo-do-tempo" class="nav-link" data-scroll-target="#interesse-no-termo-blockchain-ao-longo-do-tempo"><span class="header-section-number">1.2</span> Interesse no termo “blockchain” ao longo do tempo</a></li>
+  <li><a href="#como-um-blockchain-funciona" id="toc-como-um-blockchain-funciona" class="nav-link" data-scroll-target="#como-um-blockchain-funciona"><span class="header-section-number">1.3</span> Como um Blockchain funciona</a></li>
+  <li><a href="#definição-de-blockchain" id="toc-definição-de-blockchain" class="nav-link" data-scroll-target="#definição-de-blockchain"><span class="header-section-number">1.4</span> Definição de Blockchain</a></li>
+  <li><a href="#como-a-tecnologia-blockchain-foi-desenvolvida" id="toc-como-a-tecnologia-blockchain-foi-desenvolvida" class="nav-link" data-scroll-target="#como-a-tecnologia-blockchain-foi-desenvolvida"><span class="header-section-number">1.5</span> Como a Tecnologia Blockchain foi desenvolvida</a></li>
+  <li><a href="#visão-arquitetural-de-um-blockchain" id="toc-visão-arquitetural-de-um-blockchain" class="nav-link" data-scroll-target="#visão-arquitetural-de-um-blockchain"><span class="header-section-number">1.6</span> Visão Arquitetural de um Blockchain</a></li>
+  <li><a href="#estrutura-genérica-de-um-blockchain" id="toc-estrutura-genérica-de-um-blockchain" class="nav-link" data-scroll-target="#estrutura-genérica-de-um-blockchain"><span class="header-section-number">1.7</span> Estrutura Genérica de um Blockchain</a></li>
+  <li><a href="#estrutura-genérica-de-um-bloco" id="toc-estrutura-genérica-de-um-bloco" class="nav-link" data-scroll-target="#estrutura-genérica-de-um-bloco"><span class="header-section-number">1.8</span> Estrutura Genérica de um bloco</a></li>
+  <li><a href="#benefícios-e-limitações-de-um-blockchain" id="toc-benefícios-e-limitações-de-um-blockchain" class="nav-link" data-scroll-target="#benefícios-e-limitações-de-um-blockchain"><span class="header-section-number">1.9</span> Benefícios e Limitações de um Blockchain</a></li>
+  <li><a href="#características-principais" id="toc-características-principais" class="nav-link" data-scroll-target="#características-principais"><span class="header-section-number">1.10</span> Características Principais</a></li>
+  <li><a href="#bitcoin" id="toc-bitcoin" class="nav-link" data-scroll-target="#bitcoin"><span class="header-section-number">2</span> Bitcoin</a>
   <ul class="collapse">
-  <li><a href="#olá" id="toc-olá" class="nav-link" data-scroll-target="#olá"><span class="header-section-number">2.1</span> Olá</a></li>
-  <li><a href="#objetivos" id="toc-objetivos" class="nav-link" data-scroll-target="#objetivos"><span class="header-section-number">2.2</span> Objetivos</a></li>
-  <li><a href="#interesse-no-termo-blockchain-ao-longo-do-tempo" id="toc-interesse-no-termo-blockchain-ao-longo-do-tempo" class="nav-link" data-scroll-target="#interesse-no-termo-blockchain-ao-longo-do-tempo"><span class="header-section-number">2.3</span> Interesse no termo “blockchain” ao longo do tempo</a></li>
-  <li><a href="#como-um-blockchain-funciona" id="toc-como-um-blockchain-funciona" class="nav-link" data-scroll-target="#como-um-blockchain-funciona"><span class="header-section-number">2.4</span> Como um Blockchain funciona</a></li>
-  <li><a href="#definição-de-blockchain" id="toc-definição-de-blockchain" class="nav-link" data-scroll-target="#definição-de-blockchain"><span class="header-section-number">2.5</span> Definição de Blockchain</a></li>
-  <li><a href="#como-a-tecnologia-blockchain-foi-desenvolvida" id="toc-como-a-tecnologia-blockchain-foi-desenvolvida" class="nav-link" data-scroll-target="#como-a-tecnologia-blockchain-foi-desenvolvida"><span class="header-section-number">2.6</span> Como a Tecnologia Blockchain foi desenvolvida</a></li>
-  <li><a href="#visão-arquitetural-de-um-blockchain" id="toc-visão-arquitetural-de-um-blockchain" class="nav-link" data-scroll-target="#visão-arquitetural-de-um-blockchain"><span class="header-section-number">2.7</span> Visão Arquitetural de um Blockchain</a></li>
-  <li><a href="#estrutura-genérica-de-um-blockchain" id="toc-estrutura-genérica-de-um-blockchain" class="nav-link" data-scroll-target="#estrutura-genérica-de-um-blockchain"><span class="header-section-number">2.8</span> Estrutura Genérica de um Blockchain</a></li>
-  <li><a href="#estrutura-genérica-de-um-bloco" id="toc-estrutura-genérica-de-um-bloco" class="nav-link" data-scroll-target="#estrutura-genérica-de-um-bloco"><span class="header-section-number">2.9</span> Estrutura Genérica de um bloco</a></li>
-  <li><a href="#benefícios-e-limitações-de-um-blockchain" id="toc-benefícios-e-limitações-de-um-blockchain" class="nav-link" data-scroll-target="#benefícios-e-limitações-de-um-blockchain"><span class="header-section-number">2.10</span> Benefícios e Limitações de um Blockchain</a></li>
-  <li><a href="#características-principais" id="toc-características-principais" class="nav-link" data-scroll-target="#características-principais"><span class="header-section-number">2.11</span> Características Principais</a></li>
+  <li><a href="#bitcoin-1" id="toc-bitcoin-1" class="nav-link" data-scroll-target="#bitcoin-1"><span class="header-section-number">2.1</span> Bitcoin</a></li>
+  <li><a href="#bitcoin-na-perspectiva-de-usuário" id="toc-bitcoin-na-perspectiva-de-usuário" class="nav-link" data-scroll-target="#bitcoin-na-perspectiva-de-usuário"><span class="header-section-number">2.2</span> Bitcoin na perspectiva de usuário&nbsp;</a></li>
+  <li><a href="#chaves-criptográficas" id="toc-chaves-criptográficas" class="nav-link" data-scroll-target="#chaves-criptográficas"><span class="header-section-number">2.3</span> Chaves Criptográficas&nbsp;</a></li>
+  <li><a href="#não-perder-as-chaves-é-importante" id="toc-não-perder-as-chaves-é-importante" class="nav-link" data-scroll-target="#não-perder-as-chaves-é-importante"><span class="header-section-number">2.4</span> Não perder as chaves é importante</a></li>
+  <li><a href="#script" id="toc-script" class="nav-link" data-scroll-target="#script"><span class="header-section-number">2.5</span> Script</a></li>
+  <li><a href="#opcodes" id="toc-opcodes" class="nav-link" data-scroll-target="#opcodes"><span class="header-section-number">2.6</span> Opcodes</a></li>
+  <li><a href="#uma-visualização-da-blockchain-do-bitcoin" id="toc-uma-visualização-da-blockchain-do-bitcoin" class="nav-link" data-scroll-target="#uma-visualização-da-blockchain-do-bitcoin"><span class="header-section-number">2.7</span> Uma Visualização da Blockchain do Bitcoin</a></li>
+  <li><a href="#bloco-genesis" id="toc-bloco-genesis" class="nav-link" data-scroll-target="#bloco-genesis"><span class="header-section-number">2.8</span> Bloco Genesis</a></li>
+  <li><a href="#a-carteira-de-satoshi" id="toc-a-carteira-de-satoshi" class="nav-link" data-scroll-target="#a-carteira-de-satoshi"><span class="header-section-number">2.9</span> A carteira de Satoshi</a></li>
   </ul></li>
-  <li><a href="#bitcoin" id="toc-bitcoin" class="nav-link" data-scroll-target="#bitcoin"><span class="header-section-number">3</span> Bitcoin</a>
+  <li><a href="#mas-afinal-quem-é-satoshi-nakamoto" id="toc-mas-afinal-quem-é-satoshi-nakamoto" class="nav-link" data-scroll-target="#mas-afinal-quem-é-satoshi-nakamoto"><span class="header-section-number">3</span> Mas afinal, quem é Satoshi Nakamoto?</a>
   <ul class="collapse">
-  <li><a href="#bitcoin-1" id="toc-bitcoin-1" class="nav-link" data-scroll-target="#bitcoin-1"><span class="header-section-number">3.1</span> Bitcoin</a></li>
-  <li><a href="#bitcoin-na-perspectiva-de-usuário" id="toc-bitcoin-na-perspectiva-de-usuário" class="nav-link" data-scroll-target="#bitcoin-na-perspectiva-de-usuário"><span class="header-section-number">3.2</span> Bitcoin na perspectiva de usuário&nbsp;</a></li>
-  <li><a href="#chaves-criptográficas" id="toc-chaves-criptográficas" class="nav-link" data-scroll-target="#chaves-criptográficas"><span class="header-section-number">3.3</span> Chaves Criptográficas&nbsp;</a></li>
-  <li><a href="#não-perder-as-chaves-é-importante" id="toc-não-perder-as-chaves-é-importante" class="nav-link" data-scroll-target="#não-perder-as-chaves-é-importante"><span class="header-section-number">3.4</span> Não perder as chaves é importante</a></li>
-  <li><a href="#script" id="toc-script" class="nav-link" data-scroll-target="#script"><span class="header-section-number">3.5</span> Script</a></li>
-  <li><a href="#opcodes" id="toc-opcodes" class="nav-link" data-scroll-target="#opcodes"><span class="header-section-number">3.6</span> Opcodes</a></li>
-  <li><a href="#uma-visualização-da-blockchain-do-bitcoin" id="toc-uma-visualização-da-blockchain-do-bitcoin" class="nav-link" data-scroll-target="#uma-visualização-da-blockchain-do-bitcoin"><span class="header-section-number">3.7</span> Uma Visualização da Blockchain do Bitcoin</a></li>
-  <li><a href="#bloco-genesis" id="toc-bloco-genesis" class="nav-link" data-scroll-target="#bloco-genesis"><span class="header-section-number">3.8</span> Bloco Genesis</a></li>
-  <li><a href="#a-carteira-de-satoshi" id="toc-a-carteira-de-satoshi" class="nav-link" data-scroll-target="#a-carteira-de-satoshi"><span class="header-section-number">3.9</span> A carteira de Satoshi</a></li>
+  <li><a href="#quem-é-satoshi-nakamoto" id="toc-quem-é-satoshi-nakamoto" class="nav-link" data-scroll-target="#quem-é-satoshi-nakamoto"><span class="header-section-number">3.1</span> Quem é Satoshi Nakamoto?</a></li>
+  <li><a href="#tamanho-do-blockchain-do-bitcoin" id="toc-tamanho-do-blockchain-do-bitcoin" class="nav-link" data-scroll-target="#tamanho-do-blockchain-do-bitcoin"><span class="header-section-number">3.2</span> Tamanho do Blockchain do Bitcoin</a></li>
+  <li><a href="#consumo-de-energia" id="toc-consumo-de-energia" class="nav-link" data-scroll-target="#consumo-de-energia"><span class="header-section-number">3.3</span> Consumo de Energia</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">3.4</span> Leitura Recomendada</a></li>
+  <li><a href="#projetos-de-pesquisa" id="toc-projetos-de-pesquisa" class="nav-link" data-scroll-target="#projetos-de-pesquisa"><span class="header-section-number">3.5</span> Projetos de Pesquisa</a></li>
+  <li><a href="#projetos-de-extensão" id="toc-projetos-de-extensão" class="nav-link" data-scroll-target="#projetos-de-extensão"><span class="header-section-number">3.6</span> Projetos de Extensão</a></li>
+  <li><a href="#grupo-estudos" id="toc-grupo-estudos" class="nav-link" data-scroll-target="#grupo-estudos"><span class="header-section-number">3.7</span> Grupo Estudos</a></li>
   </ul></li>
-  <li><a href="#mas-afinal-quem-é-satoshi-nakamoto" id="toc-mas-afinal-quem-é-satoshi-nakamoto" class="nav-link" data-scroll-target="#mas-afinal-quem-é-satoshi-nakamoto"><span class="header-section-number">4</span> Mas afinal, quem é Satoshi Nakamoto?</a>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">4</span> Referências</a>
   <ul class="collapse">
-  <li><a href="#quem-é-satoshi-nakamoto" id="toc-quem-é-satoshi-nakamoto" class="nav-link" data-scroll-target="#quem-é-satoshi-nakamoto"><span class="header-section-number">4.1</span> Quem é Satoshi Nakamoto?</a></li>
-  <li><a href="#tamanho-do-blockchain-do-bitcoin" id="toc-tamanho-do-blockchain-do-bitcoin" class="nav-link" data-scroll-target="#tamanho-do-blockchain-do-bitcoin"><span class="header-section-number">4.2</span> Tamanho do Blockchain do Bitcoin</a></li>
-  <li><a href="#consumo-de-energia" id="toc-consumo-de-energia" class="nav-link" data-scroll-target="#consumo-de-energia"><span class="header-section-number">4.3</span> Consumo de Energia</a></li>
-  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">4.4</span> Leitura Recomendada</a></li>
-  <li><a href="#projetos-de-pesquisa" id="toc-projetos-de-pesquisa" class="nav-link" data-scroll-target="#projetos-de-pesquisa"><span class="header-section-number">4.5</span> Projetos de Pesquisa</a></li>
-  <li><a href="#projetos-de-extensão" id="toc-projetos-de-extensão" class="nav-link" data-scroll-target="#projetos-de-extensão"><span class="header-section-number">4.6</span> Projetos de Extensão</a></li>
-  <li><a href="#grupo-estudos" id="toc-grupo-estudos" class="nav-link" data-scroll-target="#grupo-estudos"><span class="header-section-number">4.7</span> Grupo Estudos</a></li>
-  <li><a href="#leitura-recomendada-1" id="toc-leitura-recomendada-1" class="nav-link" data-scroll-target="#leitura-recomendada-1"><span class="header-section-number">4.8</span> Leitura Recomendada</a></li>
-  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">4.9</span> <em>Word Cloud</em></a></li>
-  </ul></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">5</span> Referências</a>
-  <ul class="collapse">
-  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">5.1</span> Referências</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">4.1</span> <em>Word Cloud</em></a></li>
+  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">4.2</span> Referências</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -294,7 +309,7 @@ window.Quarto = {
   
 <div>
   <div class="abstract">
-    <div class="block-title">Abstract</div>
+    <div class="block-title">Resumo</div>
     Blockchain é uma tecnologia nova e considerada revolucionária e disruptiva, sendo até mesmo comparada, quanto ao impacto, ao surgimento da Internet. Nesta aula serão apresentados conceitos e alguns fundamentos básicos relacionadas à Tecnologia Blockchain. Nesta aula é apresentada uma Visão Geral sobre rede <strong>Ethereum</strong>, componentes do Ecossistema <em>Ethereum</em>, a <em>Ethereum Virtual Machine (EVM)</em> e Contratos Nativos. Além disso, uma perspectiva do usuário é apresentada, mostrando a estrutura dos blocos do <em>blockchain</em> da <em>Ethereum</em>, <em>Wallets</em> e <em>softwares</em> clientes, nós e mineradores, ferramentas e <code>APIs</code>, protocolos e Linguagens de Programação Suportados.
   </div>
 </div>
@@ -303,21 +318,24 @@ window.Quarto = {
 </header>
 
 
-<section id="introdução" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Introdução</h1>
-<section id="olá" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="olá"><span class="header-section-number">2.1</span> Olá</h2>
-<p>[columns]</p>
-<p>[column=0.4]</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figuras/foto.jpg" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption>Rogério Gonçalves (RAG)</figcaption>
-</figure>
-</div>
-<p>[column=0.6]</p>
-<p>Doutor em Ciência da Computação, é professor na UTFPR - Campus Campo Mourão. É revisor do journal Springer Computing e de algumas conferências. <strong>Interesse em:</strong> Computação Paralela, Computação Heterogênea, Compiladores e Runtimes para Computação Paralela e Tecnologias Blockchain.</p>
-<p>[/columns]</p>
+<!--
+# Introdução
+
+## Olá
+
+[columns]
+
+[column=0.4]
+
+![Rogério Gonçalves (RAG)](figuras/foto.jpg){width=70%}
+
+[column=0.6]
+
+Doutor em Ciência da Computação, é professor na UTFPR - Campus Campo Mourão. É revisor do journal Springer Computing e de algumas conferências. 
+__Interesse em:__ Computação Paralela, Computação Heterogênea, Compiladores e Runtimes para Computação Paralela e Tecnologias Blockchain.
+
+[/columns]
+
 <!--
 ## Ministrante
 
@@ -348,12 +366,9 @@ Saber um pouco de _JavaScript_.
 [/alertblock]
 
 -->
-</section>
-<section id="objetivos" class="level2 allowframebreaks" data-number="2.2">
-<h2 class="allowframebreaks anchored" data-number="2.2" data-anchor-id="objetivos"><span class="header-section-number">2.2</span> Objetivos</h2>
-<ul>
-<li>Apresentação de uma Visão Geral sobre o Ecossistema de Tecnologias relacionadas a <strong>Blockchain</strong>. Surgimento e contexto histórico vinculado ao <em>Bitcoin</em>. Mas o foco principal está na rede <strong>Ethereum</strong> e componentes do seu Ecossistema. Falaremos um pouco sobre a <em>Ethereum Virtual Machine (EVM)</em> e Contratos Inteligentes. Além disso, uma perspectiva do usuário é apresentada, mostrando a estrutura dos blocos do <em>blockchain</em> da <em>Ethereum</em>, <em>Wallets</em> e <em>softwares</em> clientes, nós e mineradores, ferramentas e <code>APIs</code>, protocolos e Linguagens de Programação Suportados.</li>
-</ul>
+<section id="objetivos" class="level2 allowframebreaks" data-number="1.1">
+<h2 class="allowframebreaks anchored" data-number="1.1" data-anchor-id="objetivos"><span class="header-section-number">1.1</span> Objetivos</h2>
+<p>Apresentação de uma Visão Geral sobre o Ecossistema de Tecnologias relacionadas a <strong>Blockchain</strong>. Surgimento e contexto histórico vinculado ao <em>Bitcoin</em>. Mas o foco principal está na rede <strong>Ethereum</strong> e componentes do seu Ecossistema. Falaremos um pouco sobre a <em>Ethereum Virtual Machine (EVM)</em> e Contratos Inteligentes. Além disso, uma perspectiva do usuário é apresentada, mostrando a estrutura dos blocos do <em>blockchain</em> da <em>Ethereum</em>, <em>Wallets</em> e <em>softwares</em> clientes, nós e mineradores, ferramentas e <code>APIs</code>, protocolos e Linguagens de Programação Suportados.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/visao-geral-disciplina.png" class="img-fluid figure-img" style="width:100.0%"></p>
@@ -361,8 +376,8 @@ Saber um pouco de _JavaScript_.
 </figure>
 </div>
 </section>
-<section id="interesse-no-termo-blockchain-ao-longo-do-tempo" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="interesse-no-termo-blockchain-ao-longo-do-tempo"><span class="header-section-number">2.3</span> Interesse no termo “blockchain” ao longo do tempo</h2>
+<section id="interesse-no-termo-blockchain-ao-longo-do-tempo" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="interesse-no-termo-blockchain-ao-longo-do-tempo"><span class="header-section-number">1.2</span> Interesse no termo “blockchain” ao longo do tempo</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/interesse-termo-blockchain-2008-01-01-a-2025-06-16.png" class="img-fluid figure-img" style="width:80.0%"></p>
@@ -370,8 +385,8 @@ Saber um pouco de _JavaScript_.
 </figure>
 </div>
 </section>
-<section id="como-um-blockchain-funciona" class="level2 allowframebreaks" data-number="2.4">
-<h2 class="allowframebreaks anchored" data-number="2.4" data-anchor-id="como-um-blockchain-funciona"><span class="header-section-number">2.4</span> Como um Blockchain funciona</h2>
+<section id="como-um-blockchain-funciona" class="level2 allowframebreaks" data-number="1.3">
+<h2 class="allowframebreaks anchored" data-number="1.3" data-anchor-id="como-um-blockchain-funciona"><span class="header-section-number">1.3</span> Como um Blockchain funciona</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="figuras/funcionamento-blockchain.pdf" class="img-fluid" style="width:100.0%"></p>
@@ -379,8 +394,8 @@ Saber um pouco de _JavaScript_.
 </figure>
 </div>
 </section>
-<section id="definição-de-blockchain" class="level2 allowframebreaks fragile" data-number="2.5">
-<h2 class="allowframebreaks fragile anchored" data-number="2.5" data-anchor-id="definição-de-blockchain"><span class="header-section-number">2.5</span> Definição de Blockchain</h2>
+<section id="definição-de-blockchain" class="level2 allowframebreaks fragile" data-number="1.4">
+<h2 class="allowframebreaks fragile anchored" data-number="1.4" data-anchor-id="definição-de-blockchain"><span class="header-section-number">1.4</span> Definição de Blockchain</h2>
 <p>[alertblock]{Definição de Gosh}</p>
 <p><em>A blockchain is a digital distributed ledger, where transactions are stored in blocks linked to each other with a singly linked list. A block contains a link pointing to its predecessor. New blocks can be appended to the head of a blockchain. Existing blocks cannot be modified or deleted.</em></p>
 <p>[/alertblock]</p>
@@ -405,29 +420,32 @@ Blockchain é um livro-razão distribuído ponto a ponto que é criptograficamen
 <li>Atualizável via consenso dos pares.</li>
 </ul>
 </section>
-<section id="como-a-tecnologia-blockchain-foi-desenvolvida" class="level2 allowframebreaks" data-number="2.6">
-<h2 class="allowframebreaks anchored" data-number="2.6" data-anchor-id="como-a-tecnologia-blockchain-foi-desenvolvida"><span class="header-section-number">2.6</span> Como a Tecnologia Blockchain foi desenvolvida</h2>
-<p>[columns]</p>
-<p>[column=0.5]</p>
+<section id="como-a-tecnologia-blockchain-foi-desenvolvida" class="level2 allowframebreaks" data-number="1.5">
+<h2 class="allowframebreaks anchored" data-number="1.5" data-anchor-id="como-a-tecnologia-blockchain-foi-desenvolvida"><span class="header-section-number">1.5</span> Como a Tecnologia Blockchain foi desenvolvida</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
 <p><strong>1950s</strong> – Hash functions</p>
 <p><strong>1970s</strong> – Merkle trees - hashes in a tree structure</p>
 <p><strong>1970s</strong> <em>continued</em> – Research in distributed systems, consensus, state machine replication</p>
 <p><strong>1980s</strong> – Hash chains for secure logins</p>
 <p><strong>1990s</strong> – <em>e-Cash for e-payments</em></p>
-<p>[column=0.5]</p>
+</div><div class="column" style="width:10%;">
+<!-- empty column to create gap -->
+</div><div class="column" style="width:45%;">
 <p><strong>1991</strong> – Secure timestamping of digital documents.</p>
 <p><strong>1992</strong> – Hashcash idea to combat junk emails</p>
 <p><strong>1994</strong> – S/KEY application for Unix login.</p>
 <p><strong>1997/2002</strong> – <em>Hashcash</em></p>
 <p><strong>2008/2009</strong> – Bitcoin (the first blockchain)</p>
-<p>[/columns]</p>
+</div>
+</div>
 </section>
-<section id="visão-arquitetural-de-um-blockchain" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="visão-arquitetural-de-um-blockchain"><span class="header-section-number">2.7</span> Visão Arquitetural de um Blockchain</h2>
+<section id="visão-arquitetural-de-um-blockchain" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="visão-arquitetural-de-um-blockchain"><span class="header-section-number">1.6</span> Visão Arquitetural de um Blockchain</h2>
 <p><embed src="figuras/visao-arquitetural-blockchain.pdf" class="img-fluid"></p>
 </section>
-<section id="estrutura-genérica-de-um-blockchain" class="level2 allowframebreaks" data-number="2.8">
-<h2 class="allowframebreaks anchored" data-number="2.8" data-anchor-id="estrutura-genérica-de-um-blockchain"><span class="header-section-number">2.8</span> Estrutura Genérica de um Blockchain</h2>
+<section id="estrutura-genérica-de-um-blockchain" class="level2 allowframebreaks" data-number="1.7">
+<h2 class="allowframebreaks anchored" data-number="1.7" data-anchor-id="estrutura-genérica-de-um-blockchain"><span class="header-section-number">1.7</span> Estrutura Genérica de um Blockchain</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="figuras/estrutura-generica-blockchain.pdf" class="img-fluid" style="width:100.0%"></p>
@@ -444,8 +462,8 @@ Blockchain é um livro-razão distribuído ponto a ponto que é criptograficamen
 <li>Para evitar <em>overhead</em>, os registros são agrupados em blocos. Os registros em um bloco são organizados em uma estrutura de árvore chamada de <code>Merkle tree</code> [Merkle 1989] para acesso mais rápido.</li>
 </ul>
 </section>
-<section id="estrutura-genérica-de-um-bloco" class="level2 allowframebreaks" data-number="2.9">
-<h2 class="allowframebreaks anchored" data-number="2.9" data-anchor-id="estrutura-genérica-de-um-bloco"><span class="header-section-number">2.9</span> Estrutura Genérica de um bloco</h2>
+<section id="estrutura-genérica-de-um-bloco" class="level2 allowframebreaks" data-number="1.8">
+<h2 class="allowframebreaks anchored" data-number="1.8" data-anchor-id="estrutura-genérica-de-um-bloco"><span class="header-section-number">1.8</span> Estrutura Genérica de um bloco</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="figuras/estrutura-generica-de-bloco.pdf" class="img-fluid" style="width:60.0%"></p>
@@ -469,8 +487,8 @@ Blockchain é um livro-razão distribuído ponto a ponto que é criptograficamen
 
 -->
 </section>
-<section id="benefícios-e-limitações-de-um-blockchain" class="level2" data-number="2.10">
-<h2 data-number="2.10" class="anchored" data-anchor-id="benefícios-e-limitações-de-um-blockchain"><span class="header-section-number">2.10</span> Benefícios e Limitações de um Blockchain</h2>
+<section id="benefícios-e-limitações-de-um-blockchain" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="benefícios-e-limitações-de-um-blockchain"><span class="header-section-number">1.9</span> Benefícios e Limitações de um Blockchain</h2>
 <p>[columns]</p>
 <p>[column=0.5]</p>
 <p><strong>Benefícios</strong></p>
@@ -492,8 +510,8 @@ Blockchain é um livro-razão distribuído ponto a ponto que é criptograficamen
 <p>Privacidade</p>
 <p>[/columns]</p>
 </section>
-<section id="características-principais" class="level2 allowframebreaks" data-number="2.11">
-<h2 class="allowframebreaks anchored" data-number="2.11" data-anchor-id="características-principais"><span class="header-section-number">2.11</span> Características Principais</h2>
+<section id="características-principais" class="level2 allowframebreaks" data-number="1.10">
+<h2 class="allowframebreaks anchored" data-number="1.10" data-anchor-id="características-principais"><span class="header-section-number">1.10</span> Características Principais</h2>
 <ul>
 <li><p>Consenso Distribuído</p></li>
 <li><p>Verificação de Transações</p></li>
@@ -519,18 +537,17 @@ __Capítulo 1: Blockchain 101__
 
 -->
 </section>
-</section>
-<section id="bitcoin" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Bitcoin</h1>
-<section id="bitcoin-1" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="bitcoin-1"><span class="header-section-number">3.1</span> Bitcoin</h2>
+<section id="bitcoin" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Bitcoin</h1>
+<section id="bitcoin-1" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="bitcoin-1"><span class="header-section-number">2.1</span> Bitcoin</h2>
 <ul>
 <li>Surgiu em <span class="math inline">\(2008/2009\)</span>, sendo a primeira rede <em>Blockchain</em>.</li>
 <li>Rede voltada para a Criptomoeda – <code>Bitcoin (BTC)</code>.</li>
 </ul>
 </section>
-<section id="bitcoin-na-perspectiva-de-usuário" class="level2 allowframebreaks fragile" data-number="3.2">
-<h2 class="allowframebreaks fragile anchored" data-number="3.2" data-anchor-id="bitcoin-na-perspectiva-de-usuário"><span class="header-section-number">3.2</span> Bitcoin na perspectiva de usuário&nbsp;</h2>
+<section id="bitcoin-na-perspectiva-de-usuário" class="level2 allowframebreaks fragile" data-number="2.2">
+<h2 class="allowframebreaks fragile anchored" data-number="2.2" data-anchor-id="bitcoin-na-perspectiva-de-usuário"><span class="header-section-number">2.2</span> Bitcoin na perspectiva de usuário&nbsp;</h2>
 <ul>
 <li>Passos de como enviar e receber pagamentos:
 <ul>
@@ -546,8 +563,8 @@ __Capítulo 1: Blockchain 101__
 </ul></li>
 </ul>
 </section>
-<section id="chaves-criptográficas" class="level2 allowframebreaks" data-number="3.3">
-<h2 class="allowframebreaks anchored" data-number="3.3" data-anchor-id="chaves-criptográficas"><span class="header-section-number">3.3</span> Chaves Criptográficas&nbsp;</h2>
+<section id="chaves-criptográficas" class="level2 allowframebreaks" data-number="2.3">
+<h2 class="allowframebreaks anchored" data-number="2.3" data-anchor-id="chaves-criptográficas"><span class="header-section-number">2.3</span> Chaves Criptográficas&nbsp;</h2>
 <p>[columns]</p>
 <p>[column=0.5]</p>
 <ul>
@@ -594,8 +611,8 @@ __Capítulo 1: Blockchain 101__
 
 -->
 </section>
-<section id="não-perder-as-chaves-é-importante" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="não-perder-as-chaves-é-importante"><span class="header-section-number">3.4</span> Não perder as chaves é importante</h2>
+<section id="não-perder-as-chaves-é-importante" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="não-perder-as-chaves-é-importante"><span class="header-section-number">2.4</span> Não perder as chaves é importante</h2>
 <p>[columns]</p>
 <p>[column=0.5]</p>
 <p><img src="figuras/james-howells-01.png" class="img-fluid"></p>
@@ -604,8 +621,8 @@ __Capítulo 1: Blockchain 101__
 <p>[/columns]</p>
 <p><a href="https://br.ign.com/tech/141577/news/durante-12-anos-ele-procurou-seu-disco-rigido-com-770-milhoes-de-euros-em-bitcoin-em-um-lixao-hoje-s">O Bitcoin Enterrado: A Caça ao Tesouro de James Howells na Vida Real</a></p>
 </section>
-<section id="script" class="level2 allowframebreaks" data-number="3.5">
-<h2 class="allowframebreaks anchored" data-number="3.5" data-anchor-id="script"><span class="header-section-number">3.5</span> Script</h2>
+<section id="script" class="level2 allowframebreaks" data-number="2.5">
+<h2 class="allowframebreaks anchored" data-number="2.5" data-anchor-id="script"><span class="header-section-number">2.5</span> Script</h2>
 <ul>
 <li>Linguagem simples baseada em pilha usada para descrever como os <em>bitcoins</em> podem ser gastos ou transferidos.</li>
 <li>Avaliada da esquerda para a direita usando uma pilha <em>Last in, First Out (LIFO)</em>.</li>
@@ -613,8 +630,8 @@ __Capítulo 1: Blockchain 101__
 <li>Scripts usam vários <em>opcodes</em> para definir suas operações.</li>
 </ul>
 </section>
-<section id="opcodes" class="level2 allowframebreaks" data-number="3.6">
-<h2 class="allowframebreaks anchored" data-number="3.6" data-anchor-id="opcodes"><span class="header-section-number">3.6</span> Opcodes</h2>
+<section id="opcodes" class="level2 allowframebreaks" data-number="2.6">
+<h2 class="allowframebreaks anchored" data-number="2.6" data-anchor-id="opcodes"><span class="header-section-number">2.6</span> Opcodes</h2>
 <ul>
 <li>Aqui estão alguns exemplos de alguns <em>opcodes</em> úteis usados ​​na linguagem <code>Script</code> no <em>blockchain</em> do <code>Bitcoin</code>.</li>
 </ul>
@@ -654,12 +671,12 @@ During validation, the following are checked:
 
 -->
 </section>
-<section id="uma-visualização-da-blockchain-do-bitcoin" class="level2 allowframebreaks" data-number="3.7">
-<h2 class="allowframebreaks anchored" data-number="3.7" data-anchor-id="uma-visualização-da-blockchain-do-bitcoin"><span class="header-section-number">3.7</span> Uma Visualização da Blockchain do Bitcoin</h2>
+<section id="uma-visualização-da-blockchain-do-bitcoin" class="level2 allowframebreaks" data-number="2.7">
+<h2 class="allowframebreaks anchored" data-number="2.7" data-anchor-id="uma-visualização-da-blockchain-do-bitcoin"><span class="header-section-number">2.7</span> Uma Visualização da Blockchain do Bitcoin</h2>
 <p><embed src="figuras/bitcoin-blockchain.pdf" class="img-fluid" style="width:100.0%"></p>
 </section>
-<section id="bloco-genesis" class="level2 allowframebreaks fragile" data-number="3.8">
-<h2 class="allowframebreaks fragile anchored" data-number="3.8" data-anchor-id="bloco-genesis"><span class="header-section-number">3.8</span> Bloco Genesis</h2>
+<section id="bloco-genesis" class="level2 allowframebreaks fragile" data-number="2.8">
+<h2 class="allowframebreaks fragile anchored" data-number="2.8" data-anchor-id="bloco-genesis"><span class="header-section-number">2.8</span> Bloco Genesis</h2>
 <p>[alertblock]{Bloco Genesis}</p>
 <p>O Bloco Genesis ou bloco <span class="math inline">\(\#0\)</span> foi <em>hardcoded</em> (codificado) por suas características especiais: ele é o único que não aponta para nenhum bloco anterior. No seu <em>hash</em> foi encriptado o bloco junto com a mensagem <em>“The Times 03/Jan/2009 Chancellor on brink of second bailout for banks”</em>, manchete do jornal naquele dia. Além de servir como prova datada, a manchete escolhida representa justamente uma crítica ao sistema bancário.</p>
 <p>[/alertblock]</p>
@@ -692,8 +709,8 @@ During validation, the following are checked:
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>[framebreak]</p>
 </section>
-<section id="a-carteira-de-satoshi" class="level2 allowframebreaks" data-number="3.9">
-<h2 class="allowframebreaks anchored" data-number="3.9" data-anchor-id="a-carteira-de-satoshi"><span class="header-section-number">3.9</span> A carteira de Satoshi</h2>
+<section id="a-carteira-de-satoshi" class="level2 allowframebreaks" data-number="2.9">
+<h2 class="allowframebreaks anchored" data-number="2.9" data-anchor-id="a-carteira-de-satoshi"><span class="header-section-number">2.9</span> A carteira de Satoshi</h2>
 <ul>
 <li>Carteira: <a href="https://blockchair.com/bitcoin/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"><code>1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</code></a></li>
 </ul>
@@ -782,10 +799,10 @@ During validation, the following are checked:
 </div>
 </section>
 </section>
-<section id="mas-afinal-quem-é-satoshi-nakamoto" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Mas afinal, quem é Satoshi Nakamoto?</h1>
-<section id="quem-é-satoshi-nakamoto" class="level2 allowframebreaks fragile" data-number="4.1">
-<h2 class="allowframebreaks fragile anchored" data-number="4.1" data-anchor-id="quem-é-satoshi-nakamoto"><span class="header-section-number">4.1</span> Quem é Satoshi Nakamoto?</h2>
+<section id="mas-afinal-quem-é-satoshi-nakamoto" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Mas afinal, quem é Satoshi Nakamoto?</h1>
+<section id="quem-é-satoshi-nakamoto" class="level2 allowframebreaks fragile" data-number="3.1">
+<h2 class="allowframebreaks fragile anchored" data-number="3.1" data-anchor-id="quem-é-satoshi-nakamoto"><span class="header-section-number">3.1</span> Quem é Satoshi Nakamoto?</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/elon-musk-not-satoshi.png" class="img-fluid figure-img"></p>
@@ -849,8 +866,8 @@ During validation, the following are checked:
 
 -->
 </section>
-<section id="tamanho-do-blockchain-do-bitcoin" class="level2 allowframebreaks" data-number="4.2">
-<h2 class="allowframebreaks anchored" data-number="4.2" data-anchor-id="tamanho-do-blockchain-do-bitcoin"><span class="header-section-number">4.2</span> Tamanho do Blockchain do Bitcoin</h2>
+<section id="tamanho-do-blockchain-do-bitcoin" class="level2 allowframebreaks" data-number="3.2">
+<h2 class="allowframebreaks anchored" data-number="3.2" data-anchor-id="tamanho-do-blockchain-do-bitcoin"><span class="header-section-number">3.2</span> Tamanho do Blockchain do Bitcoin</h2>
 <ul>
 <li>O <em>Blockchain</em> do <em>Bitcoin</em> tinha em <strong>October 29, 2017</strong>, aproximadamente: <span class="math inline">\(139GB\)</span></li>
 </ul>
@@ -922,8 +939,8 @@ During validation, the following are checked:
 </figure>
 </div>
 </section>
-<section id="consumo-de-energia" class="level2 allowframebreaks" data-number="4.3">
-<h2 class="allowframebreaks anchored" data-number="4.3" data-anchor-id="consumo-de-energia"><span class="header-section-number">4.3</span> Consumo de Energia</h2>
+<section id="consumo-de-energia" class="level2 allowframebreaks" data-number="3.3">
+<h2 class="allowframebreaks anchored" data-number="3.3" data-anchor-id="consumo-de-energia"><span class="header-section-number">3.3</span> Consumo de Energia</h2>
 <ul>
 <li>Pico em Janeiro de 2022: <span class="math inline">\(204.5~TWh\)</span> por ano.</li>
 </ul>
@@ -997,14 +1014,14 @@ During validation, the following are checked:
 
 -->
 </section>
-<section id="leitura-recomendada" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">4.4</span> Leitura Recomendada</h2>
+<section id="leitura-recomendada" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">3.4</span> Leitura Recomendada</h2>
 <p>[alertblock]{Leitura Recomendada}</p>
 <p><strong>Capítulo 5/6: Introduction Bitcoin</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_129">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
 <p>[/alertblock]</p>
 </section>
-<section id="projetos-de-pesquisa" class="level2 allowframebreaks" data-number="4.5">
-<h2 class="allowframebreaks anchored" data-number="4.5" data-anchor-id="projetos-de-pesquisa"><span class="header-section-number">4.5</span> Projetos de Pesquisa</h2>
+<section id="projetos-de-pesquisa" class="level2 allowframebreaks" data-number="3.5">
+<h2 class="allowframebreaks anchored" data-number="3.5" data-anchor-id="projetos-de-pesquisa"><span class="header-section-number">3.5</span> Projetos de Pesquisa</h2>
 <p><strong>Título:</strong> <em>Estudo Exploratório De Técnicas E Mecanismos Para Paralelização Automática E Offloading De Código Em Sistemas Heterogêneos (Pa-Code-Offload).</em></p>
 <blockquote class="blockquote">
 <blockquote class="blockquote">
@@ -1018,8 +1035,8 @@ During validation, the following are checked:
 </blockquote>
 </blockquote>
 </section>
-<section id="projetos-de-extensão" class="level2 allowframebreaks" data-number="4.6">
-<h2 class="allowframebreaks anchored" data-number="4.6" data-anchor-id="projetos-de-extensão"><span class="header-section-number">4.6</span> Projetos de Extensão</h2>
+<section id="projetos-de-extensão" class="level2 allowframebreaks" data-number="3.6">
+<h2 class="allowframebreaks anchored" data-number="3.6" data-anchor-id="projetos-de-extensão"><span class="header-section-number">3.6</span> Projetos de Extensão</h2>
 <p><strong>Título:</strong> <em>Escola de Computação Paralela (ECP 2024).</em></p>
 <blockquote class="blockquote">
 <blockquote class="blockquote">
@@ -1033,28 +1050,58 @@ During validation, the following are checked:
 </blockquote>
 </blockquote>
 </section>
-<section id="grupo-estudos" class="level2 allowframebreaks" data-number="4.7">
-<h2 class="allowframebreaks anchored" data-number="4.7" data-anchor-id="grupo-estudos"><span class="header-section-number">4.7</span> Grupo Estudos</h2>
+<section id="grupo-estudos" class="level2 allowframebreaks" data-number="3.7">
+<h2 class="allowframebreaks anchored" data-number="3.7" data-anchor-id="grupo-estudos"><span class="header-section-number">3.7</span> Grupo Estudos</h2>
 <p><code>GEDVAC: Grupo de Estudos sobre Desempenho, máquinas Virtuais, Arquitetura de computadores e Compiladores da UTFPR-CM.</code></p>
 </section>
-<section id="leitura-recomendada-1" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="leitura-recomendada-1"><span class="header-section-number">4.8</span> Leitura Recomendada</h2>
-<p>[alertblock]{Leitura Recomendada}</p>
+</section>
+<section id="referências" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Referências</h1>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="bigger120">Leitura Recomendada</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="bigger120">
 <p><strong>Capítulo 11: Ethereum 101</strong></p>
 <p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_276">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
 <p><strong>Capítulo 12: Futher Ethereum</strong></p>
 <p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_310">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
-<p>[/alertblock]</p>
-</section>
-<section id="word-cloud" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">4.9</span> <em>Word Cloud</em></h2>
+</div>
+</div>
+</div>
+<section id="word-cloud" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">4.1</span> <em>Word Cloud</em></h2>
 <p><img src="figuras/palestra-introducao-visao-geral-blockchain.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
+<p><span class="citation" data-cites="wood2014ethereum">(<a href="aula-01-introducao-visao-geral.html#ref-wood2014ethereum" role="doc-biblioref"><strong>wood2014ethereum?</strong></a>)</span></p>
 </section>
-</section>
-<section id="referências" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Referências</h1>
-<section id="referências-1" class="level2 fragile allowframebreaks" data-number="5.1">
-<h2 class="fragile allowframebreaks anchored" data-number="5.1" data-anchor-id="referências-1"><span class="header-section-number">5.1</span> Referências</h2>
+<section id="referências-1" class="level2 fragile allowframebreaks" data-number="4.2">
+<h2 class="fragile allowframebreaks anchored" data-number="4.2" data-anchor-id="referências-1"><span class="header-section-number">4.2</span> Referências</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-antonopoulos2018mastering" class="csl-entry" role="listitem">
+Antonopoulos, A. M., and G. Wood. 2018. <em>Mastering Ethereum: Building
+Smart Contracts and DApps</em>. O’Reilly Media, Incorporated. <a href="https://books.google.com.br/books?id=SedSMQAACAAJ">https://books.google.com.br/books?id=SedSMQAACAAJ</a>.
+</div>
+<div id="ref-178948620180101" class="csl-entry" role="listitem">
+Imran, Bashir. 2018. <em>Mastering Blockchain : Distributed Ledger
+Technology, Decentralization, and Smart Contracts Explained, 2nd
+Edition.</em> Packt Publishing. <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;lang=pt-br&amp;site=eds-live&amp;scope=site">https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;lang=pt-br&amp;site=eds-live&amp;scope=site</a>.
+</div>
+<div id="ref-nakamoto2009bitcoin" class="csl-entry" role="listitem">
+Nakamoto, Satoshi. 2009. <span>“Bitcoin: A Peer-to-Peer Electronic Cash
+System,”</span> May. <a href="http://www.bitcoin.org/bitcoin.pdf">http://www.bitcoin.org/bitcoin.pdf</a>.
+</div>
+<div id="ref-wood2014ethereum" class="csl-entry" role="listitem">
+Wood, Gavin et al. 2014. <span>“Ethereum: A Secure Decentralised
+Generalised Transaction Ledger.”</span> <em>Ethereum Project Yellow
+Paper</em> 151 (2014): 1–32.
+</div>
+</div>
 
 
 </section>
@@ -1151,7 +1198,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/ecp-minicursos");
+      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1495,4 +1542,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

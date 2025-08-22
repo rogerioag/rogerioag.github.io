@@ -103,8 +103,8 @@
     "objectID": "aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html#próximas-aulas",
     "href": "aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html#próximas-aulas",
     "title": "2  Aula 03 - Prática sobre Ethereum Virtual Machine (EVM)",
-    "section": "3.7 Próximas Aulas",
-    "text": "3.7 Próximas Aulas\n\nInstalando o Cliente Ethereum: Geth.",
+    "section": "3.8 Próximas Aulas",
+    "text": "3.8 Próximas Aulas\n\nInstalando o Cliente Ethereum: Geth.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Aula 03 - Prática sobre _Ethereum Virtual Machine (EVM)_</span>"
     ]
@@ -113,8 +113,8 @@
     "objectID": "aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html#word-cloud",
     "href": "aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html#word-cloud",
     "title": "2  Aula 03 - Prática sobre Ethereum Virtual Machine (EVM)",
-    "section": "3.8 Word Cloud",
-    "text": "3.8 Word Cloud",
+    "section": "4.1 Word Cloud",
+    "text": "4.1 Word Cloud",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Aula 03 - Prática sobre _Ethereum Virtual Machine (EVM)_</span>"
     ]
@@ -123,8 +123,8 @@
     "objectID": "aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html#sec-vet-consid-finais",
     "href": "aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html#sec-vet-consid-finais",
     "title": "2  Aula 03 - Prática sobre Ethereum Virtual Machine (EVM)",
-    "section": "3.9 Considerações Finais",
-    "text": "3.9 Considerações Finais",
+    "section": "3.7 Considerações Finais",
+    "text": "3.7 Considerações Finais",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Aula 03 - Prática sobre _Ethereum Virtual Machine (EVM)_</span>"
     ]
@@ -154,7 +154,7 @@
     "href": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#introdução-1",
     "title": "3  Aula 04 - Instalando o Cliente Ethereum",
     "section": "4.1 Introdução",
-    "text": "4.1 Introdução\nComo o desenvolvimento da Ethereum está em constante evolução, existem muitos componentes, clientes, e ferramentas que foram desenvolvidas e introduzidas nos últimos anos. Carteiras (wallets) e clientes de software.\nWallets são programas que podem armazenar as chaves privadas e baseado nos endereços armazenados podem calcular o saldo (balance) de ether associado a esses endereços, consultando a blockchain. O saldo pode ser utilizado para fazer o deploy de contratos inteligentes.\nClientes são softwares que acessam a rede, podendo fazer sincronizações e interagir com a rede:\n\nGeth: É a implementação oficial do Ethereum Client na linguagem Go. É um cliente de execução Ethereum, capaz de lidar com transações, implantação e execução de contratos inteligentes e traz uma máquina virtual embutida conhecida como Ethereum Virtual Machine (EVM). Ao executar o clietne Geth junto com um cliente de consenso transforma um computador em um nó da rede Ethereum. A última versão está disponível em https://geth.ethereum.org/downloads/.\nNethermind: É uma implementação feita em .NET que roda em GNU/Linux, Windows e macOS. Suporta Clique, Aura, e Ethash. Com boa velocidade de sincronização e suporte para plugins externos, ele fornece acesso confiável a dados on-chain por uma interface JSON-RPC e monitoramento de integridade de nós com Grafana e Seq. Detalhes de Instalação em https://docs.nethermind.io/get-started/installing-nethermind.\nErigon: É um fork do Geth, que tem sido reescrito com foco em velocidade e para poupar armazenamento. O cliente Erigon pode completar a sincronização em modo full archive em menos do que três dias e ocupando menos que \\(2TB\\) de armazenamento. Suporta várias blockchains compatíveis com EVM e testnets. Disponível em https://erigon.gitbook.io/erigon\nBesu: Hyperledger Besu é um cliente Ethereum projetado para ser amigável a empresas para casos de uso de rede pública e privada permissionada. Ele também pode ser executado com redes de teste como Sepolia e Görli. O Hyperledger Besu inclui vários algoritmos de consenso, incluindo Proof of Stake, Proof of Work e Proof of Authority (IBFT 2.0, QBFT e Clique). Disponível em https://besu.hyperledger.org/private-networks/get-started/install.\nEth: Implementação do Ethereum Client em C++. O Eth está disponível no repositório do GitHub: https://github.com/ethereum/aleth.\nParity: Esta implementação é feita usando Rust e desenvolvida pela Parity Technologies. Parity pode ser baixada do link: https://www.parity.io/. Note que Parity tornou-se o OpenEthereum.\nOpenEthereum: O cliente OpenEthereum está descontinuado desde \\(2022\\).\nTrinity: Trinity é a implementação do protocolo Ethereum, escrito em Python. Trinity pode ser baixada do link https://github.com/ethereum/trinity. O site oficial é https://trinity.ethereum.org. Descontinuado, github apresenta a mensagem “This repository has been archived by the owner on Jul 1, 2021. It is now read-only.”\n\nA Figura 4.1 apresenta os percentuais de domínio dos clientes em uso, sendo sincronizados com a rede.\n\n\n\n\n\n\nFigure 4.1: Percentual de Clientes em 03/09/2024. Fonte: ethernodes\n\n\n\nDiagramas atualizados podem ser vistos no ethernodes.org e no clientdiversity.org. E alguma documentação de como migrar de um clinte para outro pode ser encontrada no link.\nLight clients são clientes Simple Payment Verification (SPV), fazem download somente de uma pequena parte do blockchain. Isto permite dispositivos com recursos limitados, tais como dispositivos móveis, dispositivos embarcados, tablets ou dispositivos capazes de verificar transações.\nUma cópia completa da blockchain da Ethereum não é necessária para esses SPV clients, que também podem validar transações.\nA diferença entre clients e wallets é que clientes são implementações completas do protocolo Ethereum, que suportam mineração e gerenciamento de contas e funções de wallets.\nCarteiras somente armazenam as chaves públicas e privadas para fornecer gerenciamento essential de contas e interagem com o blockchain para propósitos de pagamentos, transferências de fundos.",
+    "text": "4.1 Introdução\nComo o desenvolvimento da Ethereum está em constante evolução, existem muitos componentes, clientes, e ferramentas que foram desenvolvidas e introduzidas nos últimos anos. Carteiras (wallets) e clientes de software.\nWallets são programas que podem armazenar as chaves privadas e baseado nos endereços armazenados podem calcular o saldo (balance) de ether associado a esses endereços, consultando a blockchain. O saldo pode ser utilizado para fazer o deploy de contratos inteligentes.\nClientes são softwares que acessam a rede, podendo fazer sincronizações e interagir com a rede:\n\nGeth: É a implementação oficial do Ethereum Client na linguagem Go. É um cliente de execução Ethereum, capaz de lidar com transações, implantação e execução de contratos inteligentes e traz uma máquina virtual embutida conhecida como Ethereum Virtual Machine (EVM). Ao executar o clietne Geth junto com um cliente de consenso transforma um computador em um nó da rede Ethereum. A última versão está disponível em https://geth.ethereum.org/downloads/.\nNethermind: É uma implementação feita em .NET que roda em GNU/Linux, Windows e macOS. Suporta Clique, Aura, e Ethash. Com boa velocidade de sincronização e suporte para plugins externos, ele fornece acesso confiável a dados on-chain por uma interface JSON-RPC e monitoramento de integridade de nós com Grafana e Seq. Detalhes de Instalação em https://docs.nethermind.io/get-started/installing-nethermind.\nErigon: É um fork do Geth, que tem sido reescrito com foco em velocidade e para poupar armazenamento. O cliente Erigon pode completar a sincronização em modo full archive em menos do que três dias e ocupando menos que \\(2TB\\) de armazenamento. Suporta várias blockchains compatíveis com EVM e testnets. Disponível em https://erigon.gitbook.io/erigon\nBesu: Hyperledger Besu é um cliente Ethereum projetado para ser amigável a empresas para casos de uso de rede pública e privada permissionada. Ele também pode ser executado com redes de teste como Sepolia e Görli. O Hyperledger Besu inclui vários algoritmos de consenso, incluindo Proof of Stake, Proof of Work e Proof of Authority (IBFT 2.0, QBFT e Clique). Disponível em https://besu.hyperledger.org/private-networks/get-started/install.\nEth: Implementação do Ethereum Client em C++. O Eth está disponível no repositório do GitHub: https://github.com/ethereum/aleth.\nParity: Esta implementação é feita usando Rust e desenvolvida pela Parity Technologies. Parity pode ser baixada do link: https://www.parity.io/. Note que Parity tornou-se o OpenEthereum.\nOpenEthereum: O cliente OpenEthereum está descontinuado desde \\(2022\\).\nTrinity: Trinity é a implementação do protocolo Ethereum, escrito em Python. Trinity pode ser baixada do link https://github.com/ethereum/trinity. O site oficial é https://trinity.ethereum.org. Descontinuado, github apresenta a mensagem “This repository has been archived by the owner on Jul 1, 2021. It is now read-only.”\n\nA Figura 4.1 apresenta os percentuais de domínio dos clientes em uso, sendo sincronizados com a rede.\n\n\n\n\n\n\nFigure 4.1: Percentual de Clientes em 21/08/2025. Fonte: ethernodes\n\n\n\nDiagramas atualizados podem ser vistos no ethernodes.org e no clientdiversity.org. E alguma documentação de como migrar de um clinte para outro pode ser encontrada no link.\nLight clients são clientes Simple Payment Verification (SPV), fazem download somente de uma pequena parte do blockchain. Isto permite dispositivos com recursos limitados, tais como dispositivos móveis, dispositivos embarcados, tablets ou dispositivos capazes de verificar transações.\nUma cópia completa da blockchain da Ethereum não é necessária para esses SPV clients, que também podem validar transações.\nA diferença entre clients e wallets é que clientes são implementações completas do protocolo Ethereum, que suportam mineração e gerenciamento de contas e funções de wallets.\nCarteiras somente armazenam as chaves públicas e privadas para fornecer gerenciamento essential de contas e interagem com o blockchain para propósitos de pagamentos, transferências de fundos.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aula 04 - Instalando o Cliente Ethereum</span>"
     ]
@@ -164,7 +164,7 @@
     "href": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#sec:instalando:geth",
     "title": "3  Aula 04 - Instalando o Cliente Ethereum",
     "section": "5.1 Instalando o Geth",
-    "text": "5.1 Instalando o Geth\nNesta etapa, você instalará o cliente padrão de camada de execução (geth) e outras ferramentas. Baixe e execute o a última versão 64-bit estável do Geth installer para seu Sistema Operacional do site Geth downloads page. Ou baixe e execute o a última versão 64-bit estável do Geth and Tools para seu Sistema Operacional do site Geth downloads page. Para Linux, baixe o arquivo Geth and Tools ou escolha nas guias a versão do seu Sistema Operacional.\nO geth e as outras ferramentas podem ser instaladas em sistemas derivados do Debian e Ubuntu com o pacote ethereum:\nO geth pode ser instalado em sistemas derivados do Debian e Ubuntu com o pacote ethereum:\n$ sudo apt-get install -y software-properties-common\n$ sudo add-apt-repository -y ppa:ethereum/ethereum\n$ sudo apt-get update\n$ sudo apt-get install -y ethereum\nEm outros Sistemas como o Manjaro Linux:\n$ sudo pacaur -Ss ethereum\n$ sudo pacaur -Ss go-ethereum\nextra/go-ethereum 1.14.8-1 [instalado]\n    Official Go implementation of the Ethereum protocol\n$ pacaur -S go-ethereum\natencao: go-ethereum-1.14.8-1 está atualizado -- reinstalando\nresolvendo dependencias...\nprocurando pacotes conflitantes...\n\nPacotes (1) go-ethereum-1.14.8-1\n\nTamanho total instalado:  249,48 MiB\nAlteracao no tamanho:       0,00 MiB\n\n:: Continuar a instalacao? [S/n]\nImagens docker são mantidas no DockerHub para usuários que preferem rodar em um ambiente com container. As seguintes imagens estão disponíveis com todas as ferramentas:\nethereum/client-go:alltools-latest última versão de desenvolvimento.\nethereum/client-go:alltools-stable última versão estável.\nethereum/client-go:alltools-{version} versão estável com número de versão específica.\nethereum/client-go:alltools-release-{version} última versão estável com um família de versões específica.\nInstalação via docker pode ser feita com os comandos:\n$ docker pull ethereum/client-go:alltools-stable\n$ docker run -it -p 30303:30303 ethereum/client-go:alltools-stable\nA imagem irá expor as seguintes portas:\n8545 TCP, usado pela API HTTP baseada em JSON RPC\n8546 TCP, usado pela API WebSocket baseada em JSON RPC\n8547 TCP, usado pela API GraphQL\n30303 TCP e UDP, usado pelo protocolo P2P para rodar a rede.\nNota: se você estiver executando um cliente dentro de um container docker, você deveria montar um volume de dados com um diretório de dados do cliente na pasta /root/.ethereum dentro do container para que ter certeza que os dados baixados serão preservados entre uma reinicialização e outra do container.\nNa minha máquina montaria o diretório /run/media/rogerio/DADOS/ethereum no diretório virtual /root/.ethereum, as sincronizações e comandos executados na imagem docker seriam refletidos na base de dados do diretório externo.\n$ docker run -it -p 30303:30303 -v /run/media/rogerio/DADOS/ethereum:/root/.ethereum  -w /root/.ethereum ethereum/client-go:alltools-latest\nPara atualizar as ferramentas para a última versão, basta parar o container e fazer um pull da última versão:\n$ docker stop ethereum/client-go:alltools-stable\n$ docker pull ethereum/client-go:alltools-latest\n$ docker run -it -p 30303:30303 ethereum/client-go:alltools-latest\nA execução da última versão seria pelo comando:\n$ docker run -it -p 30303:30303 ethereum/client-go:alltools-latest\nInstruções para outros Sistemas Operacionais podem ser encontradas no site oficial da documentação do Ethereum, artigo Installing Geth.\nVerifique se a versão mais nova já não foi instalada. O link Rayingri (v1.14.8) lista as versões.\nNa minha máquina está instalada a versão 1.14.8-stable-a9523b64, você pode verificar a sua com geth --version ou geth version ou evm --version:\n$ evm --version\nevm version 1.14.8-stable-a9523b64\n$ geth --version\ngeth version 1.14.8-stable-a9523b64\n$ geth version\nGeth\nVersion: 1.14.8-stable\nGit Commit: a9523b6428238a762e1a1e55e46ead47630c3a23\nGit Commit Date: 20240812\nArchitecture: amd64\nGo Version: go1.22.6\nOperating System: linux\nGOPATH=\nGOROOT=\n$",
+    "text": "5.1 Instalando o Geth\nNesta etapa, você instalará o cliente padrão de camada de execução (geth) e outras ferramentas. Baixe e execute o a última versão 64-bit estável do Geth installer para seu Sistema Operacional do site Geth downloads page. Ou baixe e execute o a última versão 64-bit estável do Geth and Tools para seu Sistema Operacional do site Geth downloads page. Para Linux, baixe o arquivo Geth and Tools ou escolha nas guias a versão do seu Sistema Operacional.\nO geth e as outras ferramentas podem ser instaladas em sistemas derivados do Debian e Ubuntu com o pacote ethereum:\nO geth pode ser instalado em sistemas derivados do Debian e Ubuntu com o pacote ethereum:\n$ sudo apt-get install -y software-properties-common\n$ sudo add-apt-repository -y ppa:ethereum/ethereum\n$ sudo apt-get update\n$ sudo apt-get install -y ethereum\nEm outros Sistemas como os derivados de Arch Linux:\n$ sudo pacaur -Ss ethereum\n$ sudo pacaur -Ss go-ethereum\nextra/go-ethereum 1.14.8-1 [instalado]\n    Official Go implementation of the Ethereum protocol\n$ pacaur -S go-ethereum\natencao: go-ethereum-1.14.8-1 está atualizado -- reinstalando\nresolvendo dependencias...\nprocurando pacotes conflitantes...\n\nPacotes (1) go-ethereum-1.14.8-1\n\nTamanho total instalado:  249,48 MiB\nAlteracao no tamanho:       0,00 MiB\n\n:: Continuar a instalacao? [S/n]\nImagens docker são mantidas no DockerHub para usuários que preferem rodar em um ambiente com container. As seguintes imagens estão disponíveis com todas as ferramentas:\nethereum/client-go:alltools-latest última versão de desenvolvimento.\nethereum/client-go:alltools-stable última versão estável.\nethereum/client-go:alltools-{version} versão estável com número de versão específica.\nethereum/client-go:alltools-release-{version} última versão estável com um família de versões específica.\nInstalação via docker pode ser feita com os comandos:\n$ docker pull ethereum/client-go:alltools-stable\n$ docker run -it -p 30303:30303 ethereum/client-go:alltools-stable\nA imagem irá expor as seguintes portas:\n8545 TCP, usado pela API HTTP baseada em JSON RPC\n8546 TCP, usado pela API WebSocket baseada em JSON RPC\n8547 TCP, usado pela API GraphQL\n30303 TCP e UDP, usado pelo protocolo P2P para rodar a rede.\nNota: se você estiver executando um cliente dentro de um container docker, você deveria montar um volume de dados com um diretório de dados do cliente na pasta /root/.ethereum dentro do container para que ter certeza que os dados baixados serão preservados entre uma reinicialização e outra do container.\nNa minha máquina montaria o diretório /run/media/rogerio/DADOS/ethereum no diretório virtual /root/.ethereum, as sincronizações e comandos executados na imagem docker seriam refletidos na base de dados do diretório externo.\n$ docker run -it -p 30303:30303 -v /run/media/rogerio/DADOS/ethereum:/root/.ethereum  -w /root/.ethereum ethereum/client-go:alltools-latest\nPara atualizar as ferramentas para a última versão, basta parar o container e fazer um pull da última versão:\n$ docker stop ethereum/client-go:alltools-stable\n$ docker pull ethereum/client-go:alltools-latest\n$ docker run -it -p 30303:30303 ethereum/client-go:alltools-latest\nA execução da última versão seria pelo comando:\n$ docker run -it -p 30303:30303 ethereum/client-go:alltools-latest\nInstruções para outros Sistemas Operacionais podem ser encontradas no site oficial da documentação do Ethereum, artigo Installing Geth.\nVerifique se a versão mais nova já não foi instalada. O link Rayingri (v1.14.8) lista as versões.\nNa minha máquina está instalada a versão 1.14.8-stable-a9523b64, você pode verificar a sua com geth --version ou geth version ou evm --version:\n$ evm --version\nevm version 1.14.8-stable-a9523b64\n$ geth --version\ngeth version 1.14.8-stable-a9523b64\n$ geth version\nGeth\nVersion: 1.14.8-stable\nGit Commit: a9523b6428238a762e1a1e55e46ead47630c3a23\nGit Commit Date: 20240812\nArchitecture: amd64\nGo Version: go1.22.6\nOperating System: linux\nGOPATH=\nGOROOT=\n$",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aula 04 - Instalando o Cliente Ethereum</span>"
     ]
@@ -174,7 +174,7 @@
     "href": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#executando-o-geth",
     "title": "3  Aula 04 - Instalando o Cliente Ethereum",
     "section": "5.2 Executando o Geth",
-    "text": "5.2 Executando o Geth\nExecutando o Geth diretamente ele irá sincronizar com a rede principal do Ethereum, a mainnet. Os dados serão sincronizados com o diretório do Ethereum que será criado em:\n\n~/.ethereum no GNU/Linux\n~/Library/Ethereum no OS X\n~/AppData/Roaming/Ethereum no Windows\n\nNestes diretórios:\n\n.ethereum/geth/chaindata/: blockchain da rede principal.\n.ethereum/sepolia/geth/chaindata: blockchain da rede de teste Sepolia.\nkeystore: Chaves das contas criadas.\n\n[rag@nitro-ryzen ~]$ geth\nINFO [10-20|21:07:12.911] Starting Geth on Ethereum mainnet... \nINFO [10-20|21:07:12.912] Bumping default cache on mainnet         provided=1024 updated=4096\nINFO [10-20|21:07:12.914] Maximum peer count                       ETH=50 LES=0 total=50\nINFO [10-20|21:07:12.915] Smartcard socket not found, disabling    err=\"stat /run/pcscd/pcscd.comm: no such file or directory\"\nINFO [10-20|21:07:12.920] Set global gas cap                       cap=50,000,000\nINFO [10-20|21:07:12.922] Allocated trie memory caches             clean=614.00MiB dirty=1024.00MiB\nINFO [10-20|21:07:12.923] Allocated cache and file handles         database=/home/rag/.ethereum/geth/chaindata cache=2.00GiB handles=262,144\nINFO [10-20|21:07:12.946] Opened ancient database                  database=/home/rag/.ethereum/geth/chaindata/ancient/chain readonly=false\nINFO [10-20|21:07:12.950]  \nINFO [10-20|21:07:12.950] -----------------------------------------------------------------------------------\nINFO [10-20|21:07:12.950] Chain ID:  1 (mainnet) \nINFO [10-20|21:07:12.950] Consensus: Beacon (proof-of-stake), merged from Ethash (proof-of-work) \nINFO [10-20|21:07:12.950]  \nINFO [10-20|21:07:12.950] Pre-Merge hard forks: \nINFO [10-20|21:07:12.950]  - Homestead:                   1150000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/homestead.md) \nINFO [10-20|21:07:12.950]  - DAO Fork:                    1920000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/dao-fork.md) \nINFO [10-20|21:07:12.950]  - Tangerine Whistle (EIP 150): 2463000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/tangerine-whistle.md) \nINFO [10-20|21:07:12.950]  - Spurious Dragon/1 (EIP 155): 2675000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/spurious-dragon.md) \nINFO [10-20|21:07:12.950]  - Spurious Dragon/2 (EIP 158): 2675000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/spurious-dragon.md) \nINFO [10-20|21:07:12.950]  - Byzantium:                   4370000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/byzantium.md) \nINFO [10-20|21:07:12.950]  - Constantinople:              7280000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/constantinople.md) \nINFO [10-20|21:07:12.950]  - Petersburg:                  7280000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/petersburg.md) \nINFO [10-20|21:07:12.950]  - Istanbul:                    9069000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/istanbul.md) \nINFO [10-20|21:07:12.950]  - Muir Glacier:                9200000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/muir-glacier.md) \nINFO [10-20|21:07:12.950]  - Berlin:                      12244000 (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/berlin.md) \nINFO [10-20|21:07:12.950]  - London:                      12965000 (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/london.md) \nINFO [10-20|21:07:12.950]  - Arrow Glacier:               13773000 (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/arrow-glacier.md) \nINFO [10-20|21:07:12.950]  - Gray Glacier:                15050000 (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/gray-glacier.md) \nINFO [10-20|21:07:12.950]  \nINFO [10-20|21:07:12.950] Merge configured: \nINFO [10-20|21:07:12.950]  - Hard-fork specification:    https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/paris.md \nINFO [10-20|21:07:12.950]  - Network known to be merged: true \nINFO [10-20|21:07:12.950]  - Total terminal difficulty:  58750000000000000000000 \nINFO [10-20|21:07:12.950]  - Merge netsplit block:       &lt;nil&gt; \nINFO [10-20|21:07:12.950] --------------------------------------------------------------------------------------\nINFO [10-20|21:07:12.950]  \nINFO [10-20|21:07:12.952] Disk storage enabled for ethash caches   dir=/home/rag/.ethereum/geth/ethash count=3\nINFO [10-20|21:07:12.952] Disk storage enabled for ethash DAGs     dir=/home/rag/.ethash               count=2\nINFO [10-20|21:07:12.952] Initialising Ethereum protocol           network=1 dbversion=8\nINFO [10-20|21:07:12.963] Loaded most recent local header          number=0 hash=d4e567..cb8fa3 td=17,179,869,184 age=53y6mo3w\nINFO [10-20|21:07:12.963] Loaded most recent local full block      number=0 hash=d4e567..cb8fa3 td=17,179,869,184 age=53y6mo3w\nINFO [10-20|21:07:12.963] Loaded most recent local fast block      number=0 hash=d4e567..cb8fa3 td=17,179,869,184 age=53y6mo3w\nINFO [10-20|21:07:12.964] Loaded local transaction journal         transactions=0 dropped=0\nINFO [10-20|21:07:12.964] Regenerated local transaction journal    transactions=0 accounts=0\nINFO [10-20|21:07:12.965] Chain post-merge, sync via beacon client \nINFO [10-20|21:07:12.965] Gasprice oracle is ignoring threshold set threshold=2\nWARN [10-20|21:07:12.965] Engine API enabled                       protocol=eth\nINFO [10-20|21:07:12.966] Starting peer-to-peer node               instance=Geth/v1.10.25-stable-69568c55/linux-amd64/go1.19.1\nINFO [10-20|21:07:12.991] New local node record                    seq=1,665,519,113,919 id=da440578e33a2ce7 ip=127.0.0.1 udp=30303 tcp=30303\nINFO [10-20|21:07:12.992] Started P2P networking                   self=enode://9ae8fcdad4a7243d1bd2308a159c5800ec170e588862be110152627c9ed3fa67376ef8c75 26d7a56e9bb72da729cf792c7bef86c095471995cc352f9e353acfc@127.0.0.1:30303\nINFO [10-20|21:07:12.993] IPC endpoint opened                      url=/home/rag/.ethereum/geth.ipc\nINFO [10-20|21:07:12.993] Loaded JWT secret file                   path=/home/rag/.ethereum/geth/jwtsecret crc32=0xdeccafe4\nINFO [10-20|21:07:12.994] WebSocket enabled                        url=ws://127.0.0.1:8551\nINFO [10-20|21:07:12.994] HTTP server started                      endpoint=127.0.0.1:8551 auth=true prefix= cors=localhost vhosts=localhost\nINFO [10-20|21:07:16.251] New local node record                    seq=1,665,519,113,920 id=da440578e33a2ce7 ip=187.95.110.26 udp=2770  tcp=30303\nINFO [10-20|21:07:22.992] Looking for peers                        peercount=0 tried=2 static=0\nINFO [10-20|21:07:32.994] Looking for peers                        peercount=0 tried=3 static=0\nINFO [10-20|21:07:43.205] Looking for peers                        peercount=0 tried=9 static=0\nWARN [10-20|21:07:47.967] Post-merge network, but no beacon client seen. Please launch one to follow the chain! \nINFO [10-20|21:07:53.281] Looking for peers                        peercount=0 tried=13 static=0\nINFO [10-20|21:08:03.346] Looking for peers                        peercount=0 tried=9  static=0\nO que vai levar um certo tempo para fazer toda a sincronização da rede completa.\nHoje, \\(03/09/2024\\) o tamanho da blockchain está em \\(1147.97 GB\\).",
+    "text": "5.2 Executando o Geth\nExecutando o Geth diretamente ele irá sincronizar com a rede principal (mainnet) do Ethereum. Os dados serão sincronizados com o diretório do Ethereum que será criado em:\n\n~/.ethereum no GNU/Linux\n~/Library/Ethereum no OS X\n~/AppData/Roaming/Ethereum no Windows\n\nNestes diretórios:\n\n.ethereum/geth/chaindata/: blockchain da rede principal.\n.ethereum/sepolia/geth/chaindata: blockchain da rede de teste Sepolia.\n.ethereum/keystore: Chaves das contas criadas.\n\n[~]$ geth\nINFO [10-20|21:07:12.911] Starting Geth on Ethereum mainnet... \nINFO [10-20|21:07:12.912] Bumping default cache on mainnet         provided=1024 updated=4096\nINFO [10-20|21:07:12.914] Maximum peer count                       ETH=50 LES=0 total=50\nINFO [10-20|21:07:12.915] Smartcard socket not found, disabling    err=\"stat /run/pcscd/pcscd.comm: no such file or directory\"\nINFO [10-20|21:07:12.920] Set global gas cap                       cap=50,000,000\nINFO [10-20|21:07:12.922] Allocated trie memory caches             clean=614.00MiB dirty=1024.00MiB\nINFO [10-20|21:07:12.923] Allocated cache and file handles         database=/home/rag/.ethereum/geth/chaindata cache=2.00GiB handles=262,144\nINFO [10-20|21:07:12.946] Opened ancient database                  database=/home/rag/.ethereum/geth/chaindata/ancient/chain readonly=false\nINFO [10-20|21:07:12.950]  \nINFO [10-20|21:07:12.950] -----------------------------------------------------------------------------------\nINFO [10-20|21:07:12.950] Chain ID:  1 (mainnet) \nINFO [10-20|21:07:12.950] Consensus: Beacon (proof-of-stake), merged from Ethash (proof-of-work) \nINFO [10-20|21:07:12.950]  \nINFO [10-20|21:07:12.950] Pre-Merge hard forks: \nINFO [10-20|21:07:12.950]  - Homestead:                   1150000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/homestead.md) \nINFO [10-20|21:07:12.950]  - DAO Fork:                    1920000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/dao-fork.md) \nINFO [10-20|21:07:12.950]  - Tangerine Whistle (EIP 150): 2463000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/tangerine-whistle.md) \nINFO [10-20|21:07:12.950]  - Spurious Dragon/1 (EIP 155): 2675000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/spurious-dragon.md) \nINFO [10-20|21:07:12.950]  - Spurious Dragon/2 (EIP 158): 2675000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/spurious-dragon.md) \nINFO [10-20|21:07:12.950]  - Byzantium:                   4370000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/byzantium.md) \nINFO [10-20|21:07:12.950]  - Constantinople:              7280000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/constantinople.md) \nINFO [10-20|21:07:12.950]  - Petersburg:                  7280000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/petersburg.md) \nINFO [10-20|21:07:12.950]  - Istanbul:                    9069000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/istanbul.md) \nINFO [10-20|21:07:12.950]  - Muir Glacier:                9200000  (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/muir-glacier.md) \nINFO [10-20|21:07:12.950]  - Berlin:                      12244000 (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/berlin.md) \nINFO [10-20|21:07:12.950]  - London:                      12965000 (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/london.md) \nINFO [10-20|21:07:12.950]  - Arrow Glacier:               13773000 (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/arrow-glacier.md) \nINFO [10-20|21:07:12.950]  - Gray Glacier:                15050000 (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/gray-glacier.md) \nINFO [10-20|21:07:12.950]  \nINFO [10-20|21:07:12.950] Merge configured: \nINFO [10-20|21:07:12.950]  - Hard-fork specification:    https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet- upgrades/paris.md \nINFO [10-20|21:07:12.950]  - Network known to be merged: true \nINFO [10-20|21:07:12.950]  - Total terminal difficulty:  58750000000000000000000 \nINFO [10-20|21:07:12.950]  - Merge netsplit block:       &lt;nil&gt; \nINFO [10-20|21:07:12.950] --------------------------------------------------------------------------------------\nINFO [10-20|21:07:12.950]  \nINFO [10-20|21:07:12.952] Disk storage enabled for ethash caches   dir=/home/rag/.ethereum/geth/ethash count=3\nINFO [10-20|21:07:12.952] Disk storage enabled for ethash DAGs     dir=/home/rag/.ethash               count=2\nINFO [10-20|21:07:12.952] Initialising Ethereum protocol           network=1 dbversion=8\nINFO [10-20|21:07:12.963] Loaded most recent local header          number=0 hash=d4e567..cb8fa3 td=17,179,869,184 age=53y6mo3w\nINFO [10-20|21:07:12.963] Loaded most recent local full block      number=0 hash=d4e567..cb8fa3 td=17,179,869,184 age=53y6mo3w\nINFO [10-20|21:07:12.963] Loaded most recent local fast block      number=0 hash=d4e567..cb8fa3 td=17,179,869,184 age=53y6mo3w\nINFO [10-20|21:07:12.964] Loaded local transaction journal         transactions=0 dropped=0\nINFO [10-20|21:07:12.964] Regenerated local transaction journal    transactions=0 accounts=0\nINFO [10-20|21:07:12.965] Chain post-merge, sync via beacon client \nINFO [10-20|21:07:12.965] Gasprice oracle is ignoring threshold set threshold=2\nWARN [10-20|21:07:12.965] Engine API enabled                       protocol=eth\nINFO [10-20|21:07:12.966] Starting peer-to-peer node               instance=Geth/v1.10.25-stable-69568c55/linux-amd64/go1.19.1\nINFO [10-20|21:07:12.991] New local node record                    seq=1,665,519,113,919 id=da440578e33a2ce7 ip=127.0.0.1 udp=30303 tcp=30303\nINFO [10-20|21:07:12.992] Started P2P networking                   self=enode://9ae8fcdad4a7243d1bd2308a159c5800ec170e588862be110152627c9ed3fa67376ef8c75 26d7a56e9bb72da729cf792c7bef86c095471995cc352f9e353acfc@127.0.0.1:30303\nINFO [10-20|21:07:12.993] IPC endpoint opened                      url=/home/rag/.ethereum/geth.ipc\nINFO [10-20|21:07:12.993] Loaded JWT secret file                   path=/home/rag/.ethereum/geth/jwtsecret crc32=0xdeccafe4\nINFO [10-20|21:07:12.994] WebSocket enabled                        url=ws://127.0.0.1:8551\nINFO [10-20|21:07:12.994] HTTP server started                      endpoint=127.0.0.1:8551 auth=true prefix= cors=localhost vhosts=localhost\nINFO [10-20|21:07:16.251] New local node record                    seq=1,665,519,113,920 id=da440578e33a2ce7 ip=187.95.110.26 udp=2770  tcp=30303\nINFO [10-20|21:07:22.992] Looking for peers                        peercount=0 tried=2 static=0\nINFO [10-20|21:07:32.994] Looking for peers                        peercount=0 tried=3 static=0\nINFO [10-20|21:07:43.205] Looking for peers                        peercount=0 tried=9 static=0\nWARN [10-20|21:07:47.967] Post-merge network, but no beacon client seen. Please launch one to follow the chain! \nINFO [10-20|21:07:53.281] Looking for peers                        peercount=0 tried=13 static=0\nINFO [10-20|21:08:03.346] Looking for peers                        peercount=0 tried=9  static=0\nO que vai levar um certo tempo para fazer toda a sincronização da rede completa.\n\nHoje, \\(21/08/2025\\) o tamanho da blockchain está em \\(1380.34 GB\\).",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aula 04 - Instalando o Cliente Ethereum</span>"
     ]
@@ -184,7 +184,7 @@
     "href": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#redes-de-teste",
     "title": "3  Aula 04 - Instalando o Cliente Ethereum",
     "section": "5.3 Redes de Teste",
-    "text": "5.3 Redes de Teste\nVimos as redes Ethereum disponíveis, uma lista completa pode ser encontrada em https://ethereum.org/en/developers/docs/networks/.\nA evolução das Redes de Teste pode ser vista nesse artigo The Evolution of Ethereum Testnets.\n\n\n\nRede\nId\nParâmetro\nDescrição\nRecursos\n\n\n\n\nMainnet\n\\(1\\)\n--mainnet\nRede principal, rede de produção. Quando as pessoas e as bolsas discutem os preços da ETH, estão falando sobre a Mainnet ETH. \n\n\n\ntestnet\n\n--testnet\nHá algumas versões anteriores, para acessar as redes de teste deveríamos utilizar parâmetro --testnet e fornecer o nome da rede, como --testnet rinkeby, por padrão era a rede ropsten. Nas versões mais atuais estão previstos parâmetros específicos para cada uma das redes.\n\n\n\nropsten\n\n--ropsten\nRopsten network: pré-configurada Proof-of-Work test network \n\n\n\nrinkeby\n\n--rinkeby\nRinkeby network: pré-configurada Proof-of-Authority test network\n\n\n\ngoerli\n\\(5\\)\n--goerli\nGörli network: pré-configurada Proof-of-Authority test network. Goerli testnet será descontinuada e substituída pela Holesovice em 2023. Please consider migrating your applications to Sepolia.\nWebsite GitHub Etherscan\n\n\nkiln\n\\(1337802\\)\n--kiln\nKiln network: pré-configurada proof-of-work to proof-of-stake test network\n\n\n\nSepolia\n\\(11155111\\)\n--sepolia\nSepolia network: pré-configurada proof-of-authority test network. Criado em outubro de 2021 pelo desenvolvedores do core do Ethereum e mantida desde então. Depois que a rede Ropsten atingiu uma dificuldade total de terminal (TTD) de 5000000000000000, as redes de teste Sepolia e Goerli fizeram a transição para um mecanismo de consenso proof-of-stake para imitar a rede principal Ethereum.\nWebsite GitHub Otterscan Etherscan\n\n\n\nA Figura \\(\\ref{fig:redes:testes}\\) apresenta um resumo no formato de timeline das redes de testes.\n\n\n\nTimeline das Redes de Teste Fonte: Etherwold",
+    "text": "5.3 Redes de Teste\nVimos as redes Ethereum disponíveis, uma lista completa pode ser encontrada em https://ethereum.org/en/developers/docs/networks/.\nA evolução das Redes de Teste pode ser vista nesse artigo The Evolution of Ethereum Testnets.\n\n\n\nRede\nId\nParâmetro\nDescrição\nRecursos\n\n\n\n\nMainnet\n\\(1\\)\n--mainnet\nRede principal, rede de produção. Quando as pessoas e as bolsas discutem os preços da ETH, estão falando sobre a Mainnet ETH. \n\n\n\ntestnet\n\n--testnet\nHá algumas versões anteriores, para acessar as redes de teste deveríamos utilizar parâmetro --testnet e fornecer o nome da rede, como --testnet rinkeby, por padrão era a rede ropsten. Nas versões mais atuais estão previstos parâmetros específicos para cada uma das redes.\n\n\n\nropsten\n\n--ropsten\nRopsten network: pré-configurada Proof-of-Work test network \n\n\n\nrinkeby\n\n--rinkeby\nRinkeby network: pré-configurada Proof-of-Authority test network\n\n\n\ngoerli\n\\(5\\)\n--goerli\nGörli network: pré-configurada Proof-of-Authority test network. Goerli testnet será descontinuada e substituída pela Holesovice em 2023. Please consider migrating your applications to Sepolia.\nWebsite GitHub Etherscan\n\n\nkiln\n\\(1337802\\)\n--kiln\nKiln network: pré-configurada proof-of-work to proof-of-stake test network\n\n\n\nSepolia\n\\(11155111\\)\n--sepolia\nSepolia network: pré-configurada proof-of-authority test network. Criado em outubro de 2021 pelo desenvolvedores do core do Ethereum e mantida desde então. Depois que a rede Ropsten atingiu uma dificuldade total de terminal (TTD) de 5000000000000000, as redes de teste Sepolia e Goerli fizeram a transição para um mecanismo de consenso proof-of-stake para imitar a rede principal Ethereum.\nWebsite GitHub Otterscan Etherscan\n\n\n\nA ?fig-redes:testes apresenta um resumo no formato de timeline das redes de testes.\n\n\n\nTimeline das Redes de Teste Fonte: Etherwold",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aula 04 - Instalando o Cliente Ethereum</span>"
     ]
@@ -343,8 +343,8 @@
     "objectID": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#leitura-recomendada",
     "href": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#leitura-recomendada",
     "title": "3  Aula 04 - Instalando o Cliente Ethereum",
-    "section": "5.19 Leitura Recomendada",
-    "text": "5.19 Leitura Recomendada\n[alertblock]{Leitura Recomendada}\nCapítulo 11: Ethereum 101\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\nCapítulo 12: Futher Ethereum\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\n[/alertblock]",
+    "section": "6.1 Leitura Recomendada",
+    "text": "6.1 Leitura Recomendada\n[alertblock]{Leitura Recomendada}\nCapítulo 11: Ethereum 101\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\nCapítulo 12: Futher Ethereum\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\n[/alertblock]",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aula 04 - Instalando o Cliente Ethereum</span>"
     ]
@@ -374,7 +374,7 @@
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html",
     "title": "1  Introdução às Tecnologias Blockchain",
     "section": "",
-    "text": "2 Introdução",
+    "text": "1.1 Objetivos\nApresentação de uma Visão Geral sobre o Ecossistema de Tecnologias relacionadas a Blockchain. Surgimento e contexto histórico vinculado ao Bitcoin. Mas o foco principal está na rede Ethereum e componentes do seu Ecossistema. Falaremos um pouco sobre a Ethereum Virtual Machine (EVM) e Contratos Inteligentes. Além disso, uma perspectiva do usuário é apresentada, mostrando a estrutura dos blocos do blockchain da Ethereum, Wallets e softwares clientes, nós e mineradores, ferramentas e APIs, protocolos e Linguagens de Programação Suportados.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -393,8 +393,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#objetivos",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#objetivos",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.2 Objetivos",
-    "text": "2.2 Objetivos\n\nApresentação de uma Visão Geral sobre o Ecossistema de Tecnologias relacionadas a Blockchain. Surgimento e contexto histórico vinculado ao Bitcoin. Mas o foco principal está na rede Ethereum e componentes do seu Ecossistema. Falaremos um pouco sobre a Ethereum Virtual Machine (EVM) e Contratos Inteligentes. Além disso, uma perspectiva do usuário é apresentada, mostrando a estrutura dos blocos do blockchain da Ethereum, Wallets e softwares clientes, nós e mineradores, ferramentas e APIs, protocolos e Linguagens de Programação Suportados.\n\n\n\n\nIdeia Geral da Disciplina",
+    "section": "",
+    "text": "Ideia Geral da Disciplina",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -403,8 +403,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#interesse-no-termo-blockchain-ao-longo-do-tempo",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#interesse-no-termo-blockchain-ao-longo-do-tempo",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.3 Interesse no termo “blockchain” ao longo do tempo",
-    "text": "2.3 Interesse no termo “blockchain” ao longo do tempo\n\n\n\nPesquisas sobre o termo “blockchain” Fonte: Google Trends",
+    "section": "1.2 Interesse no termo “blockchain” ao longo do tempo",
+    "text": "1.2 Interesse no termo “blockchain” ao longo do tempo\n\n\n\nPesquisas sobre o termo “blockchain” Fonte: Google Trends",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -413,8 +413,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#como-um-blockchain-funciona",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#como-um-blockchain-funciona",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.4 Como um Blockchain funciona",
-    "text": "2.4 Como um Blockchain funciona\n\n\n\nFuncionamento de um Blockchain",
+    "section": "1.3 Como um Blockchain funciona",
+    "text": "1.3 Como um Blockchain funciona\n\n\n\nFuncionamento de um Blockchain",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -423,8 +423,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#definição-de-blockchain",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#definição-de-blockchain",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.5 Definição de Blockchain",
-    "text": "2.5 Definição de Blockchain\n[alertblock]{Definição de Gosh}\nA blockchain is a digital distributed ledger, where transactions are stored in blocks linked to each other with a singly linked list. A block contains a link pointing to its predecessor. New blocks can be appended to the head of a blockchain. Existing blocks cannot be modified or deleted.\n[/alertblock]\n[alertblock]{Definição de Layman}\nBlockchain is an ever-growing, secure, shared recordkeeping system in which each user of the data holds a copy of the records, which can only be updated if all parties involved in a transaction agree to update.\n\n[/alertblock]\n[alertblock]{Definição Técnica}\nBlockchain is a peer-to-peer distributed ledger that is cryptographically-secure, append-only, immutable (extremely hard to change), and updateable only via consensus or agreement among peers.\n\n[/alertblock]\n[framebreak]\n\nPeer-to-peer\nDistributed Ledger (livro-razão distribuído)\nCriptograficamente Seguro\nAppend Only (Permitido somente anexar novos blocos)\nAtualizável via consenso dos pares.",
+    "section": "1.4 Definição de Blockchain",
+    "text": "1.4 Definição de Blockchain\n[alertblock]{Definição de Gosh}\nA blockchain is a digital distributed ledger, where transactions are stored in blocks linked to each other with a singly linked list. A block contains a link pointing to its predecessor. New blocks can be appended to the head of a blockchain. Existing blocks cannot be modified or deleted.\n[/alertblock]\n[alertblock]{Definição de Layman}\nBlockchain is an ever-growing, secure, shared recordkeeping system in which each user of the data holds a copy of the records, which can only be updated if all parties involved in a transaction agree to update.\n\n[/alertblock]\n[alertblock]{Definição Técnica}\nBlockchain is a peer-to-peer distributed ledger that is cryptographically-secure, append-only, immutable (extremely hard to change), and updateable only via consensus or agreement among peers.\n\n[/alertblock]\n[framebreak]\n\nPeer-to-peer\nDistributed Ledger (livro-razão distribuído)\nCriptograficamente Seguro\nAppend Only (Permitido somente anexar novos blocos)\nAtualizável via consenso dos pares.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -433,8 +433,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#como-a-tecnologia-blockchain-foi-desenvolvida",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#como-a-tecnologia-blockchain-foi-desenvolvida",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.6 Como a Tecnologia Blockchain foi desenvolvida",
-    "text": "2.6 Como a Tecnologia Blockchain foi desenvolvida\n[columns]\n[column=0.5]\n1950s – Hash functions\n1970s – Merkle trees - hashes in a tree structure\n1970s continued – Research in distributed systems, consensus, state machine replication\n1980s – Hash chains for secure logins\n1990s – e-Cash for e-payments\n[column=0.5]\n1991 – Secure timestamping of digital documents.\n1992 – Hashcash idea to combat junk emails\n1994 – S/KEY application for Unix login.\n1997/2002 – Hashcash\n2008/2009 – Bitcoin (the first blockchain)\n[/columns]",
+    "section": "1.5 Como a Tecnologia Blockchain foi desenvolvida",
+    "text": "1.5 Como a Tecnologia Blockchain foi desenvolvida\n\n\n1950s – Hash functions\n1970s – Merkle trees - hashes in a tree structure\n1970s continued – Research in distributed systems, consensus, state machine replication\n1980s – Hash chains for secure logins\n1990s – e-Cash for e-payments\n\n\n\n1991 – Secure timestamping of digital documents.\n1992 – Hashcash idea to combat junk emails\n1994 – S/KEY application for Unix login.\n1997/2002 – Hashcash\n2008/2009 – Bitcoin (the first blockchain)",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -443,8 +443,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#visão-arquitetural-de-um-blockchain",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#visão-arquitetural-de-um-blockchain",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.7 Visão Arquitetural de um Blockchain",
-    "text": "2.7 Visão Arquitetural de um Blockchain",
+    "section": "1.6 Visão Arquitetural de um Blockchain",
+    "text": "1.6 Visão Arquitetural de um Blockchain",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -453,8 +453,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#estrutura-genérica-de-um-blockchain",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#estrutura-genérica-de-um-blockchain",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.8 Estrutura Genérica de um Blockchain",
-    "text": "2.8 Estrutura Genérica de um Blockchain\n\n\n\nEstrutura Genérica de um Blockchain\n\n\n\n\n\nOrganização Blockchain\n\n\n\nPara evitar overhead, os registros são agrupados em blocos. Os registros em um bloco são organizados em uma estrutura de árvore chamada de Merkle tree [Merkle 1989] para acesso mais rápido.",
+    "section": "1.7 Estrutura Genérica de um Blockchain",
+    "text": "1.7 Estrutura Genérica de um Blockchain\n\n\n\nEstrutura Genérica de um Blockchain\n\n\n\n\n\nOrganização Blockchain\n\n\n\nPara evitar overhead, os registros são agrupados em blocos. Os registros em um bloco são organizados em uma estrutura de árvore chamada de Merkle tree [Merkle 1989] para acesso mais rápido.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -463,8 +463,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#estrutura-genérica-de-um-bloco",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#estrutura-genérica-de-um-bloco",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.9 Estrutura Genérica de um bloco",
-    "text": "2.9 Estrutura Genérica de um bloco\n\n\n\nEstrutura de um Bloco",
+    "section": "1.8 Estrutura Genérica de um bloco",
+    "text": "1.8 Estrutura Genérica de um bloco\n\n\n\nEstrutura de um Bloco",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -473,8 +473,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#benefícios-e-limitações-de-um-blockchain",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#benefícios-e-limitações-de-um-blockchain",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.10 Benefícios e Limitações de um Blockchain",
-    "text": "2.10 Benefícios e Limitações de um Blockchain\n[columns]\n[column=0.5]\nBenefícios\nDescentralização\nTransparência\nConfiança\nImutabilidade\nAlta disponibilidade\nAltamente Seguro\nSimplificação de paradigmas atuais\nTransações rápidas\n\n[column=0.5]\nLimitações\nEscalabilidade\nAdaptabilidade\nRegulação\nTecnologia Relativamente Imatura (Ainda)\nPrivacidade\n[/columns]",
+    "section": "1.9 Benefícios e Limitações de um Blockchain",
+    "text": "1.9 Benefícios e Limitações de um Blockchain\n[columns]\n[column=0.5]\nBenefícios\nDescentralização\nTransparência\nConfiança\nImutabilidade\nAlta disponibilidade\nAltamente Seguro\nSimplificação de paradigmas atuais\nTransações rápidas\n\n[column=0.5]\nLimitações\nEscalabilidade\nAdaptabilidade\nRegulação\nTecnologia Relativamente Imatura (Ainda)\nPrivacidade\n[/columns]",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -483,8 +483,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#características-principais",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#características-principais",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "2.11 Características Principais",
-    "text": "2.11 Características Principais\n\nConsenso Distribuído\nVerificação de Transações\nPlataforma para smart contracts\nTransferência de valores entre pares\nGeneração de criptomoedas\nProvedor de Segurança\nImutabilidade\nUnicidade ou singularidade (Uniqueness)",
+    "section": "1.10 Características Principais",
+    "text": "1.10 Características Principais\n\nConsenso Distribuído\nVerificação de Transações\nPlataforma para smart contracts\nTransferência de valores entre pares\nGeneração de criptomoedas\nProvedor de Segurança\nImutabilidade\nUnicidade ou singularidade (Uniqueness)",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -493,8 +493,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#bitcoin-1",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#bitcoin-1",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "3.1 Bitcoin",
-    "text": "3.1 Bitcoin\n\nSurgiu em \\(2008/2009\\), sendo a primeira rede Blockchain.\nRede voltada para a Criptomoeda – Bitcoin (BTC).",
+    "section": "2.1 Bitcoin",
+    "text": "2.1 Bitcoin\n\nSurgiu em \\(2008/2009\\), sendo a primeira rede Blockchain.\nRede voltada para a Criptomoeda – Bitcoin (BTC).",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -503,8 +503,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#bitcoin-na-perspectiva-de-usuário",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#bitcoin-na-perspectiva-de-usuário",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "3.2 Bitcoin na perspectiva de usuário ",
-    "text": "3.2 Bitcoin na perspectiva de usuário \n\nPassos de como enviar e receber pagamentos:\n\nA transação começa com um remetente assinando a transação com sua chave privada. \nA transação é serializada para que possa ser transmitida pela rede.\nA transação é transmitida para a rede.\nMineradores que escutam transações pegam a transação.\nA transação é verificada quanto à sua legitimidade pelos mineradores.\nA transação é adicionada ao bloco candidato/proposto para mineração.\nUma vez minerado, o resultado é transmitido para todos os nós da rede Bitcoin.\nNormalmente, neste momento, os usuários aguardam até seis confirmações para serem recebidas antes que uma transação seja considerada final; no entanto, uma transação pode ser considerada final na etapa anterior.\nAs confirmações servem como um mecanismo adicional para garantir que haja probabilidade muito baixa de uma transação ser revertida, mas, caso contrário, uma vez que um bloco minerado seja finalizado e anunciado, as transações dentro desse bloco serão finais nesse ponto.",
+    "section": "2.2 Bitcoin na perspectiva de usuário ",
+    "text": "2.2 Bitcoin na perspectiva de usuário \n\nPassos de como enviar e receber pagamentos:\n\nA transação começa com um remetente assinando a transação com sua chave privada. \nA transação é serializada para que possa ser transmitida pela rede.\nA transação é transmitida para a rede.\nMineradores que escutam transações pegam a transação.\nA transação é verificada quanto à sua legitimidade pelos mineradores.\nA transação é adicionada ao bloco candidato/proposto para mineração.\nUma vez minerado, o resultado é transmitido para todos os nós da rede Bitcoin.\nNormalmente, neste momento, os usuários aguardam até seis confirmações para serem recebidas antes que uma transação seja considerada final; no entanto, uma transação pode ser considerada final na etapa anterior.\nAs confirmações servem como um mecanismo adicional para garantir que haja probabilidade muito baixa de uma transação ser revertida, mas, caso contrário, uma vez que um bloco minerado seja finalizado e anunciado, as transações dentro desse bloco serão finais nesse ponto.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -513,8 +513,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#chaves-criptográficas",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#chaves-criptográficas",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "3.3 Chaves Criptográficas ",
-    "text": "3.3 Chaves Criptográficas \n[columns]\n[column=0.5]\n\nPrivate keys na rede Bitcoin\n\nPrivate keys são usadas para assinar digitalmente transações, comprovando a propriedade dos bitcoins.\n\nPublic keys na rede Bitcoin \n\nAs chaves públicas são usadas pelos nós para verificar se a transação foi realmente assinada com a chave privada correspondente.\n\nEndereços na rede Bitcoin\n\nUm endereço Bitcoin é criado pegando a chave pública correspondente de uma chave privada e fazendo hash duas vezes, primeiro com o algoritmo SHA256 e depois com RIPEMD160.\n\nEndereços Bitcoin são codificados usando Base58Check.\n\n[column=0.5]\n\n[/columns]",
+    "section": "2.3 Chaves Criptográficas ",
+    "text": "2.3 Chaves Criptográficas \n[columns]\n[column=0.5]\n\nPrivate keys na rede Bitcoin\n\nPrivate keys são usadas para assinar digitalmente transações, comprovando a propriedade dos bitcoins.\n\nPublic keys na rede Bitcoin \n\nAs chaves públicas são usadas pelos nós para verificar se a transação foi realmente assinada com a chave privada correspondente.\n\nEndereços na rede Bitcoin\n\nUm endereço Bitcoin é criado pegando a chave pública correspondente de uma chave privada e fazendo hash duas vezes, primeiro com o algoritmo SHA256 e depois com RIPEMD160.\n\nEndereços Bitcoin são codificados usando Base58Check.\n\n[column=0.5]\n\n[/columns]",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -523,8 +523,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#não-perder-as-chaves-é-importante",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#não-perder-as-chaves-é-importante",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "3.4 Não perder as chaves é importante",
-    "text": "3.4 Não perder as chaves é importante\n[columns]\n[column=0.5]\n\n[column=0.5]\n\n[/columns]\nO Bitcoin Enterrado: A Caça ao Tesouro de James Howells na Vida Real",
+    "section": "2.4 Não perder as chaves é importante",
+    "text": "2.4 Não perder as chaves é importante\n[columns]\n[column=0.5]\n\n[column=0.5]\n\n[/columns]\nO Bitcoin Enterrado: A Caça ao Tesouro de James Howells na Vida Real",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -533,8 +533,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#script",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#script",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "3.5 Script",
-    "text": "3.5 Script\n\nLinguagem simples baseada em pilha usada para descrever como os bitcoins podem ser gastos ou transferidos.\nAvaliada da esquerda para a direita usando uma pilha Last in, First Out (LIFO).\nComposta por dois componentes: elementos e operações.\nScripts usam vários opcodes para definir suas operações.",
+    "section": "2.5 Script",
+    "text": "2.5 Script\n\nLinguagem simples baseada em pilha usada para descrever como os bitcoins podem ser gastos ou transferidos.\nAvaliada da esquerda para a direita usando uma pilha Last in, First Out (LIFO).\nComposta por dois componentes: elementos e operações.\nScripts usam vários opcodes para definir suas operações.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -543,8 +543,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#opcodes",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#opcodes",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "3.6 Opcodes",
-    "text": "3.6 Opcodes\n\nAqui estão alguns exemplos de alguns opcodes úteis usados ​​na linguagem Script no blockchain do Bitcoin.",
+    "section": "2.6 Opcodes",
+    "text": "2.6 Opcodes\n\nAqui estão alguns exemplos de alguns opcodes úteis usados ​​na linguagem Script no blockchain do Bitcoin.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -553,8 +553,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#uma-visualização-da-blockchain-do-bitcoin",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#uma-visualização-da-blockchain-do-bitcoin",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "3.7 Uma Visualização da Blockchain do Bitcoin",
-    "text": "3.7 Uma Visualização da Blockchain do Bitcoin",
+    "section": "2.7 Uma Visualização da Blockchain do Bitcoin",
+    "text": "2.7 Uma Visualização da Blockchain do Bitcoin",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -563,8 +563,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#bloco-genesis",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#bloco-genesis",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "3.8 Bloco Genesis",
-    "text": "3.8 Bloco Genesis\n[alertblock]{Bloco Genesis}\nO Bloco Genesis ou bloco \\(\\#0\\) foi hardcoded (codificado) por suas características especiais: ele é o único que não aponta para nenhum bloco anterior. No seu hash foi encriptado o bloco junto com a mensagem “The Times 03/Jan/2009 Chancellor on brink of second bailout for banks”, manchete do jornal naquele dia. Além de servir como prova datada, a manchete escolhida representa justamente uma crítica ao sistema bancário.\n[/alertblock]\n[framebreak]\n[columns]\n[column=0.5]\n\n[column=0.5]\n\nFonte: https://github.com/bitcoin/bitcoin/blob/master/src/chainparams.cpp\n[/columns]\n[framebreak]\n/**\n * Build the genesis block. Note that the output of its generation\n * transaction cannot be spent since it did not originally exist in the\n * database.\n *\n * CBlock(hash=000000000019d6, ver=1, hashPrevBlock=00000000000000, hashMerkleRoot=4a5e1e, nTime=1231006505, nBits=1d00ffff, nNonce=2083236893, vtx=1)\n *   CTransaction(hash=4a5e1e, ver=1, vin.size=1, vout.size=1, nLockTime=0)\n *     CTxIn(COutPoint(000000, -1), coinbase 04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73)\n *     CTxOut(nValue=50.00000000, scriptPubKey=0x5F1DF16B2B704C8A578D0B)\n *   vMerkleTree: 4a5e1e\n */\nstatic CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, \nconst CAmount& genesisReward)\n{\n  const char* pszTimestamp = \"The Times 03/Jan/2009 Chancellor on brink of second bailout for banks\";\n  const CScript genesisOutputScript = CScript() &lt;&lt; ParseHex(\"04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f\") &lt;&lt; OP_CHECKSIG;\n  return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);\n}\n[framebreak]",
+    "section": "2.8 Bloco Genesis",
+    "text": "2.8 Bloco Genesis\n[alertblock]{Bloco Genesis}\nO Bloco Genesis ou bloco \\(\\#0\\) foi hardcoded (codificado) por suas características especiais: ele é o único que não aponta para nenhum bloco anterior. No seu hash foi encriptado o bloco junto com a mensagem “The Times 03/Jan/2009 Chancellor on brink of second bailout for banks”, manchete do jornal naquele dia. Além de servir como prova datada, a manchete escolhida representa justamente uma crítica ao sistema bancário.\n[/alertblock]\n[framebreak]\n[columns]\n[column=0.5]\n\n[column=0.5]\n\nFonte: https://github.com/bitcoin/bitcoin/blob/master/src/chainparams.cpp\n[/columns]\n[framebreak]\n/**\n * Build the genesis block. Note that the output of its generation\n * transaction cannot be spent since it did not originally exist in the\n * database.\n *\n * CBlock(hash=000000000019d6, ver=1, hashPrevBlock=00000000000000, hashMerkleRoot=4a5e1e, nTime=1231006505, nBits=1d00ffff, nNonce=2083236893, vtx=1)\n *   CTransaction(hash=4a5e1e, ver=1, vin.size=1, vout.size=1, nLockTime=0)\n *     CTxIn(COutPoint(000000, -1), coinbase 04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73)\n *     CTxOut(nValue=50.00000000, scriptPubKey=0x5F1DF16B2B704C8A578D0B)\n *   vMerkleTree: 4a5e1e\n */\nstatic CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, \nconst CAmount& genesisReward)\n{\n  const char* pszTimestamp = \"The Times 03/Jan/2009 Chancellor on brink of second bailout for banks\";\n  const CScript genesisOutputScript = CScript() &lt;&lt; ParseHex(\"04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f\") &lt;&lt; OP_CHECKSIG;\n  return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);\n}\n[framebreak]",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -573,8 +573,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#a-carteira-de-satoshi",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#a-carteira-de-satoshi",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "3.9 A carteira de Satoshi",
-    "text": "3.9 A carteira de Satoshi\n\nCarteira: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n\n\n\n\n1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n\n\n\nEssa primeira transação foi incluída no bloco #0, sob o hash 4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b.\n\n\n\n\n4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\n\n\n\n\n\n4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\n\n\n\n\n\n1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n\n\n[framebreak]\n\nDetalhes da Transação:\n\n\n\n\n4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\n\n\n[framebreak]\n\n\n\n\nSaldo em 21/11/2023\n\n\n\n\n\nSaldo em 13/08/2024\n\n\n\n\n\nSaldo em 21/11/2023 Fonte: blockchain.com\n\n\n\n\n\nSaldo em 13/08/2024 Fonte: blockchain.com\n\n\n\n\n\nSaldo em 16/06/2025 Fonte: blockchain.com",
+    "section": "2.9 A carteira de Satoshi",
+    "text": "2.9 A carteira de Satoshi\n\nCarteira: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n\n\n\n\n1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n\n\n\nEssa primeira transação foi incluída no bloco #0, sob o hash 4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b.\n\n\n\n\n4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\n\n\n\n\n\n4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\n\n\n\n\n\n1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\n\n\n[framebreak]\n\nDetalhes da Transação:\n\n\n\n\n4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\n\n\n[framebreak]\n\n\n\n\nSaldo em 21/11/2023\n\n\n\n\n\nSaldo em 13/08/2024\n\n\n\n\n\nSaldo em 21/11/2023 Fonte: blockchain.com\n\n\n\n\n\nSaldo em 13/08/2024 Fonte: blockchain.com\n\n\n\n\n\nSaldo em 16/06/2025 Fonte: blockchain.com",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -583,8 +583,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#quem-é-satoshi-nakamoto",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#quem-é-satoshi-nakamoto",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "4.1 Quem é Satoshi Nakamoto?",
-    "text": "4.1 Quem é Satoshi Nakamoto?\n\n\n\nElon Musk Fonte: CanalTech\n\n\n\n\n\nDorian Nakamoto Fonte: Livecoins\n\n\n\n\n\nLinus Torvalds Fonte: Livecoins\n\n\n\n\n\nLinus Torvalds Fonte: cointelegraph\n\n\n\n\n\nSteve Jobs Fonte: Exame 10/04/2023\n\n\n\n\n\nCraig Wright Fonte: BBC 19/12/2024\n\n\n[columns]\n[column=0.5]\n\n\n\nVídeo\n\n\n[column=0.5]\n\n\n\nVídeo\n\n\n[/columns]\nLista de suspeitos no decorrer da história: https://www.infomoney.com.br/perfil/satoshi-nakamoto/",
+    "section": "3.1 Quem é Satoshi Nakamoto?",
+    "text": "3.1 Quem é Satoshi Nakamoto?\n\n\n\nElon Musk Fonte: CanalTech\n\n\n\n\n\nDorian Nakamoto Fonte: Livecoins\n\n\n\n\n\nLinus Torvalds Fonte: Livecoins\n\n\n\n\n\nLinus Torvalds Fonte: cointelegraph\n\n\n\n\n\nSteve Jobs Fonte: Exame 10/04/2023\n\n\n\n\n\nCraig Wright Fonte: BBC 19/12/2024\n\n\n[columns]\n[column=0.5]\n\n\n\nVídeo\n\n\n[column=0.5]\n\n\n\nVídeo\n\n\n[/columns]\nLista de suspeitos no decorrer da história: https://www.infomoney.com.br/perfil/satoshi-nakamoto/",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -593,8 +593,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#tamanho-do-blockchain-do-bitcoin",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#tamanho-do-blockchain-do-bitcoin",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "4.2 Tamanho do Blockchain do Bitcoin",
-    "text": "4.2 Tamanho do Blockchain do Bitcoin\n\nO Blockchain do Bitcoin tinha em October 29, 2017, aproximadamente: \\(139GB\\)\n\n\n[framebreak]\n\nA figura mostra a evolução de Aug 2017 para Jul 2020. Aproximandamente, \\(286 GB\\).\n\n\n[framebreak]\n\nA figura mostra a evolução de Jan 2009 para Set 2022. Aproximandamente, \\(426.7 GB\\).\n\n\n\nFonte: https://www.blockchain.com/charts/blocks-size\nTamanho em 14/04/2023: \\(472.9 GB\\)\n\n\n\n\nTamanho em 14/04/2023 Fonte: ycharts\n\n\n\nTamanho em 09/08/2023: \\(502.06 GB\\)\n\n\n\n\nTamanho em 09/08/2023 Fonte: ycharts\n\n\n\nTamanho em 21/11/2023: \\(527.47 GB\\)\n\n\n\n\nTamanho em 21/11/2023 Fonte: ycharts\n\n\n\nTamanho em 13/08/2024: \\(592.72 GB\\)\n\n\n\n\nTamanho em 13/08/2024 Fonte: ycharts\n\n\n\nTamanho em 16/12/2024: \\(622.77 GB\\)\n\n\n\n\nTamanho em 16/12/2024 Fonte: ycharts\n\n\n[framebreak]\n\nTamanho em 16/06/2025: \\(665.07 GB\\)\n\n\n\n\nTamanho em 16/06/2025 Fonte: ycharts",
+    "section": "3.2 Tamanho do Blockchain do Bitcoin",
+    "text": "3.2 Tamanho do Blockchain do Bitcoin\n\nO Blockchain do Bitcoin tinha em October 29, 2017, aproximadamente: \\(139GB\\)\n\n\n[framebreak]\n\nA figura mostra a evolução de Aug 2017 para Jul 2020. Aproximandamente, \\(286 GB\\).\n\n\n[framebreak]\n\nA figura mostra a evolução de Jan 2009 para Set 2022. Aproximandamente, \\(426.7 GB\\).\n\n\n\nFonte: https://www.blockchain.com/charts/blocks-size\nTamanho em 14/04/2023: \\(472.9 GB\\)\n\n\n\n\nTamanho em 14/04/2023 Fonte: ycharts\n\n\n\nTamanho em 09/08/2023: \\(502.06 GB\\)\n\n\n\n\nTamanho em 09/08/2023 Fonte: ycharts\n\n\n\nTamanho em 21/11/2023: \\(527.47 GB\\)\n\n\n\n\nTamanho em 21/11/2023 Fonte: ycharts\n\n\n\nTamanho em 13/08/2024: \\(592.72 GB\\)\n\n\n\n\nTamanho em 13/08/2024 Fonte: ycharts\n\n\n\nTamanho em 16/12/2024: \\(622.77 GB\\)\n\n\n\n\nTamanho em 16/12/2024 Fonte: ycharts\n\n\n[framebreak]\n\nTamanho em 16/06/2025: \\(665.07 GB\\)\n\n\n\n\nTamanho em 16/06/2025 Fonte: ycharts",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -603,8 +603,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#consumo-de-energia",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#consumo-de-energia",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "4.3 Consumo de Energia",
-    "text": "4.3 Consumo de Energia\n\nPico em Janeiro de 2022: \\(204.5~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\n\nEm 21/11/2023: \\(137.68~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\n[framebreak]\n\nEm 13/08/2024: \\(172.26~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\n\nEm 16/12/2024: \\(175.87~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\n\nEm 16/06/2025: \\(175.87~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\nArtigo: “Cryptocurrencies on the road to sustainability: Ethereum paving the way for Bitcoin” (December 2022); Bitcoin’s biggest competitor, Ethereum, has reduced its electrical energy requirement by at least 99.84% by changing its method of production.",
+    "section": "3.3 Consumo de Energia",
+    "text": "3.3 Consumo de Energia\n\nPico em Janeiro de 2022: \\(204.5~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\n\nEm 21/11/2023: \\(137.68~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\n[framebreak]\n\nEm 13/08/2024: \\(172.26~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\n\nEm 16/12/2024: \\(175.87~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\n\nEm 16/06/2025: \\(175.87~TWh\\) por ano.\n\n\n\n\nConsumo de Energia Fonte: digiconomist\n\n\nArtigo: “Cryptocurrencies on the road to sustainability: Ethereum paving the way for Bitcoin” (December 2022); Bitcoin’s biggest competitor, Ethereum, has reduced its electrical energy requirement by at least 99.84% by changing its method of production.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -613,8 +613,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#leitura-recomendada",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#leitura-recomendada",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "4.4 Leitura Recomendada",
-    "text": "4.4 Leitura Recomendada\n[alertblock]{Leitura Recomendada}\nCapítulo 5/6: Introduction Bitcoin: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\n[/alertblock]",
+    "section": "3.4 Leitura Recomendada",
+    "text": "3.4 Leitura Recomendada\n[alertblock]{Leitura Recomendada}\nCapítulo 5/6: Introduction Bitcoin: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\n[/alertblock]",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -623,8 +623,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#projetos-de-pesquisa",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#projetos-de-pesquisa",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "4.5 Projetos de Pesquisa",
-    "text": "4.5 Projetos de Pesquisa\nTítulo: Estudo Exploratório De Técnicas E Mecanismos Para Paralelização Automática E Offloading De Código Em Sistemas Heterogêneos (Pa-Code-Offload).\n\n\nPesquisa em Computação Paralela.\n\n\nTítulo: Investigação sobre Infraestrutura e Suporte ao Desenvolvimento de Aplicações utilizando Tecnologias Blockchain (PRO-BLOCKCHAIN).\n\n\nPesquisa em Tecnologias Blockchain.",
+    "section": "3.5 Projetos de Pesquisa",
+    "text": "3.5 Projetos de Pesquisa\nTítulo: Estudo Exploratório De Técnicas E Mecanismos Para Paralelização Automática E Offloading De Código Em Sistemas Heterogêneos (Pa-Code-Offload).\n\n\nPesquisa em Computação Paralela.\n\n\nTítulo: Investigação sobre Infraestrutura e Suporte ao Desenvolvimento de Aplicações utilizando Tecnologias Blockchain (PRO-BLOCKCHAIN).\n\n\nPesquisa em Tecnologias Blockchain.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -633,8 +633,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#projetos-de-extensão",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#projetos-de-extensão",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "4.6 Projetos de Extensão",
-    "text": "4.6 Projetos de Extensão\nTítulo: Escola de Computação Paralela (ECP 2024).\n\n\nPreparar e ministrar minicursos em temas de Computação Paralela.\n\n\nTítulo: Academia Blockchain.\n\n\nPreparar e ministrar minicursos relacionados às Tecnologias Blockchain.",
+    "section": "3.6 Projetos de Extensão",
+    "text": "3.6 Projetos de Extensão\nTítulo: Escola de Computação Paralela (ECP 2024).\n\n\nPreparar e ministrar minicursos em temas de Computação Paralela.\n\n\nTítulo: Academia Blockchain.\n\n\nPreparar e ministrar minicursos relacionados às Tecnologias Blockchain.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -643,8 +643,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#grupo-estudos",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#grupo-estudos",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "4.7 Grupo Estudos",
-    "text": "4.7 Grupo Estudos\nGEDVAC: Grupo de Estudos sobre Desempenho, máquinas Virtuais, Arquitetura de computadores e Compiladores da UTFPR-CM.",
+    "section": "3.7 Grupo Estudos",
+    "text": "3.7 Grupo Estudos\nGEDVAC: Grupo de Estudos sobre Desempenho, máquinas Virtuais, Arquitetura de computadores e Compiladores da UTFPR-CM.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -653,8 +653,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#leitura-recomendada-1",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#leitura-recomendada-1",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "4.8 Leitura Recomendada",
-    "text": "4.8 Leitura Recomendada\n[alertblock]{Leitura Recomendada}\nCapítulo 11: Ethereum 101\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\nCapítulo 12: Futher Ethereum\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\n[/alertblock]",
+    "section": "3.8 Leitura Recomendada",
+    "text": "3.8 Leitura Recomendada\n\n\n\n\n\n\nLeitura Recomendada\n\n\n\n\nCapítulo 11: Ethereum 101\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\nCapítulo 12: Futher Ethereum\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -663,8 +663,8 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#word-cloud",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#word-cloud",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "4.9 Word Cloud",
-    "text": "4.9 Word Cloud",
+    "section": "4.1 Word Cloud",
+    "text": "4.1 Word Cloud\n\n(wood2014ethereum?)",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
     ]
@@ -673,10 +673,60 @@
     "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#referências-1",
     "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#referências-1",
     "title": "1  Introdução às Tecnologias Blockchain",
-    "section": "5.1 Referências",
-    "text": "5.1 Referências",
+    "section": "4.2 Referências",
+    "text": "4.2 Referências\n\n\nAntonopoulos, A. M., and G. Wood. 2018. Mastering Ethereum: Building\nSmart Contracts and DApps. O’Reilly Media, Incorporated. https://books.google.com.br/books?id=SedSMQAACAAJ.\n\n\nImran, Bashir. 2018. Mastering Blockchain : Distributed Ledger\nTechnology, Decentralization, and Smart Contracts Explained, 2nd\nEdition. Packt Publishing. https://search.ebscohost.com/login.aspx?direct=true&db=e000xww&AN=1789486&lang=pt-br&site=eds-live&scope=site.\n\n\nNakamoto, Satoshi. 2009. “Bitcoin: A Peer-to-Peer Electronic Cash\nSystem,” May. http://www.bitcoin.org/bitcoin.pdf.\n\n\nWood, Gavin et al. 2014. “Ethereum: A Secure Decentralised\nGeneralised Transaction Ledger.” Ethereum Project Yellow\nPaper 151 (2014): 1–32.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
+    ]
+  },
+  {
+    "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#leitura-recomendada-2",
+    "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#leitura-recomendada-2",
+    "title": "1  Introdução às Tecnologias Blockchain",
+    "section": "4.9 Leitura Recomendada",
+    "text": "4.9 Leitura Recomendada\n\nCapítulo 11: Ethereum 101\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\nCapítulo 12: Futher Ethereum\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
+    ]
+  },
+  {
+    "objectID": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#bibliografia",
+    "href": "aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#bibliografia",
+    "title": "1  Introdução às Tecnologias Blockchain",
+    "section": "3.8 Bibliografia",
+    "text": "3.8 Bibliografia\n\n\n\n\n\n\nLeitura Recomendada\n\n\n\n\nCapítulo 11: Ethereum 101\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\nCapítulo 12: Futher Ethereum\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introdução às Tecnologias Blockchain</span>"
+    ]
+  },
+  {
+    "objectID": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#referências-1",
+    "href": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#referências-1",
+    "title": "3  Aula 04 - Instalando o Cliente Ethereum",
+    "section": "6.3 Referências",
+    "text": "6.3 Referências",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aula 04 - Instalando o Cliente Ethereum</span>"
+    ]
+  },
+  {
+    "objectID": "aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html#referências-1",
+    "href": "aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html#referências-1",
+    "title": "2  Aula 03 - Prática sobre Ethereum Virtual Machine (EVM)",
+    "section": "4.2 Referências",
+    "text": "4.2 Referências",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Aula 03 - Prática sobre _Ethereum Virtual Machine (EVM)_</span>"
+    ]
+  },
+  {
+    "objectID": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#word-cloud",
+    "href": "aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html#word-cloud",
+    "title": "3  Aula 04 - Instalando o Cliente Ethereum",
+    "section": "6.2 Word Cloud",
+    "text": "6.2 Word Cloud\n\n(wood2014ethereum?)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Aula 04 - Instalando o Cliente Ethereum</span>"
     ]
   }
 ]

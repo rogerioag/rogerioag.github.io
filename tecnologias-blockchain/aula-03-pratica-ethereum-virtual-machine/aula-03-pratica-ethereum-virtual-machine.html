@@ -85,6 +85,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="../">
 <link href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" rel="next">
 <link href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" rel="prev">
+<link href="../images/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -93,7 +94,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-04eba2f631388346a9723070acb13413.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-31072f9ed96e24c019159c695a8da794.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -180,7 +181,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/rogerioag/ecp-minicursos" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/rogerioag/tecnologias-blockchain" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -223,7 +224,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Aula 01 - Introdução às Tecnologias Blockchain</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -245,7 +246,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+    <h2 id="toc-title">Sumário</h2>
    
   <ul>
   <li><a href="#prática-explorando-a-ethereum-virtual-machine-evm" id="toc-prática-explorando-a-ethereum-virtual-machine-evm" class="nav-link active" data-scroll-target="#prática-explorando-a-ethereum-virtual-machine-evm"><span class="header-section-number">3</span> Prática: Explorando a <em>Ethereum Virtual Machine</em> (<code>EVM</code>)</a>
@@ -256,13 +257,16 @@ window.Quarto = {
   <li><a href="#atividade-3-outras-operações" id="toc-atividade-3-outras-operações" class="nav-link" data-scroll-target="#atividade-3-outras-operações"><span class="header-section-number">3.4</span> Atividade 3: Outras Operações</a></li>
   <li><a href="#relatório" id="toc-relatório" class="nav-link" data-scroll-target="#relatório"><span class="header-section-number">3.5</span> Relatório</a></li>
   <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">3.6</span> Leitura Recomendada</a></li>
-  <li><a href="#próximas-aulas" id="toc-próximas-aulas" class="nav-link" data-scroll-target="#próximas-aulas"><span class="header-section-number">3.7</span> Próximas Aulas</a></li>
-  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">3.8</span> <em>Word Cloud</em></a></li>
-  <li><a href="#sec-vet-consid-finais" id="toc-sec-vet-consid-finais" class="nav-link" data-scroll-target="#sec-vet-consid-finais"><span class="header-section-number">3.9</span> Considerações Finais</a></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">3.10</span> Referências</a></li>
+  <li><a href="#sec-vet-consid-finais" id="toc-sec-vet-consid-finais" class="nav-link" data-scroll-target="#sec-vet-consid-finais"><span class="header-section-number">3.7</span> Considerações Finais</a></li>
+  <li><a href="#próximas-aulas" id="toc-próximas-aulas" class="nav-link" data-scroll-target="#próximas-aulas"><span class="header-section-number">3.8</span> Próximas Aulas</a></li>
+  </ul></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">4</span> Referências</a>
+  <ul class="collapse">
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">4.1</span> <em>Word Cloud</em></a></li>
+  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">4.2</span> Referências</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -284,7 +288,7 @@ window.Quarto = {
   
 <div>
   <div class="abstract">
-    <div class="block-title">Abstract</div>
+    <div class="block-title">Resumo</div>
     A proposta desta aula é termos uma ideia sobre o funcionamento da <em>EVM</em>, instalando a ferramenta <code>evm</code> e executando alguns exemplos.
   </div>
 </div>
@@ -512,23 +516,27 @@ https://github.com/ethereum/go-ethereum/issues/29722
 <p><strong>Livro</strong>: <a href="https://moodle.utfpr.edu.br/mod/resource/view.php?id=1521589">Antonopoulos, A. M., and G. Wood. 2018. Mastering Ethereum: Building Smart Contracts and DApps. O’Reilly Media, Incorporated.</a></p>
 <p>[/alertblock]</p>
 </section>
-<section id="próximas-aulas" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="próximas-aulas"><span class="header-section-number">3.7</span> Próximas Aulas</h2>
+<section id="sec-vet-consid-finais" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="sec-vet-consid-finais"><span class="header-section-number">3.7</span> Considerações Finais</h2>
+</section>
+<section id="próximas-aulas" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="próximas-aulas"><span class="header-section-number">3.8</span> Próximas Aulas</h2>
 <ul>
 <li>Instalando o Cliente Ethereum: Geth.</li>
 </ul>
 </section>
-<section id="word-cloud" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">3.8</span> <em>Word Cloud</em></h2>
+</section>
+<section id="referências" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Referências</h1>
+<section id="word-cloud" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">4.1</span> <em>Word Cloud</em></h2>
 <p><img src="figuras/aula-04-pratica-ethereum-virtual-machine.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
 </section>
-<section id="sec-vet-consid-finais" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="sec-vet-consid-finais"><span class="header-section-number">3.9</span> Considerações Finais</h2>
-</section>
-<section id="referências" class="level2 fragile allowframebreaks" data-number="3.10">
-<h2 class="fragile allowframebreaks anchored" data-number="3.10" data-anchor-id="referências"><span class="header-section-number">3.10</span> Referências</h2>
+<section id="referências-1" class="level2 fragile allowframebreaks" data-number="4.2">
+<h2 class="fragile allowframebreaks anchored" data-number="4.2" data-anchor-id="referências-1"><span class="header-section-number">4.2</span> Referências</h2>
+<div id="refs" role="list" style="display: none">
 
-
+</div>
 
 
 </section>
@@ -625,7 +633,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/ecp-minicursos");
+      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -954,8 +962,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="pagination-link" aria-label="Aula 01 - Introdução às Tecnologias Blockchain">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Aula 01 - Introdução às Tecnologias Blockchain</span></span>
+      <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="pagination-link" aria-label="Introdução às Tecnologias Blockchain">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -969,4 +977,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

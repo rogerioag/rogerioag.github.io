@@ -84,6 +84,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" rel="prev">
+<link href="../images/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -92,7 +93,7 @@ div.csl-indent {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-04eba2f631388346a9723070acb13413.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-31072f9ed96e24c019159c695a8da794.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -179,7 +180,7 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/rogerioag/ecp-minicursos" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/rogerioag/tecnologias-blockchain" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
       <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -221,14 +222,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../preface.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prefácio</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -250,7 +245,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+    <h2 id="toc-title">Sumário</h2>
    
   <ul>
   <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">4</span> Introdução</a>
@@ -277,14 +272,15 @@ window.Quarto = {
   <li><a href="#pedindo-recursos-para-um-faucet" id="toc-pedindo-recursos-para-um-faucet" class="nav-link" data-scroll-target="#pedindo-recursos-para-um-faucet"><span class="header-section-number">5.16</span> Pedindo Recursos para um Faucet</a></li>
   <li><a href="#importando-contas-do-metamask" id="toc-importando-contas-do-metamask" class="nav-link" data-scroll-target="#importando-contas-do-metamask"><span class="header-section-number">5.17</span> Importando contas do Metamask</a></li>
   <li><a href="#comandos-finais" id="toc-comandos-finais" class="nav-link" data-scroll-target="#comandos-finais"><span class="header-section-number">5.18</span> Comandos Finais</a></li>
-  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">5.19</span> Leitura Recomendada</a></li>
   </ul></li>
-  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">6</span> <em>Word Cloud</em></a>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">6</span> Referências</a>
   <ul class="collapse">
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">6.1</span> Referências</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">6.1</span> Leitura Recomendada</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">6.2</span> <em>Word Cloud</em></a></li>
+  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">6.3</span> Referências</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -306,7 +302,7 @@ window.Quarto = {
   
 <div>
   <div class="abstract">
-    <div class="block-title">Abstract</div>
+    <div class="block-title">Resumo</div>
     Esta prática apresenta os clientes para a rede Ethereum. Iremos instalar o <code>Geth</code> e vermos seu funcionamento, transformando a máquina em um nó da rede <em>Ethereum</em>.
   </div>
 </div>
@@ -340,7 +336,7 @@ window.Quarto = {
 <img src="figuras/percentual-por-cliente-ethereum.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-percentual:clientes:ethereum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: Percentual de Clientes em 03/09/2024. Fonte: <a href="https://ethernodes.org/">ethernodes</a>
+Figure&nbsp;4.1: Percentual de Clientes em 21/08/2025. Fonte: <a href="https://ethernodes.org/">ethernodes</a>
 </figcaption>
 </figure>
 </div>
@@ -366,7 +362,7 @@ Figure&nbsp;4.1: Percentual de Clientes em 03/09/2024. Fonte: <a href="https://e
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo add-apt-repository <span class="at">-y</span> ppa:ethereum/ethereum</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get update</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install <span class="at">-y</span> ethereum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Em outros Sistemas como o <code>Manjaro Linux</code>:</p>
+<p>Em outros Sistemas como os derivados de <code>Arch Linux</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo pacaur <span class="at">-Ss</span> ethereum</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo pacaur <span class="at">-Ss</span> go-ethereum</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">extra/go-ethereum</span> 1.14.8-1 <span class="pp">[</span><span class="ss">instalado</span><span class="pp">]</span></span>
@@ -425,7 +421,7 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 </section>
 <section id="executando-o-geth" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="executando-o-geth"><span class="header-section-number">5.2</span> Executando o <code>Geth</code></h2>
-<p>Executando o <code>Geth</code> diretamente ele irá sincronizar com a rede principal do <code>Ethereum</code>, a <code>mainnet</code>. Os dados serão sincronizados com o diretório do <code>Ethereum</code> que será criado em:</p>
+<p>Executando o <code>Geth</code> diretamente ele irá sincronizar com a rede principal (<code>mainnet</code>) do <code>Ethereum</code>. Os dados serão sincronizados com o diretório do <code>Ethereum</code> que será criado em:</p>
 <ul>
 <li><code>~/.ethereum</code> no GNU/Linux</li>
 <li><code>~/Library/Ethereum</code> no OS X</li>
@@ -435,9 +431,9 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <ul>
 <li><code>.ethereum/geth/chaindata/</code>: blockchain da rede principal.</li>
 <li><code>.ethereum/sepolia/geth/chaindata</code>: <em>blockchain</em> da rede de teste <code>Sepolia</code>.</li>
-<li><code>keystore</code>: Chaves das contas criadas.</li>
+<li><code>.ethereum/keystore</code>: Chaves das contas criadas.</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash breaklines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rag@nitro-ryzen</span> ~]$ geth</span>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash breaklines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[~]$</span> geth</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:07:12.911]</span> Starting Geth on Ethereum mainnet... </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:07:12.912]</span> Bumping default cache on mainnet         provided=1024 updated=4096</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:07:12.914]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
@@ -500,7 +496,8 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:07:53.281]</span> Looking for peers                        peercount=0 tried=13 static=0</span>
 <span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:08:03.346]</span> Looking for peers                        peercount=0 tried=9  static=0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>O que vai levar um certo tempo para fazer toda a sincronização da rede completa.</p>
-<p>Hoje, <span class="math inline">\(03/09/2024\)</span> o tamanho da <em>blockchain</em> está em <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size"><span class="math inline">\(1147.97 GB\)</span></a>.</p>
+<!--Hoje, $03/09/2024$ o tamanho da _blockchain_ está em [$1147.97 GB$](https://ycharts.com/indicators/ethereum_chain_full_sync_data_size).-->
+<p>Hoje, <span class="math inline">\(21/08/2025\)</span> o tamanho da <em>blockchain</em> está em <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size"><span class="math inline">\(1380.34 GB\)</span></a>.</p>
 </section>
 <section id="redes-de-teste" class="level2 allowframebreaks" data-number="5.3">
 <h2 class="allowframebreaks anchored" data-number="5.3" data-anchor-id="redes-de-teste"><span class="header-section-number">5.3</span> Redes de Teste</h2>
@@ -568,7 +565,7 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 </tr>
 </tbody>
 </table>
-<p>A Figura <span class="math inline">\(\ref{fig:redes:testes}\)</span> apresenta um resumo no formato de <em>timeline</em> das redes de testes.</p>
+<p>A <span class="quarto-unresolved-ref">?fig-redes:testes</span> apresenta um resumo no formato de <em>timeline</em> das redes de testes.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/TestnetsTimeline.png" class="img-fluid figure-img" style="width:90.0%"></p>
@@ -744,7 +741,7 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 </section>
 <section id="executando-um-cliente-de-execuçãolinkprysmexec" class="level2" data-number="5.10">
 <h2 data-number="5.10" class="anchored" data-anchor-id="executando-um-cliente-de-execuçãolinkprysmexec"><span class="header-section-number">5.10</span> Executando um Cliente de Execução<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></h2>
-<p>Nesta etapa, executaremos o cliente de camada de execução (<code>geth</code>), se ainda não instalou veja os passos de instalação na <span class="citation" data-cites="sec:instalando:geth">(Seção <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html#ref-sec:instalando:geth" role="doc-biblioref"><strong>sec:instalando:geth?</strong></a>)</span> e o nó <em>beacon</em> do <code>Prysm</code> que se conectará ao cliente em execução.</p>
+<p>Nesta etapa, executaremos o cliente de camada de execução (<code>geth</code>), se ainda não instalou veja os passos de instalação na <span class="citation" data-cites="sec:instalando:geth">(Seção <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#ref-sec:instalando:geth" role="doc-biblioref"><strong>sec:instalando:geth?</strong></a>)</span> e o nó <em>beacon</em> do <code>Prysm</code> que se conectará ao cliente em execução.</p>
 <p>Note que iremos adicionar o parâmetro ao comando de execução com o arquivo com o <em>token</em> <code>--authrpc.jwtsecret ~/.ethereum/sepolia/geth/jwtsecret</code>.</p>
 <pre><code>
 O comando de execução do `Geth` atualizado:
@@ -1448,8 +1445,11 @@ geth --sepolia --syncmode full --http --http.addr 127.0.0.1 --http.port 8559 --h
 <span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
 <span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="leitura-recomendada" class="level2" data-number="5.19">
-<h2 data-number="5.19" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">5.19</span> Leitura Recomendada</h2>
+</section>
+<section id="referências" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Referências</h1>
+<section id="leitura-recomendada" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">6.1</span> Leitura Recomendada</h2>
 <p>[alertblock]{Leitura Recomendada}</p>
 <p><strong>Capítulo 11: Ethereum 101</strong></p>
 <p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_276">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
@@ -1457,12 +1457,13 @@ geth --sepolia --syncmode full --http --http.addr 127.0.0.1 --http.port 8559 --h
 <p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_310">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
 <p>[/alertblock]</p>
 </section>
-</section>
-<section id="word-cloud" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> <em>Word Cloud</em></h1>
+<section id="word-cloud" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">6.2</span> <em>Word Cloud</em></h2>
 <p><img src="figuras/aula-05-pratica-instalando-cliente-ethereum.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
-<section id="referências" class="level2 fragile allowframebreaks" data-number="6.1">
-<h2 class="fragile allowframebreaks anchored" data-number="6.1" data-anchor-id="referências"><span class="header-section-number">6.1</span> Referências</h2>
+<p><span class="citation" data-cites="wood2014ethereum">(<a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#ref-wood2014ethereum" role="doc-biblioref"><strong>wood2014ethereum?</strong></a>)</span></p>
+</section>
+<section id="referências-1" class="level2 fragile allowframebreaks" data-number="6.3">
+<h2 class="fragile allowframebreaks anchored" data-number="6.3" data-anchor-id="referências-1"><span class="header-section-number">6.3</span> Referências</h2>
 <div id="refs" role="list" style="display: none">
 
 </div>
@@ -1570,7 +1571,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/ecp-minicursos");
+      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -1911,4 +1912,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
