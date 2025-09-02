@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Criando uma Rede Ethereum Privada – Tecnologias Blockchain e suas Aplicações</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" rel="prev">
+<link href="../images/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-31072f9ed96e24c019159c695a8da794.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Criando uma Rede Ethereum Privada</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/rogerioag/tecnologias-blockchain" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bem-vindo</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática sobre <em>Ethereum Virtual Machine (EVM)</em></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instalando o Cliente Ethereum</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Criando uma Rede Ethereum Privada</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">4.1</span> Introdução</a></li>
+  <li><a href="#prática-criando-uma-rede-ethereum-privada-ethash" id="toc-prática-criando-uma-rede-ethereum-privada-ethash" class="nav-link" data-scroll-target="#prática-criando-uma-rede-ethereum-privada-ethash"><span class="header-section-number">5</span> Prática: Criando uma Rede Ethereum Privada: <code>Ethash</code></a>
+  <ul class="collapse">
+  <li><a href="#criando-uma-rede-privada-local" id="toc-criando-uma-rede-privada-local" class="nav-link" data-scroll-target="#criando-uma-rede-privada-local"><span class="header-section-number">5.1</span> Criando uma Rede Privada Local</a></li>
+  <li><a href="#executando-a-nova-rede" id="toc-executando-a-nova-rede" class="nav-link" data-scroll-target="#executando-a-nova-rede"><span class="header-section-number">5.2</span> Executando a nova Rede</a></li>
+  <li><a href="#interagindo-com-a-nova-rede" id="toc-interagindo-com-a-nova-rede" class="nav-link" data-scroll-target="#interagindo-com-a-nova-rede"><span class="header-section-number">5.3</span> Interagindo com a nova Rede</a></li>
+  <li><a href="#sec-criando:contas" id="toc-sec-criando:contas" class="nav-link" data-scroll-target="#sec-criando\:contas"><span class="header-section-number">5.4</span> Criando contas na nova Rede</a></li>
+  <li><a href="#verificando-o-saldo-das-carteiras" id="toc-verificando-o-saldo-das-carteiras" class="nav-link" data-scroll-target="#verificando-o-saldo-das-carteiras"><span class="header-section-number">5.5</span> Verificando o saldo das carteiras</a></li>
+  <li><a href="#gerar-algum-saldo-para-as-carteiras" id="toc-gerar-algum-saldo-para-as-carteiras" class="nav-link" data-scroll-target="#gerar-algum-saldo-para-as-carteiras"><span class="header-section-number">5.6</span> Gerar algum saldo para as carteiras</a></li>
+  <li><a href="#transferências-entre-as-carteiras" id="toc-transferências-entre-as-carteiras" class="nav-link" data-scroll-target="#transferências-entre-as-carteiras"><span class="header-section-number">5.7</span> Transferências entre as carteiras</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">5.8</span> Leitura Recomendada</a></li>
+  <li><a href="#comandos-finais" id="toc-comandos-finais" class="nav-link" data-scroll-target="#comandos-finais"><span class="header-section-number">5.9</span> Comandos Finais</a></li>
+  <li><a href="#leitura-recomendada-1" id="toc-leitura-recomendada-1" class="nav-link" data-scroll-target="#leitura-recomendada-1"><span class="header-section-number">5.10</span> Leitura Recomendada</a></li>
+  </ul></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">6</span> <em>Word Cloud</em></a>
+  <ul class="collapse">
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">6.1</span> Referências</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Criando uma Rede Ethereum Privada</span></h1>
+<p class="subtitle lead">Ethash</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Resumo</div>
+    Esta prática apresenta os passos para criarmos uma Rede Ethereum Privada Local. Fornecemos um <em>genesis block</em> para inicializar a rede com as características desejadas e depois podemos executá-la para efeitos de testes de desenvolvimento ou se desejarmos ter um Rede privada funcionando.
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="introdução" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">4.1</span> Introdução</h2>
+<p>Podemos criar uma rede privada local utilizando o algoritmo de consenso <a href="https://ethereum.org/en/developers/docs/consensus-mechanisms/pow/mining-algorithms/ethash/"><code>ethash</code></a> que é <code>Proof-of-Work</code> <a href="https://ethereum.org/en/developers/docs/consensus-mechanisms/pow/">(PoW)</a> ou outro algoritmo, com o <code>clique</code> que funciona <code>PoA</code> ou <code>Proof-of-Stake</code> (PoS) que é o algoritmo de consenso atual.</p>
+<p>A rede <code>Ethereum</code> iniciou usando um mecanismo de consenso que envolve <strong><a href="https://ethereum.org/en/developers/docs/consensus-mechanisms/pow/">Proof-of-Work (PoW)</a></strong>. Entretanto, <em>Ethereum</em> depreciou o uso de <code>Proof-of-Work</code> em <span class="math inline">\(2022\)</span> e iniciou o uso de <a href="https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/">Proof-of-Stake</a>.</p>
+<p>Leia mais em <a href="https://ethereum.org/en/developers/docs/consensus-mechanisms/pos/">Proof-of-Stake</a> e <a href="https://ethereum.org/en/staking/">staking</a>.</p>
+</section>
+<section id="prática-criando-uma-rede-ethereum-privada-ethash" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Prática: Criando uma Rede Ethereum Privada: <code>Ethash</code></h1>
+<p>O objetivo dessa prática é criarmos uma Rede <em>Ethereum</em> Privada que utilize o algoritmo de consenso <code>Prof-of-Work</code> (PoW), o <code>ethash</code>. Para isso é necessário instalarmos o <code>geth</code> na versão <code>1.11.6</code>, pois a partir da versão <code>1.12</code> o <code>ethash</code> não é mais suportado. No <em>link</em> <a href="https://github.com/ethereum/go-ethereum/releases" class="uri">https://github.com/ethereum/go-ethereum/releases</a> temos todas as versões, a versão corrente é a <a href="https://github.com/ethereum/go-ethereum/releases/tag/v1.16.3"><code>Impact Restrictors (v1.16.3)</code></a>.</p>
+<p>Antes de baixarmos os fontes do <code>geth</code> da versão <code>1.11</code> precisaremos instalar o <code>go</code>. Para compilar os fontes do <code>geth</code> é necessário ter o <code>go</code> versão <code>1.21.1</code> instalado. Pode ser instalado o pacote do sistema (<code>golang-go</code> no Ubuntu ou <code>go</code> no Manjaro) ou baixando os binários de <a href="https://go.dev/doc/install"><code>golang</code></a>, <code>go</code> versão <a href="https://go.dev/dl/go1.21.1.linux-amd64.tar.gz"><code>1.21.1</code></a>.</p>
+<p>Se a versão do sistema não for a <code>1.21.*</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> go version</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> version go1.21.0 linux/amd64</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Será necessário baixar e instalar a partir dos binários:</p>
+<ol type="1">
+<li><strong>Remova a instalação prévia do Go</strong> deletando o diretório <code>/usr/local/go1.21.1</code>, se existir, então extraia o arquivo baixado dentro do diretório <code>/usr/local</code>, criando uma subárvore em <code>/usr/local/go1.21.1</code> ou caso não tenha permissão, crie dentro da pasta <code>home</code> do seu usuário:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd /usr/local</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> wget https://go.dev/dl/go1.21.1.linux-amd64.tar.gz</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> rm <span class="at">-rf</span> /usr/local/go1.21.1 <span class="kw">&amp;&amp;</span> <span class="fu">tar</span> <span class="at">-C</span> /usr/local <span class="at">-xzf</span> go1.21.1.linux-amd64.tar.gz <span class="kw">&amp;&amp;</span> <span class="fu">mv</span> go go1.21.1</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ln <span class="at">-s</span> go1.21.1 go</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>​(Você pode precisar executar o comando como <code>root</code> ou usando o <code>sudo</code>).</p>
+<p>​<strong>Não</strong> descompactar o arquivo dentro de uma subárvore <code>/usr/local/go</code> existente. Isso pode produzir instalações <code>Go</code> quebradas.</p>
+<p>​2. Adicione <code>/usr/local/go/bin</code> para a variável de ambiente <code>PATH</code>. Você pode fazer isso adicionando a linha de comando para o seu <code>$HOME/.profile</code> ou <code>/etc/profile</code> (para uma instalação ampla no sistema):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">PATH</span><span class="op">=</span>/usr/local/go/bin:<span class="va">$PATH</span>         </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Nota:</strong> Mudanças feitas no arquivo de <em>profile</em> podem não ser aplicadas até a próxima vez que você fizer login no computador. Para aplicar as mudanças imediatamente, execute os comandos diretamente em um terminal ou execute eles do profile usando o comando <code>source $HOME/.profile</code>.</p>
+<p>​3. Verifique que a versão correta do <code>Go</code> foi instalada:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> go version          </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="4" type="1">
+<li>Confirme que o comando imprime a versão do <code>Go</code> instalado.</li>
+</ol>
+<p>Para instalarmos o <code>geth</code> a partir do repositório a versão <a href="https://github.com/ethereum/go-ethereum/releases/tag/v1.11.6"><code>Azimir (v1.11.6)</code></a>, basta acessarmos o repositório do <code>Github</code> e baixar na pasta do seu usuário:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> git clone <span class="at">-b</span> <span class="st">'v1.11.6'</span> <span class="at">--single-branch</span> <span class="at">--depth</span> 1 https://github.com/ethereum/go-ethereum.git go-ethereum-1.11.6</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd go-ethereum-1.11.6</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">[go-ethereum-1.11.6]$</span> make all</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Após a compilação os binários estarão disponíveis no diretório <code>go-ethereum-1.11.6/build/bin</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[go-ethereum-1.11.6]$</span> ls build/bin</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">abidump</span>  bootnode          clef    ethkey  faucet  p2psim</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">abigen</span>   checkpoint-admin  devp2p  evm     geth    rlpdump</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">[go-ethereum-1.11.6]$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sendo necessário considerar esse caminho dos binários para acessar os executáveis da versão correta nesta prática: <code>/home/rag/go-ethereum-1.11.6/build/bin</code>.</p>
+<section id="criando-uma-rede-privada-local" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="criando-uma-rede-privada-local"><span class="header-section-number">5.1</span> Criando uma Rede Privada Local</h2>
+<p>Para a criação de uma nova Rede Privada Local é necessário fazermos algumas configuraçãos. Precisamos criar um diretório <code>mkdir ~/.etherprivate-ethash</code> para ser a base de armazenamento da nova rede. As configurações iniciais devem ser fornecidas em um <em>genesis file</em>. Então criamos o arquivo <code>privategenesis.json</code> em <code>~/.etherprivate-ethash</code>.</p>
+<p>[block]{Passos}</p>
+<ol type="1">
+<li>Criar um diretório <code>mkdir ~/.etherprivate-ethash</code></li>
+<li>Criar um arquivo <code>privategenesis.json</code> em <code>~/.etherprivate-ethash</code>.</li>
+</ol>
+<p>[/block]</p>
+<p>O conteúdo do arquivo <code>privategenesis.json</code> deve ser o listado no (Código <a href="#lst-privategenesis" class="quarto-xref">Listing&nbsp;<span>5.I</span></a>).</p>
+<div id="lst-privategenesis" class="json listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-privategenesis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;5.I- Genesis File
+</figcaption>
+<div aria-describedby="lst-privategenesis-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-privategenesis"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="lst-privategenesis-1"><a href="#lst-privategenesis-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="lst-privategenesis-2"><a href="#lst-privategenesis-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"config"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="lst-privategenesis-3"><a href="#lst-privategenesis-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"chainId"</span><span class="fu">:</span> <span class="dv">786</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-4"><a href="#lst-privategenesis-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"homesteadBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-5"><a href="#lst-privategenesis-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"eip150Block"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-6"><a href="#lst-privategenesis-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"eip155Block"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-7"><a href="#lst-privategenesis-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"eip158Block"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-8"><a href="#lst-privategenesis-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"byzantiumBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-9"><a href="#lst-privategenesis-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"constantinopleBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-10"><a href="#lst-privategenesis-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"petersburgBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-11"><a href="#lst-privategenesis-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"istanbulBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-12"><a href="#lst-privategenesis-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"berlinBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-13"><a href="#lst-privategenesis-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"ethash"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="lst-privategenesis-14"><a href="#lst-privategenesis-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span>  </span>
+<span id="lst-privategenesis-15"><a href="#lst-privategenesis-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"nonce"</span><span class="fu">:</span> <span class="st">"0x0000000000000042"</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-16"><a href="#lst-privategenesis-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"timestamp"</span><span class="fu">:</span> <span class="st">"0x00"</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-17"><a href="#lst-privategenesis-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"parentHash"</span><span class="fu">:</span> <span class="st">"0x0000000000000000000000000000000000000000000000000000000000000000"</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-18"><a href="#lst-privategenesis-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"extraData"</span><span class="fu">:</span> <span class="st">"0x00"</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-19"><a href="#lst-privategenesis-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"gasLimit"</span><span class="fu">:</span> <span class="st">"0x8000000"</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-20"><a href="#lst-privategenesis-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"difficulty"</span><span class="fu">:</span> <span class="st">"0x0400"</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-21"><a href="#lst-privategenesis-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"mixhash"</span><span class="fu">:</span> <span class="st">"0x0000000000000000000000000000000000000000000000000000000000000000"</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-22"><a href="#lst-privategenesis-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"coinbase"</span><span class="fu">:</span> <span class="st">"0x3333333333333333333333333333333333333333"</span><span class="fu">,</span></span>
+<span id="lst-privategenesis-23"><a href="#lst-privategenesis-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"alloc"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="lst-privategenesis-24"><a href="#lst-privategenesis-24" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</figure>
+</div>
+<p>Utilizando as configurações fornecidas no (Código <a href="#lst-privategenesis" class="quarto-xref">Listing&nbsp;<span>5.I</span></a>) a rede será criada sem nenhum usuário, o <code>"alloc": {}</code> vazio indica isso. Será possível criar posteriormente conforme descrito na (Seção <a href="#sec-criando:contas" class="quarto-xref"><span>Section 5.4</span></a>). <!--[Seção@#sec:criando:contas].--></p>
+<p>Uma outra forma de estabelecer a configuração inicial da rede com contas com valores alocados, é criando o usuário antes de inicializar a rede com as configurações do <em>Genesis File</em>, conforme o Código (<a href="#lst-criando:usuarios" class="quarto-xref">Listing&nbsp;<span>5.II</span></a>).</p>
+<div id="lst-criando:usuarios" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-criando:usuarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;5.II- Criando Usuário para iniciar a rede
+</figcaption>
+<div aria-describedby="lst-criando:usuarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-criando:usuarios"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="lst-criando:usuarios-1"><a href="#lst-criando:usuarios-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> .etherprivate]$ /home/rogerio/go-ethereum-1.11.6/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate/ account new</span>
+<span id="lst-criando:usuarios-2"><a href="#lst-criando:usuarios-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-19<span class="kw">|</span><span class="ex">16:22:04.258]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
+<span id="lst-criando:usuarios-3"><a href="#lst-criando:usuarios-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-19<span class="kw">|</span><span class="ex">16:22:04.258]</span> Smartcard socket not found, disabling    err=<span class="st">"stat /run/pcscd/pcscd.comm: no such file or directory"</span></span>
+<span id="lst-criando:usuarios-4"><a href="#lst-criando:usuarios-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> new account is locked with a password. Please give a password. Do not forget this password.</span>
+<span id="lst-criando:usuarios-5"><a href="#lst-criando:usuarios-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Password:</span> </span>
+<span id="lst-criando:usuarios-6"><a href="#lst-criando:usuarios-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Repeat</span> password: </span>
+<span id="lst-criando:usuarios-7"><a href="#lst-criando:usuarios-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-criando:usuarios-8"><a href="#lst-criando:usuarios-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> new key was generated</span>
+<span id="lst-criando:usuarios-9"><a href="#lst-criando:usuarios-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-criando:usuarios-10"><a href="#lst-criando:usuarios-10" aria-hidden="true" tabindex="-1"></a><span class="ex">Public</span> address of the key:   0x2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="lst-criando:usuarios-11"><a href="#lst-criando:usuarios-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Path</span> of the secret key file: /home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="lst-criando:usuarios-12"><a href="#lst-criando:usuarios-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-criando:usuarios-13"><a href="#lst-criando:usuarios-13" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> You can share your public address with anyone. Others need it to interact with you.</span>
+<span id="lst-criando:usuarios-14"><a href="#lst-criando:usuarios-14" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> You must NEVER share the secret key with anyone! The key controls access to your funds!</span>
+<span id="lst-criando:usuarios-15"><a href="#lst-criando:usuarios-15" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> You must BACKUP your key file! Without the key, it<span class="st">'s impossible to access account funds!</span></span>
+<span id="lst-criando:usuarios-16"><a href="#lst-criando:usuarios-16" aria-hidden="true" tabindex="-1"></a><span class="st">- You must REMEMBER your password! Without the password, it'</span>s impossible to decrypt the key!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</figure>
+</div>
+<p>Com um <code>id</code> da conta criada (<code>0x2db017e44b03b37755a4b15e14cd799f83de4c13</code>) é possível completarmos algumas informações para inicializar a nova rede. Altere o conteúdo do arquivo <code>privategenesis.json</code> tal como listado no Código (<span class="quarto-unresolved-ref">?lst-privategenesis2</span>).</p>
+<div class="sourceCode" id="cod-privategenesis2" data-lst-cap="Genesis File Atualizado"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cod-privategenesis2-1"><a href="#cod-privategenesis2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cod-privategenesis2-2"><a href="#cod-privategenesis2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"config"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cod-privategenesis2-3"><a href="#cod-privategenesis2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"chainId"</span><span class="fu">:</span> <span class="dv">786</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-4"><a href="#cod-privategenesis2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"homesteadBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-5"><a href="#cod-privategenesis2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"eip150Block"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-6"><a href="#cod-privategenesis2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"eip155Block"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-7"><a href="#cod-privategenesis2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"eip158Block"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-8"><a href="#cod-privategenesis2-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"byzantiumBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-9"><a href="#cod-privategenesis2-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"constantinopleBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-10"><a href="#cod-privategenesis2-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"petersburgBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-11"><a href="#cod-privategenesis2-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"istanbulBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-12"><a href="#cod-privategenesis2-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"berlinBlock"</span><span class="fu">:</span> <span class="dv">0</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-13"><a href="#cod-privategenesis2-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"ethash"</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cod-privategenesis2-14"><a href="#cod-privategenesis2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span>  </span>
+<span id="cod-privategenesis2-15"><a href="#cod-privategenesis2-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"nonce"</span><span class="fu">:</span> <span class="st">"0x0000000000000042"</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-16"><a href="#cod-privategenesis2-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"timestamp"</span><span class="fu">:</span> <span class="st">"0x00"</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-17"><a href="#cod-privategenesis2-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"parentHash"</span><span class="fu">:</span> <span class="st">"0x0000000000000000000000000000000000000000000000000000000000000000"</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-18"><a href="#cod-privategenesis2-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"extraData"</span><span class="fu">:</span> <span class="st">"0x00"</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-19"><a href="#cod-privategenesis2-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"gasLimit"</span><span class="fu">:</span> <span class="st">"0x8000000"</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-20"><a href="#cod-privategenesis2-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"difficulty"</span><span class="fu">:</span> <span class="st">"0x0400"</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-21"><a href="#cod-privategenesis2-21" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"mixhash"</span><span class="fu">:</span> <span class="st">"0x0000000000000000000000000000000000000000000000000000000000000000"</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-22"><a href="#cod-privategenesis2-22" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"coinbase"</span><span class="fu">:</span> <span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="fu">,</span></span>
+<span id="cod-privategenesis2-23"><a href="#cod-privategenesis2-23" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"alloc"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cod-privategenesis2-24"><a href="#cod-privategenesis2-24" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="fu">:</span> <span class="fu">{</span> <span class="dt">"balance"</span><span class="fu">:</span> <span class="st">"300000"</span> <span class="fu">}</span></span>
+<span id="cod-privategenesis2-25"><a href="#cod-privategenesis2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cod-privategenesis2-26"><a href="#cod-privategenesis2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Após a configuração inicial no <em>Genesis File</em>, o <code>geth</code> é utilizado para a criação e inicialização da nova Rede sendo executado com os parâmetros <code>--datadir</code>, indicando o diretório onde os dados da nova rede serão armazenados e com o <code>init</code> indicando o caminho para o <em>Genesis File</em>, conforme Código (<a href="#lst-init:etherprivate" class="quarto-xref">Listing&nbsp;<span>5.III</span></a>).</p>
+<div id="lst-init:etherprivate" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-init:etherprivate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;5.III- Inicialização da Rede Privada Local
+</figcaption>
+<div aria-describedby="lst-init:etherprivate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-init:etherprivate"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="lst-init:etherprivate-1"><a href="#lst-init:etherprivate-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/geth <span class="at">--networkid</span> 786 <span class="at">--identity</span> <span class="st">"RAGEtherPrivate"</span> <span class="at">--datadir</span> ~/.etherprivate init ~/.etherprivate/privategenesis.json</span>
+<span id="lst-init:etherprivate-2"><a href="#lst-init:etherprivate-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.423]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
+<span id="lst-init:etherprivate-3"><a href="#lst-init:etherprivate-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.426]</span> Smartcard socket not found, disabling    err=<span class="st">"stat /run/pcscd/pcscd.comm: no such file or directory"</span></span>
+<span id="lst-init:etherprivate-4"><a href="#lst-init:etherprivate-4" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.430]</span> Set global gas cap                       cap=50,000,000</span>
+<span id="lst-init:etherprivate-5"><a href="#lst-init:etherprivate-5" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.431]</span> Using pebble as the backing database </span>
+<span id="lst-init:etherprivate-6"><a href="#lst-init:etherprivate-6" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.431]</span> Allocated cache and file handles         database=/home/rogerio/.etherprivate/geth/chaindata cache=16.00MiB handles=16</span>
+<span id="lst-init:etherprivate-7"><a href="#lst-init:etherprivate-7" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.496]</span> Opened ancient database                  database=/home/rogerio/.etherprivate/geth/chaindata/ancient/chain readonly=false</span>
+<span id="lst-init:etherprivate-8"><a href="#lst-init:etherprivate-8" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.496]</span> Persisted trie from memory database      nodes=1 size=142.00B time=<span class="st">"10.896us"</span> gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B</span>
+<span id="lst-init:etherprivate-9"><a href="#lst-init:etherprivate-9" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.496]</span> Freezer shutting down </span>
+<span id="lst-init:etherprivate-10"><a href="#lst-init:etherprivate-10" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.502]</span> Successfully wrote genesis state         database=chaindata hash=c4bd3f..d74cb0</span>
+<span id="lst-init:etherprivate-11"><a href="#lst-init:etherprivate-11" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.502]</span> Using pebble as the backing database </span>
+<span id="lst-init:etherprivate-12"><a href="#lst-init:etherprivate-12" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.502]</span> Allocated cache and file handles         database=/home/rogerio/.etherprivate/geth/lightchaindata cache=16.00MiB handles=16</span>
+<span id="lst-init:etherprivate-13"><a href="#lst-init:etherprivate-13" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.555]</span> Opened ancient database                  database=/home/rogerio/.etherprivate/geth/lightchaindata/ancient/chain readonly=false</span>
+<span id="lst-init:etherprivate-14"><a href="#lst-init:etherprivate-14" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.556]</span> Persisted trie from memory database      nodes=1 size=142.00B time=<span class="st">"21.093us"</span> gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B</span>
+<span id="lst-init:etherprivate-15"><a href="#lst-init:etherprivate-15" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">18:22:14.563]</span> Successfully wrote genesis state         database=lightchaindata hash=c4bd3f..d74cb0</span>
+<span id="lst-init:etherprivate-16"><a href="#lst-init:etherprivate-16" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</figure>
+</div>
+</section>
+<section id="executando-a-nova-rede" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="executando-a-nova-rede"><span class="header-section-number">5.2</span> Executando a nova Rede</h2>
+<p>Ao tentar iniciar o cliente <code>Geth</code> com a nova rede privada utilizando o <code>ethash</code>, algoritmo de consenso da <code>PoW</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/geth <span class="at">--identity</span> <span class="st">"RAGEtherPrivate"</span> <span class="at">--datadir</span> ~/.etherprivate</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:06.995]</span> Starting Geth on Ethereum mainnet... </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:06.996]</span> Bumping default cache on mainnet         provided=1024 updated=4096</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:06.997]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:06.998]</span> Smartcard socket not found, disabling    err=<span class="st">"stat /run/pcscd/pcscd.comm: no such file or directory"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.000]</span> Set global gas cap                       cap=50,000,000</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.003]</span> Allocated trie memory caches             clean=614.00MiB dirty=1024.00MiB</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.004]</span> Using pebble as the backing database </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.004]</span> Allocated cache and file handles         database=/home/rogerio/.etherprivate/geth/chaindata cache=2.00GiB handles=262,144</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.066]</span> Opened ancient database                  database=/home/rogerio/.etherprivate/geth/chaindata/ancient/chain readonly=false</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> Disk storage enabled for ethash caches   dir=/home/rogerio/.etherprivate/geth/ethash count=3</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> Disk storage enabled for ethash DAGs     dir=/home/rogerio/.ethash                   count=2</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> Initialising Ethereum protocol           network=1 dbversion=8</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> <span class="at">---------------------------------------------------------------------------------------------------------------------------------------------------------</span> </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> Chain ID:  786 <span class="er">(</span><span class="ex">unknown</span><span class="kw">)</span> </span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> Consensus: Ethash <span class="er">(</span><span class="ex">proof-of-work</span><span class="kw">)</span> </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> Pre-Merge hard forks <span class="er">(</span><span class="ex">block</span> based<span class="kw">)</span><span class="bu">:</span> </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Homestead:                   <span class="co">#0        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/homestead.md) </span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Tangerine Whistle <span class="er">(</span><span class="ex">EIP</span> 150<span class="kw">)</span><span class="bu">:</span> <span class="co">#0        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/tangerine-whistle.md) </span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Spurious Dragon/1 <span class="er">(</span><span class="ex">EIP</span> 155<span class="kw">)</span><span class="bu">:</span> <span class="co">#0        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/spurious-dragon.md) </span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Spurious Dragon/2 <span class="er">(</span><span class="ex">EIP</span> 158<span class="kw">)</span><span class="bu">:</span> <span class="co">#0        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/spurious-dragon.md) </span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Byzantium:                   <span class="co">#0        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/byzantium.md) </span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Constantinople:              <span class="co">#0        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/constantinople.md) </span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Petersburg:                  <span class="co">#0        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/petersburg.md) </span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Istanbul:                    <span class="co">#0        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/istanbul.md) </span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Berlin:                      <span class="co">#0        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/berlin.md) </span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> London:                      <span class="co">#&lt;nil&gt; (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/london.md) </span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  </span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> The Merge is not yet available for this network! </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  <span class="at">-</span> Hard-fork specification: https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/paris.md </span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  </span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> Post-Merge hard forks <span class="er">(</span><span class="ex">timestamp</span> based<span class="kw">)</span><span class="bu">:</span> </span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  </span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span> <span class="at">---------------------------------------------------------------------------------------------------------------------------------------------------------</span> </span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.067]</span>  </span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.068]</span> Loaded most recent local block           number=33 hash=193b06..bc9c89 td=4,360,192 age=21m43s</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.073]</span> Loaded local transaction journal         transactions=0 dropped=0</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.074]</span> Regenerated local transaction journal    transactions=0 accounts=0</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.074]</span> Switch sync mode from snap sync to full sync </span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.076]</span> Gasprice oracle is ignoring threshold set threshold=2</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.077]</span> Engine API enabled                       protocol=eth</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.077]</span> Engine API started but chain not configured for merge yet </span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.077]</span> Starting peer-to-peer node               instance=Geth/RAGEtherPrivate/v1.11.6-stable-ea9e62ca/linux-amd64/go1.21.1</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.111]</span> New local node record                    seq=1,726,003,870,539 id=3eabcf4667e9d0bc ip=127.0.0.1 udp=30303 tcp=30303</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.111]</span> Started P2P networking                   self=enode://d5c0dbca4edd303126eb0bdbc448848390f0998843381703ca91a4850e63e9e561899e03834e0c9c7e60e357acb34351d9e9da9a59b403faa7559938188bf78b@127.0.0.1:30303</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.112]</span> IPC endpoint opened                      url=/home/rogerio/.etherprivate/geth.ipc</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.112]</span> Loaded JWT secret file                   path=/home/rogerio/.etherprivate/geth/jwtsecret crc32=0x3d38500f</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.113]</span> WebSocket enabled                        url=ws://127.0.0.1:8551</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:07.113]</span> HTTP server started                      endpoint=127.0.0.1:8551 auth=true prefix= cors=localhost vhosts=localhost</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:17.529]</span> Looking for peers                        peercount=0 tried=13 static=0</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:27.770]</span> Looking for peers                        peercount=0 tried=24 static=0</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:37.860]</span> Looking for peers                        peercount=1 tried=37 static=0</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:47.862]</span> Looking for peers                        peercount=0 tried=31 static=0</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [09-10<span class="kw">|</span><span class="ex">19:06:49.748]</span> Served eth_coinbase                      reqid=3 duration=<span class="st">"42.046us"</span> err=<span class="st">"etherbase must be explicitly specified"</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:06:58.194]</span> Looking for peers                        peercount=0 tried=29 static=0</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:07:08.265]</span> Looking for peers                        peercount=0 tried=35 static=0</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:07:16.871]</span> Updated mining threads                   threads=16</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [09-10<span class="kw">|</span><span class="ex">19:07:16.872]</span> Transaction pool price threshold updated price=1,000,000,000</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="va">ERROR</span><span class="op">[</span><span class="dv">09</span>-10|19:07:16.872<span class="op">]</span> <span class="ex">Cannot</span> start mining without etherbase    err=<span class="st">"etherbase must be explicitly specified"</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [09-10<span class="kw">|</span><span class="ex">19:07:16.872]</span> Served miner_start                       reqid=11 duration=<span class="st">"194.024us"</span> err=<span class="st">"etherbase missing: etherbase must be explicitly specified"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Com o protocolo <code>ethash</code> é preciso indicar uma conta para receber as recompensas de mineração, utilize o parâmetro <code>--miner.etherbase=0x2db017e44b03b37755a4b15e14cd799f83de4c13</code> para indicar a conta principal que foi criada·</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span> <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="interagindo-com-a-nova-rede" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="interagindo-com-a-nova-rede"><span class="header-section-number">5.3</span> Interagindo com a nova Rede</h2>
+<p>O console pode ser utilizado na interação com a instância da nova rede em execução.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/geth attach ~/.etherprivate/geth.ipc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sec-criando:contas" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-criando:contas"><span class="header-section-number">5.4</span> Criando contas na nova Rede</h2>
+<p>Vamos criar duas contas para testes na nova rede. Utilizaremos para fins de teste a senha <em>“admin12345”</em>. O Código abaixo mostra a execução quando era possível utilizar o método <code>personal.newAccount(...)</code> via console JavaScript. Em versões anteriores era possível criar contas diretamente no console:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> personal.newAccount<span class="kw">(</span><span class="st">"admin12345"</span><span class="kw">)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="st">"0xedbc36d74d5a1cd64db36e53798bd1781f0c4955"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0xedbc36d74d5a1cd64db36e53798bd1781f0c4955"</span><span class="ex">]</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>  personal.newAccount<span class="kw">(</span><span class="st">"admin12345"</span><span class="kw">)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="st">"0x1478d95f8754b3ba7127100dd0bb46578fe7d22a"</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0xedbc36d74d5a1cd64db36e53798bd1781f0c4955"</span><span class="ex">,</span> <span class="st">"0x1478d95f8754b3ba7127100dd0bb46578fe7d22a"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Na versão utilizada na prática e seguintes isso não é mais possível, pois o <code>personal</code> foi depreciado:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span>  personal.newAccount<span class="kw">(</span><span class="st">"admin12345"</span><span class="kw">)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ReferenceError:</span> personal is not defined</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> <span class="op">&lt;</span>eval<span class="op">&gt;</span>:1:2<span class="er">(</span><span class="ex">0</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Com a depreciação do <code>personal</code> é recomendado utilizar o <code>clef</code> com o parâmetro <code>newaccount</code>. É importante indicar o diretório <code>keystore</code> do <code>.etherprivate</code>.</p>
+<p>Se seguimos a opção de criar uma conta antes para configurar o <em>genesis file</em> nossa base já terá uma conta. Essa conta pode ser verificada utilizando o <code>geth --networkid 786 --datadir ~/.etherprivate/ account</code> ou o comando do <code>clef</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/clef list-accounts <span class="at">--keystore</span> ~/.etherprivate/keystore</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING!</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Clef</span> is an account management tool. It may, like any software, contain bugs.</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Please</span> take care to</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> backup your keystore files,</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> verify that the keystore<span class="er">(</span><span class="ex">s</span><span class="kw">)</span> <span class="ex">can</span> be opened with your password.</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Clef</span> is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY<span class="kw">;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="ex">without</span> even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="ex">PURPOSE.</span> See the GNU General Public License for more details.</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> <span class="st">'ok'</span> to proceed:</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ok</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="ex">0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span> <span class="er">(</span><span class="ex">keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!--
+
+```bash
+[.etherprivate]$ clef newaccount --keystore keystore
+
+WARNING!
+
+Clef is an account management tool. It may, like any software, contain bugs.
+
+Please take care to
+- backup your keystore files,
+- verify that the keystore(s) can be opened with your password.
+
+Clef is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. See the GNU General Public License for more details.
+
+Enter 'ok' to proceed:
+> ok
+
+\#\# New account password
+
+Please enter a password for the new account to be created (attempt 0 of 3)
+> 
+-----------------------
+INFO [04-17|09:22:12.882] Your new key was generated               address=0x2db017E44b03B37755A4b15e14Cd799f83DE4c13
+WARN [04-17|09:22:12.892] Please backup your key file!             path=/home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13
+WARN [04-17|09:22:12.892] Please remember your password! 
+Generated account 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13
+
+```
+-->
+<p>A conta <code>0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</code> que foi gerada, utilizei a senha <code>admin12345</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> clef newaccount <span class="at">--keystore</span> keystore</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING!</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Clef</span> is an account management tool. It may, like any software, contain bugs.</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Please</span> take care to</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> backup your keystore files,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> verify that the keystore<span class="er">(</span><span class="ex">s</span><span class="kw">)</span> <span class="ex">can</span> be opened with your password.</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Clef</span> is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY<span class="kw">;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="ex">without</span> even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="ex">PURPOSE.</span> See the GNU General Public License for more details.</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> <span class="st">'ok'</span> to proceed:</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ok</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="ex">\#\#</span> New account password</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="ex">Please</span> enter a password for the new account to be created <span class="er">(</span><span class="ex">attempt</span> 0 of 3<span class="kw">)</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="ex">-----------------------</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-17<span class="kw">|</span><span class="ex">09:28:56.607]</span> Your new key was generated               address=0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [04-17<span class="kw">|</span><span class="ex">09:28:56.607]</span> Please backup your key file!             path=/home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-28-54.934614755Z--7a7686ad451d2865a2246e239b674aefd4c6c27c</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [04-17<span class="kw">|</span><span class="ex">09:28:56.607]</span> Please remember your password! </span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="ex">Generated</span> account 0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> .etherprivatto é para termos duas contas criadas, que na minha máquina são: <span class="kw">`</span><span class="ex">0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span><span class="kw">`</span> e <span class="kw">`</span><span class="ex">0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span><span class="kw">`</span>, ambas com a senha <span class="kw">`</span><span class="ex">admin12345</span><span class="kw">`</span>.</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a><span class="ex">Verifiquemos</span> no _console_ <span class="kw">`</span><span class="ex">JavaScript</span><span class="kw">`</span> se elas são listadas:</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span><span class="fu">bash</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> geth attach ~/.etherprivate/geth.ipc</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.5-stable-a38f4108/linux-amd64/go1.20.2</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="ex">at</span> block: 0 <span class="er">(</span><span class="ex">Wed</span> Dec 31 1969 21:00:00 GMT-0300 <span class="er">(</span><span class="ex">-03</span><span class="kw">))</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a> <span class="ex">datadir:</span> /home/rogerio/.etherprivate</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a> <span class="ex">modules:</span> admin:1.0 debug:1.0 engine:1.0 eth:1.0 ethash:1.0 miner:1.0 net:1.0 rpc:1.0 txpool:1.0 web3:1.0</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="ex">,</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>]</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!--
+* Desbloquear as contas:
+
+```bash
+> eth.accounts
+["0xedbc36d74d5a1cd64db36e53798bd1781f0c4955", "0x1478d95f8754b3ba7127100dd0bb46578fe7d22a"]
+> personal.unlockAccount("0xedbc36d74d5a1cd64db36e53798bd1781f0c4955")
+Unlock account 0xedbc36d74d5a1cd64db36e53798bd1781f0c4955
+Passphrase: 
+true
+> personal.unlockAccount("0x1478d95f8754b3ba7127100dd0bb46578fe7d22a")
+Unlock account 0x1478d95f8754b3ba7127100dd0bb46578fe7d22a
+Passphrase: 
+true
+```
+-->
+</section>
+<section id="verificando-o-saldo-das-carteiras" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="verificando-o-saldo-das-carteiras"><span class="header-section-number">5.5</span> Verificando o saldo das carteiras</h2>
+<p>Vamos verificar os valores em cada uma das carteiras:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> ~/go-ethereum-1.11.6/build/bin/geth attach ~/.etherprivate/geth.ipc</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.6-stable-ea9e62ca/linux-amd64/go1.21.1</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="ex">coinbase:</span> 0x2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="ex">at</span> block: 90 <span class="er">(</span><span class="ex">Tue</span> Sep 10 2024 19:15:48 GMT-0300 <span class="er">(</span><span class="ex">-03</span><span class="kw">))</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">datadir:</span> /home/rogerio/.etherprivate</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">modules:</span> admin:1.0 debug:1.0 engine:1.0 eth:1.0 ethash:1.0 miner:1.0 net:1.0 rpc:1.0 txpool:1.0 web3:1.0</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="ex">,</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>]</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Se criamos a primeira conta antes da configuração do <em>genesis file</em>, alocamos para ela <span class="math inline">\(300000\)</span> então a consulta de valores iniciais terá resultado diferente.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="ex">,</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>]</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[0]</span><span class="kw">)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">300000</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[1]</span><span class="kw">)</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="ex">3e-13</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="gerar-algum-saldo-para-as-carteiras" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="gerar-algum-saldo-para-as-carteiras"><span class="header-section-number">5.6</span> Gerar algum saldo para as carteiras</h2>
+<p>Se não alocamos nenhuma valor para alguma conta criada antes da inicialização da rede, para acumular algum valor é necessário minerar.</p>
+<p>Vamos iniciar o <code>geth</code> indicando a carteira que irá receber as recompensas pela mineração utilizando o parâmetro <code>--miner.etherbase</code>, utilizei aqui a primeira conta criada <code>0x2db017e44b03b37755a4b15e14cd799f83de4c13</code>. Note que é possível colocar uma identificação para sua rede com <code>--identity "RAGEtherPrivate"</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span> <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O cliente <code>geth</code> irá iniciar normalmente.</p>
+<p>Em um console <code>JavaScript</code> vamos verificar o saldo inicial e iniciar a mineração.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/geth attach ~/.etherprivate/geth.ipc</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.6-stable-ea9e62ca/linux-amd64/go1.21.1</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ex">coinbase:</span> 0x2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="ex">at</span> block: 90 <span class="er">(</span><span class="ex">Tue</span> Sep 10 2024 19:15:48 GMT-0300 <span class="er">(</span><span class="ex">-03</span><span class="kw">))</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">datadir:</span> /home/rogerio/.etherprivate</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">modules:</span> admin:1.0 debug:1.0 engine:1.0 eth:1.0 ethash:1.0 miner:1.0 net:1.0 rpc:1.0 txpool:1.0 web3:1.0</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="ex">,</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>]</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.start<span class="kw">()</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="ex">2890</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="transferências-entre-as-carteiras" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="transferências-entre-as-carteiras"><span class="header-section-number">5.7</span> Transferências entre as carteiras</h2>
+<p>Vamos enviar <span class="math inline">\(100\)</span> <em>ethers</em> da primeira para a segunda carteira.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span>, to: <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>, value: 100}<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!--
+> eth.sendTransaction({from: "0xedbc36d74d5a1cd64db36e53798bd1781f0c4955", to: "0x1478d95f8754b3ba7127100dd0bb46578fe7d22a", value:web3.toWei(100, "ether") })
+
+SyntaxError: SyntaxError: (anonymous): Line 1:73 Unexpected identifier (and 6 more errors)
+```
+
+* Estava ocorrendo esse erro: `SyntaxError: SyntaxError: (anonymous): Line 1:73 Unexpected identifier (and 6 more errors)` quando tentava enviar uma transação.
+
+
+```bash
+> personal.unlockAccount(personal.listAccounts[0])
+Unlock account 0xedbc36d74d5a1cd64db36e53798bd1781f0c4955
+Passphrase: 
+true
+> personal.unlockAccount(personal.listAccounts[1])
+Unlock account 0x1478d95f8754b3ba7127100dd0bb46578fe7d22a
+Passphrase: 
+true
+> eth.sendTransaction({from: personal.listAccounts[0], to: personal.listAccounts[1], value: 100})
+"0x797c2a303974e365bf48ac1620da9d3a1e8ad0d53138c3ba06a4cddbe19e67b2"
+> eth.sendTransaction({from: "0xedbc36d74d5a1cd64db36e53798bd1781f0c4955", to: "0x1478d95f8754b3ba7127100dd0bb46578fe7d22a", value:100})
+SyntaxError: SyntaxError: (anonymous): Line 1:73 Unexpected identifier (and 6 more errors)
+
+> personal.unlockAccount(personal.listAccounts[0])
+
+Unlock account 0xedbc36d74d5a1cd64db36e53798bd1781f0c4955
+Passphrase: 
+true
+> eth.sendTransaction({from: "0xedbc36d74d5a1cd64db36e53798bd1781f0c4955" to: "0x1478d95f8754b3ba7127100dd0bb46578fe7d22a", value:100})
+SyntaxError: SyntaxError: (anonymous): Line 1:73 Unexpected identifier (and 6 more errors)
+
+> personal.unlockAccount(personal.listAccounts[1])
+Unlock account 0x1478d95f8754b3ba7127100dd0bb46578fe7d22a
+Passphrase: 
+true
+> eth.sendTransaction({from: "0xedbc36d74d5a1cd64db36e53798bd1781f0c4955" to: "0x1478d95f8754b3ba7127100dd0bb46578fe7d22a", value:100})
+SyntaxError: SyntaxError: (anonymous): Line 1:73 Unexpected identifier (and 6 more errors)
+
+> eth.sendTransaction({from: personal.listAccounts[0], to: personal.listAccounts[1], value: 100})
+"0x5c599cc300072c38544fa2a8869cf9928b17345b2d75ab43e6a3f23d4b6c0458"
+> 
+```
+
+* Usando `personal.unlockAccount(personal.listAccounts[1])` para desbloquear funcionou o envio de transações.
+
+* Verificando os valores nas carteiras:
+
+```bash
+> web3.fromWei(eth.getBalance("0xedbc36d74d5a1cd64db36e53798bd1781f0c4955"), "ether")
+9709.9999999999999998
+> web3.fromWei(eth.getBalance("0x1478d95f8754b3ba7127100dd0bb46578fe7d22a"), "ether")
+2e-16
+```
+-->
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/geth attach ~/.etherprivate/geth.ipc</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.6-stable-ea9e62ca/linux-amd64/go1.21.1</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ex">coinbase:</span> 0x2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="ex">at</span> block: 90 <span class="er">(</span><span class="ex">Tue</span> Sep 10 2024 19:15:48 GMT-0300 <span class="er">(</span><span class="ex">-03</span><span class="kw">))</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">datadir:</span> /home/rogerio/.etherprivate</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">modules:</span> admin:1.0 debug:1.0 engine:1.0 eth:1.0 ethash:1.0 miner:1.0 net:1.0 rpc:1.0 txpool:1.0 web3:1.0</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="ex">,</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>]</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.start<span class="kw">()</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="ex">2890</span></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.stop<span class="kw">()</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
+<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a><span class="ex">4335</span></span>
+<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span>, to: <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>, value: 100}<span class="kw">)</span></span>
+<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> authentication needed: password or unlock</span>
+<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> web3.js:6365:9<span class="er">(</span><span class="ex">39</span><span class="kw">)</span></span>
+<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> send <span class="er">(</span><span class="ex">web3.js:5099:62</span><span class="er">(</span><span class="ex">29</span><span class="kw">))</span></span>
+<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> <span class="op">&lt;</span>eval<span class="op">&gt;</span>:1:20<span class="er">(</span><span class="ex">9</span><span class="kw">)</span></span>
+<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> personal.unlockAccount<span class="kw">(</span><span class="ex">eth.accounts[0]</span><span class="kw">)</span></span>
+<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a><span class="ex">ReferenceError:</span> personal is not defined</span>
+<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> <span class="op">&lt;</span>eval<span class="op">&gt;</span>:1:1<span class="er">(</span><span class="ex">0</span><span class="kw">)</span></span>
+<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="ex">,</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>]</span>
+<span id="cb19-44"><a href="#cb19-44" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{to:</span> <span class="st">'0x7a7686ad451d2865a2246e239b674aefd4c6c27c'</span>, from: eth.accounts<span class="pp">[</span><span class="ss">0</span><span class="pp">]</span>, value: 100}<span class="kw">);</span></span>
+<span id="cb19-45"><a href="#cb19-45" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> authentication needed: password or unlock</span>
+<span id="cb19-46"><a href="#cb19-46" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> web3.js:6365:9<span class="er">(</span><span class="ex">39</span><span class="kw">)</span></span>
+<span id="cb19-47"><a href="#cb19-47" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> send <span class="er">(</span><span class="ex">web3.js:5099:62</span><span class="er">(</span><span class="ex">29</span><span class="kw">))</span></span>
+<span id="cb19-48"><a href="#cb19-48" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> <span class="op">&lt;</span>eval<span class="op">&gt;</span>:1:20<span class="er">(</span><span class="ex">12</span><span class="kw">)</span></span>
+<span id="cb19-49"><a href="#cb19-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-50"><a href="#cb19-50" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">({</span></span>
+<span id="cb19-51"><a href="#cb19-51" aria-hidden="true" tabindex="-1"></a>  <span class="ex">to:</span> <span class="st">'0x7a7686ad451d2865a2246e239b674aefd4c6c27c'</span>,</span>
+<span id="cb19-52"><a href="#cb19-52" aria-hidden="true" tabindex="-1"></a>  <span class="ex">from:</span> eth.accounts<span class="pp">[</span><span class="ss">0</span><span class="pp">]</span>,</span>
+<span id="cb19-53"><a href="#cb19-53" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="ex">,</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O erro <strong>“Error: authentication needed: password or unlock”</strong> ocorre por que precisamos autorizar a transação. Em versões anteriores era possível desbloquear as contas via console JavaScript, conforme tentamos no Código acima <code>personal.unlockAccount(eth.accounts[0])</code>. Como o <code>personal</code> foi depreciado não pode ser mais utilizado.</p>
+<p>Na versão corrente é preciso utilizar o <code>clef</code> para fazer a autenticação em um console. Em um outro terminal inicie a instância do <code>clef</code> com o comando:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/clef <span class="at">--chainid</span> 786 <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--configdir</span> ~/.etherprivate/clef <span class="at">--http</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING!</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Clef</span> is an account management tool. It may, like any software, contain bugs.</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Please</span> take care to</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> backup your keystore files,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> verify that the keystore<span class="er">(</span><span class="ex">s</span><span class="kw">)</span> <span class="ex">can</span> be opened with your password.</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="ex">Clef</span> is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY<span class="kw">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="ex">without</span> even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="ex">PURPOSE.</span> See the GNU General Public License for more details.</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> <span class="st">'ok'</span> to proceed:</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ok</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-17<span class="kw">|</span><span class="ex">10:23:09.630]</span> Using CLI as UI-channel </span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-17<span class="kw">|</span><span class="ex">10:23:10.050]</span> Loaded 4byte database                    embeds=268,621 locals=0 local=./4byte-custom.json</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [04-17<span class="kw">|</span><span class="ex">10:23:10.050]</span> Failed to open master, rules disabled    err=<span class="st">"failed stat on /home/rogerio/.etherprivate/clef/masterseed.json: stat /home/rogerio/.etherprivate/clef/masterseed.json: no such file or directory"</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-17<span class="kw">|</span><span class="ex">10:23:10.050]</span> Starting signer                          chainid=786 keystore=/home/rogerio/.etherprivate/keystore light-kdf=false advanced=false</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-17<span class="kw">|</span><span class="ex">10:23:10.052]</span> Smartcard socket file missing, disabling err=<span class="st">"stat /run/pcscd/pcscd.comm: no such file or directory"</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-17<span class="kw">|</span><span class="ex">10:23:10.052]</span> Audit logs configured                    file=audit.log</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-17<span class="kw">|</span><span class="ex">10:23:10.053]</span> HTTP endpoint opened                     url=http://127.0.0.1:8550/</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-17<span class="kw">|</span><span class="ex">10:23:10.053]</span> IPC endpoint opened                      url=/home/rogerio/.etherprivate/clef/clef.ipc</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="ex">-------</span> Signer info <span class="at">-------</span></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="ex">*</span> extapi_version : 6.1.0</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a><span class="ex">*</span> extapi_http : http://127.0.0.1:8550/</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a><span class="ex">*</span> extapi_ipc : /home/rogerio/.etherprivate/clef/clef.ipc</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="ex">*</span> intapi_version : 7.0.1</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a><span class="ex">-------</span> Available accounts <span class="at">-------</span></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a><span class="ex">0.</span> 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 at keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> 0x7A7686aD451d2865A2246E239B674aeFd4c6c27c at keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-28-54.934614755Z--7a7686ad451d2865a2246e239b674aefd4c6c27c</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a><span class="ex">--------</span> List Account request--------------</span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> request has been made to list all accounts. </span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a><span class="ex">You</span> can select which accounts the caller can see</span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-28-54.934614755Z--7a7686ad451d2865a2246e239b674aefd4c6c27c</span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>E volte ao terminal onde iniciou o <code>geth</code> e indique que as autentificações serão via <code>clef</code> com o parâmetro <code>--signer=/home/rogerio/.etherprivate/clef/clef.ipc</code> passando o caminho dado pelo <code>clef</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span>  <span class="at">--identity</span> <span class="st">"RAGEtherPrivate"</span>  <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.etherprivate/clef/clef.ipc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cada transação executada no console JavaScript deverá ser autorizada no console do <code>clef</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">({</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">to:</span> <span class="st">'0x7a7686ad451d2865a2246e239b674aefd4c6c27c'</span>,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">from:</span> eth.accounts<span class="pp">[</span><span class="ss">0</span><span class="pp">]</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="ex">,</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>]</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">({</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">to:</span> <span class="st">'0x7a7686ad451d2865a2246e239b674aefd4c6c27c'</span>,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">from:</span> eth.accounts<span class="pp">[</span><span class="ss">0</span><span class="pp">]</span>,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">value:</span> 100</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="kw">});</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="st">"0xb579cc595601e4aca546ce4e46bdcded7841bd7f50a0a78c505e839dd039b8b9"</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">({</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">to:</span> <span class="st">'0x7a7686ad451d2865a2246e239b674aefd4c6c27c'</span>,</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="ex">from:</span> eth.accounts<span class="pp">[</span><span class="ss">0</span><span class="pp">]</span>,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">({</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="ex">to:</span> <span class="st">'0x7a7686ad451d2865a2246e239b674aefd4c6c27c'</span>,</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="ex">from:</span> eth.accounts<span class="pp">[</span><span class="ss">0</span><span class="pp">]</span>,</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[1]</span><span class="kw">)</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>No console do <code>clef</code> é possível autorizar e ver a transação assinada com <code>hash: 0xb579cc595601e4aca546ce4e46bdcded7841bd7f50a0a78c505e839dd039b8b9</code> que é o mesmo <code>id</code> devolvido no console JavaScript.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--------</span> List Account request--------------</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> request has been made to list all accounts. </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">You</span> can select which accounts the caller can see</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-28-54.934614755Z--7a7686ad451d2865a2246e239b674aefd4c6c27c</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Additional</span> HTTP header data, provided by the external caller:</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User-Agent:</span> <span class="st">""</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Origin:</span> <span class="st">""</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Approve?</span> <span class="pp">[</span><span class="ss">y/N</span><span class="pp">]</span>:</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="ex">--------</span> List Account request--------------</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> request has been made to list all accounts. </span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="ex">You</span> can select which accounts the caller can see</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-28-54.934614755Z--7a7686ad451d2865a2246e239b674aefd4c6c27c</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="ex">Additional</span> HTTP header data, provided by the external caller:</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User-Agent:</span> <span class="st">""</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Origin:</span> <span class="st">""</span></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a><span class="ex">Approve?</span> <span class="pp">[</span><span class="ss">y/N</span><span class="pp">]</span>:</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a><span class="ex">---------</span> Transaction request-------------</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="ex">to:</span>    0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a><span class="ex">from:</span>               0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 [chksum ok]</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a><span class="ex">value:</span>              100 wei</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a><span class="ex">gas:</span>                0x5208 <span class="er">(</span><span class="ex">21000</span><span class="kw">)</span></span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a><span class="ex">gasprice:</span> 1000000000 wei</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a><span class="ex">nonce:</span>    0x0 <span class="er">(</span><span class="ex">0</span><span class="kw">)</span></span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a><span class="ex">chainid:</span>  0x312</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a><span class="ex">Additional</span> HTTP header data, provided by the external caller:</span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User-Agent:</span> <span class="st">""</span></span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Origin:</span> <span class="st">""</span></span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a><span class="ex">Approve?</span> <span class="pp">[</span><span class="ss">y/N</span><span class="pp">]</span>:</span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a><span class="ex">\#\#</span> Account password</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a><span class="ex">Please</span> enter the password for account 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a><span class="ex">-----------------------</span></span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a><span class="ex">Transaction</span> signed:</span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a> <span class="kw">{</span></span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"type"</span><span class="ex">:</span> <span class="st">"0x0"</span>,</span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nonce"</span><span class="ex">:</span> <span class="st">"0x0"</span>,</span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gasPrice"</span><span class="ex">:</span> <span class="st">"0x3b9aca00"</span>,</span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">"maxPriorityFeePerGas"</span><span class="ex">:</span> null,</span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">"maxFeePerGas"</span><span class="ex">:</span> null,</span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gas"</span><span class="ex">:</span> <span class="st">"0x5208"</span>,</span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">"value"</span><span class="ex">:</span> <span class="st">"0x64"</span>,</span>
+<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"input"</span><span class="ex">:</span> <span class="st">"0x"</span>,</span>
+<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"v"</span><span class="ex">:</span> <span class="st">"0x648"</span>,</span>
+<span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"r"</span><span class="ex">:</span> <span class="st">"0xe497ab329bf31af61f371e2eb251ca979ec8ba45e099318d44468e8703358418"</span>,</span>
+<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s"</span><span class="ex">:</span> <span class="st">"0x518b4e7e5906e4abc86e486523a8ad290727529f240a201905acc84c5f95417f"</span>,</span>
+<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"to"</span><span class="ex">:</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>,</span>
+<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hash"</span><span class="ex">:</span> <span class="st">"0xb579cc595601e4aca546ce4e46bdcded7841bd7f50a0a78c505e839dd039b8b9"</span></span>
+<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>No <em>console</em> <code>JavaScript</code> é possível recuperar o recibo da transação:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">eth.getTransactionReceipt</span><span class="er">(</span><span class="st">"0xb579cc595601e4aca546ce4e46bdcded7841bd7f50a0a78c505e839dd039b8b9"</span><span class="kw">)</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">blockHash:</span> <span class="st">"0x6756c8d89be5a01ff3d300eab5c50add20a2bca691221c4690fc663336ef2cf8"</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">blockNumber:</span> 868,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">contractAddress:</span> null,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">cumulativeGasUsed:</span> 21000,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">effectiveGasPrice:</span> 1000000000,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">from:</span> <span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span>,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">gasUsed:</span> 21000,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">logs:</span> [],</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">logsBloom:</span> <span class="st">"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"</span>,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">root:</span> <span class="st">"0x9d1d510b5517e7c772e36c67e99d47de6d10c25ba9d24311d39eb85b7db6c071"</span>,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">to:</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">transactionHash:</span> <span class="st">"0xb579cc595601e4aca546ce4e46bdcded7841bd7f50a0a78c505e839dd039b8b9"</span>,</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">transactionIndex:</span> 0,</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="ex">type:</span> <span class="st">"0x0"</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!-- eth.sendTransaction({to: eth.accounts[1], from: eth.accounts[0], value: 100}); -->
+<p>É preciso minerar para a transação ser efetivada:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.start<span class="kw">()</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[1]</span><span class="kw">)</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="ex">100</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.stop<span class="kw">()</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ao enviar outra quantida para a segunda conta é preciso autorizar a transação no console do <code>clef</code> e minerar novamente para ela ser efetivada.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span>, to: <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>, value: 100}<span class="kw">)</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="st">"0xa4cdfb3d4f5fcd98db211bab41eb15b2eace3cd938250faec9d2c4feac242980"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[1]</span><span class="kw">)</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="ex">100</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.start<span class="kw">()</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[1]</span><span class="kw">)</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="ex">200</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.stop<span class="kw">()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Console do <code>clef</code>para a segunda transação:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--------</span> List Account request--------------</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> request has been made to list all accounts. </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="ex">You</span> can select which accounts the caller can see</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-28-54.934614755Z--7a7686ad451d2865a2246e239b674aefd4c6c27c</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Additional</span> HTTP header data, provided by the external caller:</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User-Agent:</span> <span class="st">""</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Origin:</span> <span class="st">""</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="ex">Approve?</span> <span class="pp">[</span><span class="ss">y/N</span><span class="pp">]</span>:</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="ex">--------</span> List Account request--------------</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> request has been made to list all accounts. </span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a><span class="ex">You</span> can select which accounts the caller can see</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-28-54.934614755Z--7a7686ad451d2865a2246e239b674aefd4c6c27c</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="ex">Additional</span> HTTP header data, provided by the external caller:</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User-Agent:</span> <span class="st">""</span></span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Origin:</span> <span class="st">""</span></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="ex">Approve?</span> <span class="pp">[</span><span class="ss">y/N</span><span class="pp">]</span>:</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="ex">---------</span> Transaction request-------------</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="ex">to:</span>    0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="ex">from:</span>               0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 [chksum ok]</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a><span class="ex">value:</span>              100 wei</span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a><span class="ex">gas:</span>                0x5208 <span class="er">(</span><span class="ex">21000</span><span class="kw">)</span></span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a><span class="ex">gasprice:</span> 1000000000 wei</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a><span class="ex">nonce:</span>    0x1 <span class="er">(</span><span class="ex">1</span><span class="kw">)</span></span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a><span class="ex">chainid:</span>  0x312</span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a><span class="ex">Additional</span> HTTP header data, provided by the external caller:</span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User-Agent:</span> <span class="st">""</span></span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Origin:</span> <span class="st">""</span></span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a><span class="ex">Approve?</span> <span class="pp">[</span><span class="ss">y/N</span><span class="pp">]</span>:</span>
+<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span>
+<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a><span class="ex">\#\#</span> Account password</span>
+<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a><span class="ex">Please</span> enter the password for account 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span>
+<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span>
+<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a><span class="ex">-----------------------</span></span>
+<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a><span class="ex">Transaction</span> signed:</span>
+<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a> <span class="kw">{</span></span>
+<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"type"</span><span class="ex">:</span> <span class="st">"0x0"</span>,</span>
+<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"nonce"</span><span class="ex">:</span> <span class="st">"0x1"</span>,</span>
+<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gasPrice"</span><span class="ex">:</span> <span class="st">"0x3b9aca00"</span>,</span>
+<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">"maxPriorityFeePerGas"</span><span class="ex">:</span> null,</span>
+<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">"maxFeePerGas"</span><span class="ex">:</span> null,</span>
+<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">"gas"</span><span class="ex">:</span> <span class="st">"0x5208"</span>,</span>
+<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">"value"</span><span class="ex">:</span> <span class="st">"0x64"</span>,</span>
+<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"input"</span><span class="ex">:</span> <span class="st">"0x"</span>,</span>
+<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"v"</span><span class="ex">:</span> <span class="st">"0x647"</span>,</span>
+<span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"r"</span><span class="ex">:</span> <span class="st">"0x33d621389272cdbee73d2c50d91b846b325bb2d7b94f2c32d726c6fa21151f9a"</span>,</span>
+<span id="cb27-68"><a href="#cb27-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s"</span><span class="ex">:</span> <span class="st">"0x5510f0a5611c8c7640904b5a489422352fae1517eb7307bb6496468cff545726"</span>,</span>
+<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"to"</span><span class="ex">:</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>,</span>
+<span id="cb27-70"><a href="#cb27-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hash"</span><span class="ex">:</span> <span class="st">"0xa4cdfb3d4f5fcd98db211bab41eb15b2eace3cd938250faec9d2c4feac242980"</span></span>
+<span id="cb27-71"><a href="#cb27-71" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span>
+<span id="cb27-72"><a href="#cb27-72" aria-hidden="true" tabindex="-1"></a><span class="ex">--------</span> List Account request--------------</span>
+<span id="cb27-73"><a href="#cb27-73" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> request has been made to list all accounts. </span>
+<span id="cb27-74"><a href="#cb27-74" aria-hidden="true" tabindex="-1"></a><span class="ex">You</span> can select which accounts the caller can see</span>
+<span id="cb27-75"><a href="#cb27-75" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span>
+<span id="cb27-76"><a href="#cb27-76" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb27-77"><a href="#cb27-77" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb27-78"><a href="#cb27-78" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-28-54.934614755Z--7a7686ad451d2865a2246e239b674aefd4c6c27c</span>
+<span id="cb27-79"><a href="#cb27-79" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<span id="cb27-80"><a href="#cb27-80" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
+<span id="cb27-81"><a href="#cb27-81" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
+<span id="cb27-82"><a href="#cb27-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-83"><a href="#cb27-83" aria-hidden="true" tabindex="-1"></a><span class="ex">Additional</span> HTTP header data, provided by the external caller:</span>
+<span id="cb27-84"><a href="#cb27-84" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User-Agent:</span> <span class="st">""</span></span>
+<span id="cb27-85"><a href="#cb27-85" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Origin:</span> <span class="st">""</span></span>
+<span id="cb27-86"><a href="#cb27-86" aria-hidden="true" tabindex="-1"></a><span class="ex">Approve?</span> <span class="pp">[</span><span class="ss">y/N</span><span class="pp">]</span>:</span>
+<span id="cb27-87"><a href="#cb27-87" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span>
+<span id="cb27-88"><a href="#cb27-88" aria-hidden="true" tabindex="-1"></a><span class="ex">--------</span> List Account request--------------</span>
+<span id="cb27-89"><a href="#cb27-89" aria-hidden="true" tabindex="-1"></a><span class="ex">A</span> request has been made to list all accounts. </span>
+<span id="cb27-90"><a href="#cb27-90" aria-hidden="true" tabindex="-1"></a><span class="ex">You</span> can select which accounts the caller can see</span>
+<span id="cb27-91"><a href="#cb27-91" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</span>
+<span id="cb27-92"><a href="#cb27-92" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-22-11.261468773Z--2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb27-93"><a href="#cb27-93" aria-hidden="true" tabindex="-1"></a>  <span class="ex">[x]</span> 0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</span>
+<span id="cb27-94"><a href="#cb27-94" aria-hidden="true" tabindex="-1"></a>    <span class="ex">URL:</span> keystore:///home/rogerio/.etherprivate/keystore/UTC--2023-04-17T12-28-54.934614755Z--7a7686ad451d2865a2246e239b674aefd4c6c27c</span>
+<span id="cb27-95"><a href="#cb27-95" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<span id="cb27-96"><a href="#cb27-96" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
+<span id="cb27-97"><a href="#cb27-97" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
+<span id="cb27-98"><a href="#cb27-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-99"><a href="#cb27-99" aria-hidden="true" tabindex="-1"></a><span class="ex">Additional</span> HTTP header data, provided by the external caller:</span>
+<span id="cb27-100"><a href="#cb27-100" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User-Agent:</span> <span class="st">""</span></span>
+<span id="cb27-101"><a href="#cb27-101" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Origin:</span> <span class="st">""</span></span>
+<span id="cb27-102"><a href="#cb27-102" aria-hidden="true" tabindex="-1"></a><span class="ex">Approve?</span> <span class="pp">[</span><span class="ss">y/N</span><span class="pp">]</span>:</span>
+<span id="cb27-103"><a href="#cb27-103" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A transação <code>0xa4cdfb3d4f5fcd98db211bab41eb15b2eace3cd938250faec9d2c4feac242980</code> foi autorizada e podemos verificar o saldo das carteiras:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getTransactionReceipt<span class="kw">(</span><span class="st">"0xa4cdfb3d4f5fcd98db211bab41eb15b2eace3cd938250faec9d2c4feac242980"</span><span class="kw">)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">blockHash:</span> <span class="st">"0x89dd3dd5175ca3d85549aeb8387be343ef1cecfd2a96134148f39618c4b587fd"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">blockNumber:</span> 1021,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">contractAddress:</span> null,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">cumulativeGasUsed:</span> 21000,</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">effectiveGasPrice:</span> 1000000000,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="ex">from:</span> <span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">gasUsed:</span> 21000,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">logs:</span> [],</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">logsBloom:</span> <span class="st">"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"</span>,</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">root:</span> <span class="st">"0xfbaf589acffe7f4f701301e31e7549e99e102bfd36145c7f55a38800e3714194"</span>,</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="ex">to:</span> <span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span>,</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="ex">transactionHash:</span> <span class="st">"0xa4cdfb3d4f5fcd98db211bab41eb15b2eace3cd938250faec9d2c4feac242980"</span>,</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">transactionIndex:</span> 0,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="ex">type:</span> <span class="st">"0x0"</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x2db017e44b03b37755a4b15e14cd799f83de4c13"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="ex">5484.9999999999999998</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0x7a7686ad451d2865a2246e239b674aefd4c6c27c"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="ex">2e-16</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Mais detalhes de como implantar uma rede privada local do <em>Ethereum</em> podem ser visto em <a href="https://geth.ethereum.org/docs/fundamentals/private-network">Private Networks</a>.</p>
+</section>
+<section id="leitura-recomendada" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">5.8</span> Leitura Recomendada</h2>
+<p>[alertblock]{Leitura Recomendada}</p>
+<p>Capítulo 12: <em>Futher Ethereum</em> <span class="citation" data-cites="178948620180101">(<a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#ref-178948620180101" role="doc-biblioref"><strong>178948620180101?</strong></a>)</span></p>
+<p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_310">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p>[/alertblock]</p>
+</section>
+<section id="comandos-finais" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="comandos-finais"><span class="header-section-number">5.9</span> Comandos Finais</h2>
+<p>A Figura <span class="math inline">\(\ref{fig:terminais:comandos}\)</span> apresenta os comandos para cada um dos terminais.</p>
+<!--
+prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --suggested-fee-recipient=0x3437cd252485bff91957a874d449e437709f6f66 --jwt-secret=jwt.hex --genesis-state=genesis.ssz
+
+
+./prysm.sh beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --jwt-secret=~/.ethereum/sepolia/geth/jwtsecret --genesis-state=genesis.ssz --suggested-fee-recipient=0xa9e98368b44b371cec7d205f9fe2b074b6134c95 --checkpoint-sync-url=https://checkpoint-sync.sepolia.ethpandaops.io --genesis-beacon-api-url=https://checkpoint-sync.sepolia.ethpandaops.io
+
+
+geth --sepolia --syncmode full --http --http.addr 127.0.0.1 --http.port 8559 --http.api "eth,net,web3,personal,engine,admin" --keystore ~/.ethereum/sepolia/keystore --authrpc.addr localhost --authrpc.port 8551 --authrpc.vhosts localhost --authrpc.jwtsecret ~/.ethereum/sepolia/geth/jwtsecret --nodiscover --maxpeers 15 --miner.etherbase=0xa9e98368B44b371ceC7d205F9fE2b074b6134C95 --signer=/home/rogerio/.ethereum/sepolia/clef/clef.ipc --verbosity 3
+-->
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/tela-terminal-4-consoles.png" class="img-fluid figure-img"></p>
+<figcaption>Terminais </figcaption>
+</figure>
+</div>
+<!--
+[Código @lst:comando:geth]
+
+```{#lst:comando:geth .bash lst-cap="Comando do Terminal -- Geth"}-->
+<p>O comando para o terminal do <code>clef</code>:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[clef]$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/clef <span class="at">--chainid</span> 786 <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--configdir</span> ~/.etherprivate/clef <span class="at">--http</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O comando para o terminal do <code>Geth</code>:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span>  <span class="at">--identity</span> <span class="st">"RAGEtherPrivate"</span>  <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.etherprivate/clef/clef.ipc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O comando para o terminal do <code>prysm</code>: Não precisa!</p>
+<p>O comando para o <em>console</em> do <code>javascript</code>:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> /home/rogerio/go-ethereum-1.11.6/build/bin/geth attach ~/.etherprivate/geth.ipc </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/RAGEtherPrivate/v1.11.6-stable-ea9e62ca/linux-amd64/go1.21.0</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="ex">coinbase:</span> 0x2db017e44b03b37755a4b15e14cd799f83de4c13</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="ex">at</span> block: 1476 <span class="er">(</span><span class="ex">Tue</span> Sep 12 2023 17:04:22 GMT-0300 <span class="er">(</span><span class="ex">-03</span><span class="kw">))</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">datadir:</span> /home/rogerio/.etherprivate</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">modules:</span> admin:1.0 debug:1.0 engine:1.0 eth:1.0 ethash:1.0 miner:1.0 net:1.0 rpc:1.0 txpool:1.0 web3:1.0</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>#Referências</p>
+</section>
+<section id="leitura-recomendada-1" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="leitura-recomendada-1"><span class="header-section-number">5.10</span> Leitura Recomendada</h2>
+<p>[alertblock]{Leitura Recomendada}</p>
+<p><strong>Capítulo 11: Ethereum 101</strong></p>
+<p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_276">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p><strong>Capítulo 12: Futher Ethereum</strong></p>
+<p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_310">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p>[/alertblock]</p>
+</section>
+</section>
+<section id="word-cloud" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> <em>Word Cloud</em></h1>
+<p><img src="figuras/aula-06-pratica-rede-ethereum-privada-ethash.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
+<section id="referências" class="level2 fragile allowframebreaks" data-number="6.1">
+<h2 class="fragile allowframebreaks anchored" data-number="6.1" data-anchor-id="referências"><span class="header-section-number">6.1</span> Referências</h2>
+<div id="refs" role="list" style="display: none">
+
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="pagination-link" aria-label="Instalando o Cliente Ethereum">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instalando o Cliente Ethereum</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
