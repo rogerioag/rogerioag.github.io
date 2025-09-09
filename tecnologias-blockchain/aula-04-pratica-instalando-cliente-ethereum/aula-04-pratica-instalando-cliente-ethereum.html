@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>3&nbsp; Instalando o Cliente Ethereum – Tecnologias Blockchain e suas Aplicações</title>
+<title>3&nbsp; Prática: Instalando o Cliente Ethereum – Tecnologias Blockchain e suas Aplicações</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -164,7 +164,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instalando o Cliente Ethereum</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Prática: Instalando o Cliente Ethereum</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -230,19 +230,25 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática sobre <em>Ethereum Virtual Machine (EVM)</em></span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática: Explorando a <em>Ethereum Virtual Machine (EVM)</em></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instalando o Cliente Ethereum</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Prática: Instalando o Cliente Ethereum</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Criando uma Rede Ethereum Privada</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Ethash</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-06-pratica-rede-ethereum-privada-clique/aula-06-pratica-rede-ethereum-privada-clique.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Clique</code></span></span></a>
   </div>
 </li>
     </ul>
@@ -255,36 +261,33 @@ window.Quarto = {
     <h2 id="toc-title">Sumário</h2>
    
   <ul>
-  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">4</span> Introdução</a>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">3.1</span> Introdução</a></li>
+  <li><a href="#prática-instalando-o-cliente-ethereum-geth" id="toc-prática-instalando-o-cliente-ethereum-geth" class="nav-link" data-scroll-target="#prática-instalando-o-cliente-ethereum-geth"><span class="header-section-number">4</span> Prática: Instalando o Cliente <em>Ethereum</em>: <code>Geth</code></a>
   <ul class="collapse">
-  <li><a href="#introdução-1" id="toc-introdução-1" class="nav-link" data-scroll-target="#introdução-1"><span class="header-section-number">4.1</span> Introdução</a></li>
+  <li><a href="#sec-instalando:geth" id="toc-sec-instalando:geth" class="nav-link" data-scroll-target="#sec-instalando\:geth"><span class="header-section-number">4.1</span> Instalando o <code>Geth</code></a></li>
+  <li><a href="#executando-o-geth" id="toc-executando-o-geth" class="nav-link" data-scroll-target="#executando-o-geth"><span class="header-section-number">4.2</span> Executando o <code>Geth</code></a></li>
+  <li><a href="#redes-de-teste" id="toc-redes-de-teste" class="nav-link" data-scroll-target="#redes-de-teste"><span class="header-section-number">4.3</span> Redes de Teste</a></li>
+  <li><a href="#executando-o-geth-com-uma-rede-de-teste" id="toc-executando-o-geth-com-uma-rede-de-teste" class="nav-link" data-scroll-target="#executando-o-geth-com-uma-rede-de-teste"><span class="header-section-number">4.4</span> Executando o <code>Geth</code> com uma Rede de Teste</a></li>
+  <li><a href="#criando-contas-na-rede" id="toc-criando-contas-na-rede" class="nav-link" data-scroll-target="#criando-contas-na-rede"><span class="header-section-number">4.5</span> Criando Contas na Rede</a></li>
+  <li><a href="#listando-as-contas" id="toc-listando-as-contas" class="nav-link" data-scroll-target="#listando-as-contas"><span class="header-section-number">4.6</span> Listando as Contas</a></li>
+  <li><a href="#clientes-de-consenso" id="toc-clientes-de-consenso" class="nav-link" data-scroll-target="#clientes-de-consenso"><span class="header-section-number">4.7</span> Clientes de Consenso</a></li>
+  <li><a href="#instalando-o-cliente-de-consenso-prysmlinkprysm" id="toc-instalando-o-cliente-de-consenso-prysmlinkprysm" class="nav-link" data-scroll-target="#instalando-o-cliente-de-consenso-prysmlinkprysm"><span class="header-section-number">4.8</span> Instalando o cliente de consenso <code>Prysm</code></a></li>
+  <li><a href="#gerando-um-arquivo-jwt-secret" id="toc-gerando-um-arquivo-jwt-secret" class="nav-link" data-scroll-target="#gerando-um-arquivo-jwt-secret"><span class="header-section-number">4.9</span> Gerando um arquivo <em>JWT Secret</em></a></li>
+  <li><a href="#executando-um-cliente-de-execuçãolinkprysmexec" id="toc-executando-um-cliente-de-execuçãolinkprysmexec" class="nav-link" data-scroll-target="#executando-um-cliente-de-execuçãolinkprysmexec"><span class="header-section-number">4.10</span> Executando um Cliente de Execução</a></li>
+  <li><a href="#executando-um-nó-beacon-usando-prysmlinknobeacon" id="toc-executando-um-nó-beacon-usando-prysmlinknobeacon" class="nav-link" data-scroll-target="#executando-um-nó-beacon-usando-prysmlinknobeacon"><span class="header-section-number">4.11</span> Executando um nó beacon usando Prysm</a></li>
+  <li><a href="#executando-o-console-javascript" id="toc-executando-o-console-javascript" class="nav-link" data-scroll-target="#executando-o-console-javascript"><span class="header-section-number">4.12</span> Executando o Console JavaScript</a></li>
+  <li><a href="#verificação-do-funcionamento-da-rede" id="toc-verificação-do-funcionamento-da-rede" class="nav-link" data-scroll-target="#verificação-do-funcionamento-da-rede"><span class="header-section-number">4.13</span> Verificação do Funcionamento da Rede</a></li>
+  <li><a href="#listando-as-contas-pelo-console" id="toc-listando-as-contas-pelo-console" class="nav-link" data-scroll-target="#listando-as-contas-pelo-console"><span class="header-section-number">4.14</span> Listando as Contas pelo Console</a></li>
+  <li><a href="#teste-de-transferência-de-valores-entre-carteiras" id="toc-teste-de-transferência-de-valores-entre-carteiras" class="nav-link" data-scroll-target="#teste-de-transferência-de-valores-entre-carteiras"><span class="header-section-number">4.15</span> Teste de Transferência de Valores entre Carteiras</a></li>
+  <li><a href="#pedindo-recursos-para-um-faucet" id="toc-pedindo-recursos-para-um-faucet" class="nav-link" data-scroll-target="#pedindo-recursos-para-um-faucet"><span class="header-section-number">4.16</span> Pedindo Recursos para um Faucet</a></li>
+  <li><a href="#importando-contas-do-metamask" id="toc-importando-contas-do-metamask" class="nav-link" data-scroll-target="#importando-contas-do-metamask"><span class="header-section-number">4.17</span> Importando contas do Metamask</a></li>
+  <li><a href="#comandos-finais" id="toc-comandos-finais" class="nav-link" data-scroll-target="#comandos-finais"><span class="header-section-number">4.18</span> Comandos Finais</a></li>
   </ul></li>
-  <li><a href="#prática-instalando-o-cliente-ethereum-geth" id="toc-prática-instalando-o-cliente-ethereum-geth" class="nav-link" data-scroll-target="#prática-instalando-o-cliente-ethereum-geth"><span class="header-section-number">5</span> Prática: Instalando o Cliente <em>Ethereum</em>: <code>Geth</code></a>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">5</span> Referências</a>
   <ul class="collapse">
-  <li><a href="#sec:instalando:geth" id="toc-sec:instalando:geth" class="nav-link" data-scroll-target="#sec\:instalando\:geth"><span class="header-section-number">5.1</span> Instalando o <code>Geth</code></a></li>
-  <li><a href="#executando-o-geth" id="toc-executando-o-geth" class="nav-link" data-scroll-target="#executando-o-geth"><span class="header-section-number">5.2</span> Executando o <code>Geth</code></a></li>
-  <li><a href="#redes-de-teste" id="toc-redes-de-teste" class="nav-link" data-scroll-target="#redes-de-teste"><span class="header-section-number">5.3</span> Redes de Teste</a></li>
-  <li><a href="#executando-o-geth-com-uma-rede-de-teste" id="toc-executando-o-geth-com-uma-rede-de-teste" class="nav-link" data-scroll-target="#executando-o-geth-com-uma-rede-de-teste"><span class="header-section-number">5.4</span> Executando o <code>Geth</code> com uma Rede de Teste</a></li>
-  <li><a href="#criando-contas-na-rede" id="toc-criando-contas-na-rede" class="nav-link" data-scroll-target="#criando-contas-na-rede"><span class="header-section-number">5.5</span> Criando Contas na Rede</a></li>
-  <li><a href="#listando-as-contas" id="toc-listando-as-contas" class="nav-link" data-scroll-target="#listando-as-contas"><span class="header-section-number">5.6</span> Listando as Contas</a></li>
-  <li><a href="#clientes-de-consenso" id="toc-clientes-de-consenso" class="nav-link" data-scroll-target="#clientes-de-consenso"><span class="header-section-number">5.7</span> Clientes de Consenso</a></li>
-  <li><a href="#instalando-o-cliente-de-consenso-prysmlinkprysm" id="toc-instalando-o-cliente-de-consenso-prysmlinkprysm" class="nav-link" data-scroll-target="#instalando-o-cliente-de-consenso-prysmlinkprysm"><span class="header-section-number">5.8</span> Instalando o cliente de consenso <code>Prysm</code></a></li>
-  <li><a href="#gerando-um-arquivo-jwt-secret" id="toc-gerando-um-arquivo-jwt-secret" class="nav-link" data-scroll-target="#gerando-um-arquivo-jwt-secret"><span class="header-section-number">5.9</span> Gerando um arquivo <em>JWT Secret</em></a></li>
-  <li><a href="#executando-um-cliente-de-execuçãolinkprysmexec" id="toc-executando-um-cliente-de-execuçãolinkprysmexec" class="nav-link" data-scroll-target="#executando-um-cliente-de-execuçãolinkprysmexec"><span class="header-section-number">5.10</span> Executando um Cliente de Execução</a></li>
-  <li><a href="#executando-um-nó-beacon-usando-prysmlinknobeacon" id="toc-executando-um-nó-beacon-usando-prysmlinknobeacon" class="nav-link" data-scroll-target="#executando-um-nó-beacon-usando-prysmlinknobeacon"><span class="header-section-number">5.11</span> Executando um nó beacon usando Prysm</a></li>
-  <li><a href="#executando-o-console-javascript" id="toc-executando-o-console-javascript" class="nav-link" data-scroll-target="#executando-o-console-javascript"><span class="header-section-number">5.12</span> Executando o Console JavaScript</a></li>
-  <li><a href="#verificação-do-funcionamento-da-rede" id="toc-verificação-do-funcionamento-da-rede" class="nav-link" data-scroll-target="#verificação-do-funcionamento-da-rede"><span class="header-section-number">5.13</span> Verificação do Funcionamento da Rede</a></li>
-  <li><a href="#listando-as-contas-pelo-console" id="toc-listando-as-contas-pelo-console" class="nav-link" data-scroll-target="#listando-as-contas-pelo-console"><span class="header-section-number">5.14</span> Listando as Contas pelo Console</a></li>
-  <li><a href="#teste-de-transferência-de-valores-entre-carteiras" id="toc-teste-de-transferência-de-valores-entre-carteiras" class="nav-link" data-scroll-target="#teste-de-transferência-de-valores-entre-carteiras"><span class="header-section-number">5.15</span> Teste de Transferência de Valores entre Carteiras</a></li>
-  <li><a href="#pedindo-recursos-para-um-faucet" id="toc-pedindo-recursos-para-um-faucet" class="nav-link" data-scroll-target="#pedindo-recursos-para-um-faucet"><span class="header-section-number">5.16</span> Pedindo Recursos para um Faucet</a></li>
-  <li><a href="#importando-contas-do-metamask" id="toc-importando-contas-do-metamask" class="nav-link" data-scroll-target="#importando-contas-do-metamask"><span class="header-section-number">5.17</span> Importando contas do Metamask</a></li>
-  <li><a href="#comandos-finais" id="toc-comandos-finais" class="nav-link" data-scroll-target="#comandos-finais"><span class="header-section-number">5.18</span> Comandos Finais</a></li>
-  </ul></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">6</span> Referências</a>
-  <ul class="collapse">
-  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">6.1</span> Leitura Recomendada</a></li>
-  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">6.2</span> <em>Word Cloud</em></a></li>
-  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">6.3</span> Referências</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">5.1</span> Leitura Recomendada</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">5.2</span> <em>Word Cloud</em></a></li>
+  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">5.3</span> Referências</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
@@ -294,7 +297,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instalando o Cliente Ethereum</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Prática: Instalando o Cliente Ethereum</span></h1>
 <p class="subtitle lead">Geth</p>
 </div>
 
@@ -319,10 +322,8 @@ window.Quarto = {
 
 
 <!-- Prática 1 -->
-<section id="introdução" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Introdução</h1>
-<section id="introdução-1" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="introdução-1"><span class="header-section-number">4.1</span> Introdução</h2>
+<section id="introdução" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">3.1</span> Introdução</h2>
 <p>Como o desenvolvimento da <em>Ethereum</em> está em constante evolução, existem muitos componentes, clientes, e ferramentas que foram desenvolvidas e introduzidas nos últimos anos. Carteiras <em>(wallets)</em> e clientes de <em>software</em>.</p>
 <p><strong>Wallets</strong> são programas que podem armazenar as chaves privadas e baseado nos endereços armazenados podem calcular o saldo <em>(balance)</em> de <em>ether</em> associado a esses endereços, consultando a <em>blockchain</em>. O saldo pode ser utilizado para fazer o <em>deploy</em> de contratos inteligentes.</p>
 <p><strong>Clientes</strong> são <em>softwares</em> que acessam a rede, podendo fazer sincronizações e interagir com a rede:</p>
@@ -336,14 +337,14 @@ window.Quarto = {
 <li><p><strong>OpenEthereum:</strong> O cliente <a href="https://openethereum.github.io/"><code>OpenEthereum</code></a> está descontinuado desde <span class="math inline">\(2022\)</span>.</p></li>
 <li><p><strong>Trinity:</strong> Trinity é a implementação do protocolo <em>Ethereum</em>, escrito em <code>Python</code>. Trinity pode ser baixada do link <a href="https://github.com/ethereum/trinity" class="uri">https://github.com/ethereum/trinity</a>. O site oficial é <a href="https://trinity.ethereum.org" class="uri">https://trinity.ethereum.org</a>. Descontinuado, <code>github</code> apresenta a mensagem <em>“This repository has been archived by the owner on Jul 1, 2021. It is now read-only.”</em></p></li>
 </ul>
-<p>A <a href="#fig-percentual:clientes:ethereum" class="quarto-xref">Figura&nbsp;<span>4.I</span></a> apresenta os percentuais de domínio dos clientes em uso, sendo sincronizados com a rede.</p>
+<p>A <a href="#fig-percentual:clientes:ethereum" class="quarto-xref">Figura&nbsp;<span>3.I</span></a> apresenta os percentuais de domínio dos clientes em uso, sendo sincronizados com a rede.</p>
 <div id="fig-percentual:clientes:ethereum" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-percentual:clientes:ethereum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figuras/percentual-por-cliente-ethereum.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-percentual:clientes:ethereum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.I- Percentual de Clientes em 21/08/2025. Fonte: <a href="https://ethernodes.org/">ethernodes</a>
+Figure&nbsp;3.I- Percentual de Clientes em 21/08/2025. Fonte: <a href="https://ethernodes.org/">ethernodes</a>
 </figcaption>
 </figure>
 </div>
@@ -353,15 +354,14 @@ Figure&nbsp;4.I- Percentual de Clientes em 21/08/2025. Fonte: <a href="https://e
 <p>A diferença entre <em>clients</em> e <em>wallets</em> é que clientes são implementações completas do protocolo <em>Ethereum</em>, que suportam mineração e gerenciamento de contas e funções de <em>wallets</em>.</p>
 <p>Carteiras somente armazenam as chaves públicas e privadas para fornecer gerenciamento essential de contas e interagem com o <em>blockchain</em> para propósitos de pagamentos, transferências de fundos.</p>
 </section>
-</section>
-<section id="prática-instalando-o-cliente-ethereum-geth" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Prática: Instalando o Cliente <em>Ethereum</em>: <code>Geth</code></h1>
+<section id="prática-instalando-o-cliente-ethereum-geth" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Prática: Instalando o Cliente <em>Ethereum</em>: <code>Geth</code></h1>
 <!--
 ## TODO: https://www.quicknode.com/guides/infrastructure/node-setup/how-to-install-and-run-a-geth-node
 -->
 <p>A proposta desta prática é vermos o funcionamento do <em>software</em> cliente da rede <em>Ethereum</em>, iremos utilizar o <code>Geth</code>, por ser o cliente oficial. Iremos transformar a máquina em um nó da rede <em>Ethereum</em>.</p>
-<section id="sec:instalando:geth" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="sec:instalando:geth"><span class="header-section-number">5.1</span> Instalando o <code>Geth</code></h2>
+<section id="sec-instalando:geth" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-instalando:geth"><span class="header-section-number">4.1</span> Instalando o <code>Geth</code></h2>
 <p>Nesta etapa, você instalará o cliente padrão de camada de execução (<code>geth</code>) e outras ferramentas. Baixe e execute o a última versão <code>64-bit</code> estável do <strong>Geth installer</strong> para seu Sistema Operacional do site <a href="https://geth.ethereum.org/downloads/"><em>Geth downloads page</em></a>. Ou baixe e execute o a última versão <code>64-bit</code> estável do <strong><em>Geth and Tools</em></strong> para seu Sistema Operacional do site <a href="https://geth.ethereum.org/downloads/"><em>Geth downloads page</em></a>. Para Linux, baixe o arquivo <a href="https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-amd64-1.14.8-a9523b64.tar.gz"><em>Geth and Tools</em></a> ou escolha nas guias a versão do seu Sistema Operacional.</p>
 <p>O <code>geth</code> e as outras ferramentas podem ser instaladas em sistemas derivados do <code>Debian</code> e <code>Ubuntu</code> com o pacote <code>ethereum</code>:</p>
 <p>O <code>geth</code> pode ser instalado em sistemas derivados do <code>Debian</code> e <code>Ubuntu</code> com o pacote <code>ethereum</code>:</p>
@@ -426,8 +426,8 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="va">GOROOT</span><span class="op">=</span></span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="executando-o-geth" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="executando-o-geth"><span class="header-section-number">5.2</span> Executando o <code>Geth</code></h2>
+<section id="executando-o-geth" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="executando-o-geth"><span class="header-section-number">4.2</span> Executando o <code>Geth</code></h2>
 <p>Executando o <code>Geth</code> diretamente ele irá sincronizar com a rede principal (<code>mainnet</code>) do <code>Ethereum</code>. Os dados serão sincronizados com o diretório do <code>Ethereum</code> que será criado em:</p>
 <ul>
 <li><code>~/.ethereum</code> no GNU/Linux</li>
@@ -506,8 +506,8 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <!--Hoje, $03/09/2024$ o tamanho da _blockchain_ está em [$1147.97 GB$](https://ycharts.com/indicators/ethereum_chain_full_sync_data_size).-->
 <p>Hoje, <span class="math inline">\(21/08/2025\)</span> o tamanho da <em>blockchain</em> está em <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size"><span class="math inline">\(1380.34 GB\)</span></a>.</p>
 </section>
-<section id="redes-de-teste" class="level2 allowframebreaks" data-number="5.3">
-<h2 class="allowframebreaks anchored" data-number="5.3" data-anchor-id="redes-de-teste"><span class="header-section-number">5.3</span> Redes de Teste</h2>
+<section id="redes-de-teste" class="level2 allowframebreaks" data-number="4.3">
+<h2 class="allowframebreaks anchored" data-number="4.3" data-anchor-id="redes-de-teste"><span class="header-section-number">4.3</span> Redes de Teste</h2>
 <p>Vimos as redes <em>Ethereum</em> disponíveis, uma lista completa pode ser encontrada em <a href="https://ethereum.org/en/developers/docs/networks/" class="uri">https://ethereum.org/en/developers/docs/networks/</a>.</p>
 <p>A evolução das Redes de Teste pode ser vista nesse artigo <a href="https://etherworld.co/2022/08/19/the-evolution-of-ethereum-testnet/"><em>The Evolution of Ethereum Testnets</em></a>.</p>
 <table class="caption-top table">
@@ -572,16 +572,20 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 </tr>
 </tbody>
 </table>
-<p>A <span class="quarto-unresolved-ref">?fig-redes:testes</span> apresenta um resumo no formato de <em>timeline</em> das redes de testes.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figuras/TestnetsTimeline.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<figcaption><em>Timeline</em> das Redes de Teste <a href="https://etherworld.co/2022/08/19/the-evolution-of-ethereum-testnet/#section2">Fonte: Etherwold</a> </figcaption>
+<p>A <a href="#fig-redes:testes" class="quarto-xref">Figura&nbsp;<span>4.I</span></a> apresenta um resumo no formato de <em>timeline</em> das redes de testes.</p>
+<div id="fig-redes:testes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-redes:testes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/TestnetsTimeline.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-redes:testes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworld.co/2022/08/19/the-evolution-of-ethereum-testnet/#section2">Fonte: Etherwold</a>
+</figcaption>
 </figure>
 </div>
 </section>
-<section id="executando-o-geth-com-uma-rede-de-teste" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="executando-o-geth-com-uma-rede-de-teste"><span class="header-section-number">5.4</span> Executando o <code>Geth</code> com uma Rede de Teste</h2>
+<section id="executando-o-geth-com-uma-rede-de-teste" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="executando-o-geth-com-uma-rede-de-teste"><span class="header-section-number">4.4</span> Executando o <code>Geth</code> com uma Rede de Teste</h2>
 <p>Ao executar o <code>geth</code> com algum das redes de teste será criado um diretório dentro do diretório padrão <code>~/.ethereum/</code> para cada rede de teste. Por exemplo, <code>~/.ethereum/goerli</code> para <code>--goerli</code> e <code>~/.ethereum/sepolia</code> para o <code>--sepolia</code>.</p>
 <p>Iremos executar o cliente com a rede <a href="https://ethereum.org/en/developers/docs/networks/#sepolia"><code>Sepolia</code></a> que é recomendada como <code>testnet</code> padrão, uma vez que <code>Goerli</code> será descontinuada em <span class="math inline">\(2023\)</span>, sendo substituída pela <code>Holesovice</code>. É recomendado migrar sua aplicação para <code>Sepolia</code>.</p>
 <p>A rede <code>Sepolia</code> usa um conjunto validador permissionado. É uma rede nova, o que significa que seu estado e seu histórico são pequenos, o que deixa sua sincronização mais rápida e exige menos armazenamento. Características importantes para usuários que querem rapidamente montar um nó da rede e interagir com a rede diretamente.</p>
@@ -654,8 +658,8 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <li>Note que estou executando na rede de testes <code>--sepolia</code>, opção na minha versão do <code>geth</code> é diferente do livro. No livro ele diz para usar o parâmetro <code>--testnet</code> que por padrão usa a rede de testes <code>Ropsten</code>, indicando <code>--testnet sepolia</code>. Na minha instalação não suporta mais o parâmetro <code>--testnet</code>, tem o <code>--mainnet</code> e cada rede de teste disponível tem o seu parâmetro correspondente, como <code>--sepolia</code>.</li>
 </ul>
 </section>
-<section id="criando-contas-na-rede" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="criando-contas-na-rede"><span class="header-section-number">5.5</span> Criando Contas na Rede</h2>
+<section id="criando-contas-na-rede" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="criando-contas-na-rede"><span class="header-section-number">4.5</span> Criando Contas na Rede</h2>
 <p>O comando <code>geth account new</code> cria uma nova conta na rede principal. Indicaremos que a conta é para ser criada na rede de teste <code>--sepolia</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> account new</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:50:49.343]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
@@ -694,8 +698,8 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>É para termos as duas contas <code>0xa9e98368B44b371ceC7d205F9fE2b074b6134C95</code> e <code>0xc061b852A26BEdeC5Bd457b88c031c46a622f4ab</code> criadas com seus arquivos em <code>.ethereum/sepolia/keystore/</code>, com o prefixo <code>UTC--2023-04-17T00-53-06.379873395Z--*</code>.</p>
 </section>
-<section id="listando-as-contas" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="listando-as-contas"><span class="header-section-number">5.6</span> Listando as Contas</h2>
+<section id="listando-as-contas" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="listando-as-contas"><span class="header-section-number">4.6</span> Listando as Contas</h2>
 <p>As contas existentes ou que foram criadas podem ser listadas com o comando <code>geth account list</code>. Utilizaremos novamente o parâmetro que indica a rede de teste <code>--sepolia</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> account list</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:56:11.129]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
@@ -708,8 +712,8 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <p>Executando com opção de responder a comandos via <code>RPC</code>. A documentação desta parte está disponível em <a href="https://geth.ethereum.org/docs/rpc/server" class="uri">https://geth.ethereum.org/docs/rpc/server</a>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="clientes-de-consenso" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="clientes-de-consenso"><span class="header-section-number">5.7</span> Clientes de Consenso</h2>
+<section id="clientes-de-consenso" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="clientes-de-consenso"><span class="header-section-number">4.7</span> Clientes de Consenso</h2>
 <p>Para terminar a configuração é necessário instalar algum cliente de consenso. Existem atualmente cinco clientes de consenso que podem ser executado em conjunto com o <code>Geth</code>:</p>
 <ul>
 <li><p><a href="https://lighthouse-book.sigmaprime.io/">Lighthouse</a>: escrito em <code>Rust</code>.</p></li>
@@ -722,14 +726,14 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <p>A configuração do <code>Prism</code> pode ser feita conforme descrito no material <a href="https://docs.prylabs.network/docs/install/install-with-script" class="uri">https://docs.prylabs.network/docs/install/install-with-script</a>.</p>
 <p>O material ensina a usar o <code>Prysm</code> para executar um nó <em>Ethereum</em>, portanto resolver o problema apresentado após a atualização do <code>Merge</code> e opcionalmente como um validador <em>(validator)</em>.</p>
 </section>
-<section id="instalando-o-cliente-de-consenso-prysmlinkprysm" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="instalando-o-cliente-de-consenso-prysmlinkprysm"><span class="header-section-number">5.8</span> Instalando o cliente de consenso <code>Prysm</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h2>
+<section id="instalando-o-cliente-de-consenso-prysmlinkprysm" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="instalando-o-cliente-de-consenso-prysmlinkprysm"><span class="header-section-number">4.8</span> Instalando o cliente de consenso <code>Prysm</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h2>
 <p>Para a instalação do <code>Prysm</code>, crie no diretório <code>~/.ethereum/&lt;rede&gt;</code>, duas subpastas: <code>consensus</code> e <code>execution</code>. Acesse o diretório <code>consensus</code> e execute o comando para baixar o cliente <code>Prysm</code> e transformá-lo em executável:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir prysm <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> prysm</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh <span class="at">--output</span> prysm.sh <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> +x prysm.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="gerando-um-arquivo-jwt-secret" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="gerando-um-arquivo-jwt-secret"><span class="header-section-number">5.9</span> Gerando um arquivo <em>JWT Secret</em></h2>
+<section id="gerando-um-arquivo-jwt-secret" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="gerando-um-arquivo-jwt-secret"><span class="header-section-number">4.9</span> Gerando um arquivo <em>JWT Secret</em></h2>
 <ul>
 <li><p>A conexão HTTP entre seu nó beacon e seu nó de execução precisa ser autenticada usando um <em>token</em> <code>JWT</code>. Existem diversas formas de gerar este <em>token</em>:</p>
 <ul>
@@ -746,9 +750,9 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./prysm.sh</span> beacon-chain generate-auth-secret</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Nesta opção o <code>Prysm</code> irá mostrar o caminho onde o arquivo <code>jwt.hex</code> foi gerado.</p>
 </section>
-<section id="executando-um-cliente-de-execuçãolinkprysmexec" class="level2" data-number="5.10">
-<h2 data-number="5.10" class="anchored" data-anchor-id="executando-um-cliente-de-execuçãolinkprysmexec"><span class="header-section-number">5.10</span> Executando um Cliente de Execução<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></h2>
-<p>Nesta etapa, executaremos o cliente de camada de execução (<code>geth</code>), se ainda não instalou veja os passos de instalação na <span class="citation" data-cites="sec:instalando:geth">(Seção <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#ref-sec:instalando:geth" role="doc-biblioref"><strong>sec:instalando:geth?</strong></a>)</span> e o nó <em>beacon</em> do <code>Prysm</code> que se conectará ao cliente em execução.</p>
+<section id="executando-um-cliente-de-execuçãolinkprysmexec" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="executando-um-cliente-de-execuçãolinkprysmexec"><span class="header-section-number">4.10</span> Executando um Cliente de Execução<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></h2>
+<p>Nesta etapa, executaremos o cliente de camada de execução (<code>geth</code>), se ainda não instalou veja os passos de instalação na <a href="#sec-instalando:geth" class="quarto-xref">Seção&nbsp;<span>4.1</span></a> e o nó <em>beacon</em> do <code>Prysm</code> que se conectará ao cliente em execução.</p>
 <p>Note que iremos adicionar o parâmetro ao comando de execução com o arquivo com o <em>token</em> <code>--authrpc.jwtsecret ~/.ethereum/sepolia/geth/jwtsecret</code>.</p>
 <pre><code>
 O comando de execução do `Geth` atualizado:
@@ -761,8 +765,8 @@ O comando de execução do `Geth` atualizado:
 <p>Você está agora executando um <strong>nó de execução</strong> na camada de execução da <em>Ethereum</em>.</p>
 <p>[/alertblock]</p>
 </section>
-<section id="executando-um-nó-beacon-usando-prysmlinknobeacon" class="level2" data-number="5.11">
-<h2 data-number="5.11" class="anchored" data-anchor-id="executando-um-nó-beacon-usando-prysmlinknobeacon"><span class="header-section-number">5.11</span> Executando um nó beacon usando Prysm<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></h2>
+<section id="executando-um-nó-beacon-usando-prysmlinknobeacon" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="executando-um-nó-beacon-usando-prysmlinknobeacon"><span class="header-section-number">4.11</span> Executando um nó beacon usando Prysm<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></h2>
 <p>Altere o comando para iniciar um nó <em>beacon</em> que conecta no seu nó de execução local, necessário colocar o <em>hash</em> de uma das contas criadas. Por padrão, aqui estou utilizando a primeira conta criada, meu caso a <code>0xa9e98368b44b371cec7d205f9fe2b074b6134c95</code>.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./prysm.sh</span> beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/geth/jwtsecret <span class="at">--suggested-fee-recipient</span><span class="op">=&lt;&lt;hash</span> da conta principal<span class="op">&gt;&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Alterei o comando padrão para o conter o <em>hash</em> de uma das minhas contas e para o tipo de rede de teste <code>--sepolia</code>. A rede <code>Sepolia</code> precisa de um estado inicial (<em>genesis state</em>) de onde começar a sincronização. O arquivo pode ser baixado de <a href="https://github.com/eth-clients/merge-testnets/blob/main/sepolia/genesis.ssz" class="uri">https://github.com/eth-clients/merge-testnets/blob/main/sepolia/genesis.ssz</a> e deve ser colocado no diretório <code>sepolia/consensus/prysm</code>.</p>
@@ -861,8 +865,8 @@ Copy the `validator_keys` folder to your primary machine's `consensus` folder. R
 
 -->
 </section>
-<section id="executando-o-console-javascript" class="level2" data-number="5.12">
-<h2 data-number="5.12" class="anchored" data-anchor-id="executando-o-console-javascript"><span class="header-section-number">5.12</span> Executando o Console JavaScript</h2>
+<section id="executando-o-console-javascript" class="level2" data-number="4.12">
+<h2 data-number="4.12" class="anchored" data-anchor-id="executando-o-console-javascript"><span class="header-section-number">4.12</span> Executando o Console JavaScript</h2>
 <p>O console <code>javascript</code> pode também ser conectado ao nó <code>Geth</code> usando <code>IPC</code>. Quando o <code>Geth</code> é iniciado, um arquivo <code>geth.ipc</code> é criado automaticamente e salvo no diretório de dados. Este arquivo ou um caminho customizado para um arquivo IPC pode ser passado para o <code>Geth</code> usando o parâmetro <code>attach</code>:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
@@ -875,8 +879,8 @@ Copy the `validator_keys` folder to your primary machine's `consensus` folder. R
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
 <span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="verificação-do-funcionamento-da-rede" class="level2" data-number="5.13">
-<h2 data-number="5.13" class="anchored" data-anchor-id="verificação-do-funcionamento-da-rede"><span class="header-section-number">5.13</span> Verificação do Funcionamento da Rede</h2>
+<section id="verificação-do-funcionamento-da-rede" class="level2" data-number="4.13">
+<h2 data-number="4.13" class="anchored" data-anchor-id="verificação-do-funcionamento-da-rede"><span class="header-section-number">4.13</span> Verificação do Funcionamento da Rede</h2>
 <p>Para verificar o funcionamento da rede, utilize o comando <code>net.listing</code>:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
@@ -901,8 +905,8 @@ Copy the `validator_keys` folder to your primary machine's `consensus` folder. R
 <div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ curl <span class="at">-X</span> POST <span class="at">--insecure</span> <span class="at">--header</span> <span class="st">"Content-Type: application/json"</span> <span class="at">--data</span> <span class="st">'{"jsonrpc":"2.0", "method":"net_listening","params":[], "id":64}'</span> <span class="at">--location</span> http://localhost:8559</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="dt">{</span><span class="st">"jsonrpc"</span><span class="dt">:</span><span class="st">"2.0"</span><span class="op">,</span><span class="st">"id"</span><span class="dt">:64</span><span class="op">,</span><span class="st">"result"</span><span class="dt">:true}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="listando-as-contas-pelo-console" class="level2" data-number="5.14">
-<h2 data-number="5.14" class="anchored" data-anchor-id="listando-as-contas-pelo-console"><span class="header-section-number">5.14</span> Listando as Contas pelo Console</h2>
+<section id="listando-as-contas-pelo-console" class="level2" data-number="4.14">
+<h2 data-number="4.14" class="anchored" data-anchor-id="listando-as-contas-pelo-console"><span class="header-section-number">4.14</span> Listando as Contas pelo Console</h2>
 <!-- Para criar usuários: clef newaccount --keystore sepolia/keystore/ -->
 <p>A lista de contas pode ser recuperada através dos comandos no console <code>eth.accounts</code> e por <code>RPC</code> <code>{"method": "eth_accounts", "params": []}</code>. Em versões anteriores do <code>geth</code> era possível utilizar <code>personal.listAccounts</code>, mas <code>personal</code> foi <a href="https://stackoverflow.com/questions/75681463/the-error-personal-is-not-defined-occurs-when-running-geth">depreciado</a>.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
@@ -973,8 +977,8 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 ```
 -->
 </section>
-<section id="teste-de-transferência-de-valores-entre-carteiras" class="level2" data-number="5.15">
-<h2 data-number="5.15" class="anchored" data-anchor-id="teste-de-transferência-de-valores-entre-carteiras"><span class="header-section-number">5.15</span> Teste de Transferência de Valores entre Carteiras</h2>
+<section id="teste-de-transferência-de-valores-entre-carteiras" class="level2" data-number="4.15">
+<h2 data-number="4.15" class="anchored" data-anchor-id="teste-de-transferência-de-valores-entre-carteiras"><span class="header-section-number">4.15</span> Teste de Transferência de Valores entre Carteiras</h2>
 <p>Podemos testar uma transferência de valores. As duas formas de se conseguir valores é minerando ou solicitando valores para <em>Faucets</em> da rede, como por exemplo o <a href="https://faucet.sepolia.dev/" class="uri">https://faucet.sepolia.dev/</a>.</p>
 <p>Os valores de cada conta/carteira pode ser verificado com o comando <code>eth.getBalance(hash)</code>, passando como parâmetro a cadeia <em>hash</em> de identificação da conta ou indicando na lista de contas <code>eth.getBalance(eth.accounts[0])</code>.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
@@ -1346,8 +1350,8 @@ prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --sugges
 <span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> sepolia]$ </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Outras mensagens de erros envolvendo o <code>Prysm</code> podem ser encontradas na documentação <a href="https://docs.prylabs.network/docs/troubleshooting/issues-errors" class="uri">https://docs.prylabs.network/docs/troubleshooting/issues-errors</a>.</p>
 </section>
-<section id="pedindo-recursos-para-um-faucet" class="level2" data-number="5.16">
-<h2 data-number="5.16" class="anchored" data-anchor-id="pedindo-recursos-para-um-faucet"><span class="header-section-number">5.16</span> Pedindo Recursos para um Faucet</h2>
+<section id="pedindo-recursos-para-um-faucet" class="level2" data-number="4.16">
+<h2 data-number="4.16" class="anchored" data-anchor-id="pedindo-recursos-para-um-faucet"><span class="header-section-number">4.16</span> Pedindo Recursos para um Faucet</h2>
 <p>Uma alternativa ao teste com a mineração local seria solicita recursos a um <code>faucet</code>, ao <a href="https://sepoliafaucet.com/">https://sepoliafaucet.com/</a>, por exemplo.</p>
 <p>Nesses sistemas, você fornece o <code>hash</code> da conta desejada e uma pequena quantia será enviada para seu endereço. A Figura <span class="math inline">\(\ref{fig:transacao:faucet:01}\)</span> apresenta a interface do <code>faucet</code>.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -1370,8 +1374,8 @@ prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --sugges
 </figure>
 </div>
 </section>
-<section id="importando-contas-do-metamask" class="level2" data-number="5.17">
-<h2 data-number="5.17" class="anchored" data-anchor-id="importando-contas-do-metamask"><span class="header-section-number">5.17</span> Importando contas do Metamask</h2>
+<section id="importando-contas-do-metamask" class="level2" data-number="4.17">
+<h2 data-number="4.17" class="anchored" data-anchor-id="importando-contas-do-metamask"><span class="header-section-number">4.17</span> Importando contas do Metamask</h2>
 <p>Criar um aquivo com o nome do hash da conta. Exportar no Metamask a chave privada e salvar como conteúdo desse arquivo.</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ nano 0x9DBf97c71AeD31302e07e34236308C97f882f914.txt</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ clef <span class="at">--chainid</span> 11155111 <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore importraw 0x9DBf97c71AeD31302e07e34236308C97f882f914.txt </span>
@@ -1411,8 +1415,8 @@ prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --sugges
 <span id="cb55-36"><a href="#cb55-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-37"><a href="#cb55-37" aria-hidden="true" tabindex="-1"></a><span class="ex">Make</span> sure to backup keystore and passwords in a safe location.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="comandos-finais" class="level2" data-number="5.18">
-<h2 data-number="5.18" class="anchored" data-anchor-id="comandos-finais"><span class="header-section-number">5.18</span> Comandos Finais</h2>
+<section id="comandos-finais" class="level2" data-number="4.18">
+<h2 data-number="4.18" class="anchored" data-anchor-id="comandos-finais"><span class="header-section-number">4.18</span> Comandos Finais</h2>
 <p>A Figura <span class="math inline">\(\ref{fig:terminais:comandos}\)</span> apresenta os comandos para cada um dos terminais.</p>
 <!--
 prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --suggested-fee-recipient=0x3437cd252485bff91957a874d449e437709f6f66 --jwt-secret=jwt.hex --genesis-state=genesis.ssz
@@ -1453,10 +1457,10 @@ geth --sepolia --syncmode full --http --http.addr 127.0.0.1 --http.port 8559 --h
 <span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="referências" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Referências</h1>
-<section id="leitura-recomendada" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">6.1</span> Leitura Recomendada</h2>
+<section id="referências" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Referências</h1>
+<section id="leitura-recomendada" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">5.1</span> Leitura Recomendada</h2>
 <p>[alertblock]{Leitura Recomendada}</p>
 <p><strong>Capítulo 11: Ethereum 101</strong></p>
 <p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_276">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
@@ -1464,13 +1468,12 @@ geth --sepolia --syncmode full --http --http.addr 127.0.0.1 --http.port 8559 --h
 <p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_310">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
 <p>[/alertblock]</p>
 </section>
-<section id="word-cloud" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">6.2</span> <em>Word Cloud</em></h2>
+<section id="word-cloud" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">5.2</span> <em>Word Cloud</em></h2>
 <p><img src="figuras/aula-05-pratica-instalando-cliente-ethereum.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
-<p><span class="citation" data-cites="wood2014ethereum">(<a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#ref-wood2014ethereum" role="doc-biblioref"><strong>wood2014ethereum?</strong></a>)</span></p>
 </section>
-<section id="referências-1" class="level2 fragile allowframebreaks" data-number="6.3">
-<h2 class="fragile allowframebreaks anchored" data-number="6.3" data-anchor-id="referências-1"><span class="header-section-number">6.3</span> Referências</h2>
+<section id="referências-1" class="level2 fragile allowframebreaks" data-number="5.3">
+<h2 class="fragile allowframebreaks anchored" data-number="5.3" data-anchor-id="referências-1"><span class="header-section-number">5.3</span> Referências</h2>
 <div id="refs" role="list" style="display: none">
 
 </div>
@@ -1907,13 +1910,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="pagination-link" aria-label="Prática sobre _Ethereum Virtual Machine (EVM)_">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática sobre <em>Ethereum Virtual Machine (EVM)</em></span></span>
+      <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="pagination-link" aria-label="Prática: Explorando a _Ethereum Virtual Machine (EVM)_">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática: Explorando a <em>Ethereum Virtual Machine (EVM)</em></span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" class="pagination-link" aria-label="Criando uma Rede Ethereum Privada">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Criando uma Rede Ethereum Privada</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" class="pagination-link" aria-label="Prática: Criando uma Rede Ethereum Privada: `Ethash`">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Ethash</code></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

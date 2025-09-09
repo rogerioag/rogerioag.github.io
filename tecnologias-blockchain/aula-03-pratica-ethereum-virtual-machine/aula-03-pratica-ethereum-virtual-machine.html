@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Prática sobre Ethereum Virtual Machine (EVM) – Tecnologias Blockchain e suas Aplicações</title>
+<title>2&nbsp; Prática: Explorando a Ethereum Virtual Machine (EVM) – Tecnologias Blockchain e suas Aplicações</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -164,7 +164,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática sobre <em>Ethereum Virtual Machine (EVM)</em></span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática: Explorando a <em>Ethereum Virtual Machine (EVM)</em></span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -230,19 +230,25 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática sobre <em>Ethereum Virtual Machine (EVM)</em></span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática: Explorando a <em>Ethereum Virtual Machine (EVM)</em></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instalando o Cliente Ethereum</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Prática: Instalando o Cliente Ethereum</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Criando uma Rede Ethereum Privada</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Ethash</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-06-pratica-rede-ethereum-privada-clique/aula-06-pratica-rede-ethereum-privada-clique.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Clique</code></span></span></a>
   </div>
 </li>
     </ul>
@@ -255,21 +261,19 @@ window.Quarto = {
     <h2 id="toc-title">Sumário</h2>
    
   <ul>
-  <li><a href="#prática-explorando-a-ethereum-virtual-machine-evm" id="toc-prática-explorando-a-ethereum-virtual-machine-evm" class="nav-link active" data-scroll-target="#prática-explorando-a-ethereum-virtual-machine-evm"><span class="header-section-number">3</span> Prática: Explorando a <em>Ethereum Virtual Machine</em> (<code>EVM</code>)</a>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">2.1</span> Introdução</a></li>
+  <li><a href="#sec:instalando:evm" id="toc-sec:instalando:evm" class="nav-link" data-scroll-target="#sec\:instalando\:evm"><span class="header-section-number">2.2</span> Instalando o <code>evm</code></a></li>
+  <li><a href="#atividade-1-somando-dois-valores-na-pilha-da-evm" id="toc-atividade-1-somando-dois-valores-na-pilha-da-evm" class="nav-link" data-scroll-target="#atividade-1-somando-dois-valores-na-pilha-da-evm"><span class="header-section-number">2.3</span> Atividade 1: Somando dois valores na Pilha da <code>EVM</code></a></li>
+  <li><a href="#atividade-2-executando-código-de-um-contrato" id="toc-atividade-2-executando-código-de-um-contrato" class="nav-link" data-scroll-target="#atividade-2-executando-código-de-um-contrato"><span class="header-section-number">2.4</span> Atividade 2: Executando código de um contrato</a></li>
+  <li><a href="#atividade-3-outras-operações" id="toc-atividade-3-outras-operações" class="nav-link" data-scroll-target="#atividade-3-outras-operações"><span class="header-section-number">2.5</span> Atividade 3: Outras Operações</a></li>
+  <li><a href="#relatório" id="toc-relatório" class="nav-link" data-scroll-target="#relatório"><span class="header-section-number">2.6</span> Relatório</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">2.7</span> Leitura Recomendada</a></li>
+  <li><a href="#sec-vet-consid-finais" id="toc-sec-vet-consid-finais" class="nav-link" data-scroll-target="#sec-vet-consid-finais"><span class="header-section-number">2.8</span> Considerações Finais</a></li>
+  <li><a href="#próximas-aulas" id="toc-próximas-aulas" class="nav-link" data-scroll-target="#próximas-aulas"><span class="header-section-number">2.9</span> Próximas Aulas</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">3</span> Referências</a>
   <ul class="collapse">
-  <li><a href="#sec:instalando:evm" id="toc-sec:instalando:evm" class="nav-link" data-scroll-target="#sec\:instalando\:evm"><span class="header-section-number">3.1</span> Instalando o <code>evm</code></a></li>
-  <li><a href="#atividade-1-somando-dois-valores-na-pilha-da-evm" id="toc-atividade-1-somando-dois-valores-na-pilha-da-evm" class="nav-link" data-scroll-target="#atividade-1-somando-dois-valores-na-pilha-da-evm"><span class="header-section-number">3.2</span> Atividade 1: Somando dois valores na Pilha da <code>EVM</code></a></li>
-  <li><a href="#atividade-2-executando-código-de-um-contrato" id="toc-atividade-2-executando-código-de-um-contrato" class="nav-link" data-scroll-target="#atividade-2-executando-código-de-um-contrato"><span class="header-section-number">3.3</span> Atividade 2: Executando código de um contrato</a></li>
-  <li><a href="#atividade-3-outras-operações" id="toc-atividade-3-outras-operações" class="nav-link" data-scroll-target="#atividade-3-outras-operações"><span class="header-section-number">3.4</span> Atividade 3: Outras Operações</a></li>
-  <li><a href="#relatório" id="toc-relatório" class="nav-link" data-scroll-target="#relatório"><span class="header-section-number">3.5</span> Relatório</a></li>
-  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">3.6</span> Leitura Recomendada</a></li>
-  <li><a href="#sec-vet-consid-finais" id="toc-sec-vet-consid-finais" class="nav-link" data-scroll-target="#sec-vet-consid-finais"><span class="header-section-number">3.7</span> Considerações Finais</a></li>
-  <li><a href="#próximas-aulas" id="toc-próximas-aulas" class="nav-link" data-scroll-target="#próximas-aulas"><span class="header-section-number">3.8</span> Próximas Aulas</a></li>
-  </ul></li>
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">4</span> Referências</a>
-  <ul class="collapse">
-  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">4.1</span> <em>Word Cloud</em></a></li>
-  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">4.2</span> Referências</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">3.1</span> <em>Word Cloud</em></a></li>
+  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">3.2</span> Referências</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
@@ -279,7 +283,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática sobre <em>Ethereum Virtual Machine (EVM)</em></span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática: Explorando a <em>Ethereum Virtual Machine (EVM)</em></span></h1>
 <p class="subtitle lead"><em>Visão Geral</em></p>
 </div>
 
@@ -309,12 +313,13 @@ Fontes:
 https://github.com/ethereum/go-ethereum/issues/29722 
 
 -->
-<section id="prática-explorando-a-ethereum-virtual-machine-evm" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Prática: Explorando a <em>Ethereum Virtual Machine</em> (<code>EVM</code>)</h1>
+<section id="introdução" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">2.1</span> Introdução</h2>
 <p>Faça a leitura do <a href="https://moodle.utfpr.edu.br/mod/resource/view.php?id=1521589">Capítulo 13: The Ethereum Virtual Machine</a></p>
 <p>A proposta desta prática é vermos o funcionamento da <code>EVM</code>.</p>
-<section id="sec:instalando:evm" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="sec:instalando:evm"><span class="header-section-number">3.1</span> Instalando o <code>evm</code></h2>
+</section>
+<section id="sec:instalando:evm" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec:instalando:evm"><span class="header-section-number">2.2</span> Instalando o <code>evm</code></h2>
 <p>Nesta etapa, você instalará o cliente padrão de camada de execução (<code>geth</code>) e outras ferramentas. Iremos utilizar o <code>evm</code>, que é uma interface por linha de comando para a <code>Ethereum Virtual Machine</code>. Baixe e execute o a última versão <code>64-bit</code> estável do <strong><em>Geth and Tools</em></strong> para seu Sistema Operacional do site <a href="https://geth.ethereum.org/downloads/"><em>Geth downloads page</em></a>. Para Linux, baixe o arquivo <a href="https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-amd64-1.14.8-a9523b64.tar.gz"><em>Geth and Tools</em></a> ou escolha nas guias a versão do seu Sistema Operacional.</p>
 <p>O <code>geth</code> e as outras ferramentas podem ser instaladas em sistemas derivados do <code>Debian</code> e <code>Ubuntu</code> com o pacote <code>ethereum</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install <span class="at">-y</span> software-properties-common</span>
@@ -431,8 +436,8 @@ https://github.com/ethereum/go-ethereum/issues/29722
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"timestamp"</span><span class="fu">:</span> <span class="st">"0x00"</span></span>
 <span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="atividade-1-somando-dois-valores-na-pilha-da-evm" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="atividade-1-somando-dois-valores-na-pilha-da-evm"><span class="header-section-number">3.2</span> Atividade 1: Somando dois valores na Pilha da <code>EVM</code></h2>
+<section id="atividade-1-somando-dois-valores-na-pilha-da-evm" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="atividade-1-somando-dois-valores-na-pilha-da-evm"><span class="header-section-number">2.3</span> Atividade 1: Somando dois valores na Pilha da <code>EVM</code></h2>
 <ol type="1">
 <li>Crie um arquivo <code>exemplo-001.asm</code> com as instruções:</li>
 </ol>
@@ -493,8 +498,8 @@ https://github.com/ethereum/go-ethereum/issues/29722
 <span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co">#\#\#\# LOGS \#\#\#\#</span></span>
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="atividade-2-executando-código-de-um-contrato" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="atividade-2-executando-código-de-um-contrato"><span class="header-section-number">3.3</span> Atividade 2: Executando código de um contrato</h2>
+<section id="atividade-2-executando-código-de-um-contrato" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="atividade-2-executando-código-de-um-contrato"><span class="header-section-number">2.4</span> Atividade 2: Executando código de um contrato</h2>
 <p>Iremos baixar e executar o código de um contrato. Para isso precisaremos recuperar o <em>bytecode</em> de um contrato. Acesse os detalhes da transação <a href="https://etherscan.io/tx/0x8b42fe608875d106ca3a010766c53a449da92076e2e46e38861090f508cf1504">0x8b42fe608875d106ca3a010766c53a449da92076e 2e46e38861090f508cf1504</a> no <code>etherscan.io</code>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -507,39 +512,38 @@ https://github.com/ethereum/go-ethereum/issues/29722
 <div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">evm</span> <span class="at">--debug</span> <span class="at">--gas</span> 0xffffff <span class="at">--nomemory</span><span class="op">=</span>false <span class="at">--input</span> 9ceee80c <span class="at">--prestate</span> ./genesis.json run <span class="at">--codefile</span> transacao-0x8b42fe608875d106ca3a010766c53a449da92076e2e46e38861090f508cf1504-contrato- 0x353755fa4c3d8e73ca5190d86894866e9bd6abb8.bin</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Observe as alterações do conteúdo de cada estrutura.</p>
 </section>
-<section id="atividade-3-outras-operações" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="atividade-3-outras-operações"><span class="header-section-number">3.4</span> Atividade 3: Outras Operações</h2>
+<section id="atividade-3-outras-operações" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="atividade-3-outras-operações"><span class="header-section-number">2.5</span> Atividade 3: Outras Operações</h2>
 <p>Utilize a referência de comandos da <a href="https://www.evm.codes/">EVM</a> para estender o <code>exemplo-001.asm</code> da Atividade <span class="math inline">\(1\)</span> com operações de escrita e leitura em memória, no <em>storage</em> e outras operações lógicas e aritméticas.</p>
 </section>
-<section id="relatório" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="relatório"><span class="header-section-number">3.5</span> Relatório</h2>
+<section id="relatório" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="relatório"><span class="header-section-number">2.6</span> Relatório</h2>
 <p>Escreva um relatório sobre a Prática. Formato: Um arquivo PDF com sua identificação.</p>
 </section>
-<section id="leitura-recomendada" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">3.6</span> Leitura Recomendada</h2>
+<section id="leitura-recomendada" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">2.7</span> Leitura Recomendada</h2>
 <p>[alertblock]{Leitura Recomendada}</p>
 <p><strong>Capítulo 13: The Ethereum Virtual Machine</strong></p>
 <p><strong>Livro</strong>: <a href="https://moodle.utfpr.edu.br/mod/resource/view.php?id=1521589">Antonopoulos, A. M., and G. Wood. 2018. Mastering Ethereum: Building Smart Contracts and DApps. O’Reilly Media, Incorporated.</a></p>
 <p>[/alertblock]</p>
 </section>
-<section id="sec-vet-consid-finais" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="sec-vet-consid-finais"><span class="header-section-number">3.7</span> Considerações Finais</h2>
+<section id="sec-vet-consid-finais" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="sec-vet-consid-finais"><span class="header-section-number">2.8</span> Considerações Finais</h2>
 </section>
-<section id="próximas-aulas" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="próximas-aulas"><span class="header-section-number">3.8</span> Próximas Aulas</h2>
+<section id="próximas-aulas" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="próximas-aulas"><span class="header-section-number">2.9</span> Próximas Aulas</h2>
 <ul>
 <li>Instalando o Cliente Ethereum: Geth.</li>
 </ul>
 </section>
-</section>
-<section id="referências" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Referências</h1>
-<section id="word-cloud" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">4.1</span> <em>Word Cloud</em></h2>
+<section id="referências" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Referências</h1>
+<section id="word-cloud" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">3.1</span> <em>Word Cloud</em></h2>
 <p><img src="figuras/aula-04-pratica-ethereum-virtual-machine.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
 </section>
-<section id="referências-1" class="level2 fragile allowframebreaks" data-number="4.2">
-<h2 class="fragile allowframebreaks anchored" data-number="4.2" data-anchor-id="referências-1"><span class="header-section-number">4.2</span> Referências</h2>
+<section id="referências-1" class="level2 fragile allowframebreaks" data-number="3.2">
+<h2 class="fragile allowframebreaks anchored" data-number="3.2" data-anchor-id="referências-1"><span class="header-section-number">3.2</span> Referências</h2>
 <div id="refs" role="list" style="display: none">
 
 </div>
@@ -973,8 +977,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="pagination-link" aria-label="Instalando o Cliente Ethereum">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Instalando o Cliente Ethereum</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="pagination-link" aria-label="Prática: Instalando o Cliente Ethereum">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Prática: Instalando o Cliente Ethereum</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
