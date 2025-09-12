@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask – Tecnologias Blockchain e suas Aplicações</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../aula-06-pratica-rede-ethereum-privada-clique/aula-06-pratica-rede-ethereum-privada-clique.html" rel="prev">
+<link href="../images/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-31072f9ed96e24c019159c695a8da794.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/rogerioag/tecnologias-blockchain" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bem-vindo</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Prática: Explorando a <em>Ethereum Virtual Machine (EVM)</em></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Prática: Instalando o Cliente Ethereum</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Ethash</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-06-pratica-rede-ethereum-privada-clique/aula-06-pratica-rede-ethereum-privada-clique.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Clique</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+  <li><a href="#prática-simulando-uma-rede-ethereum-local-com-ganache" id="toc-prática-simulando-uma-rede-ethereum-local-com-ganache" class="nav-link active" data-scroll-target="#prática-simulando-uma-rede-ethereum-local-com-ganache"><span class="header-section-number">7</span> Prática: Simulando uma Rede Ethereum Local com Ganache</a>
+  <ul class="collapse">
+  <li><a href="#instalando-o-ganache" id="toc-instalando-o-ganache" class="nav-link" data-scroll-target="#instalando-o-ganache"><span class="header-section-number">7.1</span> Instalando o <code>Ganache</code></a></li>
+  <li><a href="#instalando-o-metamask" id="toc-instalando-o-metamask" class="nav-link" data-scroll-target="#instalando-o-metamask"><span class="header-section-number">7.2</span> Instalando o <code>Metamask</code></a></li>
+  <li><a href="#executando-o-metamask" id="toc-executando-o-metamask" class="nav-link" data-scroll-target="#executando-o-metamask"><span class="header-section-number">7.3</span> Executando o <code>Metamask</code></a></li>
+  <li><a href="#adicionando-a-rede-do-ganache" id="toc-adicionando-a-rede-do-ganache" class="nav-link" data-scroll-target="#adicionando-a-rede-do-ganache"><span class="header-section-number">7.4</span> Adicionando a Rede do <code>Ganache</code></a></li>
+  <li><a href="#importando-contas-do-ganache" id="toc-importando-contas-do-ganache" class="nav-link" data-scroll-target="#importando-contas-do-ganache"><span class="header-section-number">7.5</span> Importando contas do <code>Ganache</code></a></li>
+  <li><a href="#transferência-de-recursos-entre-contas" id="toc-transferência-de-recursos-entre-contas" class="nav-link" data-scroll-target="#transferência-de-recursos-entre-contas"><span class="header-section-number">7.6</span> Transferência de Recursos entre Contas</a></li>
+  <li><a href="#instalando-o-ganache-cli" id="toc-instalando-o-ganache-cli" class="nav-link" data-scroll-target="#instalando-o-ganache-cli"><span class="header-section-number">7.7</span> Instalando o Ganache CLI</a></li>
+  <li><a href="#adicionado-as-contas-da-rede-de-teste-sepolia" id="toc-adicionado-as-contas-da-rede-de-teste-sepolia" class="nav-link" data-scroll-target="#adicionado-as-contas-da-rede-de-teste-sepolia"><span class="header-section-number">7.8</span> Adicionado as contas da Rede de Teste Sepolia</a></li>
+  <li><a href="#solicitação-de-recursos-para-o-sepolia-faucet" id="toc-solicitação-de-recursos-para-o-sepolia-faucet" class="nav-link" data-scroll-target="#solicitação-de-recursos-para-o-sepolia-faucet"><span class="header-section-number">7.9</span> Solicitação de Recursos para o Sepolia Faucet</a></li>
+  <li><a href="#transferindo-recursos-entre-as-contas-sepolia" id="toc-transferindo-recursos-entre-as-contas-sepolia" class="nav-link" data-scroll-target="#transferindo-recursos-entre-as-contas-sepolia"><span class="header-section-number">7.10</span> Transferindo Recursos entre as contas Sepolia</a></li>
+  <li><a href="#adicionado-outras-redes" id="toc-adicionado-outras-redes" class="nav-link" data-scroll-target="#adicionado-outras-redes"><span class="header-section-number">7.11</span> Adicionado outras Redes</a></li>
+  <li><a href="#interagindo-com-o-metamask-pelo-console-do-browser" id="toc-interagindo-com-o-metamask-pelo-console-do-browser" class="nav-link" data-scroll-target="#interagindo-com-o-metamask-pelo-console-do-browser"><span class="header-section-number">7.12</span> Interagindo com o <code>Metamask</code> pelo Console do Browser</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">7.13</span> Leitura Recomendada</a></li>
+  </ul></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">8</span> <em>Word Cloud</em></a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">9</span> Referências</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span></h1>
+<p class="subtitle lead">Ganache e o Metamask</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Resumo</div>
+    Esta prática apresenta os passos para instalarmos o Ganache que simula uma rede local e o <em>plugin</em> <code>Metamask</code> que permite acessar todas as redes que vimos até o momento. Adicionamento a Rede Simulada do Ganache, a Rede de Teste Sepolia e a Rede Ethereum Privada Local.
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="prática-simulando-uma-rede-ethereum-local-com-ganache" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Prática: Simulando uma Rede Ethereum Local com Ganache</h1>
+<p>O objetivo dessa prática é instalarmos o <a href="https://trufflesuite.com/docs/ganache/"><em>Ganache</em></a> que simula uma rede <code>Ethereum</code> local e o <em>plugin</em> do O <a href="https://metamask.io/"><code>Metamask</code></a> para o <em>browser</em> para interagirmos com as redes que vimos até o momento.</p>
+<section id="instalando-o-ganache" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="instalando-o-ganache"><span class="header-section-number">7.1</span> Instalando o <code>Ganache</code></h2>
+<p>O <code>Ganache</code> é uma ferramenta que simula uma rede <em>Ethereum</em> local de maneira rápida e de fácil utilização no desenvolvimento. Uma completa descrição do <code>Ganache</code> pode ser lida no repositório do projeto no <a href="https://github.com/trufflesuite/ganache#readme">github</a>.</p>
+<p>O repositório do <code>Ganache</code> apresenta a mensagem que foi arquivado em Fevereiro de 2024: <code>This repository has been archived by the owner on Feb 26, 2024. It is now read-only</code>. Ainda é possíve instalar a ferramenta para essa prática.</p>
+<p>Podemos instalar a ferramenta <a href="https://trufflesuite.com/docs/ganache/"><em>Ganache</em></a>, diretamente do sistema ou fazendo o <em>download</em> no link <a href="https://trufflesuite.com/ganache/" class="uri">https://trufflesuite.com/ganache/</a>. A <a href="#fig-ganache:page:download" class="quarto-xref">Figura&nbsp;<span>7.I</span></a> apresenta a página de <em>download</em> no site do <code>Ganache</code>.</p>
+<div id="fig-ganache:page:download" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ganache:page:download-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ganache-page-download.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganache:page:download-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.I- Site do Ganache
+</figcaption>
+</figure>
+</div>
+<p>Versões para outros Sistemas Operacionais podem ser baixadas do site <a href="https://github.com/trufflesuite/ganache-ui/releases" class="uri">https://github.com/trufflesuite/ganache-ui/releases</a>. No meu caso, no GNU/Linux optei por baixar a versão <code>appmimage</code>, versão atual <a href="https://github.com/trufflesuite/ganache-ui/releases/download/v2.7.1/ganache-2.7.1-linux-x86_64.AppImage"><code>ganache-2.7.1-linux-x86_64.AppImage</code></a>, que pode ser executada sem a necessidade de instalação.</p>
+<p>Após o <em>download</em> é necessário dar permissão de execução para o arquivo ou com <code>chmod +x ganache-2.7.1-linux-x86_64.appimage</code> ou indo pela interface gráfica e marcando o <em>flag</em> de permissão de execução.</p>
+<p>Executando o <code>ganache</code> será apresentada a tela presente na <a href="#fig-ganache:interface:001" class="quarto-xref">Figura&nbsp;<span>7.II</span></a>. Na qual podemos escolher as opções de criação de <em>workspace</em>.</p>
+<div id="fig-ganache:interface:001" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ganache:interface:001-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ganache-start-interface-001.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganache:interface:001-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.II- Tela inicial do Ganache
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-ganache:interface:002" class="quarto-xref">Figura&nbsp;<span>7.III</span></a> mostra a tela de configuração do <em>workspace</em>. Nela podemos nomear o novo <em>workspace</em> e ainda escolher projetos <code>truffle</code> já desenvolvidos.</p>
+<div id="fig-ganache:interface:002" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ganache:interface:002-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ganache-start-interface-002.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganache:interface:002-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.III- Configuração do Workspace
+</figcaption>
+</figure>
+</div>
+<p>Na próximo aba, <code>Server</code> que é apresentada na <a href="#fig-ganache:interface:003" class="quarto-xref">Figura&nbsp;<span>7.IV</span></a> podemos fazer as configurações do servidor que será iniciado pelo <code>ganache</code>, informações como <code>IP</code>, porta de funcionamento e <code>ID</code> da rede.</p>
+<div id="fig-ganache:interface:003" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ganache:interface:003-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ganache-start-interface-003.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganache:interface:003-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.IV- Configuração do Servidor
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-ganache:interface:004" class="quarto-xref">Figura&nbsp;<span>7.V</span></a> apresenta a <em>tela de criação de contas</em>, nela é possível definirmos a quantidade de contas a serem criadas e o saldo com o qual cada conta deve ser inicializada.</p>
+<div id="fig-ganache:interface:004" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ganache:interface:004-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ganache-start-interface-004.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganache:interface:004-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.V- Definição de Contas
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-ganache:interface:005" class="quarto-xref">Figura&nbsp;<span>7.VI</span></a> apresenta a tela de definição do limite e preço do <code>GAS</code> e qual rede deve ser utilizada na simulação.</p>
+<div id="fig-ganache:interface:005" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ganache:interface:005-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ganache-start-interface-005.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganache:interface:005-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.VI- Configuração da Chain
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-ganache:interface:006" class="quarto-xref">Figura&nbsp;<span>7.VII</span></a> apresenta a configuração de arquivo e mensagens de logs.</p>
+<div id="fig-ganache:interface:006" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ganache:interface:006-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ganache-start-interface-006.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganache:interface:006-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.VII- Definições para Logs
+</figcaption>
+</figure>
+</div>
+<p>A tela de “Sobre” é apresentada na <a href="#fig-ganache:interface:007" class="quarto-xref">Figura&nbsp;<span>7.VIII</span></a>, mostrando informações sobre o <code>Ganache</code> e a versão instalada.</p>
+<div id="fig-ganache:interface:007" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ganache:interface:007-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ganache-start-interface-007.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganache:interface:007-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.VIII- Tela Sobre do Ganache
+</figcaption>
+</figure>
+</div>
+<p>Após as configurações, iniciando-se a execução em <code>Start</code>, é apresentada uma tela com a lista de contas criadas e seus respectivos saldos, conforme a <a href="#fig-ganache:interface:008" class="quarto-xref">Figura&nbsp;<span>7.IX</span></a>.</p>
+<div id="fig-ganache:interface:008" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ganache:interface:008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/ganache-start-interface-008.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganache:interface:008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.IX- Tela de Execução
+</figcaption>
+</figure>
+</div>
+<p>A tela apresenta um menu superior onde é possível além de listar as contas, também podemos ver as informações dos blocos que foram criados, as transações que foram submetidas, eventuais contratos que foram implantados, eventos e mensagens de <em>log</em>.</p>
+<p>A baixo são apresetadas as informações sobre o ambiente de execução da rede simulada, como <em>current block</em>, <em>gas price</em>, <em>gas limit</em>, rede da qual foi feito o <em>fork</em>, o <em>network id</em>, o endereço de resposta do servidor <code>RPC</code>, <em>status</em> de mineração e o <em>workspace</em> ativo.</p>
+</section>
+<section id="instalando-o-metamask" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="instalando-o-metamask"><span class="header-section-number">7.2</span> Instalando o <code>Metamask</code></h2>
+<p>O <a href="https://metamask.io/"><code>Metamask</code></a> é uma carteira que funciona como <em>plugin</em> para navegadores. O <em>plugin</em> para o Chrome pode ser instalado no <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">link</a>.</p>
+<p>Após a instalação do <em>plugin</em> e iniciando sua execução, a tela da <a href="#fig-metamask:config:001" class="quarto-xref">Figura&nbsp;<span>7.X</span></a> será apresentada.</p>
+<div id="fig-metamask:config:001" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:001-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-001.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:001-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.X- Tela Inicial do Metamask
+</figcaption>
+</figure>
+</div>
+<p>Concordando com os termos é possível solicitar a criação de uma nova conta <code>Metamask</code>, conforme mostrado na <a href="#fig-metamask:config:002" class="quarto-xref">Figura&nbsp;<span>7.XI</span></a>.</p>
+<div id="fig-metamask:config:002" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:002-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-002.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:002-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XI- Tela Inicial do Metamask
+</figcaption>
+</figure>
+</div>
+<p>Na tela apresentada na <a href="#fig-metamask:config:004" class="quarto-xref">Figura&nbsp;<span>7.XII</span></a> você pode fornecer uma senha para sua conta no <code>Metamask</code>.</p>
+<div id="fig-metamask:config:004" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:004-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-004.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:004-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XII- Criação de Conta no Metamask
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-metamask:config:005" class="quarto-xref">Figura&nbsp;<span>7.XIII</span></a> mostra a tela que possibilita que a frase de recuperação da conta do <code>Metamask</code> seja salva.</p>
+<div id="fig-metamask:config:005" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:005-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-005.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:005-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XIII- Criação de Conta no Metamask
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-metamask:config:006" class="quarto-xref">Figura&nbsp;<span>7.XIV</span></a> apresenta o aviso de que a carteira foi criada e a <a href="#fig-metamask:config:007" class="quarto-xref">Figura&nbsp;<span>7.XV</span></a> indica que a instalação foi concluída com sucesso.</p>
+<div id="fig-metamask:config:006" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:006-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-006.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:006-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XIV- Aviso de Carteira criada
+</figcaption>
+</figure>
+</div>
+<div id="fig-metamask:config:007" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:007-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-007.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:007-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XV- Aviso de Instalação Concluída
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="executando-o-metamask" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="executando-o-metamask"><span class="header-section-number">7.3</span> Executando o <code>Metamask</code></h2>
+<p>Iniciando a execução da extensão <code>Metamask</code>, será solicitado a senha da conta. A <a href="#fig-metamask:config:008" class="quarto-xref">Figura&nbsp;<span>7.XVI</span></a> a tela de <em>login</em>.</p>
+<div id="fig-metamask:config:008" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-008.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:008-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XVI- Execução do Metamask
+</figcaption>
+</figure>
+</div>
+<p>Após efetuar o <em>login</em> o usuário pode selecionar a rede que ele quer se conectar com o <code>Metamask</code>. A <a href="#fig-metamask:config:009" class="quarto-xref">Figura&nbsp;<span>7.XVII</span></a> apresenta a tela.</p>
+<div id="fig-metamask:config:009" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:009-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-009.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:009-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XVII- Tela com a seleção da rede
+</figcaption>
+</figure>
+</div>
+<p>Ainda é possível habilitar a visualização de redes de teste, conforme a <a href="#fig-metamask:config:010" class="quarto-xref">Figura&nbsp;<span>7.XVIII</span></a>.</p>
+<div id="fig-metamask:config:010" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:010-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-010.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:010-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XVIII- Visualização da lista de redes
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="adicionando-a-rede-do-ganache" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="adicionando-a-rede-do-ganache"><span class="header-section-number">7.4</span> Adicionando a Rede do <code>Ganache</code></h2>
+<p>Clicando-se em <code>Adicionar rede</code> é possível a adição de novas redes, conforme a <a href="#fig-metamask:config:011" class="quarto-xref">Figura&nbsp;<span>7.XIX</span></a> e clicando-se em “Adicionar rede manualmente” como na <a href="#fig-metamask:config:012a" class="quarto-xref">Figura&nbsp;<span>7.XX</span></a>.</p>
+<div id="fig-metamask:config:011" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:011-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-011.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:011-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XIX- Adicionar uma rede
+</figcaption>
+</figure>
+</div>
+<div id="fig-metamask:config:012a" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:012a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-012a.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:012a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XX- Adiconar uma rede manualmente
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="importando-contas-do-ganache" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="importando-contas-do-ganache"><span class="header-section-number">7.5</span> Importando contas do <code>Ganache</code></h2>
+<p>As contas criadas pelo <code>Ganache</code> também podem ser importadas. A <a href="#fig-metamask:config:012" class="quarto-xref">Figura&nbsp;<span>7.XXI</span></a> apresenta a lista de contas.</p>
+<div id="fig-metamask:config:012" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:012-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-012.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:012-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXI- Lista de Contas
+</figcaption>
+</figure>
+</div>
+<p>Clicando-se em <code>Show Keys</code> é possível copiarmos a chave para a importação da conta. A <a href="#fig-metamask:config:013" class="quarto-xref">Figura&nbsp;<span>7.XXII</span></a> mostra uma importação por chave privada.</p>
+<div id="fig-metamask:config:013" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-013.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:013-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXII- Importação por chave privada
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-metamask:config:014a" class="quarto-xref">Figura&nbsp;<span>7.XXIII</span></a> apresenta uma lista de conta e nela estão as duas contas que importamos do <code>Ganache</code> e renomeamos para <em>“Conta Ganache 01”</em> e <em>“Conta Ganache 02”</em>.</p>
+<div id="fig-metamask:config:014a" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:014a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-014-lista-contas.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:014a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXIII- Listagem de contas
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="transferência-de-recursos-entre-contas" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="transferência-de-recursos-entre-contas"><span class="header-section-number">7.6</span> Transferência de Recursos entre Contas</h2>
+<p>O <code>Metamask</code> é uma carteira, assim é possível selecionar uma conta e tendo saldo, fazer uma transferência de recursos.</p>
+<p>Selecionando a conta <em>Ganache 01</em> iremos transferir para a conta <em>Ganache 02</em>. A <a href="#fig-metamask:config:014b" class="quarto-xref">Figura&nbsp;<span>7.XXIV</span></a> apresenta a seleção da conta destinatária.</p>
+<div id="fig-metamask:config:014b" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:014b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-014-enviar.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:014b-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXIV- Seleção do destinatário
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-metamask:config:015" class="quarto-xref">Figura&nbsp;<span>7.XXV</span></a> apresenta a tela de envio, estamos enviando <span class="math inline">\(10 ETH\)</span>.</p>
+<div id="fig-metamask:config:015" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:015-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-015-enviar.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:015-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXV- Tela de Envio
+</figcaption>
+</figure>
+</div>
+<p>A confirmação do envio é feita na tela apresentada nas Figuras <a href="#fig-metamask:config:016" class="quarto-xref">-&nbsp;<span>7.XXVI</span></a> e <a href="#fig-metamask:config:017" class="quarto-xref">-&nbsp;<span>7.XXVII</span></a>.</p>
+<div id="fig-metamask:config:016" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:016-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-016-enviar.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:016-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXVI- Confirmação do Envio
+</figcaption>
+</figure>
+</div>
+<div id="fig-metamask:config:017" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:017-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-017-enviar.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:017-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXVII- Confirmação do Envio
+</figcaption>
+</figure>
+</div>
+<p>Ao confirmarmos o envio a transação aparece na lista de transações conforme mostra a <a href="#fig-metamask:config:018" class="quarto-xref">Figura&nbsp;<span>7.XXVIII</span></a> e seu <em>status</em> fica como <code>Pendente</code>.</p>
+<div id="fig-metamask:config:018" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:018-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-018-enviar.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:018-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXVIII- Transação Pendente
+</figcaption>
+</figure>
+</div>
+<p>Ao ser processada a transação o <em>status</em> da transação passa a ser <code>Confirmada</code> e o saldo é atualizado para <span class="math inline">\(90 ETH\)</span> conforme a <a href="#fig-metamask:config:019" class="quarto-xref">Figura&nbsp;<span>7.XXIX</span></a>.</p>
+<div id="fig-metamask:config:019" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:019-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-019-enviar.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:019-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXIX- Transação Confirmada
+</figcaption>
+</figure>
+</div>
+<p>O saldo da conta destino também é atualizado. A <a href="#fig-metamask:config:020" class="quarto-xref">Figura&nbsp;<span>7.XXX</span></a> mostra que o saldo foi atualizado para <span class="math inline">\(110 ETH\)</span>.</p>
+<div id="fig-metamask:config:020" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:config:020-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/metamask-config-020-enviar.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:config:020-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXX- Transação Confirmada
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="instalando-o-ganache-cli" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="instalando-o-ganache-cli"><span class="header-section-number">7.7</span> Instalando o Ganache CLI</h2>
+<p>Uma outra forma de executar a rede simulada do <code>ganache</code> é utilizando o <code>ganache-cli</code> por linha de comando. Vamos baixar o código da última <em>release</em> <a href="https://github.com/trufflesuite/ganache/archive/refs/tags/v7.9.0.tar.gz"><code>Versão 7.9.0</code></a></p>
+<p>Ou instalando diretamente com <code>npm install ganache --global</code> a versão instalada é a <span class="math inline">\(7.9.1\)</span>, mas só tem o <code>ganache</code> e o <code>ganache-cli</code>. O <a href="https://github.com/trufflesuite/ganache-ui/releases"><code>ganache-ui</code></a> está na versão <span class="math inline">\(2.7.1\)</span>.</p>
+<p>A rede simulada do <code>ganache</code> pode ser iniciada como o comando apresentado no <a href="#lst-ganache-output" class="quarto-xref">Código&nbsp;<span>7.I</span></a>.</p>
+<div id="lst-ganache-output" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-ganache-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;7.I- Comando de Inicialização do Ganache
+</figcaption>
+<div aria-describedby="lst-ganache-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-ganache-output"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="lst-ganache-output-1"><a href="#lst-ganache-output-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ganache-cli <span class="at">--chain.chainId</span> 1337 <span class="at">--chain.networkId</span> 2525</span>
+<span id="lst-ganache-output-2"><a href="#lst-ganache-output-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ganache</span> v7.9.1 <span class="er">(</span><span class="ex">@ganache/cli:</span> 0.10.1, @ganache/core: 0.10.1<span class="kw">)</span></span>
+<span id="lst-ganache-output-3"><a href="#lst-ganache-output-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Starting</span> RPC server</span>
+<span id="lst-ganache-output-4"><a href="#lst-ganache-output-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-ganache-output-5"><a href="#lst-ganache-output-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Available</span> Accounts</span>
+<span id="lst-ganache-output-6"><a href="#lst-ganache-output-6" aria-hidden="true" tabindex="-1"></a><span class="ex">==================</span></span>
+<span id="lst-ganache-output-7"><a href="#lst-ganache-output-7" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">0</span><span class="kw">)</span> <span class="ex">0x6bc36F77B80a3225F43482f7e9A79B2aB904D20A</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-8"><a href="#lst-ganache-output-8" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">1</span><span class="kw">)</span> <span class="ex">0x63f31ad415907984768e0142349d4fa91f75DBFF</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-9"><a href="#lst-ganache-output-9" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">2</span><span class="kw">)</span> <span class="ex">0x5112f12839b3dbaDbfA269c00D47B111399823C3</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-10"><a href="#lst-ganache-output-10" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">3</span><span class="kw">)</span> <span class="ex">0xD34E64e1250169421bc8f90Aa7A9878985A21cB2</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-11"><a href="#lst-ganache-output-11" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">4</span><span class="kw">)</span> <span class="ex">0xf670dc566884317174053fc0962dcfab93caa859</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-12"><a href="#lst-ganache-output-12" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">5</span><span class="kw">)</span> <span class="ex">0xB0eB5b5ff143DDa91C1Fc4E522704e78513490be</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-13"><a href="#lst-ganache-output-13" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">6</span><span class="kw">)</span> <span class="ex">0xfC6BF2645BCB7E21033968b6aB78E22c1e67E4Bd</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-14"><a href="#lst-ganache-output-14" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">7</span><span class="kw">)</span> <span class="ex">0xA06fdAf174893dc46641749D991bFB4b71C520b3</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-15"><a href="#lst-ganache-output-15" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">8</span><span class="kw">)</span> <span class="ex">0xb88cE5D42AD2685a705eeBda1f1D85750074121e</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-16"><a href="#lst-ganache-output-16" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">9</span><span class="kw">)</span> <span class="ex">0x0d4b20f9d5aA4681F281A318BE33aab77a69B425</span> <span class="er">(</span><span class="ex">1000</span> ETH<span class="kw">)</span></span>
+<span id="lst-ganache-output-17"><a href="#lst-ganache-output-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-ganache-output-18"><a href="#lst-ganache-output-18" aria-hidden="true" tabindex="-1"></a><span class="ex">Private</span> Keys</span>
+<span id="lst-ganache-output-19"><a href="#lst-ganache-output-19" aria-hidden="true" tabindex="-1"></a><span class="ex">==================</span></span>
+<span id="lst-ganache-output-20"><a href="#lst-ganache-output-20" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">0</span><span class="kw">)</span> <span class="ex">0x43dcd3a5c8b1fa55a5a76a28132b61673d7dbf2bcb45195cc5b46913a6b2596b</span></span>
+<span id="lst-ganache-output-21"><a href="#lst-ganache-output-21" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">1</span><span class="kw">)</span> <span class="ex">0x06b127b2b54722efa1d183f1aa01c676b9cc166ea38052a6cf17bd9d7ee39cf4</span></span>
+<span id="lst-ganache-output-22"><a href="#lst-ganache-output-22" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">2</span><span class="kw">)</span> <span class="ex">0x757a60ff9c9dcae6061343a0bf0f72d918e9f890292cc47a973e2bfafcae34aa</span></span>
+<span id="lst-ganache-output-23"><a href="#lst-ganache-output-23" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">3</span><span class="kw">)</span> <span class="ex">0x1e07f70327b14d261f804759bc7f483db764029e1331c0980ba78be50362794a</span></span>
+<span id="lst-ganache-output-24"><a href="#lst-ganache-output-24" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">4</span><span class="kw">)</span> <span class="ex">0xcbf4f614fd709800293b0f836d509cb2b719b8613658f295d6b7cdb1bda14995</span></span>
+<span id="lst-ganache-output-25"><a href="#lst-ganache-output-25" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">5</span><span class="kw">)</span> <span class="ex">0xc3c0018cb79be2f0cd523cdc419d3b1f62369e418fea811b7d388355b0bccbdc</span></span>
+<span id="lst-ganache-output-26"><a href="#lst-ganache-output-26" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">6</span><span class="kw">)</span> <span class="ex">0x0491bfb366bddf689d3d876a5e4391d9e94b7d1176134711d3f6ed2a315c9e00</span></span>
+<span id="lst-ganache-output-27"><a href="#lst-ganache-output-27" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">7</span><span class="kw">)</span> <span class="ex">0xc8c10efd89ec8d03e5c93ce5650dc69295c398337b1ea7b42fd3b46f01bd87cb</span></span>
+<span id="lst-ganache-output-28"><a href="#lst-ganache-output-28" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">8</span><span class="kw">)</span> <span class="ex">0xce68c07a81abaf5af757f30b45ff6acb506542ee089b42d6b485b0cc6247c0a0</span></span>
+<span id="lst-ganache-output-29"><a href="#lst-ganache-output-29" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">9</span><span class="kw">)</span> <span class="ex">0xff7a6a6f23271d47210aadcce3d077c6b64561f814373db03921f7727b02940e</span></span>
+<span id="lst-ganache-output-30"><a href="#lst-ganache-output-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-ganache-output-31"><a href="#lst-ganache-output-31" aria-hidden="true" tabindex="-1"></a><span class="ex">HD</span> Wallet</span>
+<span id="lst-ganache-output-32"><a href="#lst-ganache-output-32" aria-hidden="true" tabindex="-1"></a><span class="ex">==================</span></span>
+<span id="lst-ganache-output-33"><a href="#lst-ganache-output-33" aria-hidden="true" tabindex="-1"></a><span class="ex">Mnemonic:</span>      crucial dwarf dilemma fit steak edge comfort submit post try across side</span>
+<span id="lst-ganache-output-34"><a href="#lst-ganache-output-34" aria-hidden="true" tabindex="-1"></a><span class="ex">Base</span> HD Path:  m/44<span class="st">'/60'</span>/0<span class="st">'/0/{account_index}</span></span>
+<span id="lst-ganache-output-35"><a href="#lst-ganache-output-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-ganache-output-36"><a href="#lst-ganache-output-36" aria-hidden="true" tabindex="-1"></a><span class="st">Default Gas Price</span></span>
+<span id="lst-ganache-output-37"><a href="#lst-ganache-output-37" aria-hidden="true" tabindex="-1"></a><span class="st">==================</span></span>
+<span id="lst-ganache-output-38"><a href="#lst-ganache-output-38" aria-hidden="true" tabindex="-1"></a><span class="st">2000000000</span></span>
+<span id="lst-ganache-output-39"><a href="#lst-ganache-output-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-ganache-output-40"><a href="#lst-ganache-output-40" aria-hidden="true" tabindex="-1"></a><span class="st">BlockGas Limit</span></span>
+<span id="lst-ganache-output-41"><a href="#lst-ganache-output-41" aria-hidden="true" tabindex="-1"></a><span class="st">==================</span></span>
+<span id="lst-ganache-output-42"><a href="#lst-ganache-output-42" aria-hidden="true" tabindex="-1"></a><span class="st">30000000</span></span>
+<span id="lst-ganache-output-43"><a href="#lst-ganache-output-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-ganache-output-44"><a href="#lst-ganache-output-44" aria-hidden="true" tabindex="-1"></a><span class="st">Call Gas Limit</span></span>
+<span id="lst-ganache-output-45"><a href="#lst-ganache-output-45" aria-hidden="true" tabindex="-1"></a><span class="st">==================</span></span>
+<span id="lst-ganache-output-46"><a href="#lst-ganache-output-46" aria-hidden="true" tabindex="-1"></a><span class="st">50000000</span></span>
+<span id="lst-ganache-output-47"><a href="#lst-ganache-output-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-ganache-output-48"><a href="#lst-ganache-output-48" aria-hidden="true" tabindex="-1"></a><span class="st">Chain</span></span>
+<span id="lst-ganache-output-49"><a href="#lst-ganache-output-49" aria-hidden="true" tabindex="-1"></a><span class="st">==================</span></span>
+<span id="lst-ganache-output-50"><a href="#lst-ganache-output-50" aria-hidden="true" tabindex="-1"></a><span class="st">Hardfork: shanghai</span></span>
+<span id="lst-ganache-output-51"><a href="#lst-ganache-output-51" aria-hidden="true" tabindex="-1"></a><span class="st">Id:       1337</span></span>
+<span id="lst-ganache-output-52"><a href="#lst-ganache-output-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="lst-ganache-output-53"><a href="#lst-ganache-output-53" aria-hidden="true" tabindex="-1"></a><span class="st">RPC Listening on 127.0.0.1:8545</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</figure>
+</div>
+<p>Da mesma maneira a rede e as contas podem ser adicionadas no <code>Metamask</code>.</p>
+</section>
+<section id="adicionado-as-contas-da-rede-de-teste-sepolia" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="adicionado-as-contas-da-rede-de-teste-sepolia"><span class="header-section-number">7.8</span> Adicionado as contas da Rede de Teste Sepolia</h2>
+<p>Outra redes podem ser utilizadas no <code>Metamask</code>, como por exemplo a rede de teste <code>Sepolia</code> ou a <em>Rede Ethereum Privada Local</em> que criamos.</p>
+<p>No caso da <code>Sepolia</code> já aparece lista como rede de teste. Lembra que sincronizamos na primeira prática a rede de teste <code>Sepolia</code> e criamos duas contas para fazermos transferências.</p>
+<p>Um teste interessante também é vermos se as contas que criamos na rede de teste <code>Sepolia</code> foram sincronizadas com a rede. O <a href="#lst-lista:chaves:sepolia" class="quarto-xref">Código&nbsp;<span>7.II</span></a> apresenta os arquivos das contas que criamos localmente na rede de teste.</p>
+<div id="lst-lista:chaves:sepolia" class="bash listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-lista:chaves:sepolia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Listing&nbsp;7.II- Lista das contas criadas na rede de teste Sepolia
+</figcaption>
+<div aria-describedby="lst-lista:chaves:sepolia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="sourceCode" id="lst-lista:chaves:sepolia"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="lst-lista:chaves:sepolia-1"><a href="#lst-lista:chaves:sepolia-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[sepolia]$</span> cd keystore/</span>
+<span id="lst-lista:chaves:sepolia-2"><a href="#lst-lista:chaves:sepolia-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[keystore]$</span> ls</span>
+<span id="lst-lista:chaves:sepolia-3"><a href="#lst-lista:chaves:sepolia-3" aria-hidden="true" tabindex="-1"></a><span class="ex">UTC--2023-04-17T00-51-24.036052785Z--a9e98368b44b371cec7d205f9fe2b074b6134c95</span></span>
+<span id="lst-lista:chaves:sepolia-4"><a href="#lst-lista:chaves:sepolia-4" aria-hidden="true" tabindex="-1"></a><span class="ex">UTC--2023-04-17T00-53-06.379873395Z--c061b852a26bedec5bd457b88c031c46a622f4ab</span></span>
+<span id="lst-lista:chaves:sepolia-5"><a href="#lst-lista:chaves:sepolia-5" aria-hidden="true" tabindex="-1"></a><span class="ex">[keystore]$</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</figure>
+</div>
+<p>As contas podem ser adicionadas no <code>Metamask</code> utilizando a opção de importação do arquivo <code>JSON</code>. Importamos as duas contas como <em>Conta Sepolia 01</em> e <em>Conta Sepolia 02</em>.</p>
+</section>
+<section id="solicitação-de-recursos-para-o-sepolia-faucet" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="solicitação-de-recursos-para-o-sepolia-faucet"><span class="header-section-number">7.9</span> Solicitação de Recursos para o Sepolia Faucet</h2>
+<p>Com a <em>Conta Sepolia 01</em>, com <em>id</em> <code>a9e98368b44b371cec7d205f9fe2b074b6134c95</code> podemos fazer uma solicitação no <a href="https://sepoliafaucet.com/"><em>Sepolia Faucet</em></a>. A <a href="#fig-sepolia:faucet" class="quarto-xref">Figura&nbsp;<span>7.XXXI</span></a> mostra a tela e transação que foi criada com a requisição de recursos ao <em>faucet</em>.</p>
+<div id="fig-sepolia:faucet" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sepolia:faucet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-faucet-001.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sepolia:faucet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXXI- Sepolia Faucet
+</figcaption>
+</figure>
+</div>
+<p>Podemos ver que a transação <a href="https://sepolia.etherscan.io/tx/0xcced83e15dd6d227a6242ae4f5d46f0c977598ae66ea8b5c4b4fa6d439042216"><code>0xcced83e15dd6d227a6242ae4f5d46f0c977598ae66ea8b5c4b4fa6d439042216</code></a> foi criada e seus detalhes podem ser vistos no <a href="https://sepolia.etherscan.io/tx/0xcced83e15dd6d227a6242ae4f5d46f0c977598ae66ea8b5c4b4fa6d439042216"><code>etherscan</code></a>. A <a href="#fig-transacao:etherscan" class="quarto-xref">Figura&nbsp;<span>7.XXXII</span></a> mostra detalhes da transação gerada pelo <em>faucet</em> para a <em>Conta Sepolia 01</em>.</p>
+<div id="fig-transacao:etherscan" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transacao:etherscan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-faucet-detalhe-transacao-etherscan.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transacao:etherscan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXXII- Detalhes da transação no Etherscan
+</figcaption>
+</figure>
+</div>
+<p>Percebam que na interface do <code>Metamask</code> a transação de transferência de <span class="math inline">\(0.5SepoliaETH\)</span> aparece junto com outras solicitações anteriores que fizemos ao <em>faucet</em>. A <a href="#fig-transacoes:metamask" class="quarto-xref">Figura&nbsp;<span>7.XXXIII</span></a> mostra as transações de valores recebidos na <em>Conta Sepolia 01</em>.</p>
+<div id="fig-transacoes:metamask" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transacoes:metamask-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-faucet-transacao-na-metamask.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transacoes:metamask-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXXIII- Transações no Metamask para a Conta Sepolia 01
+</figcaption>
+</figure>
+</div>
+<p>As transações direcionadas à <em>Conta Sepolia 01</em> (<a href="https://sepolia.etherscan.io/address/0xa9e98368b44b371cec7d205f9fe2b074b6134c95"><code>a9e98368b44b371cec7d205f9fe2b074b6134c95</code></a>) podem ser vistas no <code>etherscan</code> através do <a href="https://sepolia.etherscan.io/address/0xa9e98368b44b371cec7d205f9fe2b074b6134c95">link</a>. A <a href="#fig-transacoes:etherscan" class="quarto-xref">Figura&nbsp;<span>7.XXXIV</span></a> mostra a tela que será apresentada.</p>
+<div id="fig-transacoes:etherscan" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-transacoes:etherscan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-faucet-transacoes-etherscan.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-transacoes:etherscan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXXIV- Transações recebidas pela Conta Sepolia 01
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="transferindo-recursos-entre-as-contas-sepolia" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="transferindo-recursos-entre-as-contas-sepolia"><span class="header-section-number">7.10</span> Transferindo Recursos entre as contas Sepolia</h2>
+<p>Se transferirmos <span class="math inline">\(0,251SepoliaETH\)</span> da <em>Conta Sepolia 01</em> para a <em>Conta Sepolia 02</em> a transação de transferência irá aparecer. A <a href="#fig-sepolia:envio:conta:02" class="quarto-xref">Figura&nbsp;<span>7.XXXV</span></a> apresenta a tela incial da transferência.</p>
+<div id="fig-sepolia:envio:conta:02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sepolia:envio:conta:02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-envio-para-conta-sepolia-02-01.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sepolia:envio:conta:02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXXV- Transferência para a Conta Sepolia 02
+</figcaption>
+</figure>
+</div>
+<p>Após a confirmação apresentada na <a href="#fig-sepolia:envio:conta:02:confirmacao" class="quarto-xref">Figura&nbsp;<span>7.XXXVI</span></a> a transação ficou momentaneamente com o <em>status</em> <code>Pendente</code> e depois passou a <code>Confirmada</code>.</p>
+<div id="fig-sepolia:envio:conta:02:confirmacao" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sepolia:envio:conta:02:confirmacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-envio-para-conta-sepolia-02-02.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sepolia:envio:conta:02:confirmacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXXVI- Confirmação do Envio
+</figcaption>
+</figure>
+</div>
+<p>Clicando na transação na tela que lista as transações apresentada na <a href="#fig-sepolia:envio:conta:02:lista:transacoes" class="quarto-xref">Figura&nbsp;<span>7.XXXVII</span></a> podemos ver os detalhes da transação de transferência que acabamos de fazer.</p>
+<div id="fig-sepolia:envio:conta:02:lista:transacoes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sepolia:envio:conta:02:lista:transacoes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-envio-para-conta-sepolia-02-03.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sepolia:envio:conta:02:lista:transacoes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXXVII- Lista de Transações
+</figcaption>
+</figure>
+</div>
+<p>Os detalhes da transação <code>0x4dfba552141b945e2d9189957d1b199fc38ac36a850a3f9f11e78be8223d093f</code> podem ser vistos na <a href="#fig-sepolia:envio:conta:02:detalhe:transacao:metamask" class="quarto-xref">Figura&nbsp;<span>7.XXXVIII</span></a> da tela do <code>Metamask</code> e na <a href="#fig-sepolia:envio:conta:02:detalhe:transacao:etherscan" class="quarto-xref">Figura&nbsp;<span>7.XXXIX</span></a> no <a href="https://sepolia.etherscan.io/tx/0x4dfba552141b945e2d9189957d1b199fc38ac36a850a3f9f11e78be8223d093f"><code>etherscan.</code></a>.</p>
+<div id="fig-sepolia:envio:conta:02:detalhe:transacao:metamask" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sepolia:envio:conta:02:detalhe:transacao:metamask-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-envio-para-conta-sepolia-02-04.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sepolia:envio:conta:02:detalhe:transacao:metamask-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXXVIII- Detalhe da Transação no Metamask
+</figcaption>
+</figure>
+</div>
+<div id="fig-sepolia:envio:conta:02:detalhe:transacao:etherscan" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sepolia:envio:conta:02:detalhe:transacao:etherscan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-envio-para-conta-sepolia-02-05.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sepolia:envio:conta:02:detalhe:transacao:etherscan-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XXXIX- Detalhe da Transação no Metamask
+</figcaption>
+</figure>
+</div>
+<p>Na interface do <code>Metamask</code> podemos ver a atualização do saldo e o registro da transação de recebimento, conforme a <a href="#fig-sepolia:envio:conta:02:saldo:atualizado" class="quarto-xref">Figura&nbsp;<span>7.XL</span></a>.</p>
+<div id="fig-sepolia:envio:conta:02:saldo:atualizado" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sepolia:envio:conta:02:saldo:atualizado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/sepolia-envio-para-conta-sepolia-02-06.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sepolia:envio:conta:02:saldo:atualizado-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XL- Saldo da Conta Sepolia 02 atualizado no Metamask
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="adicionado-outras-redes" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="adicionado-outras-redes"><span class="header-section-number">7.11</span> Adicionado outras Redes</h2>
+<p>A <em>Rede Ethereum Privada Local</em> pode ser adiciona da mesma forma que adicionamos o <code>Ganache</code> fornecendo o endereço que o servidor irá responder às requisições <code>RPC</code>.</p>
+<p>As transações que realizarmos com as contas importadas dessa rede poderão ser vistas, mineradas e atualizarão os saldos das contas na <em>Rede Ethereum Privada Local</em>.</p>
+</section>
+<section id="interagindo-com-o-metamask-pelo-console-do-browser" class="level2" data-number="7.12">
+<h2 data-number="7.12" class="anchored" data-anchor-id="interagindo-com-o-metamask-pelo-console-do-browser"><span class="header-section-number">7.12</span> Interagindo com o <code>Metamask</code> pelo Console do Browser</h2>
+<p>Instalado o <code>Metamask</code> ele injeta o provedor de API usando o objeto <code>window.ethereum</code> que estará disponível no contexto do <em>browser</em> e pode ser usado para interagirmos com o <em>blockchain</em>.</p>
+<p>Um exemplo de interação com a API do Ethereum usando o console <code>JavaScript</code> no <code>Chrome</code> pode ser visto na <a href="#fig-metamask:console:browser:01" class="quarto-xref">Figura&nbsp;<span>7.XLI</span></a>.</p>
+<div id="fig-metamask:console:browser:01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:console:browser:01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/console-javascript-metamask.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:console:browser:01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XLI- Console do Browser
+</figcaption>
+</figure>
+</div>
+<p>O detalhe do Console pode ser visto na <a href="#fig-metamask:console:browser:02" class="quarto-xref">Figura&nbsp;<span>7.XLII</span></a>.</p>
+<div id="fig-metamask:console:browser:02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-metamask:console:browser:02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/console-javascript-metamask-detalhe.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-metamask:console:browser:02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.XLII- Console do Browser
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="leitura-recomendada" class="level2" data-number="7.13">
+<h2 data-number="7.13" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">7.13</span> Leitura Recomendada</h2>
+<p>[alertblock]{Leitura Recomendada}</p>
+<p><strong>Capítulo 11: Ethereum 101</strong></p>
+<p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_276">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p><strong>Capítulo 12: Futher Ethereum</strong></p>
+<p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_310">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p>[/alertblock]</p>
+</section>
+</section>
+<section id="word-cloud" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> <em>Word Cloud</em></h1>
+<p><img src="figuras/aula-08-pratica-simulador-ganache-metamask.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
+</section>
+<section id="referências" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Referências</h1>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../aula-06-pratica-rede-ethereum-privada-clique/aula-06-pratica-rede-ethereum-privada-clique.html" class="pagination-link" aria-label="Prática: Criando uma Rede Ethereum Privada: `Clique`">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Clique</code></span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

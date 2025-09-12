@@ -918,5 +918,145 @@
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Prática: Criando uma Rede Ethereum Privada: `Clique`</span>"
     ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "",
+    "text": "7 Prática: Simulando uma Rede Ethereum Local com Ganache\nO objetivo dessa prática é instalarmos o Ganache que simula uma rede Ethereum local e o plugin do O Metamask para o browser para interagirmos com as redes que vimos até o momento.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#instalando-o-ganache",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#instalando-o-ganache",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.1 Instalando o Ganache",
+    "text": "7.1 Instalando o Ganache\nO Ganache é uma ferramenta que simula uma rede Ethereum local de maneira rápida e de fácil utilização no desenvolvimento. Uma completa descrição do Ganache pode ser lida no repositório do projeto no github.\nO repositório do Ganache apresenta a mensagem que foi arquivado em Fevereiro de 2024: This repository has been archived by the owner on Feb 26, 2024. It is now read-only. Ainda é possíve instalar a ferramenta para essa prática.\nPodemos instalar a ferramenta Ganache, diretamente do sistema ou fazendo o download no link https://trufflesuite.com/ganache/. A Figura 7.I apresenta a página de download no site do Ganache.\n\n\n\n\n\n\nFigure 7.I- Site do Ganache\n\n\n\nVersões para outros Sistemas Operacionais podem ser baixadas do site https://github.com/trufflesuite/ganache-ui/releases. No meu caso, no GNU/Linux optei por baixar a versão appmimage, versão atual ganache-2.7.1-linux-x86_64.AppImage, que pode ser executada sem a necessidade de instalação.\nApós o download é necessário dar permissão de execução para o arquivo ou com chmod +x ganache-2.7.1-linux-x86_64.appimage ou indo pela interface gráfica e marcando o flag de permissão de execução.\nExecutando o ganache será apresentada a tela presente na Figura 7.II. Na qual podemos escolher as opções de criação de workspace.\n\n\n\n\n\n\nFigure 7.II- Tela inicial do Ganache\n\n\n\nA Figura 7.III mostra a tela de configuração do workspace. Nela podemos nomear o novo workspace e ainda escolher projetos truffle já desenvolvidos.\n\n\n\n\n\n\nFigure 7.III- Configuração do Workspace\n\n\n\nNa próximo aba, Server que é apresentada na Figura 7.IV podemos fazer as configurações do servidor que será iniciado pelo ganache, informações como IP, porta de funcionamento e ID da rede.\n\n\n\n\n\n\nFigure 7.IV- Configuração do Servidor\n\n\n\nA Figura 7.V apresenta a tela de criação de contas, nela é possível definirmos a quantidade de contas a serem criadas e o saldo com o qual cada conta deve ser inicializada.\n\n\n\n\n\n\nFigure 7.V- Definição de Contas\n\n\n\nA Figura 7.VI apresenta a tela de definição do limite e preço do GAS e qual rede deve ser utilizada na simulação.\n\n\n\n\n\n\nFigure 7.VI- Configuração da Chain\n\n\n\nA Figura 7.VII apresenta a configuração de arquivo e mensagens de logs.\n\n\n\n\n\n\nFigure 7.VII- Definições para Logs\n\n\n\nA tela de “Sobre” é apresentada na Figura 7.VIII, mostrando informações sobre o Ganache e a versão instalada.\n\n\n\n\n\n\nFigure 7.VIII- Tela Sobre do Ganache\n\n\n\nApós as configurações, iniciando-se a execução em Start, é apresentada uma tela com a lista de contas criadas e seus respectivos saldos, conforme a Figura 7.IX.\n\n\n\n\n\n\nFigure 7.IX- Tela de Execução\n\n\n\nA tela apresenta um menu superior onde é possível além de listar as contas, também podemos ver as informações dos blocos que foram criados, as transações que foram submetidas, eventuais contratos que foram implantados, eventos e mensagens de log.\nA baixo são apresetadas as informações sobre o ambiente de execução da rede simulada, como current block, gas price, gas limit, rede da qual foi feito o fork, o network id, o endereço de resposta do servidor RPC, status de mineração e o workspace ativo.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#instalando-o-metamask",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#instalando-o-metamask",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.2 Instalando o Metamask",
+    "text": "7.2 Instalando o Metamask\nO Metamask é uma carteira que funciona como plugin para navegadores. O plugin para o Chrome pode ser instalado no link.\nApós a instalação do plugin e iniciando sua execução, a tela da Figura 7.X será apresentada.\n\n\n\n\n\n\nFigure 7.X- Tela Inicial do Metamask\n\n\n\nConcordando com os termos é possível solicitar a criação de uma nova conta Metamask, conforme mostrado na Figura 7.XI.\n\n\n\n\n\n\nFigure 7.XI- Tela Inicial do Metamask\n\n\n\nNa tela apresentada na Figura 7.XII você pode fornecer uma senha para sua conta no Metamask.\n\n\n\n\n\n\nFigure 7.XII- Criação de Conta no Metamask\n\n\n\nA Figura 7.XIII mostra a tela que possibilita que a frase de recuperação da conta do Metamask seja salva.\n\n\n\n\n\n\nFigure 7.XIII- Criação de Conta no Metamask\n\n\n\nA Figura 7.XIV apresenta o aviso de que a carteira foi criada e a Figura 7.XV indica que a instalação foi concluída com sucesso.\n\n\n\n\n\n\nFigure 7.XIV- Aviso de Carteira criada\n\n\n\n\n\n\n\n\n\nFigure 7.XV- Aviso de Instalação Concluída",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#executando-o-metamask",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#executando-o-metamask",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.3 Executando o Metamask",
+    "text": "7.3 Executando o Metamask\nIniciando a execução da extensão Metamask, será solicitado a senha da conta. A Figura 7.XVI a tela de login.\n\n\n\n\n\n\nFigure 7.XVI- Execução do Metamask\n\n\n\nApós efetuar o login o usuário pode selecionar a rede que ele quer se conectar com o Metamask. A Figura 7.XVII apresenta a tela.\n\n\n\n\n\n\nFigure 7.XVII- Tela com a seleção da rede\n\n\n\nAinda é possível habilitar a visualização de redes de teste, conforme a Figura 7.XVIII.\n\n\n\n\n\n\nFigure 7.XVIII- Visualização da lista de redes",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#adicionando-a-rede-do-ganache",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#adicionando-a-rede-do-ganache",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.4 Adicionando a Rede do Ganache",
+    "text": "7.4 Adicionando a Rede do Ganache\nClicando-se em Adicionar rede é possível a adição de novas redes, conforme a Figura 7.XIX e clicando-se em “Adicionar rede manualmente” como na Figura 7.XX.\n\n\n\n\n\n\nFigure 7.XIX- Adicionar uma rede\n\n\n\n\n\n\n\n\n\nFigure 7.XX- Adiconar uma rede manualmente",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#importando-contas-do-ganache",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#importando-contas-do-ganache",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.5 Importando contas do Ganache",
+    "text": "7.5 Importando contas do Ganache\nAs contas criadas pelo Ganache também podem ser importadas. A Figura 7.XXI apresenta a lista de contas.\n\n\n\n\n\n\nFigure 7.XXI- Lista de Contas\n\n\n\nClicando-se em Show Keys é possível copiarmos a chave para a importação da conta. A Figura 7.XXII mostra uma importação por chave privada.\n\n\n\n\n\n\nFigure 7.XXII- Importação por chave privada\n\n\n\nA Figura 7.XXIII apresenta uma lista de conta e nela estão as duas contas que importamos do Ganache e renomeamos para “Conta Ganache 01” e “Conta Ganache 02”.\n\n\n\n\n\n\nFigure 7.XXIII- Listagem de contas",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#transferência-de-recursos-entre-contas",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#transferência-de-recursos-entre-contas",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.6 Transferência de Recursos entre Contas",
+    "text": "7.6 Transferência de Recursos entre Contas\nO Metamask é uma carteira, assim é possível selecionar uma conta e tendo saldo, fazer uma transferência de recursos.\nSelecionando a conta Ganache 01 iremos transferir para a conta Ganache 02. A Figura 7.XXIV apresenta a seleção da conta destinatária.\n\n\n\n\n\n\nFigure 7.XXIV- Seleção do destinatário\n\n\n\nA Figura 7.XXV apresenta a tela de envio, estamos enviando \\(10 ETH\\).\n\n\n\n\n\n\nFigure 7.XXV- Tela de Envio\n\n\n\nA confirmação do envio é feita na tela apresentada nas Figuras - 7.XXVI e - 7.XXVII.\n\n\n\n\n\n\nFigure 7.XXVI- Confirmação do Envio\n\n\n\n\n\n\n\n\n\nFigure 7.XXVII- Confirmação do Envio\n\n\n\nAo confirmarmos o envio a transação aparece na lista de transações conforme mostra a Figura 7.XXVIII e seu status fica como Pendente.\n\n\n\n\n\n\nFigure 7.XXVIII- Transação Pendente\n\n\n\nAo ser processada a transação o status da transação passa a ser Confirmada e o saldo é atualizado para \\(90 ETH\\) conforme a Figura 7.XXIX.\n\n\n\n\n\n\nFigure 7.XXIX- Transação Confirmada\n\n\n\nO saldo da conta destino também é atualizado. A Figura 7.XXX mostra que o saldo foi atualizado para \\(110 ETH\\).\n\n\n\n\n\n\nFigure 7.XXX- Transação Confirmada",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#instalando-o-ganache-cli",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#instalando-o-ganache-cli",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.7 Instalando o Ganache CLI",
+    "text": "7.7 Instalando o Ganache CLI\nUma outra forma de executar a rede simulada do ganache é utilizando o ganache-cli por linha de comando. Vamos baixar o código da última release Versão 7.9.0\nOu instalando diretamente com npm install ganache --global a versão instalada é a \\(7.9.1\\), mas só tem o ganache e o ganache-cli. O ganache-ui está na versão \\(2.7.1\\).\nA rede simulada do ganache pode ser iniciada como o comando apresentado no Código 7.I.\n\n\n\nListing 7.I- Comando de Inicialização do Ganache\n\n\n$ ganache-cli --chain.chainId 1337 --chain.networkId 2525\nganache v7.9.1 (@ganache/cli: 0.10.1, @ganache/core: 0.10.1)\nStarting RPC server\n\nAvailable Accounts\n==================\n(0) 0x6bc36F77B80a3225F43482f7e9A79B2aB904D20A (1000 ETH)\n(1) 0x63f31ad415907984768e0142349d4fa91f75DBFF (1000 ETH)\n(2) 0x5112f12839b3dbaDbfA269c00D47B111399823C3 (1000 ETH)\n(3) 0xD34E64e1250169421bc8f90Aa7A9878985A21cB2 (1000 ETH)\n(4) 0xf670dc566884317174053fc0962dcfab93caa859 (1000 ETH)\n(5) 0xB0eB5b5ff143DDa91C1Fc4E522704e78513490be (1000 ETH)\n(6) 0xfC6BF2645BCB7E21033968b6aB78E22c1e67E4Bd (1000 ETH)\n(7) 0xA06fdAf174893dc46641749D991bFB4b71C520b3 (1000 ETH)\n(8) 0xb88cE5D42AD2685a705eeBda1f1D85750074121e (1000 ETH)\n(9) 0x0d4b20f9d5aA4681F281A318BE33aab77a69B425 (1000 ETH)\n\nPrivate Keys\n==================\n(0) 0x43dcd3a5c8b1fa55a5a76a28132b61673d7dbf2bcb45195cc5b46913a6b2596b\n(1) 0x06b127b2b54722efa1d183f1aa01c676b9cc166ea38052a6cf17bd9d7ee39cf4\n(2) 0x757a60ff9c9dcae6061343a0bf0f72d918e9f890292cc47a973e2bfafcae34aa\n(3) 0x1e07f70327b14d261f804759bc7f483db764029e1331c0980ba78be50362794a\n(4) 0xcbf4f614fd709800293b0f836d509cb2b719b8613658f295d6b7cdb1bda14995\n(5) 0xc3c0018cb79be2f0cd523cdc419d3b1f62369e418fea811b7d388355b0bccbdc\n(6) 0x0491bfb366bddf689d3d876a5e4391d9e94b7d1176134711d3f6ed2a315c9e00\n(7) 0xc8c10efd89ec8d03e5c93ce5650dc69295c398337b1ea7b42fd3b46f01bd87cb\n(8) 0xce68c07a81abaf5af757f30b45ff6acb506542ee089b42d6b485b0cc6247c0a0\n(9) 0xff7a6a6f23271d47210aadcce3d077c6b64561f814373db03921f7727b02940e\n\nHD Wallet\n==================\nMnemonic:      crucial dwarf dilemma fit steak edge comfort submit post try across side\nBase HD Path:  m/44'/60'/0'/0/{account_index}\n\nDefault Gas Price\n==================\n2000000000\n\nBlockGas Limit\n==================\n30000000\n\nCall Gas Limit\n==================\n50000000\n\nChain\n==================\nHardfork: shanghai\nId:       1337\n\nRPC Listening on 127.0.0.1:8545\n\n\n\nDa mesma maneira a rede e as contas podem ser adicionadas no Metamask.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#adicionado-as-contas-da-rede-de-teste-sepolia",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#adicionado-as-contas-da-rede-de-teste-sepolia",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.8 Adicionado as contas da Rede de Teste Sepolia",
+    "text": "7.8 Adicionado as contas da Rede de Teste Sepolia\nOutra redes podem ser utilizadas no Metamask, como por exemplo a rede de teste Sepolia ou a Rede Ethereum Privada Local que criamos.\nNo caso da Sepolia já aparece lista como rede de teste. Lembra que sincronizamos na primeira prática a rede de teste Sepolia e criamos duas contas para fazermos transferências.\nUm teste interessante também é vermos se as contas que criamos na rede de teste Sepolia foram sincronizadas com a rede. O Código 7.II apresenta os arquivos das contas que criamos localmente na rede de teste.\n\n\n\nListing 7.II- Lista das contas criadas na rede de teste Sepolia\n\n\n[sepolia]$ cd keystore/\n[keystore]$ ls\nUTC--2023-04-17T00-51-24.036052785Z--a9e98368b44b371cec7d205f9fe2b074b6134c95\nUTC--2023-04-17T00-53-06.379873395Z--c061b852a26bedec5bd457b88c031c46a622f4ab\n[keystore]$ \n\n\n\nAs contas podem ser adicionadas no Metamask utilizando a opção de importação do arquivo JSON. Importamos as duas contas como Conta Sepolia 01 e Conta Sepolia 02.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#solicitação-de-recursos-para-o-sepolia-faucet",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#solicitação-de-recursos-para-o-sepolia-faucet",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.9 Solicitação de Recursos para o Sepolia Faucet",
+    "text": "7.9 Solicitação de Recursos para o Sepolia Faucet\nCom a Conta Sepolia 01, com id a9e98368b44b371cec7d205f9fe2b074b6134c95 podemos fazer uma solicitação no Sepolia Faucet. A Figura 7.XXXI mostra a tela e transação que foi criada com a requisição de recursos ao faucet.\n\n\n\n\n\n\nFigure 7.XXXI- Sepolia Faucet\n\n\n\nPodemos ver que a transação 0xcced83e15dd6d227a6242ae4f5d46f0c977598ae66ea8b5c4b4fa6d439042216 foi criada e seus detalhes podem ser vistos no etherscan. A Figura 7.XXXII mostra detalhes da transação gerada pelo faucet para a Conta Sepolia 01.\n\n\n\n\n\n\nFigure 7.XXXII- Detalhes da transação no Etherscan\n\n\n\nPercebam que na interface do Metamask a transação de transferência de \\(0.5SepoliaETH\\) aparece junto com outras solicitações anteriores que fizemos ao faucet. A Figura 7.XXXIII mostra as transações de valores recebidos na Conta Sepolia 01.\n\n\n\n\n\n\nFigure 7.XXXIII- Transações no Metamask para a Conta Sepolia 01\n\n\n\nAs transações direcionadas à Conta Sepolia 01 (a9e98368b44b371cec7d205f9fe2b074b6134c95) podem ser vistas no etherscan através do link. A Figura 7.XXXIV mostra a tela que será apresentada.\n\n\n\n\n\n\nFigure 7.XXXIV- Transações recebidas pela Conta Sepolia 01",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#transferindo-recursos-entre-as-contas-sepolia",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#transferindo-recursos-entre-as-contas-sepolia",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.10 Transferindo Recursos entre as contas Sepolia",
+    "text": "7.10 Transferindo Recursos entre as contas Sepolia\nSe transferirmos \\(0,251SepoliaETH\\) da Conta Sepolia 01 para a Conta Sepolia 02 a transação de transferência irá aparecer. A Figura 7.XXXV apresenta a tela incial da transferência.\n\n\n\n\n\n\nFigure 7.XXXV- Transferência para a Conta Sepolia 02\n\n\n\nApós a confirmação apresentada na Figura 7.XXXVI a transação ficou momentaneamente com o status Pendente e depois passou a Confirmada.\n\n\n\n\n\n\nFigure 7.XXXVI- Confirmação do Envio\n\n\n\nClicando na transação na tela que lista as transações apresentada na Figura 7.XXXVII podemos ver os detalhes da transação de transferência que acabamos de fazer.\n\n\n\n\n\n\nFigure 7.XXXVII- Lista de Transações\n\n\n\nOs detalhes da transação 0x4dfba552141b945e2d9189957d1b199fc38ac36a850a3f9f11e78be8223d093f podem ser vistos na Figura 7.XXXVIII da tela do Metamask e na Figura 7.XXXIX no etherscan..\n\n\n\n\n\n\nFigure 7.XXXVIII- Detalhe da Transação no Metamask\n\n\n\n\n\n\n\n\n\nFigure 7.XXXIX- Detalhe da Transação no Metamask\n\n\n\nNa interface do Metamask podemos ver a atualização do saldo e o registro da transação de recebimento, conforme a Figura 7.XL.\n\n\n\n\n\n\nFigure 7.XL- Saldo da Conta Sepolia 02 atualizado no Metamask",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#adicionado-outras-redes",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#adicionado-outras-redes",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.11 Adicionado outras Redes",
+    "text": "7.11 Adicionado outras Redes\nA Rede Ethereum Privada Local pode ser adiciona da mesma forma que adicionamos o Ganache fornecendo o endereço que o servidor irá responder às requisições RPC.\nAs transações que realizarmos com as contas importadas dessa rede poderão ser vistas, mineradas e atualizarão os saldos das contas na Rede Ethereum Privada Local.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#interagindo-com-o-metamask-pelo-console-do-browser",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#interagindo-com-o-metamask-pelo-console-do-browser",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.12 Interagindo com o Metamask pelo Console do Browser",
+    "text": "7.12 Interagindo com o Metamask pelo Console do Browser\nInstalado o Metamask ele injeta o provedor de API usando o objeto window.ethereum que estará disponível no contexto do browser e pode ser usado para interagirmos com o blockchain.\nUm exemplo de interação com a API do Ethereum usando o console JavaScript no Chrome pode ser visto na Figura 7.XLI.\n\n\n\n\n\n\nFigure 7.XLI- Console do Browser\n\n\n\nO detalhe do Console pode ser visto na Figura 7.XLII.\n\n\n\n\n\n\nFigure 7.XLII- Console do Browser",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
+  },
+  {
+    "objectID": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#leitura-recomendada",
+    "href": "aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html#leitura-recomendada",
+    "title": "6  Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask",
+    "section": "7.13 Leitura Recomendada",
+    "text": "7.13 Leitura Recomendada\n[alertblock]{Leitura Recomendada}\nCapítulo 11: Ethereum 101\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\nCapítulo 12: Futher Ethereum\nLivro: IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.\n[/alertblock]",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span>"
+    ]
   }
 ]
