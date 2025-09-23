@@ -275,6 +275,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks Ethereum: Introdução ao Web3</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-10-pratica-ethereum-test-and-deploy-truffle/aula-10-pratica-ethereum-test-and-deploy-truffle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e <em>Frameworks</em> Ethereum: Introdução aos Testes e <em>Deploy</em> com <code>Truffle</code></span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -302,7 +308,7 @@ window.Quarto = {
   <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">7.1</span> Referências</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -438,7 +444,7 @@ Listing&nbsp;5.I- Genesis File
 Listing&nbsp;5.II- Criando Usuário para iniciar a rede
 </figcaption>
 <div aria-describedby="lst-criando:usuarios-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="sourceCode" id="lst-criando:usuarios"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="lst-criando:usuarios-1"><a href="#lst-criando:usuarios-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate-ethash]$</span> /home/rag/go-ethereum-1.11.6/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate-ethash/ account new</span>
+<div class="sourceCode" id="lst-criando:usuarios"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="lst-criando:usuarios-1"><a href="#lst-criando:usuarios-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate-ethash]$</span> /home/rag/go-ethereum-1.11.6/build/bin/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate-ethash/ account new</span>
 <span id="lst-criando:usuarios-2"><a href="#lst-criando:usuarios-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-19<span class="kw">|</span><span class="ex">16:22:04.258]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
 <span id="lst-criando:usuarios-3"><a href="#lst-criando:usuarios-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-19<span class="kw">|</span><span class="ex">16:22:04.258]</span> Smartcard socket not found, disabling    err=<span class="st">"stat /run/pcscd/pcscd.comm: no such file or directory"</span></span>
 <span id="lst-criando:usuarios-4"><a href="#lst-criando:usuarios-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> new account is locked with a password. Please give a password. Do not forget this password.</span>
@@ -748,7 +754,7 @@ Listing&nbsp;5.X- Criando uma nova conta com o clef
 </div>
 <p>É para termos duas contas criadas, que na minha máquina são: <code>0x2db017E44b03B37755A4b15e14Cd799f83DE4c13</code> e <code>0x7A7686aD451d2865A2246E239B674aeFd4c6c27c</code>, ambas com a senha <code>admin12345</code>.</p>
 <p>Verifiquemos no <em>console</em> <code>JavaScript</code> se elas são listadas:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate-ethash]$</span> geth attach ~/.etherprivate-ethash/geth.ipc</span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate-ethash]$</span> /home/rag/go-ethereum-1.11.6//build/bin/geth attach ~/.etherprivate-ethash/geth.ipc</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.5-stable-a38f4108/linux-amd64/go1.20.2</span>
@@ -815,10 +821,10 @@ true
 <h2 data-number="5.8" class="anchored" data-anchor-id="gerar-algum-saldo-para-as-carteiras"><span class="header-section-number">5.8</span> Gerar algum Saldo para as Carteiras</h2>
 <p>Se não alocamos nenhuma valor para alguma conta criada antes da inicialização da rede, para acumular algum valor é necessário minerar.</p>
 <p>Vamos iniciar o <code>geth</code> indicando a carteira que irá receber as recompensas pela mineração utilizando o parâmetro <code>--miner.etherbase</code>, utilizei aqui a primeira conta criada <code>0x2db017e44b03b37755a4b15e14cd799f83de4c13</code>. Note que é possível colocar uma identificação para sua rede com o parâmetro <code>--identity "RAGEtherPrivate"</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate-ethash]$</span> geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate-ethash/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span> <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate-ethash/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate-ethash/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate-ethash]$</span> ~/go-ethereum-1.11.6/build/bin/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate-ethash/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span> <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate-ethash/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate-ethash/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>O cliente <code>geth</code> irá iniciar normalmente.</p>
 <p>Em um console <code>JavaScript</code> vamos verificar o saldo inicial e iniciar a mineração.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate-ethash]$</span> /home/rag/go-ethereum-1.11.6/build/bin/geth attach ~/.etherprivate-ethash/geth.ipc</span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate-ethash]$</span> ~/go-ethereum-1.11.6/build/bin/geth attach ~/.etherprivate-ethash/geth.ipc</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.6-stable-ea9e62ca/linux-amd64/go1.21.1</span>
@@ -1787,4 +1793,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

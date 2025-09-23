@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.6">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2&nbsp; Aula 02 - Ethereum – Tecnologias Blockchain e suas Aplicações</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" rel="next">
+<link href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" rel="prev">
+<link href="../images/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-31072f9ed96e24c019159c695a8da794.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-02-visao-geral-ethereum/aula-02-visao-geral-ethereum.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aula 02 - Ethereum</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/rogerioag/tecnologias-blockchain" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bem-vindo</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-02-visao-geral-ethereum/aula-02-visao-geral-ethereum.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aula 02 - Ethereum</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Prática: Explorando a <em>Ethereum Virtual Machine (EVM)</em></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Prática: Instalando o Cliente Ethereum</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Ethash</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-06-pratica-rede-ethereum-privada-clique/aula-06-pratica-rede-ethereum-privada-clique.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Clique</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-08-pratica-estudo-sobre-solidity-solc/aula-08-pratica-estudo-sobre-solidity-solc.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em>: Estudo sobre <code>Solidity</code> e <code>solc</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-09-pratica-ethereum-introducao-ao-web3/aula-09-pratica-ethereum-introducao-ao-web3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks Ethereum: Introdução ao Web3</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-10-pratica-ethereum-test-and-deploy-truffle/aula-10-pratica-ethereum-test-and-deploy-truffle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e <em>Frameworks</em> Ethereum: Introdução aos Testes e <em>Deploy</em> com <code>Truffle</code></span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">3</span> Introdução</a>
+  <ul class="collapse">
+  <li><a href="#objetivos" id="toc-objetivos" class="nav-link" data-scroll-target="#objetivos"><span class="header-section-number">3.1</span> Objetivos</a></li>
+  </ul></li>
+  <li><a href="#visão-geral-do-ethereum" id="toc-visão-geral-do-ethereum" class="nav-link" data-scroll-target="#visão-geral-do-ethereum"><span class="header-section-number">4</span> Visão Geral do Ethereum</a></li>
+  <li><a href="#ethereum" id="toc-ethereum" class="nav-link" data-scroll-target="#ethereum"><span class="header-section-number">5</span> Ethereum</a>
+  <ul class="collapse">
+  <li><a href="#ethereum-overview" id="toc-ethereum-overview" class="nav-link" data-scroll-target="#ethereum-overview"><span class="header-section-number">5.1</span> Ethereum – Overview</a></li>
+  <li><a href="#ethereum-releases" id="toc-ethereum-releases" class="nav-link" data-scroll-target="#ethereum-releases"><span class="header-section-number">5.2</span> Ethereum Releases</a></li>
+  </ul></li>
+  <li><a href="#a-blockchain-ethereum" id="toc-a-blockchain-ethereum" class="nav-link" data-scroll-target="#a-blockchain-ethereum"><span class="header-section-number">6</span> A Blockchain Ethereum</a>
+  <ul class="collapse">
+  <li><a href="#a-blockchain-ethereum-1" id="toc-a-blockchain-ethereum-1" class="nav-link" data-scroll-target="#a-blockchain-ethereum-1"><span class="header-section-number">6.1</span> A Blockchain Ethereum</a></li>
+  <li><a href="#ethereum-perspectiva-do-usuário" id="toc-ethereum-perspectiva-do-usuário" class="nav-link" data-scroll-target="#ethereum-perspectiva-do-usuário"><span class="header-section-number">6.2</span> Ethereum – Perspectiva do usuário&nbsp;</a></li>
+  <li><a href="#arquitetura-de-alto-nível-da-ethereum" id="toc-arquitetura-de-alto-nível-da-ethereum" class="nav-link" data-scroll-target="#arquitetura-de-alto-nível-da-ethereum"><span class="header-section-number">6.3</span> Arquitetura de Alto Nível da Ethereum</a></li>
+  </ul></li>
+  <li><a href="#rede-ethereum" id="toc-rede-ethereum" class="nav-link" data-scroll-target="#rede-ethereum"><span class="header-section-number">7</span> Rede Ethereum</a>
+  <ul class="collapse">
+  <li><a href="#rede-ethereum-mainnet" id="toc-rede-ethereum-mainnet" class="nav-link" data-scroll-target="#rede-ethereum-mainnet"><span class="header-section-number">7.1</span> Rede Ethereum: mainnet</a></li>
+  <li><a href="#redes-de-testes" id="toc-redes-de-testes" class="nav-link" data-scroll-target="#redes-de-testes"><span class="header-section-number">7.2</span> Redes de Testes</a></li>
+  <li><a href="#redes-privadas" id="toc-redes-privadas" class="nav-link" data-scroll-target="#redes-privadas"><span class="header-section-number">7.3</span> Redes Privadas</a></li>
+  <li><a href="#elementos-do-ecossistema-ethereum" id="toc-elementos-do-ecossistema-ethereum" class="nav-link" data-scroll-target="#elementos-do-ecossistema-ethereum"><span class="header-section-number">7.4</span> Elementos do Ecossistema Ethereum</a></li>
+  </ul></li>
+  <li><a href="#contas" id="toc-contas" class="nav-link" data-scroll-target="#contas"><span class="header-section-number">8</span> Contas</a>
+  <ul class="collapse">
+  <li><a href="#tipos-de-contas" id="toc-tipos-de-contas" class="nav-link" data-scroll-target="#tipos-de-contas"><span class="header-section-number">8.1</span> Tipos de contas</a></li>
+  <li><a href="#externally-owned-accounts-eoa" id="toc-externally-owned-accounts-eoa" class="nav-link" data-scroll-target="#externally-owned-accounts-eoa"><span class="header-section-number">8.2</span> <strong>Externally Owned Accounts (EOA)</strong></a></li>
+  <li><a href="#contract-accounts-ca" id="toc-contract-accounts-ca" class="nav-link" data-scroll-target="#contract-accounts-ca"><span class="header-section-number">8.3</span> <strong>Contract Accounts (CA)</strong></a></li>
+  </ul></li>
+  <li><a href="#transações" id="toc-transações" class="nav-link" data-scroll-target="#transações"><span class="header-section-number">9</span> Transações</a>
+  <ul class="collapse">
+  <li><a href="#transações-e-árvore-de-transações-trie" id="toc-transações-e-árvore-de-transações-trie" class="nav-link" data-scroll-target="#transações-e-árvore-de-transações-trie"><span class="header-section-number">9.1</span> Transações e Árvore de Transações (trie)</a></li>
+  <li><a href="#tipos-de-transações" id="toc-tipos-de-transações" class="nav-link" data-scroll-target="#tipos-de-transações"><span class="header-section-number">9.2</span> Tipos de Transações</a></li>
+  <li><a href="#estado-da-conta-e-armazenamento-na-trie" id="toc-estado-da-conta-e-armazenamento-na-trie" class="nav-link" data-scroll-target="#estado-da-conta-e-armazenamento-na-trie"><span class="header-section-number">9.3</span> Estado da conta e armazenamento na trie</a></li>
+  </ul></li>
+  <li><a href="#recibos-de-transações" id="toc-recibos-de-transações" class="nav-link" data-scroll-target="#recibos-de-transações"><span class="header-section-number">10</span> Recibos de Transações</a>
+  <ul class="collapse">
+  <li><a href="#recibos-de-transações-1" id="toc-recibos-de-transações-1" class="nav-link" data-scroll-target="#recibos-de-transações-1"><span class="header-section-number">10.1</span> Recibos de Transações</a></li>
+  <li><a href="#blocks-e-blockchain" id="toc-blocks-e-blockchain" class="nav-link" data-scroll-target="#blocks-e-blockchain"><span class="header-section-number">10.2</span> Blocks e Blockchain</a></li>
+  </ul></li>
+  <li><a href="#ethereum-virtual-machine" id="toc-ethereum-virtual-machine" class="nav-link" data-scroll-target="#ethereum-virtual-machine"><span class="header-section-number">11</span> Ethereum Virtual Machine</a>
+  <ul class="collapse">
+  <li><a href="#a-ethereum-virtual-machine-evm" id="toc-a-ethereum-virtual-machine-evm" class="nav-link" data-scroll-target="#a-ethereum-virtual-machine-evm"><span class="header-section-number">11.1</span> A Ethereum Virtual Machine (EVM)</a></li>
+  <li><a href="#evm-operation-design" id="toc-evm-operation-design" class="nav-link" data-scroll-target="#evm-operation-design"><span class="header-section-number">11.2</span> EVM operation design</a></li>
+  <li><a href="#ambiente-de-execução" id="toc-ambiente-de-execução" class="nav-link" data-scroll-target="#ambiente-de-execução"><span class="header-section-number">11.3</span> Ambiente de Execução</a></li>
+  <li><a href="#machine-state" id="toc-machine-state" class="nav-link" data-scroll-target="#machine-state"><span class="header-section-number">11.4</span> Machine State</a></li>
+  </ul></li>
+  <li><a href="#nós" id="toc-nós" class="nav-link" data-scroll-target="#nós"><span class="header-section-number">12</span> Nós</a>
+  <ul class="collapse">
+  <li><a href="#nós-e-mineradores" id="toc-nós-e-mineradores" class="nav-link" data-scroll-target="#nós-e-mineradores"><span class="header-section-number">12.1</span> Nós e Mineradores&nbsp;</a></li>
+  </ul></li>
+  <li><a href="#clientes" id="toc-clientes" class="nav-link" data-scroll-target="#clientes"><span class="header-section-number">13</span> Clientes</a>
+  <ul class="collapse">
+  <li><a href="#wallets-e-software-clientes" id="toc-wallets-e-software-clientes" class="nav-link" data-scroll-target="#wallets-e-software-clientes"><span class="header-section-number">13.1</span> Wallets e Software Clientes&nbsp;</a></li>
+  <li><a href="#tipos-de-sincronização-de-clientes" id="toc-tipos-de-sincronização-de-clientes" class="nav-link" data-scroll-target="#tipos-de-sincronização-de-clientes"><span class="header-section-number">13.2</span> Tipos de sincronização de clientes</a></li>
+  <li><a href="#requisitos-full-node-vs-archive-node" id="toc-requisitos-full-node-vs-archive-node" class="nav-link" data-scroll-target="#requisitos-full-node-vs-archive-node"><span class="header-section-number">13.3</span> Requisitos: <em>Full Node vs Archive Node</em></a></li>
+  </ul></li>
+  <li><a href="#consumo-de-armazenamento-e-energia" id="toc-consumo-de-armazenamento-e-energia" class="nav-link" data-scroll-target="#consumo-de-armazenamento-e-energia"><span class="header-section-number">14</span> Consumo de Armazenamento e Energia</a>
+  <ul class="collapse">
+  <li><a href="#tamanho-dos-dados-do-blockchain-da-ethereum" id="toc-tamanho-dos-dados-do-blockchain-da-ethereum" class="nav-link" data-scroll-target="#tamanho-dos-dados-do-blockchain-da-ethereum"><span class="header-section-number">14.1</span> Tamanho dos dados do Blockchain da Ethereum</a></li>
+  <li><a href="#consumo-de-energia" id="toc-consumo-de-energia" class="nav-link" data-scroll-target="#consumo-de-energia"><span class="header-section-number">14.2</span> Consumo de Energia</a></li>
+  </ul></li>
+  <li><a href="#contratos-inteligentes" id="toc-contratos-inteligentes" class="nav-link" data-scroll-target="#contratos-inteligentes"><span class="header-section-number">15</span> Contratos Inteligentes</a>
+  <ul class="collapse">
+  <li><a href="#contratos-ricardianos" id="toc-contratos-ricardianos" class="nav-link" data-scroll-target="#contratos-ricardianos"><span class="header-section-number">15.1</span> Contratos Ricardianos</a></li>
+  <li><a href="#contratos-inteligentes-1" id="toc-contratos-inteligentes-1" class="nav-link" data-scroll-target="#contratos-inteligentes-1"><span class="header-section-number">15.2</span> Contratos Inteligentes</a></li>
+  </ul></li>
+  <li><a href="#programando-contratos" id="toc-programando-contratos" class="nav-link" data-scroll-target="#programando-contratos"><span class="header-section-number">16</span> Programando Contratos</a>
+  <ul class="collapse">
+  <li><a href="#ecossistema-de-componentes-de-desenvolvimento-ethereum" id="toc-ecossistema-de-componentes-de-desenvolvimento-ethereum" class="nav-link" data-scroll-target="#ecossistema-de-componentes-de-desenvolvimento-ethereum"><span class="header-section-number">16.1</span> Ecossistema de Componentes de Desenvolvimento Ethereum</a></li>
+  <li><a href="#linguagem-solidity" id="toc-linguagem-solidity" class="nav-link" data-scroll-target="#linguagem-solidity"><span class="header-section-number">16.2</span> Linguagem <strong>Solidity</strong></a></li>
+  <li><a href="#compilador-solc" id="toc-compilador-solc" class="nav-link" data-scroll-target="#compilador-solc"><span class="header-section-number">16.3</span> Compilador <code>solc</code></a></li>
+  <li><a href="#ferramentas-e-bibliotecas" id="toc-ferramentas-e-bibliotecas" class="nav-link" data-scroll-target="#ferramentas-e-bibliotecas"><span class="header-section-number">16.4</span> Ferramentas e Bibliotecas</a></li>
+  <li><a href="#frameworks" id="toc-frameworks" class="nav-link" data-scroll-target="#frameworks"><span class="header-section-number">16.5</span> Frameworks</a></li>
+  <li><a href="#desenvolvimento-e-implantação" id="toc-desenvolvimento-e-implantação" class="nav-link" data-scroll-target="#desenvolvimento-e-implantação"><span class="header-section-number">16.6</span> Desenvolvimento e Implantação</a></li>
+  <li><a href="#formato-de-um-arquivo-fonte-de-solidity2" id="toc-formato-de-um-arquivo-fonte-de-solidity2" class="nav-link" data-scroll-target="#formato-de-um-arquivo-fonte-de-solidity2"><span class="header-section-number">16.7</span> Formato de um arquivo fonte de Solidity</a></li>
+  <li><a href="#remix-ide" id="toc-remix-ide" class="nav-link" data-scroll-target="#remix-ide"><span class="header-section-number">16.8</span> Remix IDE</a></li>
+  </ul></li>
+  <li><a href="#hyperledger" id="toc-hyperledger" class="nav-link" data-scroll-target="#hyperledger"><span class="header-section-number">17</span> Hyperledger</a>
+  <ul class="collapse">
+  <li><a href="#hyperledger-1" id="toc-hyperledger-1" class="nav-link" data-scroll-target="#hyperledger-1"><span class="header-section-number">17.1</span> Hyperledger</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">17.2</span> Leitura Recomendada</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">17.3</span> <em>Word Cloud</em></a></li>
+  </ul></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">18</span> Referências</a>
+  <ul class="collapse">
+  <li><a href="#referências-1" id="toc-referências-1" class="nav-link" data-scroll-target="#referências-1"><span class="header-section-number">18.1</span> Referências</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-02-visao-geral-ethereum/aula-02-visao-geral-ethereum.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aula 02 - Ethereum</span></h1>
+<p class="subtitle lead">Visão Geral</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Resumo</div>
+    Nesta aula é apresentada uma Visão Geral sobre rede <strong>Ethereum</strong>, componentes do Ecossistema <em>Ethereum</em>, a <em>Ethereum Virtual Machine (EVM)</em> e Contratos Nativos. Além disso, uma perspectiva do usuário é apresentada, mostrando a estrutura dos blocos do <em>blockchain</em> da <em>Ethereum</em>, <em>Wallets</em> e <em>softwares</em> clientes, nós e mineradores, ferramentas e <code>APIs</code>, protocolos e Linguagens de Programação Suportados.
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="introdução" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Introdução</h1>
+<section id="objetivos" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="objetivos"><span class="header-section-number">3.1</span> Objetivos</h2>
+<ul>
+<li>Apresentação de uma Visão Geral sobre rede <strong>Ethereum</strong>, componentes do Ecossistema <em>Ethereum</em>, a <em>Ethereum Virtual Machine (EVM)</em> e Contratos Nativos. Além disso, uma perspectiva do usuário é apresentada, mostrando a estrutura dos blocos do <em>blockchain</em> da <em>Ethereum</em>, <em>Wallets</em> e <em>softwares</em> clientes, nós e mineradores, ferramentas e <code>APIs</code>, protocolos e Linguagens de Programação Suportados.</li>
+</ul>
+</section>
+</section>
+<section id="visão-geral-do-ethereum" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Visão Geral do Ethereum</h1>
+</section>
+<section id="ethereum" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Ethereum</h1>
+<section id="ethereum-overview" class="level2 allowframebreaks" data-number="5.1">
+<h2 class="allowframebreaks anchored" data-number="5.1" data-anchor-id="ethereum-overview"><span class="header-section-number">5.1</span> Ethereum – Overview</h2>
+<ul>
+<li><p><a href="https://vitalik.ca">Vitalik Buterin</a> conceitualizou <a href="https://ethereum.org"><code>Ethereum</code></a> em Novembro de 2013.</p></li>
+<li><p>A ideia central proposta foi o desenvolvimento de uma linguagem <strong>Turing-completa</strong> para permitir o desenvolvimento de programas arbitrários (contratos inteligentes) para <em>blockchain</em> e Aplicações Descentralizados (DApps).</p></li>
+<li><p>Este conceito difere do <em>Bitcoin</em>, onde a linguagem de <strong>script</strong> é limitada e permite apenas as operações necessárias.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="figuras/yellow-paper.pdf" class="img-fluid"></p>
+<figcaption>O <a href="https://ethereum.github.io/yellowpaper/paper.pdf"><em>Ethereum Yellow Paper</em></a><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li><p>O <a href="https://ethereum.github.io/yellowpaper/paper.pdf"><em>Ethereum Yellow Paper</em></a> foi escrito por Dr.&nbsp;Gavin Wood, o fundador do <em>Ethereum</em> e da <em>Parity</em> (<a href="http://gavwood.com" class="uri">http://gavwood.com</a>), e serve como uma especificação formal do protocolo da <em>Ethereum</em>.</p></li>
+<li><p>As implementações de clientes <code>Ethereum</code> seguem as especificações de protocolo definidas no artigo.</p></li>
+</ul>
+</section>
+<section id="ethereum-releases" class="level2 allowframebreaks" data-number="5.2">
+<h2 class="allowframebreaks anchored" data-number="5.2" data-anchor-id="ethereum-releases"><span class="header-section-number">5.2</span> Ethereum Releases</h2>
+<ul>
+<li>A primeira versão da <em>Ethereum</em>, denominada <strong>Olympic</strong>, foi liberada em Maio de 2015.</li>
+<li>Dois meses mais tarde, a versão chamada de <strong>Frontier</strong> foi liberada em Julho.</li>
+<li>Outra versão, a <strong>Homestead</strong> com várias melhorias foi liberada em Março de 2016.</li>
+<li>A release chamada de <strong>Muir Glacier</strong>, que atrasou a <strong>difficulty bomb</strong> (<a href="https://eips.ethereum.org/EIPS/eip-2384" class="uri">https://eips.ethereum.org/EIPS/eip-2384</a>).</li>
+<li>Um grande lançamento antes disso foi <strong>Istambul</strong>, que incluiu mudanças em torno de privacidade e dimensionamento capacidades.</li>
+<li>Uma lista completa com todas as <em>releases</em> anunciadas é mantida em <a href="https://github.com/ethereum/go-ethereum/releases" class="uri">https://github.com/ethereum/go-ethereum/releases</a>.</li>
+</ul>
+</section>
+</section>
+<section id="a-blockchain-ethereum" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> A Blockchain Ethereum</h1>
+<section id="a-blockchain-ethereum-1" class="level2 allowframebreaks" data-number="6.1">
+<h2 class="allowframebreaks anchored" data-number="6.1" data-anchor-id="a-blockchain-ethereum-1"><span class="header-section-number">6.1</span> A Blockchain Ethereum</h2>
+<ul>
+<li>O <strong>Ethereum</strong>, assim como qualquer outro <em>blockchain</em>, pode ser visualizado como uma máquina de estado baseada em transações.</li>
+</ul>
+<p><embed src="figuras/ethereum-blockchain.pdf" class="img-fluid"></p>
+<ul>
+<li><p>A ideia principal da <em>blockchain</em> da <em>Ethereum</em>: um estado gênese é transformado em um estado final executando transações de forma incremental.</p></li>
+<li><p>A transformação final é então aceita como a versão absoluta e indiscutível do estado.</p></li>
+<li><p>A função de transição de estado <em>Ethereum</em> é mostrada, onde a execução de uma transação resultou em uma transição de estado.</p></li>
+</ul>
+</section>
+<section id="ethereum-perspectiva-do-usuário" class="level2 allowframebreaks" data-number="6.2">
+<h2 class="allowframebreaks anchored" data-number="6.2" data-anchor-id="ethereum-perspectiva-do-usuário"><span class="header-section-number">6.2</span> Ethereum – Perspectiva do usuário&nbsp;</h2>
+<ul>
+<li><p>O caso de uso mais comum do rede <em>Ethereum</em> é o envio e o recebimento de pagamentos.</p></li>
+<li><p>Para isso, o usuário assina a transação e a envia, que se propaga na rede, momento em que os mineradores a pegam, verificam e iniciam a Prova de Trabalho (PoW).</p></li>
+<li><p>Com a atualização <code>Merge</code>, a <code>PoW</code> foi substituída por <em>Proof of Stake</em> <code>PoS</code>.</p></li>
+<li><p>Se a verificação for bem sucedida, o bloco com a transação é finalizado e propagado, e um novo bloco é adicionado à cadeia.</p></li>
+<li><p>Para enviar e receber transações, um <em>software</em> de carteira pode ser usado, por exemplo, carteiras são usadas em dispositivos móveis. como aplicativos.</p></li>
+</ul>
+</section>
+<section id="arquitetura-de-alto-nível-da-ethereum" class="level2 allowframebreaks" data-number="6.3">
+<h2 class="allowframebreaks anchored" data-number="6.3" data-anchor-id="arquitetura-de-alto-nível-da-ethereum"><span class="header-section-number">6.3</span> Arquitetura de Alto Nível da Ethereum</h2>
+<p><embed src="figuras/ethereum-high-level-architecture.pdf" class="img-fluid"></p>
+</section>
+</section>
+<section id="rede-ethereum" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Rede Ethereum</h1>
+<section id="rede-ethereum-mainnet" class="level2 allowframebreaks" data-number="7.1">
+<h2 class="allowframebreaks anchored" data-number="7.1" data-anchor-id="rede-ethereum-mainnet"><span class="header-section-number">7.1</span> Rede Ethereum: mainnet</h2>
+<p>A rede <em>Ethereum</em> é uma rede <em>peer-to-peer</em> onde os nós participantes mantem a <em>blockchain</em> e contribuem para o mecanismo de consenso. As redes podem ser divididas em três tipos, com base nos requisitos e uso.</p>
+<p>[block]{A mainnet}</p>
+<p>A <strong>mainnet</strong> é a atual rede <em>Ethereum</em>. Seu ID de rede é <span class="math inline">\(1\)</span> e seu ID de cadeia (<em>chain</em>) é também <span class="math inline">\(1\)</span>. Os IDs de rede e de cadeia são usados para identificar a rede. Um explorador de blocos que mostra informações detalhadas sobre blocos e outras métricas relevantes está disponível em <a href="https://etherscan.io" class="uri">https://etherscan.io</a>, que pode ser usado para explorar a <em>blockchain</em> <code>Ethereum</code>.</p>
+<p>[/block]</p>
+</section>
+<section id="redes-de-testes" class="level2 allowframebreaks" data-number="7.2">
+<h2 class="allowframebreaks anchored" data-number="7.2" data-anchor-id="redes-de-testes"><span class="header-section-number">7.2</span> Redes de Testes</h2>
+<p>[alertblock]{Testnets}</p>
+<p>Existem um número de redes de testes (testnets) disponíveis para <em>Ethereum</em>. Elas tem como objetivo fornecer um ambiente de testes para contratos inteligentes e <em>DApps</em> antes de serem implantados para produção na rede <em>blockchain</em>. Além disso, sendo redes de teste, elas permitem experimentos e pesquisa. Umas das principais redes de testes que existiu foi <code>Ropsten</code>, que contém todas as características de outras redes de propósito especial menores que foram criados para fins específicos. Por exemplo, outras redes de teste incluem <code>Kovan</code> e <code>Rinkeby</code>, que foram desenvolvidos para testar as versões do <strong>Byzantium</strong>. As mudanças que foram implementados nessas redes de teste menores também foram implementados em <code>Ropsten</code>, fazendo com que a rede <code>Ropsten</code> tivesse todas as propriedades de <code>Kovan</code> e <code>Rinkeby</code>.</p>
+<p>[/alertblock]</p>
+<p>[framebreak]</p>
+<p>[alertblock]{Testnets}</p>
+<p>Em 16/06/2025, as três <em>testsnets</em> públicas para desenvolvimento que eram mantidas <a href="https://ethereum.org/pt/developers/docs/networks/#sepolia"><code>Sepolia</code></a>, <a href="https://ethereum.org/pt/developers/docs/networks#hoodi"><code>Hoodi</code></a> e a <a href="https://ethereum.org/pt/developers/docs/networks#holesky"><code>Holesky</code></a>, (que será depreciada em setembro de 2025).</p>
+<p>A rede <code>Sepolia</code> é uma rede para desenvolvedores testarem seus contratos e aplicações. A rede <a href="https://ethereum.org/pt/developers/docs/networks/#goerli"><code>Goerli</code></a> permitia que os desenvolvedores de protocolo testassem atualizações de rede e permitia que os interessados ​​testassem validadores em execução. A <code>Goerli</code> foi depreciada em <span class="math inline">\(2023\)</span>, dando lugar a <a href="https://github.com/eth-clients/holesky"><code>Holešky</code></a>.</p>
+<p>A <code>Sepolia</code> é recomendada como padrão para desenvolvimento de aplicações.</p>
+<p>Atualmente, (14/08/2025) as redes de teste podem ser vistas em: <a href="https://ethereum.org/pt/developers/docs/networks/" class="uri">https://ethereum.org/pt/developers/docs/networks/</a></p>
+<p>[/alertblock]</p>
+</section>
+<section id="redes-privadas" class="level2 allowframebreaks" data-number="7.3">
+<h2 class="allowframebreaks anchored" data-number="7.3" data-anchor-id="redes-privadas"><span class="header-section-number">7.3</span> Redes Privadas</h2>
+<p>[exampleblock]{Redes Privadas}</p>
+<p>As <em>private nets</em> são redes privadas que podem ser criadas gerando-se um novo <em>genesis block</em>. Este é geralmente o caso em redes <em>blockchain</em> privadas, onde um grupo privado de entidades iniciam sua rede <em>blockchain</em> e a usam como uma blockchain autorizada ou de consórcio.</p>
+<p>Uma lista de redes pode ser vista em <a href="https://chainlist.org/" class="uri">https://chainlist.org/</a>.</p>
+<p>Mais informações sobre <a href="https://ethereum.org/pt/developers/docs/networks/#private-networks">Redes Privadas</a>.</p>
+<p>[/exampleblock]</p>
+</section>
+<section id="elementos-do-ecossistema-ethereum" class="level2 allowframebreaks" data-number="7.4">
+<h2 class="allowframebreaks anchored" data-number="7.4" data-anchor-id="elementos-do-ecossistema-ethereum"><span class="header-section-number">7.4</span> Elementos do Ecossistema Ethereum</h2>
+<ul>
+<li>Chaves e Endereços</li>
+<li>Contas</li>
+<li>Transações e mensagens</li>
+<li>Criptomoeda/Tokens Ether</li>
+<li>A Ethereum Virtual Machine (EVM)&nbsp;</li>
+<li>Smart contracts e contratos nativos.</li>
+</ul>
+</section>
+</section>
+<section id="contas" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Contas</h1>
+<section id="tipos-de-contas" class="level2 allowframebreaks" data-number="8.1">
+<h2 class="allowframebreaks anchored" data-number="8.1" data-anchor-id="tipos-de-contas"><span class="header-section-number">8.1</span> Tipos de contas</h2>
+<ul>
+<li><strong>EOAs:</strong> <em>Externally Owned Accounts</em>. Contas de usuários representadas por um endereço.</li>
+<li><strong>CAs:</strong> <em>Contract accounts</em>. Criadas como resultado do <em>deployment</em> de um contrato inteligente, também representado por um endereço.</li>
+</ul>
+</section>
+<section id="externally-owned-accounts-eoa" class="level2 allowframebreaks" data-number="8.2">
+<h2 class="allowframebreaks anchored" data-number="8.2" data-anchor-id="externally-owned-accounts-eoa"><span class="header-section-number">8.2</span> <strong>Externally Owned Accounts (EOA)</strong></h2>
+<ul>
+<li><p>Uma <em>Externally Owned Account (EOA)</em> é uma conta controla por um par de chaves privadas, que pode ser mantida por uma pessoa ou por um servidor externo. Essas contas não podem conter código <code>EVM</code>. As características de um EOA incluem o seguinte:</p>
+<ul>
+<li><p>Contém um saldo (balance) de <em>Ether</em></p></li>
+<li><p>Capaz de enviar transações</p></li>
+<li><p>Controlada pelas chaves privadas da conta</p></li>
+<li><p>Não tem nenhum código associado a ela.</p></li>
+<li><p>Um banco de dados de chave/valor contido em cada conta, onde chaves e os valores são <em>strings</em> de 32 bytes.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="contract-accounts-ca" class="level2 allowframebreaks" data-number="8.3">
+<h2 class="allowframebreaks anchored" data-number="8.3" data-anchor-id="contract-accounts-ca"><span class="header-section-number">8.3</span> <strong>Contract Accounts (CA)</strong></h2>
+<ul>
+<li><p><em>Contract accounts</em> não são controladas por humanos. Elas armazenam instruções de contratos inteligentes e são ativadas por contas externas ou por outros contratos.</p></li>
+<li><p><em>Contract accounts</em> tem as seguintes características:</p>
+<ul>
+<li><p>Tem um saldo de <em>Ether</em></p></li>
+<li><p>Mantem algum código de contrato na memória.</p></li>
+<li><p>Pode ser acionado por humanos (enviando uma transação) ou outro contratos enviando uma mensagem.</p></li>
+<li><p>Quando executado, pode executar operações complexas.</p></li>
+<li><p>Têm seu próprio estado persistente e podem chamar outros contratos.</p></li>
+<li><p>Não ter dono após ser liberado para o <code>EVM</code>.</p></li>
+<li><p>Um banco de dados de chave/valor contido em cada conta, onde chaves e os valores são <em>strings</em> de 32 bytes.</p></li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="transações" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Transações</h1>
+<section id="transações-e-árvore-de-transações-trie" class="level2 allowframebreaks" data-number="9.1">
+<h2 class="allowframebreaks anchored" data-number="9.1" data-anchor-id="transações-e-árvore-de-transações-trie"><span class="header-section-number">9.1</span> Transações e Árvore de Transações (trie)</h2>
+<p>[alertblock]{Transações}</p>
+<p>Uma transação no <em>Ethereum</em> consiste em vários campos, como mostrado aqui, junto com a <em>transaction trie</em>. O diagrama também mostra a relação entre a tentativa de transação e o cabeçalho do bloco.</p>
+<p>[/alertblock]</p>
+<p><embed src="figuras/ethereum-transaction-trie.pdf" class="img-fluid"></p>
+</section>
+<section id="tipos-de-transações" class="level2 allowframebreaks" data-number="9.2">
+<h2 class="allowframebreaks anchored" data-number="9.2" data-anchor-id="tipos-de-transações"><span class="header-section-number">9.2</span> Tipos de Transações</h2>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<ul>
+<li>Existem três tipo de transações:
+<ul>
+<li>Criação de Contrato <code>[Contract Creation]</code></li>
+<li>Invocação de Contrato <code>[Contract Call]</code></li>
+<li>Transferência de Valor.</li>
+</ul></li>
+</ul>
+<p>[column=0.5]</p>
+<p><embed src="figuras/ethereum-transaction.pdf" class="img-fluid" style="width:100.0%"></p>
+<p>[/columns]</p>
+<p>O diagrama mostra a criação do contrato e as transações de chamada, com campos obrigatórios.</p>
+</section>
+<section id="estado-da-conta-e-armazenamento-na-trie" class="level2 allowframebreaks" data-number="9.3">
+<h2 class="allowframebreaks anchored" data-number="9.3" data-anchor-id="estado-da-conta-e-armazenamento-na-trie"><span class="header-section-number">9.3</span> Estado da conta e armazenamento na trie</h2>
+<p>O diagrama mostra os campos contidos no estado da conta e como os vários elementos estão contidos no <em>world state</em> trie: * World state trie</p>
+<ul>
+<li><p>State root</p></li>
+<li><p>Account state</p></li>
+<li><p>Account storage trie</p></li>
+</ul>
+<p><embed src="figuras/ethereum-account-state-storage.pdf" class="img-fluid"></p>
+</section>
+</section>
+<section id="recibos-de-transações" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Recibos de Transações</h1>
+<section id="recibos-de-transações-1" class="level2 allowframebreaks" data-number="10.1">
+<h2 class="allowframebreaks anchored" data-number="10.1" data-anchor-id="recibos-de-transações-1"><span class="header-section-number">10.1</span> Recibos de Transações</h2>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<ul>
+<li>Recibos de Transações <em>(transaction receipts)</em> são gerados como resultado da execução de transações.</li>
+<li><em>Logs</em> também são atualizados em conformidade.</li>
+<li>Ambas as estruturas de dados contêm vários campos.</li>
+</ul>
+<p>[column=0.5]</p>
+<p><embed src="figuras/ethereum-transaction-receipts.pdf" class="img-fluid"></p>
+<p>[/columns]</p>
+</section>
+<section id="blocks-e-blockchain" class="level2 allowframebreaks" data-number="10.2">
+<h2 class="allowframebreaks anchored" data-number="10.2" data-anchor-id="blocks-e-blockchain"><span class="header-section-number">10.2</span> Blocks e Blockchain</h2>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<p>Um bloco <em>Ethereum</em> consiste em vários campos, conforme diagrama. <em>State root, transaction root</em> e <em>receipts root</em> são <em>root hashes</em> de suas respectivas árvores.</p>
+<p>[column=0.5]</p>
+<p><embed src="figuras/ethereum-blocks.pdf" class="img-fluid"></p>
+<p>[/columns]</p>
+</section>
+</section>
+<section id="ethereum-virtual-machine" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Ethereum Virtual Machine</h1>
+<section id="a-ethereum-virtual-machine-evm" class="level2 allowframebreaks" data-number="11.1">
+<h2 class="allowframebreaks anchored" data-number="11.1" data-anchor-id="a-ethereum-virtual-machine-evm"><span class="header-section-number">11.1</span> A Ethereum Virtual Machine (EVM)</h2>
+<ul>
+<li><p>Stack size based on LIFO queue: Last In, First Out.</p></li>
+<li><p>Limite de profundidade de pilha <span class="math inline">\(1024\)</span></p></li>
+<li><p>Turing complete mas limitada por <em>gas</em>, fazendo ela ser <em>quasi-Turing complete</em>.</p></li>
+<li><p>Projeto Big-endian.</p></li>
+<li><p>Armazenamento disponível na EVM:</p>
+<ul>
+<li>Memory&nbsp;</li>
+<li>Storage</li>
+<li>Stack</li>
+</ul></li>
+</ul>
+</section>
+<section id="evm-operation-design" class="level2 allowframebreaks" data-number="11.2">
+<h2 class="allowframebreaks anchored" data-number="11.2" data-anchor-id="evm-operation-design"><span class="header-section-number">11.2</span> EVM operation design</h2>
+<p><embed src="figuras/ethereum-evm.pdf" class="img-fluid"></p>
+</section>
+<section id="ambiente-de-execução" class="level2 allowframebreaks" data-number="11.3">
+<h2 class="allowframebreaks anchored" data-number="11.3" data-anchor-id="ambiente-de-execução"><span class="header-section-number">11.3</span> Ambiente de Execução</h2>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<p>O ambiente de execução do <em>Ethereum</em> consiste em vários elementos, como mostrado:</p>
+<p>[column=0.5]</p>
+<p><embed src="figuras/ethereum-execution-env.pdf" class="img-fluid" style="width:50.0%"></p>
+<p>[/columns]</p>
+</section>
+<section id="machine-state" class="level2 allowframebreaks" data-number="11.4">
+<h2 class="allowframebreaks anchored" data-number="11.4" data-anchor-id="machine-state"><span class="header-section-number">11.4</span> Machine State</h2>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<p>Uma Máquina de Estado ou <em>Machine state</em> é uma tupla compreendendo vários campos, como mostrado em:</p>
+<p>[column=0.5]</p>
+<p><embed src="figuras/ethereum-machine-state.pdf" class="img-fluid" style="width:75.0%"></p>
+<p>[/columns]</p>
+<!--
+## Mecanismo de Validação de Blocos {.allowframebreaks}
+
+The Ethereum block validation mechanism checks the following conditions:
+  * If it is consistent with uncles and transactions. This means that all ommers satisfy the property that they are indeed uncles, and also if the Proof of Work (PoW) for uncles is valid. 
+  * If the previous block (parent) exists and is valid. 
+  * If the timestamp of the block is valid. This means that the current block's timestamp must be higher than the parent block's timestamp. Also, it should be less than 15 minutes into the future. All block times are calculated in epoch time (Unix time). 
+
+If any of these checks fails, the block will be rejected. A list of errors for which the block can be rejected is presented here: 
+  * The timestamp is older than the parent 
+  * There are too many, or duplicate uncles   
+  * The uncle is an ancestor, or the uncle’s parent is not an ancestor
+  * There is non-positive difficulty 
+  * There is an invalid mix digest or PoW
+
+## Finalização de Bloco {.allowframebreaks}
+
+Block finalization is a process that is run by miners to validate the contents of the block and apply rewards. It results in four steps being executed. These steps are described here:
+
+1. __Ommers (uncles) validation.__ In the case of mining, determine ommers. The validation process of the headers of stale blocks checks whether the header is valid and whether the relationship between the uncle and the current block satisfies the maximum depth of six blocks. A block can contain a maximum of two uncles.
+
+2. **Transaction validation.** In the case of mining, determine transactions. This process involves checking whether the total gas used in the block is equal to the final gas consumption after the final transaction, in other words, the cumulative gas used by the transactions included in the block.
+   
+3. **Reward application.** Apply rewards, which means updating the beneficiary's account with a reward balance. In Ethereum, a reward is also given to miners for stale blocks, which is 1/32 of the block reward. Uncles that are included in the blocks also receive 7/8 of the total block reward. The current block reward is 2 ether. It was reduced first from 5 ether to 3 with the Byzantium release of Ethereum. Later, in the Constantinople release (https://blog.ethereum.org/2019/02/22/ethereum-constantinople-st-petersburg-upgrade-announcement/), it was reduced further to 2 ether. A block can have a maximum of two uncles.
+   
+4. **State and nonce validation.** Verify the state and block nonce. In the case of mining, compute a valid state and block nonce.
+
+## Mecanismo de Block difficulty {.allowframebreaks}
+
+O mecanismo de dificuldade do bloco é representado pela fórmula abaixo, que garante que os blocos sejam produzidos a uma taxa constante:
+
+$block\_diff = parent\_diff + parent\_diff //' 2048 * max(1 - (block\_timestamp - parent\_timestamp) // 10, -99) + int(2**((block.number // 100000) - 2))$
+
+O _gas cost_ de uma transação pode ser calculado usando esta fórmula:
+
+$Total cost = gasUsed * gasPrice$
+-->
+<!--
+## Ethereum keystore: Key decryption process {.allowframebreaks}
+
+Os arquivos de chave pública e privada são armazenados no diretório keystore. Os arquivos de keystore Ethereum são arquivos JSON, cujo conteúdo se parece com o script abaixo.
+
+![](figuras/ethereum-keys-json.pdf)
+
+[framebreak]
+
+Key decryption process:
+
+![](figuras/ethereum-key-decryption-process.pdf)
+
+-->
+</section>
+</section>
+<section id="nós" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Nós</h1>
+<section id="nós-e-mineradores" class="level2 allowframebreaks" data-number="12.1">
+<h2 class="allowframebreaks anchored" data-number="12.1" data-anchor-id="nós-e-mineradores"><span class="header-section-number">12.1</span> Nós e Mineradores&nbsp;</h2>
+<ul>
+<li><p>A mineração é o processo pelo qual novos blocos são selecionados por meio de um mecanismo de consenso e adicionados ao <em>blockchain</em>.</p></li>
+<li><p>O processo segue os seguintes passos:</p></li>
+<li><p>Ficam ouvindo as transações transmitidas na rede Ethereum e determina as transações a serem processadas.&nbsp;</p></li>
+<li><p>Determinam quais blocos são válidos e os obsoletos.</p></li>
+<li><p>Atualiza a conta (account balance) com a recompensa ganha pela mineração bem sucedida de um bloco.</p></li>
+<li><p>Finalmente, um novo estado válido é computado e o bloco é finalizado.</p></li>
+<li><p><code>Ethash</code> é o nome do algoritmo de <code>Proof of Work</code> (PoW) que era usado na <code>Ethereum</code>.</p></li>
+<li><p><code>Casper</code> é o algoritmo de consenso <code>Proof of Stake</code> (PoS) da <code>Ethereum</code>.</p></li>
+</ul>
+<!--
+
+## Ethash {.allowframebreaks}
+
+`Ethash` é o nome do algoritmo de `Proof of Work` usado no `Ethereum`.
+
+
+1. First, the header from the previous block and a 32-bit random nonce is combined using Keccak-256. 
+2. This produces a 128-bit structure called `mix`. 
+3. `mix` determines which data is to be picked up from the DAG. 
+4. Once the data is fetched from the DAG, it is "mixed" with the mix to produce the next mix, which is then again used to fetch data from the DAG and subsequently mixed. This process is repeated 64 times. 
+5. Eventually, the 64th mix is run through a digest function to produce a 32-byte sequence. 
+6. This sequence is compared with the difficulty target. If it is less than the difficulty target, the nonce is valid, and the PoW is solved. As a result, the block is mined. If not, then the algorithm repeats with a new nonce. 
+
+## Mineração {.allowframebreaks}
+
+* **CPU:** Mining using a computer’s built in CPU.
+* **GPU:** Mining using graphical processing units, which provide better performance as compared to CPUs.
+* **ASICs:** Specialized hardware—Application-Specific Integrated Circuit designed solely to run mining algorithms. These are currently the most efficient mining tools.
+* Mining pools: In mining pools, resources are shared between miners and rewards are split accordingly.
+-->
+<!-- 
+## Protocolos Suportados {.allowframebreaks}
+
+Dois principais protocolos de suporte, `Swarm` e `Whisper`, são usados para fornecer armazenamento e mensagens descentralizadas, a fim de criar um ecossistema descentralizado completo.
+
+![](figuras/ethereum-supporting-protocols.pdf)
+
+-->
+</section>
+</section>
+<section id="clientes" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Clientes</h1>
+<section id="wallets-e-software-clientes" class="level2 allowframebreaks" data-number="13.1">
+<h2 class="allowframebreaks anchored" data-number="13.1" data-anchor-id="wallets-e-software-clientes"><span class="header-section-number">13.1</span> Wallets e Software Clientes&nbsp;</h2>
+<ul>
+<li><em>Wallets</em> (Carteiras)</li>
+<li><em>Light clients</em> (softwares clientes)</li>
+</ul>
+</section>
+<section id="tipos-de-sincronização-de-clientes" class="level2 allowframebreaks" data-number="13.2">
+<h2 class="allowframebreaks anchored" data-number="13.2" data-anchor-id="tipos-de-sincronização-de-clientes"><span class="header-section-number">13.2</span> Tipos de sincronização de clientes</h2>
+<ul>
+<li><p><strong>Full:</strong> Os nós completos mantêm apenas uma cópia local dos dados relativamente recentes (normalmente os 128 blocos mais recentes), permitindo que os dados mais antigos sejam excluídos para economizar espaço em disco. Dados mais antigos podem ser regenerados quando necessário.</p></li>
+<li><p><strong>Archive:</strong> Nesse modo de sincronização, o cliente <code>Geth</code> faz um <em>download</em> completo da <em>blockchain</em> para o nó local. Isso significa que ele obtém todos os cabeçalhos e corpos dos blocos e valida todas as transações e blocos desde o bloco <em>genesis</em>.</p></li>
+<li><p><strong>Fast:</strong> Neste modo é feito o <em>download</em> completo, mas somente recupera e verifica somente os <span class="math inline">\(64\)</span> blocos anteriores ao bloco corrente. Depois disso, ele verifica os novos blocos na íntegra. Não reproduz e verifica todas as transações históricas desde o bloco <em>genesis</em>, em vez disso, ele só faz os <em>downloads</em> de estado. Isso também reduz significativamente o tamanho do disco do banco de dados <em>blockchain</em>. Este é o modo padrão de sincronização do cliente <code>Geth</code>.</p></li>
+<li><p><strong>Light:</strong> Este é o modo mais rápido e apenas baixa e armazena o estado atual. Nesse modo, o cliente não baixa nenhum bloco histórico e processa apenas os blocos mais novos.</p></li>
+</ul>
+<p>Mais informações: <a href="https://ethereum.org/en/developers/docs/nodes-and-clients/">Nodes and clients</a></p>
+</section>
+<section id="requisitos-full-node-vs-archive-node" class="level2 allowframebreaks" data-number="13.3">
+<h2 class="allowframebreaks anchored" data-number="13.3" data-anchor-id="requisitos-full-node-vs-archive-node"><span class="header-section-number">13.3</span> Requisitos: <em>Full Node vs Archive Node</em></h2>
+<p><strong>Full Node:</strong> últimos 128 mais recentes blocos.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/0-60344c2bc2c5063827a7f41b353a87a4.jpg" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption><a href="https://www.quicknode.com/guides/infrastructure/node-setup/ethereum-full-node-vs-archive-node">Full Node</a></figcaption>
+</figure>
+</div>
+<p><strong>Archive Node:</strong> Todos os blocos desde o <em>Genesis block</em>. O armazenamento varia conforme o cliente (em março de 2023, o <em>archive mode</em> no <code>Geth</code> usava ~13.5 TB, e <code>Erigon</code> utilizava ~2 TB (3 TB era o recomendado)).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/1-3adabd9dc46895202781d9faa8ce362a.jpg" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption><a href="https://www.quicknode.com/guides/infrastructure/node-setup/ethereum-full-node-vs-archive-node">Archive Node</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-full-node-vs-archive-node.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://www.youtube.com/watch?v=ZOW6C2wQiZ0">Vídeo</a></figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="consumo-de-armazenamento-e-energia" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> Consumo de Armazenamento e Energia</h1>
+<section id="tamanho-dos-dados-do-blockchain-da-ethereum" class="level2 allowframebreaks" data-number="14.1">
+<h2 class="allowframebreaks anchored" data-number="14.1" data-anchor-id="tamanho-dos-dados-do-blockchain-da-ethereum"><span class="header-section-number">14.1</span> Tamanho dos dados do Blockchain da Ethereum</h2>
+<ul>
+<li><p>No início de 2020, o tamanho do <em>blockchain</em> <strong>Ethereum</strong> era de aproximadamente <span class="math inline">\(210GB\)</span>, baixar e manter isso pode ser um problema.</p></li>
+<li><p>Em 18 de outubro de 2022 o tamanho chegava a <span class="math inline">\(966.06GB\)</span>, segundo <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size"><code>ycharts</code></a>.</p></li>
+</ul>
+<p>[framebreak]</p>
+<ul>
+<li>Em 16 de abril de 2023 o tamanho estava em <span class="math inline">\(914.81 GB\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-chain-full-sync-data-size-16-04-2023.png" class="img-fluid figure-img"></p>
+<figcaption>Ethereum chain full sync data size <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size">Fonte: <code>ycharts</code></a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Em 10 de Agosto de 2023 o tamanho estava em <span class="math inline">\(1138.91 GB\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-chain-full-sync-data-size-10-08-2023.png" class="img-fluid figure-img"></p>
+<figcaption>Ethereum chain full sync data size <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size">Fonte: <code>ycharts</code></a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Em 21 de novembro de 2023 o tamanho estava em <span class="math inline">\(1351.56 GB\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-chain-full-sync-data-size-21-11-2023.png" class="img-fluid figure-img"></p>
+<figcaption>Ethereum chain full sync data size <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size">Fonte: <code>ycharts</code></a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Em 13 de agosto de 2024 o tamanho estava em <span class="math inline">\(1137.17 GB\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-chain-full-sync-data-size-13-08-2024.png" class="img-fluid figure-img"></p>
+<figcaption>Ethereum chain full sync data size <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size">Fonte: <code>ycharts</code></a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Em 16 de dezembro de 2024 o tamanho estava em <span class="math inline">\(1203.89 GB\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-chain-full-sync-data-size-16-12-2024.png" class="img-fluid figure-img"></p>
+<figcaption>Ethereum chain full sync data size <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size">Fonte: <code>ycharts</code></a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Em 16 de junho de 2025 o tamanho estava em <span class="math inline">\(1328.17 GB\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-chain-full-sync-data-size-16-06-2025.png" class="img-fluid figure-img"></p>
+<figcaption>Ethereum chain full sync data size <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size">Fonte: <code>ycharts</code></a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Em 14 de agosto de 2025 o tamanho está em <span class="math inline">\(1373.84 GB\)</span>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-chain-full-sync-data-size-14-08-2025.png" class="img-fluid figure-img"></p>
+<figcaption>Ethereum chain full sync data size <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size">Fonte: <code>ycharts</code></a></figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li>Panorama de <span class="math inline">\(5\)</span> anos:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-chain-full-sync-data-size-14-08-2025-panorama-5-anos.png" class="img-fluid figure-img" style="width:95.0%"></p>
+<figcaption>Ethereum chain full sync data size <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size">Fonte: <code>ycharts</code></a></figcaption>
+</figure>
+</div>
+</section>
+<section id="consumo-de-energia" class="level2 allowframebreaks" data-number="14.2">
+<h2 class="allowframebreaks anchored" data-number="14.2" data-anchor-id="consumo-de-energia"><span class="header-section-number">14.2</span> Consumo de Energia</h2>
+<ul>
+<li>Com a última atualização <code>Merge</code> que trocaram a <em>Proof of Work</em> (PoW) pela <em>Proof of Stake</em> (PoS) tendo como uma das motivações a questão ambiental. Houve um grande impacto no consumo de energia.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-energy-consumption-page-03.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://digiconomist.net/ethereum-energy-consumptio">Ethereum Energy Consumption</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Em 13/08/2024:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-energy-consumption-13-08-2024.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption><a href="https://digiconomist.net/ethereum-energy-consumptio">Ethereum Energy Consumption</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Em 16/12/2024:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-energy-consumption-16-12-2024.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption><a href="https://digiconomist.net/ethereum-energy-consumptio">Ethereum Energy Consumption</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Em 16/06/2025:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-energy-consumption-16-06-2025.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption><a href="https://digiconomist.net/ethereum-energy-consumptio">Ethereum Energy Consumption</a></figcaption>
+</figure>
+</div>
+<ul>
+<li>Em 14/08/2025:</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ethereum-energy-consumption-14-08-2025.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption><a href="https://digiconomist.net/ethereum-energy-consumptio">Ethereum Energy Consumption</a></figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="contratos-inteligentes" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> Contratos Inteligentes</h1>
+<section id="contratos-ricardianos" class="level2 allowframebreaks" data-number="15.1">
+<h2 class="allowframebreaks anchored" data-number="15.1" data-anchor-id="contratos-ricardianos"><span class="header-section-number">15.1</span> Contratos Ricardianos</h2>
+<ul>
+<li>Contratos Ricardianos foram introduzidos no <em>Financial Cryptography in 7 Layers</em>, por Ian Grigg, no final dos anos 1990s <span class="citation" data-cites="10.1007/3-540-45472-1_23">(<a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#ref-10.1007/3-540-45472-1_23" role="doc-biblioref"><strong>10.1007/3-540-45472-1_23?</strong></a>)</span> <!--
+• It is a contract offered by an issuer to holders
+• It is a valuable right held by holders and managed by the issuer
+• It can be easily read by people (like a contract on paper)
+• It can be read by programs (parsable, like a database)
+• It is digitally signed
+• It carries the keys and server information
+• It is allied with a unique and secure identifier
+--></li>
+</ul>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<p>Os contratos ricardianos podem registrar um documento como um contrato legal, e vinculá-lo com segurança a outros Sistemas.</p>
+<ul>
+<li>Usam hashes criptográficos para identificação</li>
+<li>Incluem conteúdo jurídico legível por humanos e código de máquina.</li>
+</ul>
+<p>[column=0.5]</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/contratos-ricardianos.png" class="img-fluid figure-img"></p>
+<figcaption>Contratos Ricardianos</figcaption>
+</figure>
+</div>
+<p>[/columns]</p>
+</section>
+<section id="contratos-inteligentes-1" class="level2 allowframebreaks" data-number="15.2">
+<h2 class="allowframebreaks anchored" data-number="15.2" data-anchor-id="contratos-inteligentes-1"><span class="header-section-number">15.2</span> Contratos Inteligentes</h2>
+<ul>
+<li><p>Um <em>Smart Contract</em> é um programa de computador que é seguro e não interrompível representando um acordo que é executado automaticamente:</p>
+<ul>
+<li>Seguro</li>
+<li>Determinístico</li>
+<li>Semanticamente correto</li>
+<li>Não interrompível. Uma vez executado, o contrato inteligente não pode ser interrompido e uma vez implantado geralmente não pode ser alterado.</li>
+</ul></li>
+<li><p><em>Nick Szabo</em> cunhou o termo “contrato inteligente”. Em 1994, ele escreveu <a href="https://www.fon.hum.uva.nl/rob/Courses/InformationInSpeech/CDROM/Literature/LOTwinterschool2006/szabo.best.vwh.net/smart.contracts.html">uma introdução ao conceito</a> e, em 1996, <a href="https://www.fon.hum.uva.nl/rob/Courses/InformationInSpeech/CDROM/Literature/LOTwinterschool2006/szabo.best.vwh.net/smart_contracts_2.html">uma análise sobre o que os contratos inteligentes poderiam fazer)</a>.</p></li>
+<li><p>Uma introdução sobre Contratos Inteligentes <a href="https://ethereum.org/pt-br/smart-contracts/#introduction-to-smart-contracts">link</a></p></li>
+</ul>
+</section>
+</section>
+<section id="programando-contratos" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> Programando Contratos</h1>
+<section id="ecossistema-de-componentes-de-desenvolvimento-ethereum" class="level2 allowframebreaks" data-number="16.1">
+<h2 class="allowframebreaks anchored" data-number="16.1" data-anchor-id="ecossistema-de-componentes-de-desenvolvimento-ethereum"><span class="header-section-number">16.1</span> Ecossistema de Componentes de Desenvolvimento Ethereum</h2>
+<p><embed src="figuras/taxonomia-componentes-de-desenvolvimento.pdf" class="img-fluid"></p>
+</section>
+<section id="linguagem-solidity" class="level2 allowframebreaks" data-number="16.2">
+<h2 class="allowframebreaks anchored" data-number="16.2" data-anchor-id="linguagem-solidity"><span class="header-section-number">16.2</span> Linguagem <strong>Solidity</strong></h2>
+<ul>
+<li><p>É uma linguagem orientada a objetos de alto nível para implementar <em>smart contracts</em>. Tem se tornado a linguagem padrão para escrever contratos para <em>Ethereum</em>. O código precisa ser compilado e transformado em <em>bytecode</em>, é necessário utilizar o compilador <a href="https://docs.soliditylang.org/en/v0.8.21/installing-solidity.html"><code>solc</code></a>.</p></li>
+<li><p>Leia mais sobre <code>Solidity</code> e Recursos de Desenvolvimento de <code>DApps</code> em <a href="http://ethdocs.org/en/latest/contracts-and-transactions/developer-tools.html#developer-tools">DAPP DEVELOPMENT FRAMEWORKS</a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p></li>
+</ul>
+</section>
+<section id="compilador-solc" class="level2 allowframebreaks" data-number="16.3">
+<h2 class="allowframebreaks anchored" data-number="16.3" data-anchor-id="compilador-solc"><span class="header-section-number">16.3</span> Compilador <code>solc</code></h2>
+<ul>
+<li>O compilador para a linguagem <a href="https://soliditylang.org/"><code>Solidity</code></a> é o <a href="https://docs.soliditylang.org/en/v0.8.21/installing-solidity.html"><code>solc</code></a>.</li>
+<li>Compilador usado para compilar código de contratos inteligentes e converter eles para <em>bytecode</em> da <a href="https://ethereum.org/pt-br/developers/docs/evm/"><code>EVM</code></a>.</li>
+</ul>
+</section>
+<section id="ferramentas-e-bibliotecas" class="level2 allowframebreaks" data-number="16.4">
+<h2 class="allowframebreaks anchored" data-number="16.4" data-anchor-id="ferramentas-e-bibliotecas"><span class="header-section-number">16.4</span> Ferramentas e Bibliotecas</h2>
+<ul>
+<li><a href="https://trufflesuite.com/docs/ganache/"><em><code>Ganache</code></em></a>
+<ul>
+<li>Simula um blockchain Ethereum local com uma interface com usuário (UI). É comumente usado no desenvolvimento e testes.</li>
+</ul></li>
+<li><code>Ganache-cli</code>
+<ul>
+<li>Versão linha de comando do <code>Ganache</code> tem como pre-requisito <code>NodeJS</code>.</li>
+</ul></li>
+<li>Na aula anterior instalamos o <code>Ganache</code> e o <code>Metamask</code>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ganache-start-interface.png" class="img-fluid figure-img"></p>
+<figcaption>Interface do Ganache UI</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/ganache-ui-contract-creation-002.png" class="img-fluid figure-img"></p>
+<figcaption>Interface do Ganache UI</figcaption>
+</figure>
+</div>
+</section>
+<section id="frameworks" class="level2 allowframebreaks" data-number="16.5">
+<h2 class="allowframebreaks anchored" data-number="16.5" data-anchor-id="frameworks"><span class="header-section-number">16.5</span> Frameworks</h2>
+<ul>
+<li><a href="https://trufflesuite.com/"><strong>Truffle</strong></a>: <em>Framework</em> de desenvolvimento para <em>Ethereum</em> com recursos para implantação, depuração e testes de contratos inteligentes. Automatiza as tarefas de compilação e <em>deploy</em>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/truffle-command-line.png" class="img-fluid figure-img"></p>
+<figcaption>Truffle</figcaption>
+</figure>
+</div>
+<p>[framebreak]</p>
+<ul>
+<li><a href="https://hardhat.org/"><strong>Hardhat</strong></a></li>
+</ul>
+<p>[columns]</p>
+<p>[column=0.5]</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/hardhat-interface.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Hardhat</figcaption>
+</figure>
+</div>
+<p>[column=0.5]</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/hardhat-interface-02.png" class="img-fluid figure-img"></p>
+<figcaption>Hardhat</figcaption>
+</figure>
+</div>
+<p>[/columns]</p>
+<!--
+## Redes de Testes Locais e Simuladas {.allowframebreaks}
+
+![Rede Privada Local](figuras/tela-terminal-4-consoles.png)
+
+-->
+</section>
+<section id="desenvolvimento-e-implantação" class="level2 allowframebreaks" data-number="16.6">
+<h2 class="allowframebreaks anchored" data-number="16.6" data-anchor-id="desenvolvimento-e-implantação"><span class="header-section-number">16.6</span> Desenvolvimento e Implantação</h2>
+<ul>
+<li>A escrita de contratos inteligentes é basicamente a escrita de código fonte do contrato em <code>Solidity</code> em um editor de texto.</li>
+<li>Existem vários <em>plugins</em> e extensões disponíveis para os editores mais comuns, tais como Vim, Atom, <a href="https://open-vsx.org/vscode/item?itemName=juanblanco.solidity">VSCode:JuanBlanco.solidity</a>, que fornecem <em>syntax highlighting</em> e formatadores para código fonte <code>Solidity</code>.</li>
+</ul>
+<p><img src="figuras/vscode-interface.png" class="img-fluid"></p>
+</section>
+<section id="formato-de-um-arquivo-fonte-de-solidity2" class="level2 allowframebreaks" data-number="16.7">
+<h2 class="allowframebreaks anchored" data-number="16.7" data-anchor-id="formato-de-um-arquivo-fonte-de-solidity2"><span class="header-section-number">16.7</span> Formato de um arquivo fonte de Solidity<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/solidity-contract-example.png" class="img-fluid figure-img"></p>
+<figcaption>Formato de Arquivo</figcaption>
+</figure>
+</div>
+</section>
+<section id="remix-ide" class="level2 allowframebreaks" data-number="16.8">
+<h2 class="allowframebreaks anchored" data-number="16.8" data-anchor-id="remix-ide"><span class="header-section-number">16.8</span> Remix IDE</h2>
+<ul>
+<li>A <code>Remix IDE</code> pode ser utilizada para edição, compilação, teste e <em>deploy</em>.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/remix-ide-editing-contract-001.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Editando o contrato no Remix IDE</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/remix-ide-creating-contract-001.png" class="img-fluid figure-img"></p>
+<figcaption>Criando o Contrato</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/remix-ide-call-contract-adding-UTFPR.png" class="img-fluid figure-img"></p>
+<figcaption>Adicionando a cadeia <em>UTFPR</em></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/remix-ide-call-contract-adding-UFTPR-diff-string.png" class="img-fluid figure-img"></p>
+<figcaption>Verificando se a cadeia diferente <em>UFTPR</em> está armazenada</figcaption>
+</figure>
+</div>
+<!--
+# Contratos Nativos
+
+## Contratos Nativos {.allowframebreaks}
+
+* Existem nove contratos pré-compilados ou contratos nativos na versão Ethereum Istanbul:
+
+  * *The elliptic curve public key recovery function*
+
+  * *The SHA-256-bit hash function* 
+
+  * *The RIPEMD-160-bit hash function* 
+
+  * *The identity/datacopy function* 
+
+  * *Big mod exponentiation function* 
+
+  * *Elliptic curve point addition function* 
+
+  * *Elliptic curve scalar multiplication* 
+
+  * *Elliptic curve pairing* 
+
+  * *Blake2 compression function 'F'* 
+
+-->
+</section>
+</section>
+<section id="hyperledger" class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> Hyperledger</h1>
+<section id="hyperledger-1" class="level2 allowframebreaks" data-number="17.1">
+<h2 class="allowframebreaks anchored" data-number="17.1" data-anchor-id="hyperledger-1"><span class="header-section-number">17.1</span> Hyperledger</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/hyperledger.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://www.hyperledger.org/projects">Hyperledger Projects</a></figcaption>
+</figure>
+</div>
+<p><em>A Blockchain Platform for the Enterprise</em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/hyperledger-projects.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption><a href="https://www.lfdecentralizedtrust.org/project-matrix">Linux Foundation</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/hyperledger-all-projects-02.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://www.hyperledger.org/projects">Hyperledger Projects</a></figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/hyperledger-all-projects-03.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://www.hyperledger.org/projects">Hyperledger Projects</a></figcaption>
+</figure>
+</div>
+</section>
+<section id="leitura-recomendada" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">17.2</span> Leitura Recomendada</h2>
+<p>[alertblock]{Leitura Recomendada}</p>
+<p><strong>Capítulo 11: Ethereum 101</strong></p>
+<p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_276">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p><strong>Capítulo 12: Futher Ethereum</strong></p>
+<p><strong>Livro</strong>: <a href="https://search.ebscohost.com/login.aspx?direct=true&amp;db=e000xww&amp;AN=1789486&amp;authtype=shib&amp;lang=pt-br&amp;site=eds-live&amp;scope=site&amp;ebv=EB&amp;ppid=pp_310">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 2nd Edition.</a></p>
+<p>[/alertblock]</p>
+</section>
+<section id="word-cloud" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">17.3</span> <em>Word Cloud</em></h2>
+<p><img src="figuras/aula-02-visao-geral-ethereum.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
+</section>
+</section>
+<section id="referências" class="level1" data-number="18">
+<h1 data-number="18"><span class="header-section-number">18</span> Referências</h1>
+<section id="referências-1" class="level2 fragile allowframebreaks" data-number="18.1">
+<h2 class="fragile allowframebreaks anchored" data-number="18.1" data-anchor-id="referências-1"><span class="header-section-number">18.1</span> Referências</h2>
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p><span class="uri">http://ethdocs.org/en/latest/contracts-and-transactions/developer-tools.html#developer-tools</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><span class="uri">http://ethdocs.org/en/latest/contracts-and-transactions/developer-tools.html#developer-tools</span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://docs.soliditylang.org/en/v0.8.21/layout-of-source-files.html">Formato de Arquivo na documentação do Solidity</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="pagination-link" aria-label="Introdução às Tecnologias Blockchain">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="pagination-link" aria-label="Prática: Explorando a _Ethereum Virtual Machine (EVM)_">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Prática: Explorando a <em>Ethereum Virtual Machine (EVM)</em></span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-02-visao-geral-ethereum/aula-02-visao-geral-ethereum.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

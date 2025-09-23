@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/index.html</loc>
-    <lastmod>2025-09-10T17:32:59.958Z</lastmod>
+    <lastmod>2025-09-23T14:07:36.380Z</lastmod>
   </url>
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html</loc>
@@ -22,7 +22,7 @@
   </url>
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html</loc>
-    <lastmod>2025-09-12T00:57:50.476Z</lastmod>
+    <lastmod>2025-09-19T01:30:30.689Z</lastmod>
   </url>
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-06-pratica-rede-ethereum-privada-clique/aula-06-pratica-rede-ethereum-privada-clique.html</loc>
@@ -39,5 +39,9 @@
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-09-pratica-ethereum-introducao-ao-web3/aula-09-pratica-ethereum-introducao-ao-web3.html</loc>
     <lastmod>2025-09-18T23:59:27.391Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-10-pratica-ethereum-test-and-deploy-truffle/aula-10-pratica-ethereum-test-and-deploy-truffle.html</loc>
+    <lastmod>2025-09-23T22:24:18.274Z</lastmod>
   </url>
 </urlset>
