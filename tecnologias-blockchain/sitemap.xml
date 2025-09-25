@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/index.html</loc>
-    <lastmod>2025-09-23T14:07:36.380Z</lastmod>
+    <lastmod>2025-09-25T20:24:35.531Z</lastmod>
   </url>
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html</loc>
@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-02-visao-geral-ethereum/aula-02-visao-geral-ethereum.html</loc>
-    <lastmod>2025-08-14T23:53:35.841Z</lastmod>
+    <lastmod>2025-09-25T22:46:50.830Z</lastmod>
   </url>
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html</loc>
@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-08-pratica-estudo-sobre-solidity-solc/aula-08-pratica-estudo-sobre-solidity-solc.html</loc>
-    <lastmod>2025-09-16T23:23:47.705Z</lastmod>
+    <lastmod>2025-09-25T20:17:33.953Z</lastmod>
   </url>
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-09-pratica-ethereum-introducao-ao-web3/aula-09-pratica-ethereum-introducao-ao-web3.html</loc>
@@ -43,5 +43,9 @@
   <url>
     <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-10-pratica-ethereum-test-and-deploy-truffle/aula-10-pratica-ethereum-test-and-deploy-truffle.html</loc>
     <lastmod>2025-09-23T23:46:34.506Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rogerioag.github.io/tecnologias-blockchain/aula-11-pratica-instalando-explorer-local/aula-11-pratica-instalando-explorer-local.html</loc>
+    <lastmod>2025-09-25T23:01:38.189Z</lastmod>
   </url>
 </urlset>

@@ -281,6 +281,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e <em>Frameworks</em> Ethereum: Introdução aos Testes e <em>Deploy</em> com <code>Truffle</code></span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-11-pratica-instalando-explorer-local/aula-11-pratica-instalando-explorer-local.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Prática sobre Instalação de <em>Block Explorers</em> Locais para as Redes de Testes</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -761,6 +767,12 @@ Figure&nbsp;5.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworl
 <p>Para a instalação do <code>Prysm</code>, crie no diretório <code>~/.ethereum/&lt;rede&gt;</code>, duas subpastas: <code>consensus</code> e <code>execution</code>. Acesse o diretório <code>consensus</code> e execute o comando para baixar o cliente <code>Prysm</code> e transformá-lo em executável:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir prysm <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> prysm</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh <span class="at">--output</span> prysm.sh <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> +x prysm.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside id="footnotes" class="footnotes footnotes-end-of-section" role="doc-footnote">
+<hr>
+<ol>
+<li id="fn1"><p><em>Step 2: Install Prysm:</em> <a href="https://docs.prylabs.network/docs/install/install-with-script#step-2-install-prysm">https://docs.prylabs.network/docs/install/install-with-script#step-2-install-prysm</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
 </section>
 <section id="gerando-um-arquivo-jwt-secret" class="level2" data-number="5.9">
 <h2 data-number="5.9" class="anchored" data-anchor-id="gerando-um-arquivo-jwt-secret"><span class="header-section-number">5.9</span> Gerando um arquivo <em>JWT Secret</em></h2>
@@ -794,6 +806,12 @@ O comando de execução do `Geth` atualizado:
 <p>[alertblock]{Parabéns}</p>
 <p>Você está agora executando um <strong>nó de execução</strong> na camada de execução da <em>Ethereum</em>.</p>
 <p>[/alertblock]</p>
+<aside id="footnotes-2" class="footnotes footnotes-end-of-section" role="doc-footnote">
+<hr>
+<ol start="2">
+<li id="fn2"><p><em>Step 3: Run an execution client:</em> <a href="https://docs.prylabs.network/docs/install/install-with-script#step-3-run-an-execution-client">https://docs.prylabs.network/docs/install/install-with-script#step-3-run-an-execution-client</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
 </section>
 <section id="executando-um-nó-beacon-usando-prysmlinknobeacon" class="level2" data-number="5.11">
 <h2 data-number="5.11" class="anchored" data-anchor-id="executando-um-nó-beacon-usando-prysmlinknobeacon"><span class="header-section-number">5.11</span> Executando um nó beacon usando Prysm<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></h2>
@@ -894,6 +912,12 @@ Copy the `validator_keys` folder to your primary machine's `consensus` folder. R
 * You can leave your **execution client**, **beacon node**, and **validator client** terminal windows open and running. Once your validator is activated, it will automatically begin proposing and validating blocks.
 
 -->
+<aside id="footnotes-3" class="footnotes footnotes-end-of-section" role="doc-footnote">
+<hr>
+<ol start="3">
+<li id="fn3"><p><em>Step 4: Run a beacon node using Prysm:</em> <a href="https://docs.prylabs.network/docs/install/install-with-script#step-4-run-a-beacon-node-using-prysm">https://docs.prylabs.network/docs/install/install-with-script#step-4-run-a-beacon-node-using-prysm</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
 </section>
 <section id="executando-o-console-javascript" class="level2" data-number="5.12">
 <h2 data-number="5.12" class="anchored" data-anchor-id="executando-o-console-javascript"><span class="header-section-number">5.12</span> Executando o Console JavaScript</h2>
@@ -1510,14 +1534,6 @@ geth --sepolia --syncmode full --http --http.addr 127.0.0.1 --http.port 8559 --h
 
 
 </section>
-</section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p><em>Step 2: Install Prysm:</em> <a href="https://docs.prylabs.network/docs/install/install-with-script#step-2-install-prysm">https://docs.prylabs.network/docs/install/install-with-script#step-2-install-prysm</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p><em>Step 3: Run an execution client:</em> <a href="https://docs.prylabs.network/docs/install/install-with-script#step-3-run-an-execution-client">https://docs.prylabs.network/docs/install/install-with-script#step-3-run-an-execution-client</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p><em>Step 4: Run a beacon node using Prysm:</em> <a href="https://docs.prylabs.network/docs/install/install-with-script#step-4-run-a-beacon-node-using-prysm">https://docs.prylabs.network/docs/install/install-with-script#step-4-run-a-beacon-node-using-prysm</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
 </section>
 
 </main> <!-- /main -->
