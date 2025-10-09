@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>13&nbsp; Prática sobre Ferramentas de Desenvolvimento e Frameworks Ethereum – Tecnologias Blockchain e suas Aplicações</title>
+<title>13&nbsp; Prática sobre Ferramentas de Desenvolvimento e Frameworks Ethereum: Implementação de Aplicações – Tecnologias Blockchain e suas Aplicações</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -165,7 +165,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-13-pratica-implementacao-patentidea-app/aula-13-pratica-implementacao-patentidea-app.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em></span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-13-pratica-implementacao-patentidea-app/aula-13-pratica-implementacao-patentidea-app.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em>: <em>Implementação de Aplicações</em></span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -298,7 +298,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../aula-13-pratica-implementacao-patentidea-app/aula-13-pratica-implementacao-patentidea-app.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em>: <em>Implementação de Aplicações</em></span></span></a>
   </div>
 </li>
     </ul>
@@ -311,24 +311,21 @@ window.Quarto = {
     <h2 id="toc-title">Sumário</h2>
    
   <ul>
-  <li><a href="#prática-implementação-de-uma-aplicação" id="toc-prática-implementação-de-uma-aplicação" class="nav-link active" data-scroll-target="#prática-implementação-de-uma-aplicação"><span class="header-section-number">14</span> Prática: Implementação de uma Aplicação</a>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">13.1</span> Introdução</a></li>
+  <li><a href="#biblioteca-javascript-web3.js" id="toc-biblioteca-javascript-web3.js" class="nav-link" data-scroll-target="#biblioteca-javascript-web3.js"><span class="header-section-number">13.2</span> Biblioteca javascript Web3.js&nbsp;</a></li>
+  <li><a href="#servidor-http" id="toc-servidor-http" class="nav-link" data-scroll-target="#servidor-http"><span class="header-section-number">13.3</span> Servidor HTTP</a></li>
+  <li><a href="#projeto-projeto-helloworld-truffle" id="toc-projeto-projeto-helloworld-truffle" class="nav-link" data-scroll-target="#projeto-projeto-helloworld-truffle"><span class="header-section-number">13.4</span> Projeto <code>projeto-helloworld-truffle</code></a></li>
+  <li><a href="#projeto-projeto-valuechecker-truffle" id="toc-projeto-projeto-valuechecker-truffle" class="nav-link" data-scroll-target="#projeto-projeto-valuechecker-truffle"><span class="header-section-number">13.5</span> Projeto <code>projeto-valuechecker-truffle</code></a></li>
+  <li><a href="#executando-o-app.js" id="toc-executando-o-app.js" class="nav-link" data-scroll-target="#executando-o-app.js"><span class="header-section-number">13.6</span> Executando o <code>app.js</code></a></li>
+  <li><a href="#desenvolvendo-o-projeto-patentidea" id="toc-desenvolvendo-o-projeto-patentidea" class="nav-link" data-scroll-target="#desenvolvendo-o-projeto-patentidea"><span class="header-section-number">13.7</span> Desenvolvendo o Projeto PatentIdea</a></li>
+  <li><a href="#implantando-o-contrato-com-o-truffle" id="toc-implantando-o-contrato-com-o-truffle" class="nav-link" data-scroll-target="#implantando-o-contrato-com-o-truffle"><span class="header-section-number">13.8</span> Implantando o contrato com o <code>Truffle</code></a></li>
+  <li><a href="#criando-uma-interface-web" id="toc-criando-uma-interface-web" class="nav-link" data-scroll-target="#criando-uma-interface-web"><span class="header-section-number">13.9</span> Criando uma interface web</a></li>
+  <li><a href="#criando-uma-app-react" id="toc-criando-uma-app-react" class="nav-link" data-scroll-target="#criando-uma-app-react"><span class="header-section-number">13.10</span> Criando uma app react</a></li>
+  <li><a href="#considerações-finais" id="toc-considerações-finais" class="nav-link" data-scroll-target="#considerações-finais"><span class="header-section-number">13.11</span> Considerações Finais</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">13.12</span> Leitura Recomendada</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">14</span> <em>Word Cloud</em></a>
   <ul class="collapse">
-  <li><a href="#interagindo-com-contratos-via-frontends-web" id="toc-interagindo-com-contratos-via-frontends-web" class="nav-link" data-scroll-target="#interagindo-com-contratos-via-frontends-web"><span class="header-section-number">14.1</span> Interagindo com contratos via frontends web&nbsp;</a></li>
-  <li><a href="#biblioteca-javascript-web3.js" id="toc-biblioteca-javascript-web3.js" class="nav-link" data-scroll-target="#biblioteca-javascript-web3.js"><span class="header-section-number">14.2</span> Biblioteca javascript Web3.js&nbsp;</a></li>
-  <li><a href="#servidor-http" id="toc-servidor-http" class="nav-link" data-scroll-target="#servidor-http"><span class="header-section-number">14.3</span> Servidor HTTP</a></li>
-  <li><a href="#projeto-projeto-helloworld-truffle" id="toc-projeto-projeto-helloworld-truffle" class="nav-link" data-scroll-target="#projeto-projeto-helloworld-truffle"><span class="header-section-number">14.4</span> Projeto <code>projeto-helloworld-truffle</code></a></li>
-  <li><a href="#projeto-projeto-valuechecker-truffle" id="toc-projeto-projeto-valuechecker-truffle" class="nav-link" data-scroll-target="#projeto-projeto-valuechecker-truffle"><span class="header-section-number">14.5</span> Projeto <code>projeto-valuechecker-truffle</code></a></li>
-  <li><a href="#executando-o-app.js" id="toc-executando-o-app.js" class="nav-link" data-scroll-target="#executando-o-app.js"><span class="header-section-number">14.6</span> Executando o <code>app.js</code></a></li>
-  <li><a href="#desenvolvendo-o-projeto-patentidea" id="toc-desenvolvendo-o-projeto-patentidea" class="nav-link" data-scroll-target="#desenvolvendo-o-projeto-patentidea"><span class="header-section-number">14.7</span> Desenvolvendo o Projeto PatentIdea</a></li>
-  <li><a href="#implantando-o-contrato-com-o-truffle" id="toc-implantando-o-contrato-com-o-truffle" class="nav-link" data-scroll-target="#implantando-o-contrato-com-o-truffle"><span class="header-section-number">14.8</span> Implantando o contrato com o <code>Truffle</code></a></li>
-  <li><a href="#criando-uma-interface-web" id="toc-criando-uma-interface-web" class="nav-link" data-scroll-target="#criando-uma-interface-web"><span class="header-section-number">14.9</span> Criando uma interface web</a></li>
-  <li><a href="#criando-uma-app-react" id="toc-criando-uma-app-react" class="nav-link" data-scroll-target="#criando-uma-app-react"><span class="header-section-number">14.10</span> Criando uma app react</a></li>
-  <li><a href="#considerações-finais" id="toc-considerações-finais" class="nav-link" data-scroll-target="#considerações-finais"><span class="header-section-number">14.11</span> Considerações Finais</a></li>
-  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">14.12</span> Leitura Recomendada</a></li>
-  </ul></li>
-  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">15</span> <em>Word Cloud</em></a>
-  <ul class="collapse">
-  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">15.1</span> Referências</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">14.1</span> Referências</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-13-pratica-implementacao-patentidea-app/aula-13-pratica-implementacao-patentidea-app.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
@@ -338,7 +335,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em></span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em>: <em>Implementação de Aplicações</em></span></h1>
 <p class="subtitle lead"><em>Implementação de Aplicações</em></p>
 </div>
 
@@ -362,10 +359,8 @@ window.Quarto = {
 </header>
 
 
-<section id="prática-implementação-de-uma-aplicação" class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> Prática: Implementação de uma Aplicação</h1>
-<section id="interagindo-com-contratos-via-frontends-web" class="level2 allowframebreaks" data-number="14.1">
-<h2 class="allowframebreaks anchored" data-number="14.1" data-anchor-id="interagindo-com-contratos-via-frontends-web"><span class="header-section-number">14.1</span> Interagindo com contratos via frontends web&nbsp;</h2>
+<section id="introdução" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">13.1</span> Introdução</h2>
 <p>A interação com <em>smart contracts</em> como parte de uma <code>DApps</code> é normalmente feito usando uma interface web desenvolvida utilizando <code>HTML/JS/CSS</code>. Algumas bibliotecas e <em>frameworks</em> como <code>React</code>, <code>Redux</code>, e <code>Drizzle</code>, podem também ser usadas. A Figura <span class="math inline">\(\ref{fig:arquitetura}\)</span> apresenta um esquema de interação com uma rede <em>blockchain</em> via aplicação <em>web</em> utilizando biblioteca <code>web3</code>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -374,8 +369,8 @@ window.Quarto = {
 </figure>
 </div>
 </section>
-<section id="biblioteca-javascript-web3.js" class="level2 allowframebreaks" data-number="14.2">
-<h2 class="allowframebreaks anchored" data-number="14.2" data-anchor-id="biblioteca-javascript-web3.js"><span class="header-section-number">14.2</span> Biblioteca javascript Web3.js&nbsp;</h2>
+<section id="biblioteca-javascript-web3.js" class="level2 allowframebreaks" data-number="13.2">
+<h2 class="allowframebreaks anchored" data-number="13.2" data-anchor-id="biblioteca-javascript-web3.js"><span class="header-section-number">13.2</span> Biblioteca javascript Web3.js&nbsp;</h2>
 <p>Se ainda não instalou a biblioteca <code>web3.js</code>, pode instalá-la via <code>npm</code> com o comando:</p>
 <!-- wget https://cdnjs.cloudflare.com/ajax/libs/web3/1.10.0/web3.min.js.map
 -->
@@ -389,8 +384,8 @@ window.Quarto = {
 <li><p><strong>web3-utils:</strong> Fornece funções úteis para o desenvolvimento de <code>DApps</code>.</p></li>
 </ul>
 </section>
-<section id="servidor-http" class="level2 allowframebreaks" data-number="14.3">
-<h2 class="allowframebreaks anchored" data-number="14.3" data-anchor-id="servidor-http"><span class="header-section-number">14.3</span> Servidor HTTP</h2>
+<section id="servidor-http" class="level2 allowframebreaks" data-number="13.3">
+<h2 class="allowframebreaks anchored" data-number="13.3" data-anchor-id="servidor-http"><span class="header-section-number">13.3</span> Servidor HTTP</h2>
 <p>Para executarmos uma aplicação <em>web</em> precisaremos de um servidor de aplicações <code>http</code>. O pacote <code>http-server</code> do <code>node</code> pode ser usado para suporte a um servidor <code>http</code> e pode ser instalado com o comando:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> npm install <span class="at">--global</span> http-server</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -431,8 +426,8 @@ Hit CTRL-C to stop the server
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">[app]$</span> python <span class="at">-m</span> SimpleHTTPServer 8000</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Tanto o servidor do <code>http</code> do <code>node</code> quanto do <code>Python</code> deve ser executado dentro do diretório <code>app</code> do projeto.</p>
 </section>
-<section id="projeto-projeto-helloworld-truffle" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="projeto-projeto-helloworld-truffle"><span class="header-section-number">14.4</span> Projeto <code>projeto-helloworld-truffle</code></h2>
+<section id="projeto-projeto-helloworld-truffle" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="projeto-projeto-helloworld-truffle"><span class="header-section-number">13.4</span> Projeto <code>projeto-helloworld-truffle</code></h2>
 <p>Considerando o projeto <code>projeto-helloworld-truffle</code>, vamos executar o teste em uma rede padrão do <code>truffle</code> para verificar o funcionamento, vamos utilizar o comando <code>truffle test</code>:</p>
 <pre><code>[projeto-helloworld-truffle]$ truffle test
 Using network 'test'.
@@ -657,8 +652,8 @@ Compiling your contracts...
 <span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_getBlockByNumber</span></span>
 <span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_estimateGas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="projeto-projeto-valuechecker-truffle" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="projeto-projeto-valuechecker-truffle"><span class="header-section-number">14.5</span> Projeto <code>projeto-valuechecker-truffle</code></h2>
+<section id="projeto-projeto-valuechecker-truffle" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="projeto-projeto-valuechecker-truffle"><span class="header-section-number">13.5</span> Projeto <code>projeto-valuechecker-truffle</code></h2>
 <p>O outro exemplo de contrato do <code>projeto-valuechecker-truffle</code> pode ser testado da mesma forma utilizando qualquer uma das redes que executamos, seja simulado ou rede privada local.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-valuechecker-truffle]$</span> truffle test <span class="at">--network</span> ganachecli</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> network <span class="st">'ganachecli'</span>.</span>
@@ -1208,8 +1203,8 @@ truffle(ganachecli)>
 
 -->
 </section>
-<section id="executando-o-app.js" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="executando-o-app.js"><span class="header-section-number">14.6</span> Executando o <code>app.js</code></h2>
+<section id="executando-o-app.js" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="executando-o-app.js"><span class="header-section-number">13.6</span> Executando o <code>app.js</code></h2>
 <p>Recuperando a ABI do contrato no arquivo <code>projeto-valuechecker-truffle/build/contracts/ValueChecker.json</code>:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="st">"abi"</span><span class="ex">:</span> [</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">{</span></span>
@@ -1654,8 +1649,8 @@ truffle(ganachecli)>
 </figure>
 </div>
 </section>
-<section id="desenvolvendo-o-projeto-patentidea" class="level2 allowframebreaks" data-number="14.7">
-<h2 class="allowframebreaks anchored" data-number="14.7" data-anchor-id="desenvolvendo-o-projeto-patentidea"><span class="header-section-number">14.7</span> Desenvolvendo o Projeto PatentIdea</h2>
+<section id="desenvolvendo-o-projeto-patentidea" class="level2 allowframebreaks" data-number="13.7">
+<h2 class="allowframebreaks anchored" data-number="13.7" data-anchor-id="desenvolvendo-o-projeto-patentidea"><span class="header-section-number">13.7</span> Desenvolvendo o Projeto PatentIdea</h2>
 <!--![](figuras/contract-proof.pdf)-->
 <pre class="solidity"><code>// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
@@ -1836,8 +1831,8 @@ contract PatentIdea {
 </div>
 <p>Agora que testamos o contrato na rede simulada do <code>Ganache</code> usando a <code>Remix IDE</code>, podemos fazer o <em>deploy</em> em nossa rede privada.</p>
 </section>
-<section id="implantando-o-contrato-com-o-truffle" class="level2" data-number="14.8">
-<h2 data-number="14.8" class="anchored" data-anchor-id="implantando-o-contrato-com-o-truffle"><span class="header-section-number">14.8</span> Implantando o contrato com o <code>Truffle</code></h2>
+<section id="implantando-o-contrato-com-o-truffle" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="implantando-o-contrato-com-o-truffle"><span class="header-section-number">13.8</span> Implantando o contrato com o <code>Truffle</code></h2>
 <p>Vamos criar o diretório do projeto <code>ideap</code> e inicializar a estrutura de projeto para o <code>truffle</code>:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir ideap</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cd ideap/</span>
@@ -2244,14 +2239,14 @@ module.exports = function(deployer) {
 <span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a><span class="ex">=======</span></span>
 <span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Total <span class="ex">deployments:</span>   1</span>
 <span id="cb43-39"><a href="#cb43-39" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Final <span class="ex">cost:</span>          0.001096589375280614 ETH</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Na <a href="#fig-ganacheui:contract:creation" class="quarto-xref">Figura&nbsp;<span>14.I</span></a> podemos ver que o contrato foi criado.</p>
+<p>Na <a href="#fig-ganacheui:contract:creation" class="quarto-xref">Figura&nbsp;<span>13.I</span></a> podemos ver que o contrato foi criado.</p>
 <div id="fig-ganacheui:contract:creation" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ganacheui:contract:creation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figuras/truffle-contract-create.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ganacheui:contract:creation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.I- Transação de Criação do Contrato
+Figure&nbsp;13.I- Transação de Criação do Contrato
 </figcaption>
 </figure>
 </div>
@@ -2271,8 +2266,8 @@ https://www.luiztools.com.br/post/integracao-com-metamask-via-js/
 
 -->
 </section>
-<section id="criando-uma-interface-web" class="level2 allowframebreaks" data-number="14.9">
-<h2 class="allowframebreaks anchored" data-number="14.9" data-anchor-id="criando-uma-interface-web"><span class="header-section-number">14.9</span> Criando uma interface web</h2>
+<section id="criando-uma-interface-web" class="level2 allowframebreaks" data-number="13.9">
+<h2 class="allowframebreaks anchored" data-number="13.9" data-anchor-id="criando-uma-interface-web"><span class="header-section-number">13.9</span> Criando uma interface web</h2>
 <!--
 The necessary steps to create a proof of idea project, as detailed in the core Mastering Blockchain book, are as follows:
 
@@ -2298,8 +2293,8 @@ This is the resulting interactive frontend of the proof of idea DApp.
 
 -->
 </section>
-<section id="criando-uma-app-react" class="level2" data-number="14.10">
-<h2 data-number="14.10" class="anchored" data-anchor-id="criando-uma-app-react"><span class="header-section-number">14.10</span> Criando uma app react</h2>
+<section id="criando-uma-app-react" class="level2" data-number="13.10">
+<h2 data-number="13.10" class="anchored" data-anchor-id="criando-uma-app-react"><span class="header-section-number">13.10</span> Criando uma app react</h2>
 <p>Vamos criar uma interface para nossa aplicação de interação com o contrato.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[ideap]$</span> npx create-react-app app</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Need</span> to install the following packages:</span>
@@ -2446,12 +2441,12 @@ This is the resulting interactive frontend of the proof of idea DApp.
 </figure>
 </div>
 </section>
-<section id="considerações-finais" class="level2" data-number="14.11">
-<h2 data-number="14.11" class="anchored" data-anchor-id="considerações-finais"><span class="header-section-number">14.11</span> Considerações Finais</h2>
+<section id="considerações-finais" class="level2" data-number="13.11">
+<h2 data-number="13.11" class="anchored" data-anchor-id="considerações-finais"><span class="header-section-number">13.11</span> Considerações Finais</h2>
 <p>Nesta aula vimos alguns exemplos de implantação de contratos e como podemos fazer chamadas a esses contratos.</p>
 </section>
-<section id="leitura-recomendada" class="level2" data-number="14.12">
-<h2 data-number="14.12" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">14.12</span> Leitura Recomendada</h2>
+<section id="leitura-recomendada" class="level2" data-number="13.12">
+<h2 data-number="13.12" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">13.12</span> Leitura Recomendada</h2>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2467,12 +2462,11 @@ This is the resulting interactive frontend of the proof of idea DApp.
 </div>
 </div>
 </section>
-</section>
-<section id="word-cloud" class="level1" data-number="15">
-<h1 data-number="15"><span class="header-section-number">15</span> <em>Word Cloud</em></h1>
+<section id="word-cloud" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> <em>Word Cloud</em></h1>
 <p><img src="figuras/aula-13-pratica-implementacao-patentidea-app.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
-<section id="referências" class="level2 fragile allowframebreaks" data-number="15.1">
-<h2 class="fragile allowframebreaks anchored" data-number="15.1" data-anchor-id="referências"><span class="header-section-number">15.1</span> Referências</h2>
+<section id="referências" class="level2 fragile allowframebreaks" data-number="14.1">
+<h2 class="fragile allowframebreaks anchored" data-number="14.1" data-anchor-id="referências"><span class="header-section-number">14.1</span> Referências</h2>
 <div id="refs" role="list" style="display: none">
 
 </div>
