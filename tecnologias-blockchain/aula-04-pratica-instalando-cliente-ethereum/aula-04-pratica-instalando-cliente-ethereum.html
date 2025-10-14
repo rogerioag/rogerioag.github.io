@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.6">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,17 +87,21 @@ div.csl-indent {
 <link href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" rel="next">
 <link href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" rel="prev">
 <link href="../images/logo.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-31072f9ed96e24c019159c695a8da794.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-8af282cae751bfb3a2fbecba8a55da7f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-888a994573c04143e2a6089a1c6b7523.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-9c15c3a5755bd8aa5242770252b660f1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-888a994573c04143e2a6089a1c6b7523.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -139,7 +144,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -157,7 +162,169 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -179,7 +346,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -302,6 +471,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em>: <em>Implementação de Aplicações</em></span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-14-pratica-ethereum-introducao-tokenizacao/aula-14-pratica-ethereum-introducao-tokenizacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Prática sobre Tokenização: <em>Introdução à Tokenização</em></span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -345,6 +520,7 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -395,7 +571,7 @@ window.Quarto = {
 <img src="figuras/percentual-por-cliente-ethereum.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-percentual:clientes:ethereum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.I- Percentual de Clientes em 21/08/2025. Fonte: <a href="https://ethernodes.org/">ethernodes</a>
+Figure&nbsp;4.I: Percentual de Clientes em 21/08/2025. Fonte: <a href="https://ethernodes.org/">ethernodes</a>
 </figcaption>
 </figure>
 </div>
@@ -416,12 +592,12 @@ Figure&nbsp;4.I- Percentual de Clientes em 21/08/2025. Fonte: <a href="https://e
 <p>Nesta etapa, você instalará o cliente padrão de camada de execução (<code>geth</code>) e outras ferramentas. Baixe e execute o a última versão <code>64-bit</code> estável do <strong>Geth installer</strong> para seu Sistema Operacional do site <a href="https://geth.ethereum.org/downloads/"><em>Geth downloads page</em></a>. Ou baixe e execute o a última versão <code>64-bit</code> estável do <strong><em>Geth and Tools</em></strong> para seu Sistema Operacional do site <a href="https://geth.ethereum.org/downloads/"><em>Geth downloads page</em></a>. Para Linux, baixe o arquivo <a href="https://gethstore.blob.core.windows.net/builds/geth-alltools-linux-amd64-1.14.8-a9523b64.tar.gz"><em>Geth and Tools</em></a> ou escolha nas guias a versão do seu Sistema Operacional.</p>
 <p>O <code>geth</code> e as outras ferramentas podem ser instaladas em sistemas derivados do <code>Debian</code> e <code>Ubuntu</code> com o pacote <code>ethereum</code>:</p>
 <p>O <code>geth</code> pode ser instalado em sistemas derivados do <code>Debian</code> e <code>Ubuntu</code> com o pacote <code>ethereum</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install <span class="at">-y</span> software-properties-common</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install <span class="at">-y</span> software-properties-common</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo add-apt-repository <span class="at">-y</span> ppa:ethereum/ethereum</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get update</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install <span class="at">-y</span> ethereum</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install <span class="at">-y</span> ethereum</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Em outros Sistemas como os derivados de <code>Arch Linux</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo pacaur <span class="at">-Ss</span> ethereum</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo pacaur <span class="at">-Ss</span> ethereum</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo pacaur <span class="at">-Ss</span> go-ethereum</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">extra/go-ethereum</span> 1.14.8-1 <span class="pp">[</span><span class="ss">instalado</span><span class="pp">]</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Official</span> Go implementation of the Ethereum protocol</span>
@@ -435,15 +611,15 @@ Figure&nbsp;4.I- Percentual de Clientes em 21/08/2025. Fonte: <a href="https://e
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Tamanho</span> total instalado:  249,48 MiB</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Alteracao</span> no tamanho:       0,00 MiB</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">::</span> Continuar a instalacao<span class="pp">?</span> <span class="pp">[</span><span class="ss">S/n</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">::</span> Continuar a instalacao<span class="pp">?</span> <span class="pp">[</span><span class="ss">S/n</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Imagens <code>docker</code> são mantidas no <a href="https://hub.docker.com/r/ethereum/client-go"><code>DockerHub</code></a> para usuários que preferem rodar em um ambiente com <em>container</em>. As seguintes imagens estão disponíveis com todas as ferramentas:</p>
 <pre><code>ethereum/client-go:alltools-latest última versão de desenvolvimento.
 ethereum/client-go:alltools-stable última versão estável.
 ethereum/client-go:alltools-{version} versão estável com número de versão específica.
 ethereum/client-go:alltools-release-{version} última versão estável com um família de versões específica.</code></pre>
 <p>Instalação via <code>docker</code> pode ser feita com os comandos:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker pull ethereum/client-go:alltools-stable</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-it</span> <span class="at">-p</span> 30303:30303 ethereum/client-go:alltools-stable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker pull ethereum/client-go:alltools-stable</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-it</span> <span class="at">-p</span> 30303:30303 ethereum/client-go:alltools-stable</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A imagem irá expor as seguintes portas:</p>
 <pre><code>8545 TCP, usado pela API HTTP baseada em JSON RPC
 8546 TCP, usado pela API WebSocket baseada em JSON RPC
@@ -451,17 +627,17 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 30303 TCP e UDP, usado pelo protocolo P2P para rodar a rede.</code></pre>
 <p><strong>Nota:</strong> se você estiver executando um cliente dentro de um container docker, você deveria montar um volume de dados com um diretório de dados do cliente na pasta <code>/root/.ethereum</code> dentro do container para que ter certeza que os dados baixados serão preservados entre uma reinicialização e outra do container.</p>
 <p>Na minha máquina montaria o diretório <code>/run/media/rogerio/DADOS/ethereum</code> no diretório virtual <code>/root/.ethereum</code>, as sincronizações e comandos executados na imagem <code>docker</code> seriam refletidos na base de dados do diretório externo.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-it</span> <span class="at">-p</span> 30303:30303 <span class="at">-v</span> /run/media/rogerio/DADOS/ethereum:/root/.ethereum  <span class="at">-w</span> /root/.ethereum ethereum/client-go:alltools-latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-it</span> <span class="at">-p</span> 30303:30303 <span class="at">-v</span> /run/media/rogerio/DADOS/ethereum:/root/.ethereum  <span class="at">-w</span> /root/.ethereum ethereum/client-go:alltools-latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Para atualizar as ferramentas para a última versão, basta parar o <em>container</em> e fazer um <em>pull</em> da última versão:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker stop ethereum/client-go:alltools-stable</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker stop ethereum/client-go:alltools-stable</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker pull ethereum/client-go:alltools-latest</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-it</span> <span class="at">-p</span> 30303:30303 ethereum/client-go:alltools-latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-it</span> <span class="at">-p</span> 30303:30303 ethereum/client-go:alltools-latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A execução da última versão seria pelo comando:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-it</span> <span class="at">-p</span> 30303:30303 ethereum/client-go:alltools-latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> docker run <span class="at">-it</span> <span class="at">-p</span> 30303:30303 ethereum/client-go:alltools-latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Instruções para outros Sistemas Operacionais podem ser encontradas no site oficial da documentação do <code>Ethereum</code>, artigo <a href="https://geth.ethereum.org/docs/getting-started/installing-geth"><em>Installing Geth</em></a>.</p>
 <p>Verifique se a versão mais nova já não foi instalada. O link <a href="https://github.com/ethereum/go-ethereum/releases">Rayingri (v1.14.8)</a> lista as versões.</p>
 <p>Na minha máquina está instalada a versão <code>1.14.8-stable-a9523b64</code>, você pode verificar a sua com <code>geth --version</code> ou <code>geth version</code> ou <code>evm --version</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> evm <span class="at">--version</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> evm <span class="at">--version</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">evm</span> version 1.14.8-stable-a9523b64</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> geth <span class="at">--version</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">geth</span> version 1.14.8-stable-a9523b64</span>
@@ -475,7 +651,7 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Operating</span> System: linux</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="va">GOPATH</span><span class="op">=</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="va">GOROOT</span><span class="op">=</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="executando-o-geth" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="executando-o-geth"><span class="header-section-number">5.2</span> Executando o <code>Geth</code></h2>
@@ -491,7 +667,7 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <li><code>.ethereum/sepolia/geth/chaindata</code>: <em>blockchain</em> da rede de teste <code>Sepolia</code>.</li>
 <li><code>.ethereum/keystore</code>: Chaves das contas criadas.</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash breaklines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[~]$</span> geth</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash breaklines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[~]$</span> geth</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:07:12.911]</span> Starting Geth on Ethereum mainnet... </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:07:12.912]</span> Bumping default cache on mainnet         provided=1024 updated=4096</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:07:12.914]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
@@ -552,7 +728,7 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:07:43.205]</span> Looking for peers                        peercount=0 tried=9 static=0</span>
 <span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [10-20<span class="kw">|</span><span class="ex">21:07:47.967]</span> Post-merge network, but no beacon client seen. Please launch one to follow the chain! </span>
 <span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:07:53.281]</span> Looking for peers                        peercount=0 tried=13 static=0</span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:08:03.346]</span> Looking for peers                        peercount=0 tried=9  static=0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-20<span class="kw">|</span><span class="ex">21:08:03.346]</span> Looking for peers                        peercount=0 tried=9  static=0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O que vai levar um certo tempo para fazer toda a sincronização da rede completa.</p>
 <!--Hoje, $03/09/2024$ o tamanho da _blockchain_ está em [$1147.97 GB$](https://ycharts.com/indicators/ethereum_chain_full_sync_data_size).-->
 <p>Hoje, <span class="math inline">\(21/08/2025\)</span> o tamanho da <em>blockchain</em> está em <a href="https://ycharts.com/indicators/ethereum_chain_full_sync_data_size"><span class="math inline">\(1380.34 GB\)</span></a>.</p>
@@ -630,7 +806,7 @@ ethereum/client-go:alltools-release-{version} última versão estável com um fa
 <img src="figuras/TestnetsTimeline.png" class="img-fluid figure-img" style="width:90.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-redes:testes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworld.co/2022/08/19/the-evolution-of-ethereum-testnet/#section2">Fonte: Etherwold</a>
+Figure&nbsp;5.I: <em>Timeline</em> das Redes de Teste <a href="https://etherworld.co/2022/08/19/the-evolution-of-ethereum-testnet/#section2">Fonte: Etherwold</a>
 </figcaption>
 </figure>
 </div>
@@ -640,7 +816,7 @@ Figure&nbsp;5.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworl
 <p>Ao executar o <code>geth</code> com algum das redes de teste será criado um diretório dentro do diretório padrão <code>~/.ethereum/</code> para cada rede de teste. Por exemplo, <code>~/.ethereum/goerli</code> para <code>--goerli</code> e <code>~/.ethereum/sepolia</code> para o <code>--sepolia</code>.</p>
 <p>Iremos executar o cliente com a rede <a href="https://ethereum.org/en/developers/docs/networks/#sepolia"><code>Sepolia</code></a> que é recomendada como <code>testnet</code> padrão, uma vez que <code>Goerli</code> será descontinuada em <span class="math inline">\(2023\)</span>, sendo substituída pela <code>Holesovice</code>. É recomendado migrar sua aplicação para <code>Sepolia</code>.</p>
 <p>A rede <code>Sepolia</code> usa um conjunto validador permissionado. É uma rede nova, o que significa que seu estado e seu histórico são pequenos, o que deixa sua sincronização mais rápida e exige menos armazenamento. Características importantes para usuários que querem rapidamente montar um nó da rede e interagir com a rede diretamente.</p>
-<div class="sourceCode" id="cb11" data-breaklines="true"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-breaklines="true"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:27:45.640]</span> Starting Geth on Sepolia testnet... </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:27:45.641]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:27:45.643]</span> Smartcard socket not found, disabling    err=<span class="st">"stat /run/pcscd/pcscd.comm: no such file or directory"</span></span>
@@ -698,13 +874,13 @@ Figure&nbsp;5.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworl
 <span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:27:45.686]</span> HTTP server started                      endpoint=127.0.0.1:8551 auth=true  prefix= cors=localhost vhosts=localhost</span>
 <span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [04-16<span class="kw">|</span><span class="ex">21:27:55.489]</span> System clock seems off by <span class="at">-25.06956443s,</span> which can prevent network connectivity </span>
 <span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [04-16<span class="kw">|</span><span class="ex">21:27:55.490]</span> Please enable network time synchronisation in system settings. </span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [04-16<span class="kw">|</span><span class="ex">21:28:20.672]</span> Post-merge network, but no beacon client seen. Please launch one to follow the chain! </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [04-16<span class="kw">|</span><span class="ex">21:28:20.672]</span> Post-merge network, but no beacon client seen. Please launch one to follow the chain! </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Note que está sendo gerada uma mensagem de aviso:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [04-16<span class="kw">|</span><span class="ex">21:28:20.672]</span> Post-merge network, but no beacon client seen. Please launch one to follow the chain!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [04-16<span class="kw">|</span><span class="ex">21:28:20.672]</span> Post-merge network, but no beacon client seen. Please launch one to follow the chain!</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Pesquisando na Internet por <em>“Post-merge network, but no beacon client seen. Please launch one to follow the chain!”</em>, encontramos essa solução: <a href="https://github.com/ethereum/go-ethereum/issues/25791#issuecomment-1249553882">Github:go-ethereum, issue-25791</a>.</p>
 <p>A documentação do <em>Ethereum</em> sobre <a href="https://geth.ethereum.org/docs/getting-started/consensus-clients"><em>Consensus Clients</em></a>, mostra que <code>geth</code> deve ser iniciado, com conexão <code>RPC</code> autenticada usando um arquivo <code>jwtsecret</code>. Por padrão esse arquivo está em <code>~/.ethereum/geth/jwtsecret</code>. Para as redes de teste o caminho terá o diretório da respectiva rede, como por exemplo <code>~/.ethereum/sepolia/geth/jwtsecret</code> para a rede <code>Sepolia</code>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:27:45.640]</span> Starting Geth on Sepolia testnet... </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:27:45.640]</span> Starting Geth on Sepolia testnet... </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Note que estou executando na rede de testes <code>--sepolia</code>, opção na minha versão do <code>geth</code> é diferente do livro. No livro ele diz para usar o parâmetro <code>--testnet</code> que por padrão usa a rede de testes <code>Ropsten</code>, indicando <code>--testnet sepolia</code>. Na minha instalação não suporta mais o parâmetro <code>--testnet</code>, tem o <code>--mainnet</code> e cada rede de teste disponível tem o seu parâmetro correspondente, como <code>--sepolia</code>.</li>
 </ul>
@@ -712,7 +888,7 @@ Figure&nbsp;5.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworl
 <section id="criando-contas-na-rede" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="criando-contas-na-rede"><span class="header-section-number">5.5</span> Criando Contas na Rede</h2>
 <p>O comando <code>geth account new</code> cria uma nova conta na rede principal. Indicaremos que a conta é para ser criada na rede de teste <code>--sepolia</code>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> account new</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> account new</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:50:49.343]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:50:49.344]</span> Smartcard socket not found, disabling    err=<span class="st">"stat /run/pcscd/pcscd.comm: no such file or directory"</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> new account is locked with a password. Please give a password. Do not forget this password.</span>
@@ -727,9 +903,9 @@ Figure&nbsp;5.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworl
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> You can share your public address with anyone. Others need it to interact with you.</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> You must NEVER share the secret key with anyone! The key controls access to your funds!</span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> You must BACKUP your key file! Without the key, it<span class="st">'s impossible to access account funds!</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="st">- You must REMEMBER your password! Without the password, it'</span>s impossible to decrypt the key!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="st">- You must REMEMBER your password! Without the password, it'</span>s impossible to decrypt the key!</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A conta com a chave pública <code>0xa9e98368B44b371ceC7d205F9fE2b074b6134C95</code> foi criada. Iremos criar uma segunda conta.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> account new</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> account new</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:52:58.948]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:52:58.948]</span> Smartcard socket not found, disabling    err=<span class="st">"stat /run/pcscd/pcscd.comm: no such file or directory"</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Your</span> new account is locked with a password. Please give a password. Do not forget this password.</span>
@@ -746,22 +922,22 @@ Figure&nbsp;5.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworl
 <span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> You must BACKUP your key file! Without the key, it<span class="st">'s impossible to access account funds!</span></span>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="st">- You must REMEMBER your password! Without the password, it'</span>s impossible to decrypt the key!</span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>É para termos as duas contas <code>0xa9e98368B44b371ceC7d205F9fE2b074b6134C95</code> e <code>0xc061b852A26BEdeC5Bd457b88c031c46a622f4ab</code> criadas com seus arquivos em <code>.ethereum/sepolia/keystore/</code>, com o prefixo <code>UTC--2023-04-17T00-53-06.379873395Z--*</code>.</p>
 </section>
 <section id="listando-as-contas" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="listando-as-contas"><span class="header-section-number">5.6</span> Listando as Contas</h2>
 <p>As contas existentes ou que foram criadas podem ser listadas com o comando <code>geth account list</code>. Utilizaremos novamente o parâmetro que indica a rede de teste <code>--sepolia</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> account list</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> account list</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:56:11.129]</span> Maximum peer count                       ETH=50 LES=0 total=50</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:56:11.130]</span> Smartcard socket not found, disabling    err=<span class="st">"stat /run/pcscd/pcscd.comm: no such file or directory"</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-16<span class="kw">|</span><span class="ex">21:56:11.130]</span> Set global gas cap                       cap=50,000,000</span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Account</span> <span class="co">#0: {a9e98368b44b371cec7d205f9fe2b074b6134c95} keystore:///home/rogerio/.ethereum/sepolia/keystore/UTC--2023-04-17T00-51-24.03605278 5Z--a9e98368b44b371cec7d205f9fe2b074b6134c95</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Account</span> <span class="co">#1: {c061b852a26bedec5bd457b88c031c46a622f4ab} keystore:///home/rogerio/.ethereum/sepolia/keystore/UTC--2023-04-17T00-53-06.37987339 5Z--c061b85 2a26bedec5bd457b88c031c46a622f4ab</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A documentação do <code>geth</code>, bem como comandos e parâmetros podem ser acessados em <a href="https://geth.ethereum.org/docs" class="uri">https://geth.ethereum.org/docs</a>.</p>
 <p>Executando com opção de responder a comandos via <code>RPC</code>. A documentação desta parte está disponível em <a href="https://geth.ethereum.org/docs/rpc/server" class="uri">https://geth.ethereum.org/docs/rpc/server</a>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="clientes-de-consenso" class="level2" data-number="5.7">
 <h2 data-number="5.7" class="anchored" data-anchor-id="clientes-de-consenso"><span class="header-section-number">5.7</span> Clientes de Consenso</h2>
@@ -780,8 +956,8 @@ Figure&nbsp;5.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworl
 <section id="instalando-o-cliente-de-consenso-prysmlinkprysm" class="level2" data-number="5.8">
 <h2 data-number="5.8" class="anchored" data-anchor-id="instalando-o-cliente-de-consenso-prysmlinkprysm"><span class="header-section-number">5.8</span> Instalando o cliente de consenso <code>Prysm</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></h2>
 <p>Para a instalação do <code>Prysm</code>, crie no diretório <code>~/.ethereum/&lt;rede&gt;</code>, duas subpastas: <code>consensus</code> e <code>execution</code>. Acesse o diretório <code>consensus</code> e execute o comando para baixar o cliente <code>Prysm</code> e transformá-lo em executável:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir prysm <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> prysm</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh <span class="at">--output</span> prysm.sh <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> +x prysm.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mkdir prysm <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> prysm</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl https://raw.githubusercontent.com/prysmaticlabs/prysm/master/prysm.sh <span class="at">--output</span> prysm.sh <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> +x prysm.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside id="footnotes" class="footnotes footnotes-end-of-section" role="doc-footnote">
 <hr>
 <ol>
@@ -800,11 +976,11 @@ Figure&nbsp;5.I- <em>Timeline</em> das Redes de Teste <a href="https://etherworl
 <li>Usar o próprio <code>Prysm</code> para gerar o <code>jwt.hex</code>:</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#\# Optional. This command is necessary only if you've previously configured USE\_PRYSM\_VERSION</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#\# Optional. This command is necessary only if you've previously configured USE\_PRYSM\_VERSION</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="va">USE_PRYSM_VERSION</span><span class="op">=</span>v4.0.0</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#\# Required.</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./prysm.sh</span> beacon-chain generate-auth-secret</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./prysm.sh</span> beacon-chain generate-auth-secret</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Nesta opção o <code>Prysm</code> irá mostrar o caminho onde o arquivo <code>jwt.hex</code> foi gerado.</p>
 </section>
 <section id="executando-um-cliente-de-execuçãolinkprysmexec" class="level2" data-number="5.10">
@@ -831,12 +1007,12 @@ O comando de execução do `Geth` atualizado:
 <section id="executando-um-nó-beacon-usando-prysmlinknobeacon" class="level2" data-number="5.11">
 <h2 data-number="5.11" class="anchored" data-anchor-id="executando-um-nó-beacon-usando-prysmlinknobeacon"><span class="header-section-number">5.11</span> Executando um nó beacon usando Prysm<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></h2>
 <p>Altere o comando para iniciar um nó <em>beacon</em> que conecta no seu nó de execução local, necessário colocar o <em>hash</em> de uma das contas criadas. Por padrão, aqui estou utilizando a primeira conta criada, meu caso a <code>0xa9e98368b44b371cec7d205f9fe2b074b6134c95</code>.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./prysm.sh</span> beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/geth/jwtsecret <span class="at">--suggested-fee-recipient</span><span class="op">=&lt;&lt;hash</span> da conta principal<span class="op">&gt;&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./prysm.sh</span> beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/geth/jwtsecret <span class="at">--suggested-fee-recipient</span><span class="op">=&lt;&lt;hash</span> da conta principal<span class="op">&gt;&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Alterei o comando padrão para o conter o <em>hash</em> de uma das minhas contas e para o tipo de rede de teste <code>--sepolia</code>. A rede <code>Sepolia</code> precisa de um estado inicial (<em>genesis state</em>) de onde começar a sincronização. O arquivo pode ser baixado de <a href="https://github.com/eth-clients/merge-testnets/blob/main/sepolia/genesis.ssz" class="uri">https://github.com/eth-clients/merge-testnets/blob/main/sepolia/genesis.ssz</a> e deve ser colocado no diretório <code>sepolia/consensus/prysm</code>.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ wget https://github.com/eth-clients/merge-testnets/raw/main/sepolia/genesis.ssz <span class="at">-O</span> genesis.ssz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ wget https://github.com/eth-clients/merge-testnets/raw/main/sepolia/genesis.ssz <span class="at">-O</span> genesis.ssz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Então o comando pode ser utilizado para iniciar um nó <em>beacon</em> que conecta seu nó de execução local.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ ./prysm.sh beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--sepolia</span> <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/sepolia/geth/jwtsecret <span class="at">--genesis-state</span><span class="op">=</span>genesis.ssz <span class="at">--suggested-fee-recipient</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ ./prysm.sh beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--sepolia</span> <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/sepolia/geth/jwtsecret <span class="at">--genesis-state</span><span class="op">=</span>genesis.ssz <span class="at">--suggested-fee-recipient</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95 <span class="at">--checkpoint-sync-url</span><span class="op">=</span>https://sepolia.beaconstate.info <span class="at">--genesis-beacon-api-url</span><span class="op">=</span>https://sepolia.beaconstate.info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ ./prysm.sh beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--sepolia</span> <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/sepolia/geth/jwtsecret <span class="at">--genesis-state</span><span class="op">=</span>genesis.ssz <span class="at">--suggested-fee-recipient</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ ./prysm.sh beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--sepolia</span> <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/sepolia/geth/jwtsecret <span class="at">--genesis-state</span><span class="op">=</span>genesis.ssz <span class="at">--suggested-fee-recipient</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95 <span class="at">--checkpoint-sync-url</span><span class="op">=</span>https://sepolia.beaconstate.info <span class="at">--genesis-beacon-api-url</span><span class="op">=</span>https://sepolia.beaconstate.info</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No terminal onde o cliente de execução apareceu um novo <code>warning</code>: <code>"WARN [04-19|13:07:28.462] Served miner_start reqid=14 duration="233.485us" err="etherbase missing: etherbase must be explicitly specified"</code>.</p>
 <!--
 Goerli:
@@ -937,7 +1113,7 @@ Copy the `validator_keys` folder to your primary machine's `consensus` folder. R
 <section id="executando-o-console-javascript" class="level2" data-number="5.12">
 <h2 data-number="5.12" class="anchored" data-anchor-id="executando-o-console-javascript"><span class="header-section-number">5.12</span> Executando o Console JavaScript</h2>
 <p>O console <code>javascript</code> pode também ser conectado ao nó <code>Geth</code> usando <code>IPC</code>. Quando o <code>Geth</code> é iniciado, um arquivo <code>geth.ipc</code> é criado automaticamente e salvo no diretório de dados. Este arquivo ou um caminho customizado para um arquivo IPC pode ser passado para o <code>Geth</code> usando o parâmetro <code>attach</code>:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.5-stable-a38f4108/linux-amd64/go1.20.2</span>
@@ -946,12 +1122,12 @@ Copy the `validator_keys` folder to your primary machine's `consensus` folder. R
 <span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">modules:</span> admin:1.0 debug:1.0 engine:1.0 eth:1.0 ethash:1.0 miner:1.0 net:1.0 rpc:1.0 txpool:1.0 web3:1.0</span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="verificação-do-funcionamento-da-rede" class="level2" data-number="5.13">
 <h2 data-number="5.13" class="anchored" data-anchor-id="verificação-do-funcionamento-da-rede"><span class="header-section-number">5.13</span> Verificação do Funcionamento da Rede</h2>
 <p>Para verificar o funcionamento da rede, utilize o comando <code>net.listing</code>:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.5-stable-a38f4108/linux-amd64/go1.20.2</span>
@@ -962,7 +1138,7 @@ Copy the `validator_keys` folder to your primary machine's `consensus` folder. R
 <span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> net.listening</span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">true</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A mesma verificação pode ser feita via API <code>JSON</code> <code>RPC</code> no terminal do sistema:</p>
 <!-- 
 ```bash
@@ -971,14 +1147,14 @@ Copy the `validator_keys` folder to your primary machine's `consensus` folder. R
 
 ```
 -->
-<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ curl <span class="at">-X</span> POST <span class="at">--insecure</span> <span class="at">--header</span> <span class="st">"Content-Type: application/json"</span> <span class="at">--data</span> <span class="st">'{"jsonrpc":"2.0", "method":"net_listening","params":[], "id":64}'</span> <span class="at">--location</span> http://localhost:8559</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="dt">{</span><span class="st">"jsonrpc"</span><span class="dt">:</span><span class="st">"2.0"</span><span class="op">,</span><span class="st">"id"</span><span class="dt">:64</span><span class="op">,</span><span class="st">"result"</span><span class="dt">:true}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ curl <span class="at">-X</span> POST <span class="at">--insecure</span> <span class="at">--header</span> <span class="st">"Content-Type: application/json"</span> <span class="at">--data</span> <span class="st">'{"jsonrpc":"2.0", "method":"net_listening","params":[], "id":64}'</span> <span class="at">--location</span> http://localhost:8559</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="dt">{</span><span class="st">"jsonrpc"</span><span class="dt">:</span><span class="st">"2.0"</span><span class="op">,</span><span class="st">"id"</span><span class="dt">:64</span><span class="op">,</span><span class="st">"result"</span><span class="dt">:true}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="listando-as-contas-pelo-console" class="level2" data-number="5.14">
 <h2 data-number="5.14" class="anchored" data-anchor-id="listando-as-contas-pelo-console"><span class="header-section-number">5.14</span> Listando as Contas pelo Console</h2>
 <!-- Para criar usuários: clef newaccount --keystore sepolia/keystore/ -->
 <p>A lista de contas pode ser recuperada através dos comandos no console <code>eth.accounts</code> e por <code>RPC</code> <code>{"method": "eth_accounts", "params": []}</code>. Em versões anteriores do <code>geth</code> era possível utilizar <code>personal.listAccounts</code>, mas <code>personal</code> foi <a href="https://stackoverflow.com/questions/75681463/the-error-personal-is-not-defined-occurs-when-running-geth">depreciado</a>.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.5-stable-a38f4108/linux-amd64/go1.20.2</span>
@@ -994,17 +1170,17 @@ Copy the `validator_keys` folder to your primary machine's `consensus` folder. R
 <span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> <span class="op">&lt;</span>eval<span class="op">&gt;</span>:1:1<span class="er">(</span><span class="ex">0</span><span class="kw">)</span></span>
 <span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.accounts</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span><span class="ex">,</span> <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="ex">[</span><span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span><span class="ex">,</span> <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O mesmo resultado pode ser obtido via comando <code>curl</code> no terminal para listar as contas usando <code>RPC</code>:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ curl <span class="at">-X</span> POST <span class="at">--insecure</span> <span class="at">--header</span> <span class="st">"Content-Type: application/json"</span> <span class="at">--data</span> <span class="st">'{"jsonrpc":"2.0","method":"eth_accounts","params":[], "id":64}'</span> <span class="at">--location</span> http://localhost:8559</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">{</span><span class="st">"jsonrpc"</span><span class="ex">:</span><span class="st">"2.0"</span><span class="ex">,</span><span class="st">"id"</span><span class="ex">:64,</span><span class="st">"result"</span><span class="ex">:[</span><span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span><span class="ex">,</span> <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>]}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ curl <span class="at">-X</span> POST <span class="at">--insecure</span> <span class="at">--header</span> <span class="st">"Content-Type: application/json"</span> <span class="at">--data</span> <span class="st">'{"jsonrpc":"2.0","method":"eth_accounts","params":[], "id":64}'</span> <span class="at">--location</span> http://localhost:8559</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">{</span><span class="st">"jsonrpc"</span><span class="ex">:</span><span class="st">"2.0"</span><span class="ex">,</span><span class="st">"id"</span><span class="ex">:64,</span><span class="st">"result"</span><span class="ex">:[</span><span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span><span class="ex">,</span> <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>]}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Outros comandos podem ser executados da mesma maneira via Console JavaScript ou invocação <code>RPC</code> através do <code>curl</code>. Uma lista completa de comandos da API <code>RPC</code>estão disponíveis em <a href="https://ethereum.org/en/developers/docs/apis/json-rpc/">JSON-RPC API</a>.</p>
 <p>Como por exemplo, recuperar a versão do cliente <code>geth</code>:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ curl <span class="at">-X</span> POST <span class="at">--insecure</span>  <span class="at">--header</span> <span class="st">"Content-Type: application/json"</span> <span class="at">--data</span> <span class="st">'{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'</span> <span class="at">--location</span> http://localhost:8559</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="dt">{</span><span class="st">"jsonrpc"</span><span class="dt">:</span><span class="st">"2.0"</span><span class="op">,</span><span class="st">"id"</span><span class="dt">:67</span><span class="op">,</span><span class="st">"result"</span><span class="dt">:</span><span class="st">"Geth/v1.11.5-stable-a38f4108/linux-amd64/go1.20.2"</span><span class="dt">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ curl <span class="at">-X</span> POST <span class="at">--insecure</span>  <span class="at">--header</span> <span class="st">"Content-Type: application/json"</span> <span class="at">--data</span> <span class="st">'{"jsonrpc":"2.0","method":"web3_clientVersion","params":[],"id":67}'</span> <span class="at">--location</span> http://localhost:8559</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="dt">{</span><span class="st">"jsonrpc"</span><span class="dt">:</span><span class="st">"2.0"</span><span class="op">,</span><span class="st">"id"</span><span class="dt">:67</span><span class="op">,</span><span class="st">"result"</span><span class="dt">:</span><span class="st">"Geth/v1.11.5-stable-a38f4108/linux-amd64/go1.20.2"</span><span class="dt">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Ou a versão da Rede:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ curl <span class="at">-X</span> POST <span class="at">--header</span> <span class="st">"Content-Type: application/json"</span>  <span class="at">--data</span> <span class="st">'{"jsonrpc":"2.0","method":"net_version","params":[],"id":67}'</span> <span class="at">--location</span> http://localhost:8559</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="dt">{</span><span class="st">"jsonrpc"</span><span class="dt">:</span><span class="st">"2.0"</span><span class="op">,</span><span class="st">"id"</span><span class="dt">:67</span><span class="op">,</span><span class="st">"result"</span><span class="dt">:</span><span class="st">"11155111"</span><span class="dt">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ curl <span class="at">-X</span> POST <span class="at">--header</span> <span class="st">"Content-Type: application/json"</span>  <span class="at">--data</span> <span class="st">'{"jsonrpc":"2.0","method":"net_version","params":[],"id":67}'</span> <span class="at">--location</span> http://localhost:8559</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="dt">{</span><span class="st">"jsonrpc"</span><span class="dt">:</span><span class="st">"2.0"</span><span class="op">,</span><span class="st">"id"</span><span class="dt">:67</span><span class="op">,</span><span class="st">"result"</span><span class="dt">:</span><span class="st">"11155111"</span><span class="dt">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O valor <span class="math inline">\(11155111\)</span> em <code>result</code> indica que estamos executando sobre a rede <code>Sepolia</code>. Uma lista completa com os <code>IDs</code> das redes está disponível em <a href="https://chainlist.org" class="uri">https://chainlist.org</a>. Os mais comuns são <span class="math inline">\(1\)</span>: <em>Ethereum Mainnet</em>, <span class="math inline">\(2\)</span>: <em>Morden testnet</em> (depreciado), <span class="math inline">\(3\)</span>: <em>Ropsten testnet</em>, <span class="math inline">\(4\)</span>: <em>Rinkeby testnet</em>, <span class="math inline">\(5\)</span>: <em>Goerli testnet</em> (será <a href="https://ethereum.org/en/developers/docs/networks/#goerli">depreciada em 2023</a>).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1050,7 +1226,7 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <h2 data-number="5.15" class="anchored" data-anchor-id="teste-de-transferência-de-valores-entre-carteiras"><span class="header-section-number">5.15</span> Teste de Transferência de Valores entre Carteiras</h2>
 <p>Podemos testar uma transferência de valores. As duas formas de se conseguir valores é minerando ou solicitando valores para <em>Faucets</em> da rede, como por exemplo o <a href="https://faucet.sepolia.dev/" class="uri">https://faucet.sepolia.dev/</a>.</p>
 <p>Os valores de cada conta/carteira pode ser verificado com o comando <code>eth.getBalance(hash)</code>, passando como parâmetro a cadeia <em>hash</em> de identificação da conta ou indicando na lista de contas <code>eth.getBalance(eth.accounts[0])</code>.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc </span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.11.5-stable-a38f4108/linux-amd64/go1.20.2</span>
@@ -1069,9 +1245,9 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span><span class="kw">)</span></span>
 <span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
 <span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span><span class="kw">)</span></span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Como os saldos estão zerados, vamos iniciar a mineração com o comando <code>miner.start()</code>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.start<span class="kw">()</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.start<span class="kw">()</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> etherbase missing: etherbase must be explicitly specified</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>       <span class="ex">at</span> web3.js:6365:9<span class="er">(</span><span class="ex">39</span><span class="kw">)</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>       <span class="ex">at</span> send <span class="er">(</span><span class="ex">web3.js:5099:62</span><span class="er">(</span><span class="ex">29</span><span class="kw">))</span></span>
@@ -1097,11 +1273,11 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a><span class="ex">goroutine</span> 82 <span class="pp">[</span><span class="ss">running</span><span class="pp">]</span>:</span>
 <span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a><span class="ex">github.com/dop251/goja.</span><span class="er">(</span><span class="ex">*baseJsFuncObject</span><span class="kw">)</span><span class="ex">._call</span><span class="er">(</span><span class="ex">...</span><span class="kw">)</span></span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>       <span class="ex">github.com/dop251/goja@v0.0.0-20230122112309-96b1610dd4f7/func.go:396</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>       <span class="ex">github.com/dop251/goja@v0.0.0-20230122112309-96b1610dd4f7/func.go:396</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O erro <strong>“Error: etherbase must be explicitly specified”</strong> ocorre pois é necessário fornecer o <em>hash</em> da carteira também para a execução do cliente <code>geth</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Fornecendo a carteira como <code>--miner.etherbase=0xa9e98368b44b371cec7d205f9fe2b074b6134c95</code>, agora podemos iniciar a mineração.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.start<span class="kw">()</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.start<span class="kw">()</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.stop<span class="kw">()</span></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span>
@@ -1116,9 +1292,9 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
 <span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="ex">5004</span></span>
 <span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[0]</span><span class="kw">)</span></span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="ex">5.004e+21</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="ex">5.004e+21</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Para enviar <span class="math inline">\(100\)</span> <em>ethers</em> da primeira para a segunda carteira:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span>, to: <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>, value: 100}<span class="kw">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span>, to: <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>, value: 100}<span class="kw">)</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Error:</span> authentication needed: password or unlock</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> web3.js:6365:9<span class="er">(</span><span class="ex">39</span><span class="kw">)</span></span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> send <span class="er">(</span><span class="ex">web3.js:5099:62</span><span class="er">(</span><span class="ex">29</span><span class="kw">))</span></span>
@@ -1132,7 +1308,7 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> personal.unlockAccount<span class="kw">(</span><span class="ex">eth.accounts[0]</span><span class="kw">)</span></span>
 <span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="ex">ReferenceError:</span> personal is not defined</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> <span class="op">&lt;</span>eval<span class="op">&gt;</span>:1:1<span class="er">(</span><span class="ex">0</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">at</span> <span class="op">&lt;</span>eval<span class="op">&gt;</span>:1:1<span class="er">(</span><span class="ex">0</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O erro <strong>“Error: authentication needed: password or unlock”</strong> ocorre por que precisamos autorizar a transação. Em versões anteriores era possível desbloquear as contas via <em>console</em> <code>javascript</code>, conforme tentamos no Código acima <code>personal.unlockAccount(eth.accounts[0])</code>. Verificando a documentação o <code>personal</code> foi depreciado e não pode ser mais utilizado.</p>
 <p>Na versão corrente é preciso utilizar o <a href="https://geth.ethereum.org/docs/tools/clef/introduction"><code>clef</code></a> para fazer a autenticação em um <em>terminal</em> separado. O <code>clef</code> é um autenticador das operações, a Figura <span class="math inline">\(\ref{fig:clef:fluxo}\)</span> apresenta o fluxo de autenticação de uma transição solicitada pelo usuário.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -1142,7 +1318,7 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 </figure>
 </div>
 <p>Então em um outro <em>terminal</em> inicie a instância do <code>clef</code> com o comando:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> sepolia]$ clef <span class="at">--chainid</span> 11155111 <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--configdir</span> ~/.ethereum/sepolia/clef <span class="at">--http</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> sepolia]$ clef <span class="at">--chainid</span> 11155111 <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--configdir</span> ~/.ethereum/sepolia/clef <span class="at">--http</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING!</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1176,15 +1352,15 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb37-32"><a href="#cb37-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-33"><a href="#cb37-33" aria-hidden="true" tabindex="-1"></a><span class="ex">-------</span> Available accounts <span class="at">-------</span></span>
 <span id="cb37-34"><a href="#cb37-34" aria-hidden="true" tabindex="-1"></a><span class="ex">0.</span> 0xa9e98368B44b371ceC7d205F9fE2b074b6134C95 at keystore:///home/rogerio/.ethereum/sepolia/keystore/UTC--2023-04-17T00-51-24.03605278 5Z--a9e98368b44b371cec7d205f9fe2b074b6134c95</span>
-<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> 0xc061b852A26BEdeC5Bd457b88c031c46a622f4ab at keystore:///home/rogerio/.ethereum/sepolia/keystore/UTC--2023-04-17T00-53-06.37987339 5Z--c061b85 2a26bedec5bd457b88c031c46a622f4ab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-35"><a href="#cb37-35" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> 0xc061b852A26BEdeC5Bd457b88c031c46a622f4ab at keystore:///home/rogerio/.ethereum/sepolia/keystore/UTC--2023-04-17T00-53-06.37987339 5Z--c061b85 2a26bedec5bd457b88c031c46a622f4ab</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O <code>clef</code> iniciará e listará as contas disponíveis que irá controlar.</p>
 <p>O arquivo para a comunicação <code>IPC socket/pipe</code> será criado dentro do <em>datadir</em> <code>.ethereum/sepolia/ clef/clef.ipc</code>, se preferir o caminho onde o arquivo será criado pode ser fornecido como parâmetro <code>--ipcpath valor</code>.</p>
 <p>Volte ao terminal onde iniciou o <code>geth</code> e indique que as autentificações serão via <code>clef</code> com o parâmetro <code>--signer=/home/rogerio/.ethereum/sepolia/clef/clef.ipc</code> passando o caminho dado pelo <code>clef</code>.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.ethereum/sepolia/clef/clef.ipc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> execution]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.ethereum/sepolia/clef/clef.ipc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Retorne ao <em>console</em> <code>javascript</code>, e execute novamente as transações, cada uma deverá ser autorizada no console do <code>clef</code>.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span>, to: <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>, value: 100}<span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span>, to: <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>, value: 100}<span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No <em>console</em> do <code>clef</code> é possível autorizar e ver a transação assinada com <em>hash:</em> <code>0xb579cc595601e4aca546ce4e46bdcded7841bd7f50a0a78c505e839dd039b8b9</code> que é o mesmo <code>id</code> devolvido no console <code>javascript</code>.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1235,22 +1411,22 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"chainId"</span><span class="ex">:</span> <span class="st">"0xaa36a7"</span>,</span>
 <span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"accessList"</span><span class="ex">:</span> [],</span>
 <span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hash"</span><span class="ex">:</span> <span class="st">"0x298bb20795a584c9bd038d47323f592e072b66eace172833d27acaad8278281a"</span></span>
-<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Com a autorização feita no <em>console</em> do <code>clef</code> será mostrado as informações da transação assinada, como o <code>hash: 0x298bb20795a584c9bd038d47323f592e072b66eace172833d27acaad8278281a</code>. Observe que no <em>console</em> <code>javascript</code> aparece o mesmo <em>hash</em> da transação para a transação que solicitamos:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span>, to: <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>, value: 100}<span class="kw">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span>, to: <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>, value: 100}<span class="kw">)</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="st">"0x298bb20795a584c9bd038d47323f592e072b66eace172833d27acaad8278281a"</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Se buscarmos pelo recibo da transação ou verificarmos se o saldo da conta 1 foi alterado, veremos que a transação no foi efetivada ainda, pois a consulta devolve <code>null</code> e o saldo da conta ainda é zero.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span>, to: <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>, value: 100}<span class="kw">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span>, to: <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>, value: 100}<span class="kw">)</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="st">"0x298bb20795a584c9bd038d47323f592e072b66eace172833d27acaad8278281a"</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getTransactionReceipt<span class="kw">(</span><span class="st">"0x298bb20795a584c9bd038d47323f592e072b66eace172833d27acaad 8278281a"</span><span class="kw">)</span></span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span>
 <span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[1]</span><span class="kw">)</span></span>
 <span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span></span>
 <span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[0]</span><span class="kw">)</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="ex">5.004e+21</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="ex">5.004e+21</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>É preciso minerar para a transação ser efetivada:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> miner.start<span class="kw">()</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="ex">null</span></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[1]</span><span class="kw">)</span></span>
@@ -1261,9 +1437,9 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="ex">5.0859999999999998529e+21</span></span>
 <span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[1]</span><span class="kw">)</span></span>
 <span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="ex">100</span></span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Agora sim, é possível recuper o recibo da transação. Desde do <em>fork</em> para a versão <code>Byzantium</code>, a <em>Ethereum</em> fornece uma forma de se verficar se a transação deu certo ou falhou, o campo <em>status</em> no recibo indica a situação (0 - falhou e 1 - foi executada com sucesso).</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getTransactionReceipt<span class="kw">(</span><span class="st">"0x298bb20795a584c9bd038d47323f592e072b66eace172833d27acaad 8278281a"</span><span class="kw">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getTransactionReceipt<span class="kw">(</span><span class="st">"0x298bb20795a584c9bd038d47323f592e072b66eace172833d27acaad 8278281a"</span><span class="kw">)</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">blockHash:</span> <span class="st">"0x1e3ae615a7d676cc51983ea066e2cda3a5d7702d27255065b330591cc3b9062f"</span>,</span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">blockNumber:</span> 2503,</span>
@@ -1284,9 +1460,9 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  <span class="ex">transactionHash:</span> <span class="st">"0x298bb20795a584c9bd038d47323f592e072b66eace172833d27acaad8278281a"</span>,</span>
 <span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a>  <span class="ex">transactionIndex:</span> 0,</span>
 <span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="ex">type:</span> <span class="st">"0x2"</span></span>
-<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Ao enviar outra quantidade para a segunda conta é preciso autorizar a transação no console do <code>clef</code> e minerar novamente para ela ser efetivada.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.sendTransaction<span class="kw">(</span><span class="ex">{from:</span> <span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span>, to: <span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span>, value: 1000}<span class="kw">)</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="st">"0x667f9570b629fdd437b112e4b5f388cbbe68efb43e0bdbb75bf9db473cbd00fc"</span></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[1]</span><span class="kw">)</span></span>
@@ -1302,11 +1478,11 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="ex">1100</span></span>
 <span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getBalance<span class="kw">(</span><span class="ex">eth.accounts[0]</span><span class="kw">)</span></span>
 <span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a><span class="ex">5.1779999999999997049e+21</span></span>
-<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No <em>terminal</em> de execução do <code>geth</code> aparece que a transação foi submetida e após a mineração os saldos das contas foram atualizados.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-19<span class="kw">|</span><span class="ex">15:10:01.663]</span> Submitted transaction                    hash=0x667f9570b629fdd437b112e4b5f388cbbe68efb43e0bdbb75bf9db473cbd00fc from=0xa9e98368B44b371ceC7d205F9fE2b074b6134C95 nonce=1 recipient=0xc061b852A26BEdeC5Bd457b88c031c46a622f4ab value=1000</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [04-19<span class="kw">|</span><span class="ex">15:10:01.663]</span> Submitted transaction                    hash=0x667f9570b629fdd437b112e4b5f388cbbe68efb43e0bdbb75bf9db473cbd00fc from=0xa9e98368B44b371ceC7d205F9fE2b074b6134C95 nonce=1 recipient=0xc061b852A26BEdeC5Bd457b88c031c46a622f4ab value=1000</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A transação <code>0x667f9570b629fdd437b112e4b5f388cbbe68efb43e0bdbb75bf9db473cbd00fc</code> foi autorizada e podemos verificar o saldo das carteiras.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getTransactionReceipt<span class="kw">(</span><span class="st">"0x667f9570b629fdd437b112e4b5f388cbbe68efb43e0bdbb75bf9db47 3cbd00fc"</span><span class="kw">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> eth.getTransactionReceipt<span class="kw">(</span><span class="st">"0x667f9570b629fdd437b112e4b5f388cbbe68efb43e0bdbb75bf9db47 3cbd00fc"</span><span class="kw">)</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">blockHash:</span> <span class="st">"0x30643a61e054cc3a2e5ce04c67e4c14ed192a889cede500bcf214d754540fe6b"</span>,</span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">blockNumber:</span> 2544,</span>
@@ -1333,11 +1509,11 @@ Verificar a transação: <https://testnet.starkscan.co/tx/0x7533e77fdf62e0f9b444
 <span id="cb47-25"><a href="#cb47-25" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0xa9e98368b44b371cec7d205f9fe2b074b6134c95"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
 <span id="cb47-26"><a href="#cb47-26" aria-hidden="true" tabindex="-1"></a><span class="ex">5177.9999999999997049</span></span>
 <span id="cb47-27"><a href="#cb47-27" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> web3.fromWei<span class="kw">(</span><span class="ex">eth.getBalance</span><span class="er">(</span><span class="st">"0xc061b852a26bedec5bd457b88c031c46a622f4ab"</span><span class="kw">)</span><span class="ex">,</span> <span class="st">"ether"</span><span class="kw">)</span></span>
-<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a><span class="ex">1.1e-15</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-28"><a href="#cb47-28" aria-hidden="true" tabindex="-1"></a><span class="ex">1.1e-15</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Surgiu após a instalação e execução a seguinte mensagem:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">All</span> I see is, beacon client online, but never received consensus updates. Please ensure your beacon client is operational to follow the chain!</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">All</span> I see is, beacon client online, but never received consensus updates. Please ensure your beacon client is operational to follow the chain!</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="ex">I</span> connected the consensus client and it is syncing but not the geth client.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="ex">I</span> connected the consensus client and it is syncing but not the geth client.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Procurando pela mensagem chegamos à resposta no forum <a href="https://ethereum.stackexchange.com/questions/136810/geth-does-not-sync-proof-of-stake" class="uri">https://ethereum.stackexchange.com/questions/136810/geth-does-not-sync-proof-of-stake</a> diz que é possível fazer uma sincronização rápida, usando um <em>checkpoint</em>.</p>
 <blockquote class="blockquote">
 <p><em>Your <code>geth</code> client will not start <code>sync</code> before your <code>consensus-client</code> does not sync completely. If you are using <code>prysm</code> consensus client, you can use <a href="https://ethereum.stackexchange.com/questions/136748/how-to-speed-up-prysm-sync"><code>checkpoint</code></a> sync feature to sync in minutes so you don’t need to wait.</em></p>
@@ -1361,17 +1537,17 @@ prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --sugges
 </figure>
 </div>
 <p>No passo a passo da configuração para o <code>Prysm</code>, no <em>Step 2</em> fala para adicionarmos os argumentos <em>checkpoint sync</em> para o nosso cliente:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--checkpoint-sync-url=https://checkpoint-sync.sepolia.ethpandaops.io</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="ex">--genesis-beacon-api-url=https://checkpoint-sync.sepolia.ethpandaops.io</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--checkpoint-sync-url=https://checkpoint-sync.sepolia.ethpandaops.io</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="ex">--genesis-beacon-api-url=https://checkpoint-sync.sepolia.ethpandaops.io</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O comando do terminal do <code>prysm</code> deve ser alterado para:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ ./prysm.sh beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--sepolia</span> <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/sepolia/geth/jwtsecret <span class="at">--genesis-state</span><span class="op">=</span>genesis.ssz <span class="at">--suggested-fee-recipient</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95 <span class="at">--checkpoint-sync-url</span><span class="op">=</span>https://checkpoint-sync.sepolia.ethpandaops.io <span class="at">--genesis-beacon-api-url</span><span class="op">=</span>https://checkpoint-sync.sepolia.ethpandaops.io</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ ./prysm.sh beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--sepolia</span> <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/sepolia/geth/jwtsecret <span class="at">--genesis-state</span><span class="op">=</span>genesis.ssz <span class="at">--suggested-fee-recipient</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95 <span class="at">--checkpoint-sync-url</span><span class="op">=</span>https://checkpoint-sync.sepolia.ethpandaops.io <span class="at">--genesis-beacon-api-url</span><span class="op">=</span>https://checkpoint-sync.sepolia.ethpandaops.io</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Na <code>Option B</code> do <em>Step 4</em> é necessário recuperar os valores do <code>slot number</code> e do <code>state_root</code>.</p>
 <pre class="text"><code>1. Open http://YOUR\_NODE\_IP:YOUR\_NODE\_PORT/eth/v1/beacon/headers/finalized in your browser.
 2. Find the slot number.
 3. Find the state_root value.</code></pre>
 <p>Será necessário conhecer o IP e a porta do <em>beacon node.</em> A porta padrão para o <code>Prysm</code> é <code>3500</code>.</p>
 <p>Abrindo no navegador o link <a href="http://localhost:3500/eth/v1/beacon/headers/finalized" class="uri">http://localhost:3500/eth/v1/beacon/headers/finalized</a> será retornado o <code>JSON</code> com as informações:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a> <span class="dt">"data"</span><span class="fu">:{</span></span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>   <span class="dt">"root"</span><span class="fu">:</span><span class="st">"0xc41093353f2a6bb5b63ac406ac040d95a28cf54ec3d6f0f232955d8e2456727c"</span><span class="fu">,</span></span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>   <span class="dt">"canonical"</span><span class="fu">:</span><span class="kw">true</span><span class="fu">,</span></span>
@@ -1390,9 +1566,9 @@ prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --sugges
 <span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a> <span class="fu">},</span></span>
 <span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a> <span class="dt">"execution_optimistic"</span><span class="fu">:</span><span class="kw">true</span><span class="fu">,</span></span>
 <span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a> <span class="dt">"finalized"</span><span class="fu">:</span><span class="kw">true</span></span>
-<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Uma outra opção dada na <em>Option C</em> é utilizar os comandos <code>curl</code> e o <code>jq</code> e recuperar a informação pelo terminal.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ curl <span class="at">-s</span> http://localhost:3500/eth/v1/beacon/headers/finalized <span class="kw">|</span> <span class="ex">jq</span> .<span class="st">'data.header.message'</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ curl <span class="at">-s</span> http://localhost:3500/eth/v1/beacon/headers/finalized <span class="kw">|</span> <span class="ex">jq</span> .<span class="st">'data.header.message'</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"slot"</span><span class="ex">:</span> <span class="st">"3154944"</span>,</span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"proposer_index"</span><span class="ex">:</span> <span class="st">"187"</span>,</span>
@@ -1400,12 +1576,12 @@ prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --sugges
 <span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"state_root"</span><span class="ex">:</span> <span class="st">"0x041fb39788896d2c0662e104ab7393124140546aacbeaedc2b7f94b9b5fcc548"</span>,</span>
 <span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"body_root"</span><span class="ex">:</span> <span class="st">"0x128fe8300ed3e76226ca14955790583df1921ed9c65d111804db319b7b6118ba"</span></span>
 <span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Para verificar seu <code>slot</code> e seu <code>state_root</code> abra uma outra instância do site <a href="https://checkpoint-sync.sepolia.ethpandaops.io/">Checkpointz</a>, note que deve ser uma instância diferente da que você está lendo esse tutorial.</p>
 <p>Verifique a tabela do histórico de limites de época finalizados e procure a linha que contém o valor do seu <code>slot</code> e tenha certeza que o seu <code>state_root</code> casa com o listado. Se coincidir, ok!</p>
 <p>Caso contrário, você deveria iniciar do início novamente limpando seu nó beacon e iniciando novamente os passos. Existem a opção do <code>prysm</code> <code>--clear-db</code> para limpar o banco de dados.</p>
 <p>Pelo visto a parte que envolvia a mineração não funciona mais. Ao executar o comando no console javascript <code>miner.start()</code> a seguinte mensagem de erro aconteceu:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">panic:</span> ethash <span class="er">(</span><span class="ex">pow</span><span class="kw">)</span> <span class="ex">sealing</span> not supported any more</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">panic:</span> ethash <span class="er">(</span><span class="ex">pow</span><span class="kw">)</span> <span class="ex">sealing</span> not supported any more</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="ex">goroutine</span> 4324 <span class="pp">[</span><span class="ss">running</span><span class="pp">]</span>:</span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="ex">github.com/ethereum/go-ethereum/consensus/ethash.</span><span class="er">(</span><span class="ex">*Ethash</span><span class="kw">)</span><span class="ex">.Seal</span><span class="er">(</span><span class="ex">0xc000199680?,</span> {0x5607920e8325<span class="pp">?</span>, 0xc000c85ce0<span class="pp">?</span>}, 0xc000c85de8<span class="pp">?</span>, 0xc000c85ce0<span class="pp">?</span>, 0x8ba4636bba1627dc<span class="pp">?</span><span class="kw">)</span></span>
@@ -1416,7 +1592,7 @@ prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --sugges
 <span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">github.com/ethereum/go-ethereum/miner/worker.go:616</span> +0x2fd</span>
 <span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="ex">created</span> by github.com/ethereum/go-ethereum/miner.newWorker in goroutine 1</span>
 <span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">github.com/ethereum/go-ethereum/miner/worker.go:285</span> +0x8f8</span>
-<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> sepolia]$ </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> sepolia]$ </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Outras mensagens de erros envolvendo o <code>Prysm</code> podem ser encontradas na documentação <a href="https://docs.prylabs.network/docs/troubleshooting/issues-errors" class="uri">https://docs.prylabs.network/docs/troubleshooting/issues-errors</a>.</p>
 </section>
 <section id="pedindo-recursos-para-um-faucet" class="level2" data-number="5.16">
@@ -1446,7 +1622,7 @@ prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --sugges
 <section id="importando-contas-do-metamask" class="level2" data-number="5.17">
 <h2 data-number="5.17" class="anchored" data-anchor-id="importando-contas-do-metamask"><span class="header-section-number">5.17</span> Importando contas do Metamask</h2>
 <p>Criar um aquivo com o nome do hash da conta. Exportar no Metamask a chave privada e salvar como conteúdo desse arquivo.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ nano 0x9DBf97c71AeD31302e07e34236308C97f882f914.txt</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ nano 0x9DBf97c71AeD31302e07e34236308C97f882f914.txt</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ clef <span class="at">--chainid</span> 11155111 <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore importraw 0x9DBf97c71AeD31302e07e34236308C97f882f914.txt </span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING!</span></span>
@@ -1482,7 +1658,7 @@ prysm beacon-chain --execution-endpoint=http://localhost:8551 --sepolia --sugges
 <span id="cb55-34"><a href="#cb55-34" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> key is now encrypted<span class="kw">;</span> <span class="ex">losing</span> the password will result in permanently losing</span>
 <span id="cb55-35"><a href="#cb55-35" aria-hidden="true" tabindex="-1"></a><span class="ex">access</span> to the key and all associated funds!</span>
 <span id="cb55-36"><a href="#cb55-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-37"><a href="#cb55-37" aria-hidden="true" tabindex="-1"></a><span class="ex">Make</span> sure to backup keystore and passwords in a safe location.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-37"><a href="#cb55-37" aria-hidden="true" tabindex="-1"></a><span class="ex">Make</span> sure to backup keystore and passwords in a safe location.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="comandos-finais" class="level2" data-number="5.18">
 <h2 data-number="5.18" class="anchored" data-anchor-id="comandos-finais"><span class="header-section-number">5.18</span> Comandos Finais</h2>
@@ -1503,17 +1679,17 @@ geth --sepolia --syncmode full --http --http.addr 127.0.0.1 --http.port 8559 --h
 </figure>
 </div>
 <p>O comando para o console do <code>clef</code>:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> clef]$ clef <span class="at">--chainid</span> 11155111 <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--configdir</span> ~/.ethereum/sepolia/clef <span class="at">--http</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> clef]$ clef <span class="at">--chainid</span> 11155111 <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--configdir</span> ~/.ethereum/sepolia/clef <span class="at">--http</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O comando para o console do <code>Geth</code>:</p>
 <!--
 [Código @lst:comando:geth]
 
 ```{#lst:comando:geth .bash caption="Comando do Terminal -- Geth"}-->
-<div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> sepolia]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0xa9e98368B44b371ceC7d205F9fE2b074b6134C95 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.ethereum/sepolia/clef/clef.ipc <span class="at">--verbosity</span> 3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> sepolia]$ geth <span class="at">--sepolia</span> <span class="at">--syncmode</span> full <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin"</span> <span class="at">--keystore</span> ~/.ethereum/sepolia/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.ethereum/sepolia/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0xa9e98368B44b371ceC7d205F9fE2b074b6134C95 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.ethereum/sepolia/clef/clef.ipc <span class="at">--verbosity</span> 3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O comando para o console do <code>prysm</code>:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ ./prysm.sh beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--sepolia</span> <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/sepolia/geth/jwtsecret <span class="at">--suggested-fee-recipient</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95 <span class="at">--genesis-state</span><span class="op">=</span>genesis.ssz <span class="at">--checkpoint-sync-url</span><span class="op">=</span>https://checkpoint-sync.sepolia.ethpandaops.io <span class="at">--genesis-beacon-api-url</span><span class="op">=</span>https://checkpoint-sync.sepolia.ethpandaops.io <span class="at">--clear-db</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb58"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> prysm]$ ./prysm.sh beacon-chain <span class="at">--execution-endpoint</span><span class="op">=</span>http://localhost:8551 <span class="at">--sepolia</span> <span class="at">--jwt-secret</span><span class="op">=</span>~/.ethereum/sepolia/geth/jwtsecret <span class="at">--suggested-fee-recipient</span><span class="op">=</span>0xa9e98368b44b371cec7d205f9fe2b074b6134c95 <span class="at">--genesis-state</span><span class="op">=</span>genesis.ssz <span class="at">--checkpoint-sync-url</span><span class="op">=</span>https://checkpoint-sync.sepolia.ethpandaops.io <span class="at">--genesis-beacon-api-url</span><span class="op">=</span>https://checkpoint-sync.sepolia.ethpandaops.io <span class="at">--clear-db</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O comando para o console do <code>javascript</code>:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[rogerio@ryzen-nitro</span> ~]$ geth attach /home/rogerio/.ethereum/sepolia/geth.ipc</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Welcome</span> to the Geth JavaScript console!</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="ex">instance:</span> Geth/v1.12.2-stable-bed84606/linux-amd64/go1.21.0</span>
@@ -1523,7 +1699,7 @@ geth --sepolia --syncmode full --http --http.addr 127.0.0.1 --http.port 8559 --h
 <span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">modules:</span> admin:1.0 debug:1.0 engine:1.0 eth:1.0 miner:1.0 net:1.0 rpc:1.0 txpool:1.0 web3:1.0</span>
 <span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="ex">To</span> exit, press ctrl-d or type exit</span>
-<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="referências" class="level1" data-number="6">
@@ -1553,380 +1729,256 @@ geth --sepolia --syncmode full --http --http.addr 127.0.0.1 --http.port 8559 --h
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
       return false;
     }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1934,185 +1986,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="pagination-link" aria-label="Prática: Explorando a _Ethereum Virtual Machine (EVM)_">

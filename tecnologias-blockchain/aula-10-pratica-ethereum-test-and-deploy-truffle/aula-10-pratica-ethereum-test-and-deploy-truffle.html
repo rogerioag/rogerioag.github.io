@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.6">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +34,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,17 +87,21 @@ div.csl-indent {
 <link href="../aula-11-pratica-instalando-explorer-local/aula-11-pratica-instalando-explorer-local.html" rel="next">
 <link href="../aula-09-pratica-ethereum-introducao-ao-web3/aula-09-pratica-ethereum-introducao-ao-web3.html" rel="prev">
 <link href="../images/logo.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6c21014d9765ba549c6ebad95917e4d7.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0a9048d95e02c7ff9c82715fd5ddea4.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-31072f9ed96e24c019159c695a8da794.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-8af282cae751bfb3a2fbecba8a55da7f.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-888a994573c04143e2a6089a1c6b7523.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-9c15c3a5755bd8aa5242770252b660f1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-888a994573c04143e2a6089a1c6b7523.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -139,7 +144,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -157,7 +162,169 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -179,7 +346,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -302,6 +471,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em>: <em>Implementação de Aplicações</em></span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-14-pratica-ethereum-introducao-tokenizacao/aula-14-pratica-ethereum-introducao-tokenizacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Prática sobre Tokenização: <em>Introdução à Tokenização</em></span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -340,6 +515,7 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -389,24 +565,24 @@ https://www.luiztools.com.br/post/como-criar-seu-primeiro-smart-contract-em-soli
 <li><p>Instale as outras ferramentas: <code>Node.js</code>, <code>Ganache</code> e <code>Ganache-CLI</code>, <code>Truffle</code>, <code>Drizzle</code>, <code>Embark</code> e outras ferramentas indicadas no capítulo. O <code>truffle</code> utiliza o <code>nodejs</code> nas versões <code>v14-v18</code> (<a href="https://trufflesuite.com/docs/truffle/how-to/install/" class="uri">https://trufflesuite.com/docs/truffle/how-to/install/</a>)</p></li>
 <li><p>Instale o <code>nvm</code> para configurar a versão desejada para o <code>Node.js</code> e as bibliotecas necessárias.</p></li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install nvm</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nvm install 18</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt-get install nvm</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nvm install 18</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
 <li>Instale o <code>Truffle</code>.</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> npm install <span class="at">-g</span> truffle</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> npm install <span class="at">-g</span> truffle</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
 <li>Verifique a versão instalada das ferramentas.</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> truffle <span class="at">--version</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> truffle <span class="at">--version</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Truffle</span> v5.11.5 <span class="er">(</span><span class="ex">core:</span> 5.11.5<span class="kw">)</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Ganache</span> v7.9.1</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Solidity</span> v0.5.16 <span class="er">(</span><span class="ex">solc-js</span><span class="kw">)</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Node</span> v18.16.0</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Web3.js</span> v1.10.0</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Comandos possíves com o <code>Truffle</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> truffle <span class="at">--help</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> truffle <span class="at">--help</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Truffle</span> v5.11.5 <span class="at">-</span> a development framework for Ethereum</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Usage:</span> truffle <span class="op">&lt;</span>command<span class="op">&gt;</span> <span class="pp">[</span><span class="ss">options</span><span class="pp">]</span></span>
@@ -448,15 +624,15 @@ https://www.luiztools.com.br/post/como-criar-seu-primeiro-smart-contract-em-soli
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="ex">See</span> more at https://trufflesuite.com/docs/</span>
 <span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="ex">For</span> Ethereum JSON-RPC documentation see https://ganache.dev</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="criando-a-estrutura-básica-do-projeto-com-o-truffle" class="level2" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="criando-a-estrutura-básica-do-projeto-com-o-truffle"><span class="header-section-number">10.3</span> Criando a estrutura básica do projeto com o <code>Truffle</code></h2>
 <p>Iremos criar a estrutura de um projeto básico. Crie um diretório com o nome do projeto, aqui estou utilizando o nome <code>projeto-helloworld-truffle</code>, crie e acesse o diretório.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[src]$</span> mkdir projeto-helloworld-truffle</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[src]$</span> cd projeto-helloworld-truffle/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[src]$</span> mkdir projeto-helloworld-truffle</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[src]$</span> cd projeto-helloworld-truffle/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Utilize o comando <code>truffle init</code> para inicializar a estrutura básica do projeto (skeleton).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle init</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle init</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Starting</span> init...</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">================</span></span>
@@ -481,7 +657,7 @@ https://www.luiztools.com.br/post/como-criar-seu-primeiro-smart-contract-em-soli
 <span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> test</span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> truffle-config.js</span>
 <span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="ex">3</span> directories, 1 files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="ex">3</span> directories, 1 files</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Se verificarem os diretórios criados <code>contracts</code>, <code>migrations</code> e <code>test</code> estão vazios e foi criado um arquivo de configuração <code>truffle-config.js</code>.</p>
 <ul>
 <li><code>contracts</code>: diretório para os contratos.</li>
@@ -490,11 +666,11 @@ https://www.luiztools.com.br/post/como-criar-seu-primeiro-smart-contract-em-soli
 <li><code>truffle-config.js</code>: Arquivo de configuração do <code>Truffle</code>.</li>
 </ul>
 <p>Vamos criar um contrato com nome de <code>Greeter</code> para testarmos.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle create contract Greeter</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle create contract Greeter</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> ls contracts/</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Greeter.sol</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Greeter.sol</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Notem que o arquivo <code>Greeter.sol</code> foi criado dentro do diretório <code>contracts</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[src]$</span> tree projeto-helloworld-truffle/</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[src]$</span> tree projeto-helloworld-truffle/</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">projeto-helloworld-truffle/</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> contracts</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">|</span><span class="ex">--</span> Greeter.sol</span>
@@ -502,7 +678,7 @@ https://www.luiztools.com.br/post/como-criar-seu-primeiro-smart-contract-em-soli
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> test</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> truffle-config.js</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">3</span> directories, 2 files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">3</span> directories, 2 files</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Editando o contrato <code>Greeter.sol</code> temos uma estrutura básica já criada pelo <code>Truffle</code>.</p>
 <pre class="solidity"><code>// SPDX-License-Identifier: MIT
 pragma solidity &gt;=0.4.22 &lt;0.9.0;
@@ -526,7 +702,7 @@ contract Greeter {
     }
 }</code></pre>
 <p>Vamos criar um teste para o contrato <code>Greeter</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle create test greeter_test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle create test greeter_test</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> tree ../projeto-helloworld-truffle</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">../projeto-helloworld-truffle</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> contracts</span>
@@ -536,9 +712,9 @@ contract Greeter {
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">|</span><span class="ex">--</span> greeter_test.js</span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> truffle-config.js</span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ex">4</span> directories, 3 files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ex">4</span> directories, 3 files</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Edite o arquivo <code>test/greeter_test.js</code> e altere o código para:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> GreeterContract <span class="op">=</span> artifacts<span class="op">.</span><span class="fu">require</span>(<span class="st">"Greeter"</span>)<span class="op">;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> GreeterContract <span class="op">=</span> artifacts<span class="op">.</span><span class="fu">require</span>(<span class="st">"Greeter"</span>)<span class="op">;</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * uncomment accounts to access the test accounts made available by the</span></span>
@@ -550,9 +726,9 @@ contract Greeter {
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> greeter <span class="op">=</span> <span class="cf">await</span> GreeterContract<span class="op">.</span><span class="fu">deployed</span>()<span class="op">;</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">assert</span>(greeter<span class="op">,</span> <span class="st">"contract was not deployed"</span>)<span class="op">;</span></span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Se tentarmos executar o teste para o <code>Greeter</code>, o teste irá falhar e emitirá uma mensagem que o contrato não existe, pois não foi feito o <em>deploy</em> para a rede detectada.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -576,7 +752,7 @@ contract Greeter {
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> Object.checkNetworkArtifactMatch <span class="er">(</span><span class="ex">/home/rogerio/.nvm/versions/node/v18.16.0/lib/node_modules/truffle/build/</span> webpack:/packages/contract/lib/utils/index.js:256:1<span class="kw">)</span></span>
 <span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> Function.deployed <span class="er">(</span><span class="ex">/home/rogerio/.nvm/versions/node/v18.16.0/lib/node_modules/truffle/build/</span> webpack:/packages/contract/lib/contract/constructorMethods.js:83:1<span class="kw">)</span></span>
 <span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> Context.<span class="op">&lt;</span>anonymous<span class="op">&gt;</span> <span class="er">(</span><span class="ex">test/greeter_test.js:10:21</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> Context.<span class="op">&lt;</span>anonymous<span class="op">&gt;</span> <span class="er">(</span><span class="ex">test/greeter_test.js:10:21</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Toda vez que executamos o comando <code>truffle test</code>, o <code>Truffle</code> compila os contratos e então implanta eles para uma rede de teste. Para fazer o <em>deploy</em> precisamos de um outro arquivo <code>migrations</code>.</p>
 <p><code>Migrations</code> são <em>scripts</em> escritos em <code>JavaScript</code> que são usados para automatizar a implantação dos contratos.</p>
 <!--The default Migrations contract found in contracts/Migrations.sol is
@@ -585,16 +761,16 @@ only contract that has made its way to the test network. In order to add our Gre
 contract to the network, we will need to create a migration using the code found in
 Example 4-3.-->
 <p>Crie o arquivo <code>migrations/2_deploy_greeter.js</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> touch migrations/2_deploy_greeter.js</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> touch migrations/2_deploy_greeter.js</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Edite o arquivo <code>migrations/2_deploy_greeter.js</code> e altere seu conteúdo para:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> GreeterContract <span class="op">=</span> artifacts<span class="op">.</span><span class="fu">require</span>(<span class="st">"Greeter"</span>)<span class="op">;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> GreeterContract <span class="op">=</span> artifacts<span class="op">.</span><span class="fu">require</span>(<span class="st">"Greeter"</span>)<span class="op">;</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>module<span class="op">.</span><span class="at">exports</span> <span class="op">=</span> <span class="kw">function</span>(deployer) {</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    deployer<span class="op">.</span><span class="fu">deploy</span>(GreeterContract)<span class="op">;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Agora o comando de teste pode ser executado novamente:</p>
 <!-- [ok] troquei por [ok]-->
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -608,18 +784,18 @@ Example 4-3.-->
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="ex">[ok]</span> has been deployed successfully</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">1</span> passing <span class="er">(</span><span class="ex">48ms</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="ex">1</span> passing <span class="er">(</span><span class="ex">48ms</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Voltemos ao arquivo de teste <code>test/greeter_test.js</code> para adicionarmos um teste para a função <code>greet()</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(<span class="st">"greet()"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(<span class="st">"greet()"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">it</span>(<span class="st">"returns 'Hello, World!'"</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> greeter <span class="op">=</span> <span class="cf">await</span> GreeterContract<span class="op">.</span><span class="fu">deployed</span>()<span class="op">;</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> expected <span class="op">=</span> <span class="st">"Hello, World!"</span><span class="op">;</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> actual <span class="op">=</span> <span class="cf">await</span> greeter<span class="op">.</span><span class="fu">greet</span>()<span class="op">;</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(actual<span class="op">,</span> expected<span class="op">,</span> <span class="st">"greeted with 'Hello, World!'"</span>)<span class="op">;</span></span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Executando o teste novamente:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -636,9 +812,9 @@ Example 4-3.-->
 <span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="ex">[ok]</span> returns <span class="st">'Hello, World!'</span></span>
 <span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="ex">2</span> passing <span class="er">(</span><span class="ex">72ms</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="ex">2</span> passing <span class="er">(</span><span class="ex">72ms</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Caso a função <code>greet()</code> não estivesse definida em <code>Greeter.sol</code> o teste falharia e uma mensagem de erro que ela não está definida seria emitida. (Comentei a função para vermos a mensagem).</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -662,9 +838,9 @@ Example 4-3.-->
 <span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>       <span class="ex">returns</span> <span class="st">'Hello, World!'</span>:</span>
 <span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>     <span class="ex">TypeError:</span> greeter.greet is not a function</span>
 <span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> Context.<span class="op">&lt;</span>anonymous<span class="op">&gt;</span> <span class="er">(</span><span class="ex">test/greeter_test.js:19:32</span><span class="kw">)</span></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A função <code>function setGreeting(string calldata greeting)</code> pode ser utilizada para definirmos a mensagem de saudação, deixando o comportamento dinâmico. Adicionemos ao arquivo de teste <code>test/greeter_test.js</code> o código para testar a função <code>setGreeting(string...)</code>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contract</span>(<span class="st">"Greeter: update greeting"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contract</span>(<span class="st">"Greeter: update greeting"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe</span>(<span class="st">"setGreeting(string)"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">it</span>(<span class="st">"sets greeting to passed in string"</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> greeter <span class="op">=</span> <span class="cf">await</span> GreeterContract<span class="op">.</span><span class="fu">deployed</span>()</span>
@@ -675,9 +851,9 @@ Example 4-3.-->
 <span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>      assert<span class="op">.</span><span class="fu">equal</span>(actual<span class="op">,</span> expected<span class="op">,</span> <span class="st">"greeting was not updated"</span>)<span class="op">;</span></span>
 <span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Executando o teste novamente:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -698,21 +874,21 @@ Example 4-3.-->
 <span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>      <span class="ex">[ok]</span> sets greeting to passed in string <span class="er">(</span><span class="ex">75ms</span><span class="kw">)</span></span>
 <span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">3</span> passing <span class="er">(</span><span class="ex">153ms</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">3</span> passing <span class="er">(</span><span class="ex">153ms</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Até aqui temos um projeto básico com teste.</p>
 </section>
 <section id="definindo-um-dono-para-o-contrato" class="level2" data-number="10.4">
 <h2 data-number="10.4" class="anchored" data-anchor-id="definindo-um-dono-para-o-contrato"><span class="header-section-number">10.4</span> Definindo um dono para o Contrato</h2>
 <p>Adicionemos ao arquivo de teste do contrato o teste para uma função que retorna o proprietário do contrato.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contract</span>(<span class="st">"owner()"</span><span class="op">,</span> (accounts) <span class="kw">=&gt;</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contract</span>(<span class="st">"owner()"</span><span class="op">,</span> (accounts) <span class="kw">=&gt;</span> {</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">it</span>(<span class="st">"returns the address of the owner"</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> greeter <span class="op">=</span> <span class="cf">await</span> GreeterContract<span class="op">.</span><span class="fu">deployed</span>()<span class="op">;</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> owner <span class="op">=</span> <span class="cf">await</span> greeter<span class="op">.</span><span class="fu">owner</span>()<span class="op">;</span></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">assert</span>(owner<span class="op">,</span> <span class="st">"the current owner"</span>)<span class="op">;</span></span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Executando os testes novamente irá dar erro pois a função <code>owner()</code> não foi definida.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -742,7 +918,7 @@ Example 4-3.-->
 <span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>         <span class="ex">returns</span> the address of the owner:</span>
 <span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>     <span class="ex">TypeError:</span> greeter.owner is not a function</span>
 <span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> Context.<span class="op">&lt;</span>anonymous<span class="op">&gt;</span> <span class="er">(</span><span class="ex">test/greeter_test.js:41:35</span><span class="kw">)</span></span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Adicionemos um atributo <code>_owner</code> e a função no <code>Greeter.sol</code>.</p>
 <pre class="solidity"><code>// SPDX-License-Identifier: MIT
 pragma solidity &gt;=0.4.22 &lt;0.9.0;
@@ -764,7 +940,7 @@ contract Greeter {
     }
 }</code></pre>
 <p>Executando o teste novamente.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -785,10 +961,10 @@ contract Greeter {
 <span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>      <span class="ex">[ok]</span> returns the address of the owner</span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">4</span> passing <span class="er">(</span><span class="ex">200ms</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>  <span class="ex">4</span> passing <span class="er">(</span><span class="ex">200ms</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O que realmente queremos testar é se o endereço em <code>owner</code> é o mesmo endereço que de quem fez o <em>deploy</em>. Adicionemos para isso uma verificação se o endereço de propriedade é o mesmo da conta padrão que fez a implantação do contrato. Para testarmos isso, precisamos recuperar a variável <code>accounts</code> do ambiente de teste do <code>Truffle</code>.</p>
 <p>Altere o arquivo de teste para fazer a verificação:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contract</span>(<span class="st">"owner()"</span><span class="op">,</span> (accounts) <span class="kw">=&gt;</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contract</span>(<span class="st">"owner()"</span><span class="op">,</span> (accounts) <span class="kw">=&gt;</span> {</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">it</span>(<span class="st">"returns the address of the owner"</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> greeter <span class="op">=</span> <span class="cf">await</span> GreeterContract<span class="op">.</span><span class="fu">deployed</span>()<span class="op">;</span></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        <span class="kw">const</span> owner <span class="op">=</span> <span class="cf">await</span> greeter<span class="op">.</span><span class="fu">owner</span>()<span class="op">;</span></span>
@@ -802,9 +978,9 @@ contract Greeter {
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        assert<span class="op">.</span><span class="fu">equal</span>(owner<span class="op">,</span> expected<span class="op">,</span> <span class="st">"matches address used to deploy contract"</span>)<span class="op">;</span></span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A conta também pode ser verificada com o console do <code>Truffle:</code></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle console</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle console</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">ganache</span><span class="kw">)</span><span class="op">&gt;</span> accounts</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="bu">[</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">'0x5C93A5B7BDB9bDc43322F774Cb968e3b01Ab3279'</span>,</span>
@@ -818,7 +994,7 @@ contract Greeter {
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="er">'0x339A0d1f045794cfB6e8e78119E8a2C766d61492',</span></span>
 <span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="er">'0x344b14B22d9EDf6cCdCadf00Fe9Aa78730a66A49'</span></span>
 <span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="bu">]</span></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="er">truffle(ganache)&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="er">truffle(ganache)&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Adicione o construtor ao contrato <code>Greeter.sol</code></p>
 <pre class="solidity"><code>// SPDX-License-Identifier: MIT
 pragma solidity &gt;=0.4.22 &lt;0.9.0;
@@ -844,7 +1020,7 @@ contract Greeter {
     }
 }</code></pre>
 <p>Executando o teste novamente.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -877,9 +1053,9 @@ contract Greeter {
 <span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>  <span class="ex">5</span> passing <span class="er">(</span><span class="ex">212ms</span><span class="kw">)</span></span>
 <span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Atualize o teste para verificar quando a mensagem for enviada por outra conta.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contract</span>(<span class="st">"Greeter: update greeting"</span><span class="op">,</span> (accounts) <span class="kw">=&gt;</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contract</span>(<span class="st">"Greeter: update greeting"</span><span class="op">,</span> (accounts) <span class="kw">=&gt;</span> {</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">describe</span>(<span class="st">"setGreeting(string)"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">describe</span>(<span class="st">"when message is sent by the owner"</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">it</span>(<span class="st">"sets greeting to passed in string"</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
@@ -905,9 +1081,9 @@ contract Greeter {
 <span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">assert</span>(<span class="kw">false</span><span class="op">,</span> <span class="st">"greeting should not update"</span>)<span class="op">;</span></span>
 <span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>      })<span class="op">;</span></span>
 <span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
-<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Executando o teste novamente irá dar uma falha com a mensagem <code>AssertionError: greeting should not update</code>.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -955,7 +1131,7 @@ contract Greeter {
 <span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a>           <span class="ex">does</span> not set the greeting:</span>
 <span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a>     <span class="ex">AssertionError:</span> greeting should not update</span>
 <span id="cb31-48"><a href="#cb31-48" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> Context.<span class="op">&lt;</span>anonymous<span class="op">&gt;</span> <span class="er">(</span><span class="ex">test/greeter_test.js:94:9</span><span class="kw">)</span></span>
-<span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a>      <span class="ex">at</span> processTicksAndRejections <span class="er">(</span><span class="ex">node:internal/process/task_queues:95:5</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Para corrigir esse falha, adicione o código em <code>Greeter.sol</code> após o construtor.</p>
 <pre class="solidity"><code>modifier onlyOwner() {
   require(
@@ -985,7 +1161,7 @@ Owner declaration after external in the function definition:
   _greeting = greeting;
 }</code></pre>
 <p>Running our tests, we see they are all passing!</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -1022,15 +1198,15 @@ Owner declaration after external in the function definition:
 <span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>        <span class="ex">[ok]</span> does not set the greeting <span class="er">(</span><span class="ex">363ms</span><span class="kw">)</span></span>
 <span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">751ms</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">751ms</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="utilizando-o-openzeppelin" class="level2" data-number="10.5">
 <h2 data-number="10.5" class="anchored" data-anchor-id="utilizando-o-openzeppelin"><span class="header-section-number">10.5</span> Utilizando o <code>OpenZeppelin</code></h2>
 <p>Uma outra forma de fazer essa implementação de verificação de propriedade pode ser feita com a biblioteca <a href="https://www.openzeppelin.com/"><code>OpenZeppelin</code></a> que além de já ter algumas implementações que ajudam na criação de contratos que podem ser usadas na criação de <em>tokens</em>, ele também tem contratos que implementam a ideia de propriedade <em>(ownership)</em>, e no que implementamos duplicamos esse comportamento. Vamos atualizar o <code>Greeter.sol</code> para utilizar o que já tem pronto na <code>OpenZeppelin</code>.</p>
 <p>Instale o pacote <code>openzeppelin-solidity</code>.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> npm install openzeppelin-solidity</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> npm install openzeppelin-solidity</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="ex">added</span> 1 package in 4s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="ex">added</span> 1 package in 4s</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Altere o código do <code>Greeter.sol</code> para:</p>
 <pre><code>pragma solidity &gt;=0.4.22 &lt;0.9.0;
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
@@ -1067,7 +1243,7 @@ is prudent when working with smart contracts since security of smart contracts i
 critically important.
 -->
 <p>Reexecutando os testes:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -1089,16 +1265,16 @@ critically important.
 <span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a><span class="ex">Compilation</span> failed. See above.</span>
 <span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="ex">Truffle</span> v5.11.5 <span class="er">(</span><span class="ex">core:</span> 5.11.5<span class="kw">)</span></span>
-<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a><span class="ex">Node</span> v18.16.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a><span class="ex">Node</span> v18.16.0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Edite o arquivo <code>projeto-helloworld-truffle/node_modules/openzeppelin-solidity/contracts/access/ Ownable.sol</code> e <code>node_modules/openzeppelin-solidity/contracts/utils/Context.sol</code> e altere a versão <code>"pragma solidity &gt;=0.4.22 &lt;0.9.0;"</code>. No <code>Context.sol</code> para evitar o erro:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">TypeError:</span> Return argument type address is not implicitly convertible to expected type <span class="er">(</span><span class="bu">type</span> of first return variable<span class="kw">)</span> <span class="ex">address</span> payable.</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">TypeError:</span> Return argument type address is not implicitly convertible to expected type <span class="er">(</span><span class="bu">type</span> of first return variable<span class="kw">)</span> <span class="ex">address</span> payable.</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">--</span><span class="op">&gt;</span> openzeppelin-solidity/contracts/utils/Context.sol:17:16:</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>   <span class="kw">|</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="ex">17</span> <span class="kw">|</span>         <span class="cf">return</span> <span class="ex">msg.sender</span><span class="kw">;</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">|</span>                <span class="ex">^^^^^^^^^^</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>   <span class="kw">|</span>                <span class="ex">^^^^^^^^^^</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Alterei o retorno da função com <code>"return payable(msg.sender);"</code> conforme esse <a href="https://ethereum.stackexchange.com/questions/69264/typeerror-type-address-is-not-implicitly-convertible-to-expected-type-address-p">link</a>.</p>
 <p>Reexecutando o teste:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -1147,7 +1323,7 @@ critically important.
 <span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a>        <span class="ex">[ok]</span> does not set the greeting <span class="er">(</span><span class="ex">337ms</span><span class="kw">)</span></span>
 <span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">731ms</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">731ms</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <!--
 ## Plugin do Truffle para VSCode
 
@@ -1290,7 +1466,7 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <section id="deploy-de-contratos-na-rede-simulada-do-truffle" class="level2" data-number="10.7">
 <h2 data-number="10.7" class="anchored" data-anchor-id="deploy-de-contratos-na-rede-simulada-do-truffle"><span class="header-section-number">10.7</span> <em>Deploy</em> de Contratos na rede simulada do <code>Truffle</code></h2>
 <p>O comando <code>truffle develop</code> instancia uma rede <code>develop</code> do próprio <code>truffle</code> para que possamos executar os mesmos comandos que foram executados na prática anterior: <code>compile</code>, <code>test</code> e <code>migrate</code>. Ao executar o <code>truffle</code> com <code>develop</code> ele cria a rede com contas e uma chave privada que pode ser adicionada inclusive em carteiras como o <code>Metamask</code> para o desenvolvimento. Também disponibiliza um console javascript no qual podemos executar os comandos <code>compile</code>, <code>test</code> e <code>migrate</code> e interagir com o contrato implantado.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle develop</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle develop</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Truffle</span> Develop started at http://127.0.0.1:9545/</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Accounts:</span></span>
@@ -1320,9 +1496,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a><span class="ex">Mnemonic:</span> enable grace credit robust flight demand excuse airport replace episode real emerge</span>
 <span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a><span class="ex">\warning</span>  Important <span class="dt">\w</span>arning  : This mnemonic was created for you by Truffle. It is not secure.</span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a><span class="ex">Ensure</span> you do not use it on production blockchains, or else you risk losing funds.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a><span class="ex">Ensure</span> you do not use it on production blockchains, or else you risk losing funds.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Resultado para o comando <code>compile</code>:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> compile</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> compile</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -1341,9 +1517,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Artifacts <span class="ex">written</span> to /run/media/rogerio/BK-RAG-HP1TB/repositorios/Dropbox/dados/rogerio/UTFPR/docencia/disciplinas/2023/DLT-PPGCC17/2023-2/aulas/md/aula-16-pratica-implementacao-patentidea-app/src/projeto-helloworld-truffle/build/contracts</span>
 <span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Compiled <span class="ex">successfully</span> using:</span>
-<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>   <span class="ex">-</span> solc: 0.8.21+commit.d9974bed.Emscripten.clang</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>   <span class="ex">-</span> solc: 0.8.21+commit.d9974bed.Emscripten.clang</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Resultado para o comando <code>test</code>:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> test</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> test</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> network <span class="st">'develop'</span>.</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1373,9 +1549,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb43-28"><a href="#cb43-28" aria-hidden="true" tabindex="-1"></a>        <span class="ex">\checkmark</span> does not set the greeting <span class="er">(</span><span class="ex">321ms</span><span class="kw">)</span></span>
 <span id="cb43-29"><a href="#cb43-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-30"><a href="#cb43-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">612ms</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-31"><a href="#cb43-31" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">612ms</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Resultado para o comando <code>migrate</code>:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> migrate</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> migrate</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -1418,9 +1594,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Total <span class="ex">deployments:</span>   1</span>
 <span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Final <span class="ex">cost:</span>          0.002396980324621773 ETH</span>
 <span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No console é possível interagirmos com o contrato implantado, verificando suas propriedades e instanciando-o e fazendo chamadas a seus métodos.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> Greeter.isDeployed<span class="kw">()</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> Greeter.isDeployed<span class="kw">()</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">true</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> Greeter.address</span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="st">'0xA29E4Ac8fF0eA3ae093D229F21317a9afacefae3'</span></span>
@@ -1460,7 +1636,7 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb45-38"><a href="#cb45-38" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span>
 <span id="cb45-39"><a href="#cb45-39" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> app.greet<span class="kw">()</span></span>
 <span id="cb45-40"><a href="#cb45-40" aria-hidden="true" tabindex="-1"></a><span class="st">'Olá'</span></span>
-<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb45-41"><a href="#cb45-41" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">develop</span><span class="kw">)</span><span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="deploy-de-contratos-em-outras-redes" class="level2" data-number="10.8">
 <h2 data-number="10.8" class="anchored" data-anchor-id="deploy-de-contratos-em-outras-redes"><span class="header-section-number">10.8</span> <em>Deploy</em> de Contratos em outras Redes</h2>
@@ -1468,7 +1644,7 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <p>Estamos utilizando as redes simuladas do <code>ganache</code>, a <code>ganache</code> ou <code>ganache-cli</code> no <em>console</em> e a <code>ganache-ui</code> (AppImage), e a Rede Privada Local, a <code>etherprivate</code>.</p>
 <p>A <code>etherprivate</code> está executando o servidor <code>RPC</code> no endereço <code>http://127.0.0.1:8559</code> com o id <span class="math inline">\(786\)</span>, a rede do <code>ganache</code> via <em>console</em> com os comandos <code>ganache</code> ou <code>ganache-cli</code> no <code>http://127.0.0.1:8545</code> com id <span class="math inline">\(2525\)</span> e a <code>ganache-ui</code> está executando no endereço <code>http://127.0.0.1:7545</code> com id <span class="math inline">\(5777\)</span>.</p>
 <p>As configurações das redes podem ser passadas para o arquivo <code>truffle-config.js</code>:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">networks:</span> {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">networks:</span> {</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="ex">//</span> Useful for testing. The <span class="kw">`</span><span class="ex">development</span><span class="kw">`</span> name is special <span class="at">-</span> truffle uses it by default</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">//</span> if it<span class="st">'s defined here and no other network is specified at the command line.</span></span>
 <span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="st">    // You should run a client (like ganache, geth, or parity) in a separate terminal</span></span>
@@ -1498,13 +1674,13 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a><span class="st">      port: 8545,</span></span>
 <span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a><span class="st">      network_id: "2525",</span></span>
 <span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a><span class="st">    },    </span></span>
-<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="deploy-na-rede-do-ganache-ui" class="level2" data-number="10.9">
 <h2 data-number="10.9" class="anchored" data-anchor-id="deploy-na-rede-do-ganache-ui"><span class="header-section-number">10.9</span> Deploy na Rede do <code>Ganache-UI</code></h2>
 <p>Para executarmos o teste semelhante ao que fizemos com o <code>truffle</code> utilizando uma instância própria do <code>ganache</code>, a execução padrão, vamos executar o teste utilizando uma das redes.</p>
 <p>Para listarmos as redes disponíveis podemos executar o comando <code>truffle networks</code>:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle networks</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle networks</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Network:</span> etherprivate <span class="er">(</span><span class="ex">id:</span> 786<span class="kw">)</span></span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">No</span> contracts deployed.</span>
@@ -1513,9 +1689,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>  <span class="ex">No</span> contracts deployed.</span>
 <span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Network:</span> ganacheui <span class="er">(</span><span class="ex">id:</span> 5777<span class="kw">)</span></span>
-<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">No</span> contracts deployed.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="ex">No</span> contracts deployed.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Vamos iniciar os testes com a rede criada pelo <code>ganache-ui</code>:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> ganacheui</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> ganacheui</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> network <span class="st">'ganacheui'</span>.</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1534,7 +1710,7 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a><span class="st">    at /home/rogerio/.nvm/versions/node/v18.16.0/lib/node_modules/truffle/build/webpack: /packages/deployer/src/deployment.js:330:1</span></span>
 <span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="st">Truffle v5.11.5 (core: 5.11.5)</span></span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="st">Node v18.16.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="st">Node v18.16.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Deu um erro de falha no <em>deploy</em> por <code>invalid opcode</code>. Aparecendo na interface do <code>ganache</code> que o contrato não foi implantado:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1547,11 +1723,11 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <h2 data-number="10.10" class="anchored" data-anchor-id="deploy-na-rede-privada-local"><span class="header-section-number">10.10</span> Deploy na Rede Privada Local</h2>
 <p>Executando a Rede Privada Local (<code>etherprivate</code>) que criamos nas aulas anteriores com o <code>geth</code> e tentando fazer o teste assim como fizemos com a rede do <code>ganache</code>.</p>
 <p>Comando para executar o <code>clef</code>:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> ~/go-ethereum/build/bin/clef <span class="at">--chainid</span> 786 <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--configdir</span> ~/.etherprivate/clef <span class="at">--http</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> ~/go-ethereum/build/bin/clef <span class="at">--chainid</span> 786 <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--configdir</span> ~/.etherprivate/clef <span class="at">--http</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Comando para executar o <code>geth</code>:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> ~/go-ethereum/build/bin/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span>  <span class="at">--identity</span> <span class="st">"RAGEtherPrivate"</span> <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.etherprivate/clef/clef.ipc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> ~/go-ethereum/build/bin/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span>  <span class="at">--identity</span> <span class="st">"RAGEtherPrivate"</span> <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.etherprivate/clef/clef.ipc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Executando o teste com a Rede Privada Local:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> etherprivate</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> etherprivate</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> network <span class="st">'etherprivate'</span>.</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
@@ -1569,9 +1745,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a><span class="st">    at /home/rogerio/.nvm/versions/node/v18.16.0/lib/node_modules/truffle/build/webpack: /packages/deployer/src/deployment.js:330:1</span></span>
 <span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a><span class="st">Truffle v5.11.5 (core: 5.11.5)</span></span>
-<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="st">Node v18.16.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="st">Node v18.16.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Conseguimos mensagens de confirmação no console do <code>clef</code>:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="ex">-------------------------------------------</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Request</span> context:</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">NA</span> <span class="at">-</span><span class="op">&gt;</span> ipc <span class="at">-</span><span class="op">&gt;</span> NA</span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1615,9 +1791,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb52-42"><a href="#cb52-42" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User-Agent:</span> <span class="st">""</span></span>
 <span id="cb52-43"><a href="#cb52-43" aria-hidden="true" tabindex="-1"></a>        <span class="ex">Origin:</span> <span class="st">""</span></span>
 <span id="cb52-44"><a href="#cb52-44" aria-hidden="true" tabindex="-1"></a><span class="ex">Approve?</span> <span class="pp">[</span><span class="ss">y/N</span><span class="pp">]</span>:</span>
-<span id="cb52-45"><a href="#cb52-45" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-45"><a href="#cb52-45" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>E mensagens na janela de execução do <code>geth</code>:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [10-05<span class="kw">|</span><span class="ex">21:31:02.588]</span> Served eth_estimateGas                   conn=127.0.0.1:39264 reqid=12 duration=1.742993ms  err=<span class="st">"invalid opcode: PUSH0"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="ex">WARN</span> [10-05<span class="kw">|</span><span class="ex">21:31:02.588]</span> Served eth_estimateGas                   conn=127.0.0.1:39264 reqid=12 duration=1.742993ms  err=<span class="st">"invalid opcode: PUSH0"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O que explica a mensagem recebida de <em>opcode</em> inválido. Está ocorrendo algum problema de versão entre compilador e conjunto de instruções suportado pela <code>EVM</code> da versão do cliente <code>geth</code>.</p>
 <p>Procurando pelo erro <em>“invalid opcode: PUSH0”</em> encontramos uma possível solução no <a href="https://stackoverflow.com/questions/76328677/remix-returned-error-jsonrpc2-0-errorinvalid-opcode-push0-id24">link</a>.</p>
 <blockquote class="blockquote">
@@ -1667,7 +1843,7 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <section id="deploy-na-rede-do-ganache-cli" class="level2" data-number="10.11">
 <h2 data-number="10.11" class="anchored" data-anchor-id="deploy-na-rede-do-ganache-cli"><span class="header-section-number">10.11</span> Deploy na Rede do <code>Ganache-cli</code></h2>
 <p>Iremos testar o <em>deploy</em> no <em>ganache-cli</em>.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> ganache-cli <span class="at">--chain.chainId</span> 1337 <span class="at">--chain.networkId</span> 2525</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb54"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> ganache-cli <span class="at">--chain.chainId</span> 1337 <span class="at">--chain.networkId</span> 2525</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ganache</span> v7.9.1 <span class="er">(</span><span class="ex">@ganache/cli:</span> 0.10.1, @ganache/core: 0.10.1<span class="kw">)</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Starting</span> RPC server</span>
 <span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1719,9 +1895,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb54-50"><a href="#cb54-50" aria-hidden="true" tabindex="-1"></a><span class="st">Hardfork: shanghai</span></span>
 <span id="cb54-51"><a href="#cb54-51" aria-hidden="true" tabindex="-1"></a><span class="st">Id:       1337</span></span>
 <span id="cb54-52"><a href="#cb54-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-53"><a href="#cb54-53" aria-hidden="true" tabindex="-1"></a><span class="st">RPC Listening on 127.0.0.1:8545</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-53"><a href="#cb54-53" aria-hidden="true" tabindex="-1"></a><span class="st">RPC Listening on 127.0.0.1:8545</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Executando o teste com o <code>ganache-cli</code>:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> ganachecli</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> ganachecli</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> network <span class="st">'ganachecli'</span>.</span>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1751,9 +1927,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb55-28"><a href="#cb55-28" aria-hidden="true" tabindex="-1"></a>        <span class="ex">[ok]</span> does not set the greeting <span class="er">(</span><span class="ex">233ms</span><span class="kw">)</span></span>
 <span id="cb55-29"><a href="#cb55-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-30"><a href="#cb55-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-31"><a href="#cb55-31" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">663ms</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-31"><a href="#cb55-31" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">663ms</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Fazendo o teste as mensagens aparecem no console onde o <code>ganache-cli</code> foi iniciado:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_blockNumber</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_blockNumber</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="ex">net_version</span></span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_accounts</span></span>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_blockNumber</span></span>
@@ -1851,9 +2027,9 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb56-96"><a href="#cb56-96" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_getBlockByNumber</span></span>
 <span id="cb56-97"><a href="#cb56-97" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_call</span></span>
 <span id="cb56-98"><a href="#cb56-98" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_getBlockByNumber</span></span>
-<span id="cb56-99"><a href="#cb56-99" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_estimateGas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb56-99"><a href="#cb56-99" aria-hidden="true" tabindex="-1"></a><span class="ex">eth_estimateGas</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Executando o <em>deploy</em> para o <code>ganache-cli</code>:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle migrate <span class="at">--network</span> ganachecli</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle migrate <span class="at">--network</span> ganachecli</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -1894,7 +2070,7 @@ This is the resulting interactive frontend of the proof of idea DApp.
 <span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a><span class="ex">Summary</span></span>
 <span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a><span class="ex">=======</span></span>
 <span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Total <span class="ex">deployments:</span>   1</span>
-<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Final <span class="ex">cost:</span>          0.002336807524670708 ETH</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Final <span class="ex">cost:</span>          0.002336807524670708 ETH</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No <em>console</em> do <code>ganache-cli</code>:</p>
 <pre><code>eth_blockNumber
 net_version
@@ -1930,7 +2106,7 @@ eth_getBalance</code></pre>
 <section id="interagindo-com-o-contrato-via-truffle-console" class="level2" data-number="10.12">
 <h2 data-number="10.12" class="anchored" data-anchor-id="interagindo-com-o-contrato-via-truffle-console"><span class="header-section-number">10.12</span> Interagindo com o contrato via <code>truffle console</code></h2>
 <p>Interagindo com o contrato via <code>truffle console</code>, no <a href="https://trufflesuite.com/docs/truffle/how-to/contracts/interact-with-your-contracts/">link</a> tem outros comandos:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle console <span class="at">--network</span> ganachecli</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle console <span class="at">--network</span> ganachecli</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">ganachecli</span><span class="kw">)</span><span class="op">&gt;</span> let <span class="ex">accounts</span> = await web3.eth.getAccounts<span class="er">(</span><span class="kw">)</span></span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="ex">undefined</span></span>
 <span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">ganachecli</span><span class="kw">)</span><span class="op">&gt;</span> accounts</span>
@@ -1946,16 +2122,16 @@ eth_getBalance</code></pre>
 <span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>  <span class="er">'0xb88cE5D42AD2685a705eeBda1f1D85750074121e',</span></span>
 <span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>  <span class="er">'0x0d4b20f9d5aA4681F281A318BE33aab77a69B425'</span></span>
 <span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a><span class="bu">]</span></span>
-<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a><span class="er">truffle(ganachecli)&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb60"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">ganachecli</span><span class="kw">)</span><span class="op">&gt;</span> let <span class="ex">newInstance</span> = await Greeter.new<span class="er">(</span><span class="kw">)</span></span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a><span class="er">truffle(ganachecli)&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb60"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">ganachecli</span><span class="kw">)</span><span class="op">&gt;</span> let <span class="ex">newInstance</span> = await Greeter.new<span class="er">(</span><span class="kw">)</span></span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="ex">undefined</span></span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">ganachecli</span><span class="kw">)</span><span class="op">&gt;</span> newInstance.address</span>
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="st">'0x1B5834c58E81bb9c8E38607469f7753b7ED2642B'</span></span>
 <span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">ganachecli</span><span class="kw">)</span><span class="op">&gt;</span> newInstance.greet.call<span class="kw">()</span></span>
 <span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="st">'Hello, World!'</span></span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">ganachecli</span><span class="kw">)</span><span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="ex">truffle</span><span class="er">(</span><span class="ex">ganachecli</span><span class="kw">)</span><span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A versão <code>ganache</code> e <code>ganache-cli</code> possibilitam vermos os resultados no <em>console</em>, mas vamos tentar gerar um <code>App.image</code> da versão atual.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone Ganache repository</span></span>
 <span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/trufflesuite/ganache.git</span>
@@ -1981,7 +2157,7 @@ eth_getBalance</code></pre>
 <span id="cb61-24"><a href="#cb61-24" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x out/Ganache-<span class="pp">*</span>.AppImage</span>
 <span id="cb61-25"><a href="#cb61-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb61-26"><a href="#cb61-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Run Ganache AppImage</span></span>
-<span id="cb61-27"><a href="#cb61-27" aria-hidden="true" tabindex="-1"></a><span class="ex">./out/Ganache-*.AppImage</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb61-27"><a href="#cb61-27" aria-hidden="true" tabindex="-1"></a><span class="ex">./out/Ganache-*.AppImage</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No Manjaro não funcionou.</p>
 </section>
 <section id="alterando-a-versão-da-evm-alvo" class="level2" data-number="10.13">
@@ -1994,16 +2170,16 @@ eth_getBalance</code></pre>
 </figure>
 </div>
 <p>Alteramos no arquivo <code>truffle-config.js</code> as configurações do <code>solc</code>:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> Configure your compilers</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb62"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="ex">//</span> Configure your compilers</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">compilers:</span> {</span>
 <span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">solc:</span> {</span>
 <span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>      <span class="ex">version:</span> <span class="st">"0.8.21"</span>,      // Fetch exact version from sol<span class="op">&gt;</span></span>
 <span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>      <span class="ex">//</span> evmVersion: <span class="st">"shanghai"</span></span>
 <span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">evmVersion:</span> <span class="st">"london"</span></span>
 <span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    <span class="er">}</span></span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="er">}</span><span class="ex">,</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="er">}</span><span class="ex">,</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Executando o teste para o <code>ganache-ui</code>:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> ganacheui</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> ganacheui</span>
 <span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> network <span class="st">'ganacheui'</span>.</span>
 <span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2042,9 +2218,9 @@ eth_getBalance</code></pre>
 <span id="cb63-37"><a href="#cb63-37" aria-hidden="true" tabindex="-1"></a>        <span class="ex">[ok]</span> does not set the greeting <span class="er">(</span><span class="ex">186ms</span><span class="kw">)</span></span>
 <span id="cb63-38"><a href="#cb63-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb63-39"><a href="#cb63-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-40"><a href="#cb63-40" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">474ms</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb63-40"><a href="#cb63-40" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">474ms</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Fazendo o <em>deploy</em> no <code>ganache-ui</code>:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle migrate <span class="at">--network</span> ganacheui</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb64"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle migrate <span class="at">--network</span> ganacheui</span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -2085,7 +2261,7 @@ eth_getBalance</code></pre>
 <span id="cb64-39"><a href="#cb64-39" aria-hidden="true" tabindex="-1"></a><span class="ex">Summary</span></span>
 <span id="cb64-40"><a href="#cb64-40" aria-hidden="true" tabindex="-1"></a><span class="ex">=======</span></span>
 <span id="cb64-41"><a href="#cb64-41" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Total <span class="ex">deployments:</span>   1</span>
-<span id="cb64-42"><a href="#cb64-42" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Final <span class="ex">cost:</span>          0.002337151018614538 ETH</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb64-42"><a href="#cb64-42" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Final <span class="ex">cost:</span>          0.002337151018614538 ETH</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Uma transação de <code>Contract Creation</code> será criada na lista de transações do <code>ganache-ui</code>.</p>
 <!--
 ![_Contract Creation_](figuras/ganache-ui-contract-creation-001.png){width=75%}
@@ -2119,7 +2295,7 @@ eth_getBalance</code></pre>
 <section id="continuando-o-teste-na-rede-privada-local" class="level2" data-number="10.14">
 <h2 data-number="10.14" class="anchored" data-anchor-id="continuando-o-teste-na-rede-privada-local"><span class="header-section-number">10.14</span> Continuando o Teste na Rede Privada Local</h2>
 <p>Voltando ao teste para o <code>etherprivate</code>:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> etherprivate</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle test <span class="at">--network</span> etherprivate</span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Using</span> network <span class="st">'etherprivate'</span>.</span>
 <span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2158,9 +2334,9 @@ eth_getBalance</code></pre>
 <span id="cb65-37"><a href="#cb65-37" aria-hidden="true" tabindex="-1"></a>        <span class="ex">[ok]</span> does not set the greeting <span class="er">(</span><span class="ex">350ms</span><span class="kw">)</span></span>
 <span id="cb65-38"><a href="#cb65-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb65-39"><a href="#cb65-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-40"><a href="#cb65-40" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">1m</span><span class="kw">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb65-40"><a href="#cb65-40" aria-hidden="true" tabindex="-1"></a>  <span class="ex">7</span> passing <span class="er">(</span><span class="ex">1m</span><span class="kw">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Console do <code>clef</code>:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> ~/go-ethereum/build/bin/clef <span class="at">--chainid</span> 786 <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--configdir</span> ~/.etherprivate/clef <span class="at">--http</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> ~/go-ethereum/build/bin/clef <span class="at">--chainid</span> 786 <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--configdir</span> ~/.etherprivate/clef <span class="at">--http</span></span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING!</span></span>
 <span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -3080,20 +3256,20 @@ eth_getBalance</code></pre>
 <span id="cb66-918"><a href="#cb66-918" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s"</span><span class="ex">:</span> <span class="st">"0x6d9c18462013e322bfd4774c2fd459d23cb2bf29ae1d3b1f17b2841a3c104c7d"</span>,</span>
 <span id="cb66-919"><a href="#cb66-919" aria-hidden="true" tabindex="-1"></a>    <span class="st">"to"</span><span class="ex">:</span> <span class="st">"0x05733407e1078d4e9d50adc48f04a05d3269f7d2"</span>,</span>
 <span id="cb66-920"><a href="#cb66-920" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hash"</span><span class="ex">:</span> <span class="st">"0x80fefda3c78497187449c561c54884b0925ae5cd9bb66712e1e8c4453f7fc283"</span></span>
-<span id="cb66-921"><a href="#cb66-921" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb66-921"><a href="#cb66-921" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>As notificações de contratos submetidos para criação aparecem no <em>console</em> do <code>geth</code>:</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-10<span class="kw">|</span><span class="ex">10:09:41.718]</span> Submitted contract creation              hash=0xe15b0e773f71256345ef5089bd6ba5c190386d7162dcebcf4d25dcc3ab37ec63 from=0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 nonce=17 contract=0x2Ec04170e7b52d40D494F149Bd5E29e0Bf0c8Dd8 value=0</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-10<span class="kw">|</span><span class="ex">10:09:41.718]</span> Submitted contract creation              hash=0xe15b0e773f71256345ef5089bd6ba5c190386d7162dcebcf4d25dcc3ab37ec63 from=0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 nonce=17 contract=0x2Ec04170e7b52d40D494F149Bd5E29e0Bf0c8Dd8 value=0</span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
 <span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-10<span class="kw">|</span><span class="ex">10:16:35.223]</span> Submitted contract creation              hash=0x6cff3c9a22e589bf23806e5d828afa8c40ec6e4ca3b6f685c70ef49424e11109 from=0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 nonce=18 contract=0x0D11EFB65b7E3BFE2fb3f8bCADbD34115aE7c805 value=0</span>
 <span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-10<span class="kw">|</span><span class="ex">10:17:09.792]</span> Submitted contract creation              hash=0x851f13f7ab055356b5f22e012a9c7b947fcf941e44857ae3ea041fa05b4f2408 from=0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 nonce=19 contract=0x83fd6403127A6b3F329Afd854cD47C277276fcBc value=0</span>
 <span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-10<span class="kw">|</span><span class="ex">10:17:45.671]</span> Submitted transaction                    hash=0x3b20dda6c2078014368b4043cd431a856eaa1f35a771827edb4580b652a7d1b8 from=0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 nonce=20 recipient=0x83fd6403127A6b3F329Afd854cD47C277276fcBc value=0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-10<span class="kw">|</span><span class="ex">10:17:45.671]</span> Submitted transaction                    hash=0x3b20dda6c2078014368b4043cd431a856eaa1f35a771827edb4580b652a7d1b8 from=0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 nonce=20 recipient=0x83fd6403127A6b3F329Afd854cD47C277276fcBc value=0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="deploy-na-rede-privada-local-cont." class="level2" data-number="10.15">
 <h2 data-number="10.15" class="anchored" data-anchor-id="deploy-na-rede-privada-local-cont."><span class="header-section-number">10.15</span> Deploy na Rede Privada Local (cont.)</h2>
 <p>Fazer a implantação na <code>etherprivate</code>:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle migrate <span class="at">--network</span> etherprivate</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> truffle migrate <span class="at">--network</span> etherprivate</span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Compiling</span> your contracts...</span>
 <span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="ex">===========================</span></span>
@@ -3143,9 +3319,9 @@ eth_getBalance</code></pre>
 <span id="cb68-48"><a href="#cb68-48" aria-hidden="true" tabindex="-1"></a><span class="ex">Summary</span></span>
 <span id="cb68-49"><a href="#cb68-49" aria-hidden="true" tabindex="-1"></a><span class="ex">=======</span></span>
 <span id="cb68-50"><a href="#cb68-50" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Total <span class="ex">deployments:</span>   1</span>
-<span id="cb68-51"><a href="#cb68-51" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Final <span class="ex">cost:</span>          0.000528209 ETH</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb68-51"><a href="#cb68-51" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> Final <span class="ex">cost:</span>          0.000528209 ETH</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No <em>console</em> onde o <code>clef</code> está sendo executado aparecem as solicitações de aprovações e solicitações de senha para a conta principal.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> ~/go-ethereum/build/bin/clef <span class="at">--chainid</span> 786 <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--configdir</span> ~/.etherprivate/clef <span class="at">--http</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> ~/go-ethereum/build/bin/clef <span class="at">--chainid</span> 786 <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--configdir</span> ~/.etherprivate/clef <span class="at">--http</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING!</span></span>
 <span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -3388,14 +3564,14 @@ eth_getBalance</code></pre>
 <span id="cb69-241"><a href="#cb69-241" aria-hidden="true" tabindex="-1"></a>    <span class="st">"s"</span><span class="ex">:</span> <span class="st">"0x11953128d72e6bc7163eea524c0c9f7749e8ec9c5cfc97154524451d0b29f04"</span>,</span>
 <span id="cb69-242"><a href="#cb69-242" aria-hidden="true" tabindex="-1"></a>    <span class="st">"to"</span><span class="ex">:</span> null,</span>
 <span id="cb69-243"><a href="#cb69-243" aria-hidden="true" tabindex="-1"></a>    <span class="st">"hash"</span><span class="ex">:</span> <span class="st">"0xe32f1b83d45971309bb07e38a118561c33e51abbbc0667a51326368a79930e3b"</span></span>
-<span id="cb69-244"><a href="#cb69-244" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb69-244"><a href="#cb69-244" aria-hidden="true" tabindex="-1"></a>  <span class="kw">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O <em>console</em> de execução do <code>geth</code> no caso do <em>deploy</em> aparece uma única submissão de criação do contrato.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> ~/go-ethereum/build/bin/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span>  <span class="at">--identity</span> <span class="st">"RAGEtherPrivate"</span> <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.etherprivate/clef/clef.ipc</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[.etherprivate]$</span> ~/go-ethereum/build/bin/geth <span class="at">--networkid</span> 786 <span class="at">--datadir</span> ~/.etherprivate/ <span class="at">--syncmode</span> full <span class="at">--allow-insecure-unlock</span>  <span class="at">--identity</span> <span class="st">"RAGEtherPrivate"</span> <span class="at">--http</span> <span class="at">--http.addr</span> 127.0.0.1 <span class="at">--http.port</span> 8559 <span class="at">--http.api</span> <span class="st">"eth,net,web3,personal,engine,admin,debug"</span> <span class="at">--keystore</span> ~/.etherprivate/keystore <span class="at">--authrpc.addr</span> localhost <span class="at">--authrpc.port</span> 8551 <span class="at">--authrpc.vhosts</span> localhost <span class="at">--authrpc.jwtsecret</span> ~/.etherprivate/geth/jwtsecret <span class="at">--nodiscover</span> <span class="at">--maxpeers</span> 15 <span class="at">--miner.etherbase</span><span class="op">=</span>0x2db017e44b03b37755a4b15e14cd799f83de4c13 <span class="at">--signer</span><span class="op">=</span>/home/rogerio/.etherprivate/clef/clef.ipc</span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
 <span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="ex">INFO</span> [10-10<span class="kw">|</span><span class="ex">10:23:47.211]</span> Submitted contract creation              hash=0xe32f1b83d45971309bb07e38a118561c33e51abbbc0667a51326368a79930e3b from=0x2db017E44b03B37755A4b15e14Cd799f83DE4c13 nonce=27 contract=0x92aB300b4C587Fb07d404f8C4263213b65c5CF45 value=0</span>
-<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>No <em>console</em> do <code>truffle</code> é possível interagir com o contrato criado.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>[projeto<span class="op">-</span>helloworld<span class="op">-</span>truffle]$ truffle <span class="bu">console</span> <span class="op">--</span>network etherprivate</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="sourceCode javascript code-with-copy"><code class="sourceCode javascript"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>[projeto<span class="op">-</span>helloworld<span class="op">-</span>truffle]$ truffle <span class="bu">console</span> <span class="op">--</span>network etherprivate</span>
 <span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">truffle</span>(etherprivate)<span class="op">&gt;</span> Greeter</span>
 <span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>Greeter</span>
 <span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -3405,7 +3581,7 @@ eth_getBalance</code></pre>
 <span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a><span class="st">'0xC81A295b1266ba3b9988d9B052e4df7646CCC6bc'</span></span>
 <span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a><span class="fu">truffle</span>(etherprivate)<span class="op">&gt;</span> newInstance<span class="op">.</span><span class="at">greet</span><span class="op">.</span><span class="fu">call</span>()</span>
 <span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="st">'Hello, World!'</span></span>
-<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="fu">truffle</span>(etherprivate)<span class="op">&gt;</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="fu">truffle</span>(etherprivate)<span class="op">&gt;</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <!--
 https://ethereum.org/pt/developers/tutorials/calling-a-smart-contract-from-javascript/
 
@@ -3427,7 +3603,7 @@ https://medium.com/coinmonks/delegatecall-calling-another-contract-function-in-s
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="bigger120">Leitura Recomendada</span>
+<span class="screen-reader-only">Important</span><span class="bigger120">Leitura Recomendada</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -3452,380 +3628,256 @@ https://medium.com/coinmonks/delegatecall-calling-another-contract-function-in-s
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
     }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-    let newTheme = '';
-    if(darkModeDefault) {
-      newTheme = isAlternate ? baseTheme : alternateTheme;
-    } else {
-      newTheme = isAlternate ? alternateTheme : baseTheme;
-    }
-    const changeGiscusTheme = () => {
-      // From: https://github.com/giscus/giscus/issues/336
-      const sendMessage = (message) => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (!iframe) return;
-        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-      }
-      sendMessage({
-        setConfig: {
-          theme: newTheme
-        }
-      });
-    }
-    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-    if (isGiscussLoaded) {
-      changeGiscusTheme();
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
       return false;
     }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  const darkModeDefault = false;
-  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-    toggleGiscusIfUsed(toAlternate, darkModeDefault);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/tecnologias-blockchain");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -3833,185 +3885,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../aula-09-pratica-ethereum-introducao-ao-web3/aula-09-pratica-ethereum-introducao-ao-web3.html" class="pagination-link" aria-label="Prática sobre Ferramentas de Desenvolvimento e Frameworks Ethereum: Introdução ao Web3">

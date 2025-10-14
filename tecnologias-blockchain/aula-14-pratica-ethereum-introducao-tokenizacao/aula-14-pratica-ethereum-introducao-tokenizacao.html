@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rogério Aparecido Gonçalves (rogerioag@utfpr.edu.br)">
-<meta name="description" content="<p>Este livro irá te ensinar alguns conteúdos sobre Tecnologias Blockchain e suas Aplicações.</p>">
 
-<title>Tecnologias Blockchain e suas Aplicações</title>
+<title>14&nbsp; Prática sobre Tokenização: Introdução à Tokenização – Tecnologias Blockchain e suas Aplicações</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,33 +20,52 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" rel="next">
-<link href="./images/logo.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-888a994573c04143e2a6089a1c6b7523.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-9c15c3a5755bd8aa5242770252b660f1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-888a994573c04143e2a6089a1c6b7523.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../aula-13-pratica-implementacao-patentidea-app/aula-13-pratica-implementacao-patentidea-app.html" rel="prev">
+<link href="../images/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-707d8167ce6003fca903bfe2be84ab7f.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-888a994573c04143e2a6089a1c6b7523.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-9c15c3a5755bd8aa5242770252b660f1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-888a994573c04143e2a6089a1c6b7523.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -251,7 +268,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Bem-vindo</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../aula-14-pratica-ethereum-introducao-tokenizacao/aula-14-pratica-ethereum-introducao-tokenizacao.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Prática sobre Tokenização: <em>Introdução à Tokenização</em></span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -265,10 +282,10 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="./index.html" class="sidebar-logo-link">
+      <a href="../index.html" class="sidebar-logo-link">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Tecnologias Blockchain e suas Aplicações</a> 
+      <a href="../">Tecnologias Blockchain e suas Aplicações</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/rogerioag/tecnologias-blockchain" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
@@ -307,91 +324,91 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Bem-vindo</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-02-visao-geral-ethereum/aula-02-visao-geral-ethereum.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-02-visao-geral-ethereum/aula-02-visao-geral-ethereum.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aula 02 - Ethereum</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-03-pratica-ethereum-virtual-machine/aula-03-pratica-ethereum-virtual-machine.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Prática: Explorando a <em>Ethereum Virtual Machine (EVM)</em></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-04-pratica-instalando-cliente-ethereum/aula-04-pratica-instalando-cliente-ethereum.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Prática: Instalando o Cliente Ethereum</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-05-pratica-rede-ethereum-privada-ethash/aula-05-pratica-rede-ethereum-privada-ethash.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Ethash</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-06-pratica-rede-ethereum-privada-clique/aula-06-pratica-rede-ethereum-privada-clique.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-06-pratica-rede-ethereum-privada-clique/aula-06-pratica-rede-ethereum-privada-clique.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Prática: Criando uma Rede Ethereum Privada: <code>Clique</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-07-pratica-simulador-ganache-metamask/aula-07-pratica-simulador-ganache-metamask.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Prática: Simulando uma Rede Ethereum Local: Ganache e o Metamask</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-08-pratica-estudo-sobre-solidity-solc/aula-08-pratica-estudo-sobre-solidity-solc.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-08-pratica-estudo-sobre-solidity-solc/aula-08-pratica-estudo-sobre-solidity-solc.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em>: Estudo sobre <code>Solidity</code> e <code>solc</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-09-pratica-ethereum-introducao-ao-web3/aula-09-pratica-ethereum-introducao-ao-web3.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-09-pratica-ethereum-introducao-ao-web3/aula-09-pratica-ethereum-introducao-ao-web3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks Ethereum: Introdução ao Web3</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-10-pratica-ethereum-test-and-deploy-truffle/aula-10-pratica-ethereum-test-and-deploy-truffle.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-10-pratica-ethereum-test-and-deploy-truffle/aula-10-pratica-ethereum-test-and-deploy-truffle.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e <em>Frameworks</em> Ethereum: Introdução aos Testes e <em>Deploy</em> com <code>Truffle</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-11-pratica-instalando-explorer-local/aula-11-pratica-instalando-explorer-local.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-11-pratica-instalando-explorer-local/aula-11-pratica-instalando-explorer-local.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Prática sobre Instalação de <em>Block Explorers</em> Locais para as Redes de Testes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-12-pratica-ethereum-test-and-deploy-hardhat/aula-12-pratica-ethereum-test-and-deploy-hardhat.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-12-pratica-ethereum-test-and-deploy-hardhat/aula-12-pratica-ethereum-test-and-deploy-hardhat.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks Ethereum: Testes e <em>Deploy</em> de Contratos com <code>Hardhat</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-13-pratica-implementacao-patentidea-app/aula-13-pratica-implementacao-patentidea-app.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-13-pratica-implementacao-patentidea-app/aula-13-pratica-implementacao-patentidea-app.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em>: <em>Implementação de Aplicações</em></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./aula-14-pratica-ethereum-introducao-tokenizacao/aula-14-pratica-ethereum-introducao-tokenizacao.html" class="sidebar-item-text sidebar-link">
+  <a href="../aula-14-pratica-ethereum-introducao-tokenizacao/aula-14-pratica-ethereum-introducao-tokenizacao.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Prática sobre Tokenização: <em>Introdução à Tokenização</em></span></span></a>
   </div>
 </li>
@@ -405,10 +422,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Sumário</h2>
    
   <ul>
-  <li><a href="#bem-vindo" id="toc-bem-vindo" class="nav-link active" data-scroll-target="#bem-vindo">Bem-vindo</a></li>
-  <li><a href="#licença" id="toc-licença" class="nav-link" data-scroll-target="#licença">Licença</a></li>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">14.1</span> Introdução</a></li>
+  <li><a href="#relatório" id="toc-relatório" class="nav-link" data-scroll-target="#relatório"><span class="header-section-number">15</span> Relatório</a>
+  <ul class="collapse">
+  <li><a href="#considerações-finais" id="toc-considerações-finais" class="nav-link" data-scroll-target="#considerações-finais"><span class="header-section-number">15.1</span> Considerações Finais</a></li>
+  <li><a href="#leitura-recomendada" id="toc-leitura-recomendada" class="nav-link" data-scroll-target="#leitura-recomendada"><span class="header-section-number">15.2</span> Leitura Recomendada</a></li>
+  </ul></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">16</span> <em>Word Cloud</em></a>
+  <ul class="collapse">
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">16.1</span> Referências</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-14-pratica-ethereum-introducao-tokenizacao/aula-14-pratica-ethereum-introducao-tokenizacao.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -416,47 +441,217 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Tecnologias Blockchain e suas Aplicações</h1>
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Prática sobre Tokenização: <em>Introdução à Tokenização</em></span></h1>
+<p class="subtitle lead"><em>Introdução à Tokenização</em></p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Autor</div>
-    <div class="quarto-title-meta-contents">
-             <p>Rogério Aparecido Gonçalves (rogerioag@utfpr.edu.br) </p>
-          </div>
-  </div>
     
   
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Resumo</div>
+    A proposta desta prática é explorarmos o desenvolvimento de <em>Tokens</em> e o suporte à Tokenização que existe para a Rede <code>Ethereum</code>. O objetivo é desenvolver o projeto exemplo de um dos Capítulos e escrever um relatório sobre o desenvolvimento de <em>Tokens</em> para <em>Ethereum</em>, que possa ser reproduzido por outras pessoas. A ideia é que os leitores consigam entender <em>Tokenização</em> e como <em>tokens</em> podem ser implementados.
+  </div>
+</div>
 
 
 </header>
 
 
-
-<section id="bem-vindo" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="bem-vindo">Bem-vindo</h2><p><img src="images/cover.png" title="Tecnologias Blockchain e suas Aplicações" class="quarto-cover-image nolightbox img-fluid"></p>
-<p>Este livro reune o material das práticas da disciplina <strong>PPGCC17 - Tópicos em Redes de Computadores e Cibersegurança</strong>, no tema <strong>Tecnologias Blockchain</strong>.</p>
+<section id="introdução" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">14.1</span> Introdução</h2>
+<p><em>Tokens</em> são uma abstração que representa propriedade. Nestes casos o <em>token</em>, ou prova de propriedade, é representado por um título ou escritura. Também pode fornecer o direito de acesso a algo como software ou filme. Aqui os tokens podem ser representados por uma chave de licença ou um <em>ticket</em> físico. Como a propriedade pode mudar com frequência, rastrear essas alterações em uma plataforma criptograficamente segura faz muito sentido.</p>
+<p>A tokenização converte um ativo em um token digital em um blockchain. É um processo de conversão dos direitos de propriedade de um ativo do mundo real em um <em>token</em> criptográfico/digital em um <em>blockchain</em>.</p>
+<p>Para auxiliar os desenvolvedores na criação de tokens, a comunidade <code>Ethereum</code> desenvolveu vários tipos diferentes de padrões de token por meio do processo <a href="https://eips.ethereum.org/erc"><em>Ethereum Improvement Proposal (EIP)</em></a>. Vamos dar uma olhada em dois desses padrões, <a href="https://eips.ethereum.org/EIPS/eip-20"><code>ERC-20</code></a> e <a href="https://eips.ethereum.org/EIPS/eip-721"><code>ERC-721</code></a>.</p>
+<p>Utilizem como base o <a href="https://moodle.utfpr.edu.br/mod/resource/view.php?id=1565913">Capítulo 18: Tokenização</a> <span class="citation" data-cites="178948620180101">(<a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#ref-178948620180101" role="doc-biblioref"><strong>178948620180101?</strong></a>)</span> e o <a href="https://moodle.utfpr.edu.br/mod/resource/view.php?id=1565912">Capítulo 10: Tokens</a> <span class="citation" data-cites="antonopoulos2018mastering">(<a href="../aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html#ref-antonopoulos2018mastering" role="doc-biblioref"><strong>antonopoulos2018mastering?</strong></a>)</span>.</p>
+</section>
+<section id="relatório" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> Relatório</h1>
+<p>O relatório deve apresentar uma descrição sobre a atividade, desenvolvimento e ferramentas.</p>
 <!--
-::: {.callout-note appearance="simple"}
-This book was originally created using [bookdown](https://bookdown.org) and published at <https://rstudio-education.github.io/hopr/>. This site is a port of the original book source to the [Quarto](https://quarto.org) publishing system in order to provide an example of it's use.
-:::
+## Tipos de Tokens
+
+Fungible tokens 
+Indistinguishable from other tokens of the same type
+Interchangeable
+Divisible between multiple parties
+
+Non-fungible tokens 
+Unique
+Non-interchangeable
+Indivisible
+
+## Stable Tokens
+
+Stable token value is pegged to another asset's value.
+Types of stable token include:
+Fiat collateralized 
+Commodity collateralized 
+Crypto collateralized 
+Algorithmically stable
+
+
+## Tokens Offerings
+
+Initial Coin Offerings (ICOs)
+Security Token Offerings  (STOs)
+Initial Exchange Offerings (IEOs)
+Equity Token Offerings (ETOs)
+Decentralized autonomous Initial Coin Offerings (DAICOs)
+
+## Process of tokenization
+
+Onboard an investor. 
+Asset is scrutinized and audited. 
+Security Token Offering made. 
+Physical asset is placed with a custodian  
+Derivative token, representing the asset, released
+Trading on secondary markets begins
+
+
+## Padrões de Implementação
+
+ERC-20: ERC-20 is the most famous token standard on the Ethereum platform. 
+Many token offerings are based on ERC-20 and there are wallets available, such as MetaMask, that support ERC-20 tokens. 
+
+ERC-223
+ERC-777
+ERC-721
+ERC-884
+ERC-1400
+ERC-1404
+
+ERC-20
+
+The ERC-20 standard is used when creating a fungible, or mutually interchangeable
+token. These tokens would be ideal replacements for things like rewards points from
+retailers, miles from airlines, or a currency. All tokens created from an ERC-20 contract are considered to have the same value and are effectively indistinguishable
+from each other. Because all the tokens are considered identical, the primary respon‐
+sibility of an ERC-20 contract is tracking balances.
+This standard has several optional fields such as name and symbol, but requires the
+implementation of the following:
+`totalSupply()`
+      Returns the number of tokens in circulation.
+
+`balanceOf(address owner)`
+      Returns the balance for the provided address.
+
+`transfer(address to, uint value)`
+      Returns true or false based on the success or failure of the transfer.
+
+`transferFrom(address from, address to, uint value)`
+      Returns true or false based on the success or failure of the transfer. In this case the transfer is initiated by another address that is not the owner, and must have been previously approved to spend these funds on the owner’s behalf.
+
+`approve(address spender, uint value)`
+      Returns true or false if successful. The method is used to set an amount that another address can spend on the owner’s behalf.
+
+`allowance(address owner, address spender)`
+      Returns the amount still available for the spender to withdraw.
+
+If you ever find yourself working on an application that requires an ERC-20 implementation, you can create an ERC-20 token by defining these functions; however, we recommend using the [_OpenZeppelin contracts_](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts/token/ERC20) as a basis to get started. These contracts have all been thoroughly audited and well documented, making them a great starting place for crafting your own token.
+ERC-20 tokens have been used for many different purposes, but one that has likely caught your attention is the Initial Coin Offering (ICO). In an ICO, an organization will sell tokens as a means to raise funds. In some regards this is similar to what [Kickstarter](https://www.kickstarter.com/) does for organizations or new projects but in a decentralized way.
+If the token is expected to gain in value based on the performance of the issuing organization, the token may be considered a security. If that is the case, there are likely going to be some regulatory requirements that need to be considered when developing these smart contracts. For tokens that may fall into this category, there is a [draft proposal](https://eips.ethereum.org/EIPS/eip-1462) in the works that may help keep the token in compliance.
+For real-world examples, you can check out a list of deployed tokens on [Etherscan](https://etherscan.io/tokens).
+
+Now let’s talk about tokens that are not mutually interchangeable or, in other words, non-fungible.
+
+## Non-Fungible Token (ERC-721)
+
+ERC-721 provides the standard for non-fungible tokens. These tokens are—or at least have the ability to become—different from each other. Because these tokens are distinct, the contract cannot simply track a balance of tokens but must track each individual token that it issues.
+
+Like the ERC-20, ERC-721 contracts may optionally implement fields for name and
+symbol, and they can also optionally include a token URI (Uniform Resource Identifier), but they must implement the following:
+
+`balanceOf(address owner)`
+      Returns the number of non-fungible tokens (NFT) for the passed-in owner.
+
+`ownerOf(uint256 tokenId)`
+      Returns the address of the owner for that particular token ID. Remember, every token is unique and the contract has to maintain a data structure that tracks ownership.
+
+`setTransferFrom(address from, address to, uint256 tokenId, bytes data)`
+      Transfers ownership of the token. In a case where the to address is a contract, it will subsequently invoke the onERC721Received function to ensure it can accept the token.
+
+`setTransferFrom(address from, address to, uint256 tokenId)`
+      Same as the previous function, but sets data to an empty string. This also shows that the Solidity programming language supports method overloading, or two methods with the same name but different parameters.
+
+`transferFrom(address from, address to, uint256 tokenId)`
+      Transfers ownership of the token. Unlike the safeTransferFrom methods, it does not check to make sure the receiver is capable of receiving an ERC-721 token. If the receiver is not able to accept ERC-721 tokens, and this method is used, it may be permanently lost. If there’s any doubt, use the safeTransferFrom method instead.
+
+`approve(address approved, uint256 tokenId)`
+      Allows another address to transfer the token on behalf of the owner. This is much like the approve method for ERC-20, but instead of an amount, we specify which token the approved address can transfer.
+
+`setApprovalForAll(address operator, bool approve)`
+      When approve is set to true, it approves all tokens from the contract owned by the current owner (message sender) for the address of the operator. When approve is set to false, it removes access from all tokens owned by the current owner (message sender) for the operator address.
+
+`getApproved(uint256 tokenId)`
+      Returns the approved address for the provided token ID. Just like ERC-20, OpenZeppelin has created contracts that can be used as the basis for your own implementation of [`ERC-721`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol).
+
+
+For an example of how ERC-721s have been used, let’s take a look at CryptoKitties. CryptoKitties is a game that allows users to collect virtual cats, where each cat has a unique set of cattributes, which are represented by a 256-bit genome. Users then breed their cats to generate new ones, which inherit a mix of the traits from the parent genomes.
+
+This may sound silly, but as of this writing, people have spent over $27 million USD buying these kitties, with a single kitty going for over $172,625 USD. If you’d like to see current figures, check out the Kitty Sales website.
+ERC-721 tokens can represent just about any unique item that can be transferred.
+This makes it an ideal token for managing digital collectables or license keys, or even for a registry of physical real-world goods.
+Speaking of real-world goods, let’s jump into our next major use case, the supply chain.
+
+## Desenvolvendo um Token   
+
+
+<https://github.com/ethereumbook/ethereumbook/blob/develop/10tokens.asciidoc#tokens>
+
+
+
+https://www.luiztools.com.br/post/como-criar-um-token-erc20-em-solidity/
+
+https://www.luiztools.com.br/post/como-criar-um-token-erc20-em-solidity-2/
+
+https://www.luiztools.com.br/post/como-criar-um-token-erc20-em-solidity-3/
+
+https://www.luiztools.com.br/post/como-criar-uma-nova-criptomoeda-usando-solidity-typescript-hardhat/
 
 -->
+<section id="considerações-finais" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="considerações-finais"><span class="header-section-number">15.1</span> Considerações Finais</h2>
+<p>Nesta prática desenvolvemos o conteúdo sobre <em>Tokenização</em>.</p>
 </section>
-<section id="licença" class="level2">
-<h2 class="anchored" data-anchor-id="licença">Licença</h2>
-<p>Este material é <strong>livre para o uso</strong> e está sobre a licença <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivs 4.0</a>.</p>
-<!--
-If you'd like a **physical copy** of the book, you can order it from [amazon](https://www.amazon.com/Hands-Programming-Write-Functions-Simulations/dp/1449359019); it was published by O'Reilly in July 2014. If you'd like to give back, please consider reporting a typo or leaving a pull request at [github.com/rstudio-education/hopr](https://github.com/rstudio-education/hopr).-->
+<section id="leitura-recomendada" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="leitura-recomendada"><span class="header-section-number">15.2</span> Leitura Recomendada</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span><span class="bigger120">Leitura Recomendada</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Capítulo 18: Tokenização</strong></p>
+<p><strong>Livro</strong>: <a href="https://moodle.utfpr.edu.br/mod/resource/view.php?id=1565913">IMRAN BASHIR. Mastering Blockchain : Distributed Ledger Technology, Decentralization, and Smart Contracts Explained, 3nd Edition.</a></p>
+<p><strong>Capítulo 10: Tokens</strong></p>
+<p><strong>Livro</strong>: <a href="https://moodle.utfpr.edu.br/mod/resource/view.php?id=1565912">Antonopoulos, A. M., and G. Wood. 2018. Mastering Ethereum: Building Smart Contracts and DApps. O’Reilly Media, Incorporated.</a></p>
+</div>
+</div>
+</section>
+</section>
+<section id="word-cloud" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> <em>Word Cloud</em></h1>
+<p><img src="figuras/aula-14-pratica-ethereum-introducao-a-tokenizacao.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
+<section id="referências" class="level2 fragile allowframebreaks" data-number="16.1">
+<h2 class="fragile allowframebreaks anchored" data-number="16.1" data-anchor-id="referências"><span class="header-section-number">16.1</span> Referências</h2>
+<div id="refs" role="list" style="display: none">
+
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -875,11 +1070,11 @@ If you'd like a **physical copy** of the book, you can order it from [amazon](ht
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../aula-13-pratica-implementacao-patentidea-app/aula-13-pratica-implementacao-patentidea-app.html" class="pagination-link" aria-label="Prática sobre Ferramentas de Desenvolvimento e Frameworks _Ethereum_: _Implementação de Aplicações_">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Prática sobre Ferramentas de Desenvolvimento e Frameworks <em>Ethereum</em>: <em>Implementação de Aplicações</em></span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./aula-01-introducao-visao-geral/aula-01-introducao-visao-geral.html" class="pagination-link" aria-label="Introdução às Tecnologias Blockchain">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução às Tecnologias Blockchain</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -887,4 +1082,4 @@ If you'd like a **physical copy** of the book, you can order it from [amazon](ht
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/tecnologias-blockchain/edit/master/aula-14-pratica-ethereum-introducao-tokenizacao/aula-14-pratica-ethereum-introducao-tokenizacao.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
