@@ -477,6 +477,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Prática sobre Tokenização: <em>Introdução à Tokenização</em></span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-15-pratica-hyperledger-besu/aula-15-pratica-hyperledger-besu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Prática sobre Hyperledger: <em>Introdução ao Besu</em></span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -1202,6 +1208,7 @@ Owner declaration after external in the function definition:
 </section>
 <section id="utilizando-o-openzeppelin" class="level2" data-number="10.5">
 <h2 data-number="10.5" class="anchored" data-anchor-id="utilizando-o-openzeppelin"><span class="header-section-number">10.5</span> Utilizando o <code>OpenZeppelin</code></h2>
+<!-- https://www.luiztools.com.br/post/introducao-a-openzeppelin-contracts/ -->
 <p>Uma outra forma de fazer essa implementação de verificação de propriedade pode ser feita com a biblioteca <a href="https://www.openzeppelin.com/"><code>OpenZeppelin</code></a> que além de já ter algumas implementações que ajudam na criação de contratos que podem ser usadas na criação de <em>tokens</em>, ele também tem contratos que implementam a ideia de propriedade <em>(ownership)</em>, e no que implementamos duplicamos esse comportamento. Vamos atualizar o <code>Greeter.sol</code> para utilizar o que já tem pronto na <code>OpenZeppelin</code>.</p>
 <p>Instale o pacote <code>openzeppelin-solidity</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[projeto-helloworld-truffle]$</span> npm install openzeppelin-solidity</span>
