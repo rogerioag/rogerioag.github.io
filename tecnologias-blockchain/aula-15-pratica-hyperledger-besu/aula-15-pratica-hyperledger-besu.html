@@ -84,6 +84,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../aula-16-pratica-hyperledger-fabric/aula-16-pratica-hyperledger-fabric.html" rel="next">
 <link href="../aula-14-pratica-ethereum-introducao-tokenizacao/aula-14-pratica-ethereum-introducao-tokenizacao.html" rel="prev">
 <link href="../images/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -480,6 +481,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../aula-15-pratica-hyperledger-besu/aula-15-pratica-hyperledger-besu.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Prática sobre Hyperledger: <em>Introdução ao Besu</em></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../aula-16-pratica-hyperledger-fabric/aula-16-pratica-hyperledger-fabric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Prática sobre Hyperledger: <em>Introdução ao Fabric</em></span></span></a>
   </div>
 </li>
     </ul>
@@ -1159,6 +1166,7 @@ window.Quarto = {
 <section id="executando-com-uma-rede-de-teste" class="level1" data-number="16">
 <h1 data-number="16"><span class="header-section-number">16</span> Executando com uma Rede de Teste</h1>
 <p>Iremos subir o nó <code>etherum</code> com a rede de teste <code>sepolia</code> e para interagirmos via <code>API JSON-RPC</code> é necessário habilitar o suporte com a opção <code>--rpc-http-enabled</code>, assim podemos usar o <code>cURL</code> para executar chamadas para métodos da <code>API JSON-RPC</code>. Indicamos na linha de comando que a rede é a <code>Sepolia</code> com o parâmetro <code>--network=sepolia</code> e onde os dados serão salvos <code>--data-path=./sepolia</code>, neste exemplo os dados serão salvos no diretório local em um diretório <code>sepolia</code>.</p>
+<p>bin/besu –network=sepolia –data-path=~/besu-data/sepolia –rpc-http-enabled=true –rpc-http-host=0.0.0.0 –rpc-ws-enabled=true –rpc-ws-host=0.0.0.0 –host-allowlist=172.18.1.213,127.0.0.1,localhost –engine-host-allowlist=172.18.1.213,127.0.0.1,localhost –engine-rpc-enabled –engine-jwt-secret=/home/rag/besu-data/sepolia/jwtsecret.hex</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> bin/besu <span class="at">--rpc-http-enabled</span> <span class="at">--network</span><span class="op">=</span>sepolia <span class="at">--data-path</span><span class="op">=</span>~/besu-data/sepolia</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING:</span> A restricted method in java.lang.System has been called</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">WARNING:</span> java.lang.System::load has been called by com.sun.jna.Native in an unnamed module <span class="er">(</span><span class="ex">file:/home/rag/besu-25.10.0/lib/jna-5.16.0.jar</span><span class="kw">)</span></span>
@@ -1842,6 +1850,9 @@ window.Quarto = {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../aula-16-pratica-hyperledger-fabric/aula-16-pratica-hyperledger-fabric.html" class="pagination-link" aria-label="Prática sobre Hyperledger: _Introdução ao Fabric_">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Prática sobre Hyperledger: <em>Introdução ao Fabric</em></span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
