@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Introdução à Infraestrutura de Compilação do LLVM – Escola de Computação Paralela: Minicursos e Tutoriais</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./freertos-resumo.html" rel="next">
+<link href="./llvm-resumo.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3bdf4b82c437318dfd870a1db1780efa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llvm-resumo.html">Minicurso: Introdução à Infraestrutura de Compilação do LLVM</a></li><li class="breadcrumb-item"><a href="./llvm.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introdução à Infraestrutura de Compilação do LLVM</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Escola de Computação Paralela: Minicursos e Tutoriais</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/rogerioag/ecp-minicursos" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bem-vindo</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./pthreads-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Computação Paralela e Programação Multithreading usando Pthreads.</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pthreads.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela e Programação Multithreading usando Pthreads.</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">opemp-resumo.qmd</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./openmp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introdução à Programação Paralela com OpenMP</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./simd-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Programação Paralela: Vetorização</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introdução à Programação Paralela: Vetorização</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./cuda-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Computação Paralela em Sistemas: Heterogêneos: Programação para  GPUs com a Plataforma CUDA</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cuda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela em Sistemas: Heterogêneos: Programação para GPUs com a Plataforma CUDA</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./pytorch-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Implementação de Modelos de Aprendizagem Profunda com pyTorch usando GPUs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pytorch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introdução à Implementação de Modelos de Aprendizagem Profunda com pyTorch usando GPUs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llvm-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Infraestrutura de Compilação do LLVM</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llvm.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introdução à Infraestrutura de Compilação do LLVM</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./freertos-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Programação para Sistemas Embarcados com FreeRTOS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./freertos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introdução à Programação para Sistemas Embarcados com FreeRTOS</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./quantica-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Computação Quântica usando `Qiskit`</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quantica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introdução à Computação Quântica usando <code>Qiskit</code></span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./comp-dist-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Compilação Distribuída</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comp-dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introdução à Compilação Distribuída</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./sup-acel-lpms-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Suporte a Aceleradores em Linguagens de Programação Modernas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sup-acel-lpms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Suporte a Aceleradores em Linguagens de Programação em Sistemas Heterogêneos</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./a1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Apêndice A1</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-llvm-intro" id="toc-sec-llvm-intro" class="nav-link active" data-scroll-target="#sec-llvm-intro"><span class="header-section-number">7.1</span> Introdução</a>
+  <ul class="collapse">
+  <li><a href="#infraestrutura" id="toc-infraestrutura" class="nav-link" data-scroll-target="#infraestrutura"><span class="header-section-number">7.1.1</span> Infraestrutura</a></li>
+  </ul></li>
+  <li><a href="#instalação-e-ferramentas" id="toc-instalação-e-ferramentas" class="nav-link" data-scroll-target="#instalação-e-ferramentas"><span class="header-section-number">7.2</span> Instalação e Ferramentas</a>
+  <ul class="collapse">
+  <li><a href="#compilando-a-infraestrutura-build-manual" id="toc-compilando-a-infraestrutura-build-manual" class="nav-link" data-scroll-target="#compilando-a-infraestrutura-build-manual"><span class="header-section-number">7.2.1</span> Compilando a Infraestrutura (Build Manual)</a></li>
+  <li><a href="#ferramentas-comuns" id="toc-ferramentas-comuns" class="nav-link" data-scroll-target="#ferramentas-comuns"><span class="header-section-number">7.2.2</span> Ferramentas Comuns</a></li>
+  </ul></li>
+  <li><a href="#geração-de-código" id="toc-geração-de-código" class="nav-link" data-scroll-target="#geração-de-código"><span class="header-section-number">7.3</span> Geração de Código</a>
+  <ul class="collapse">
+  <li><a href="#código-intermediário-ir" id="toc-código-intermediário-ir" class="nav-link" data-scroll-target="#código-intermediário-ir"><span class="header-section-number">7.3.1</span> Código Intermediário (IR)</a></li>
+  <li><a href="#static-single-assignment-ssa" id="toc-static-single-assignment-ssa" class="nav-link" data-scroll-target="#static-single-assignment-ssa"><span class="header-section-number">7.3.2</span> Static Single Assignment (SSA)</a></li>
+  <li><a href="#bloco-básico" id="toc-bloco-básico" class="nav-link" data-scroll-target="#bloco-básico"><span class="header-section-number">7.3.3</span> Bloco Básico</a></li>
+  <li><a href="#control-flow-graph" id="toc-control-flow-graph" class="nav-link" data-scroll-target="#control-flow-graph"><span class="header-section-number">7.3.4</span> Control Flow Graph</a></li>
+  </ul></li>
+  <li><a href="#implementando-um-jit" id="toc-implementando-um-jit" class="nav-link" data-scroll-target="#implementando-um-jit"><span class="header-section-number">7.4</span> Implementando um JIT</a>
+  <ul class="collapse">
+  <li><a href="#jit-na-prática" id="toc-jit-na-prática" class="nav-link" data-scroll-target="#jit-na-prática"><span class="header-section-number">7.4.1</span> JIT na prática</a></li>
+  <li><a href="#porque-brainfuck" id="toc-porque-brainfuck" class="nav-link" data-scroll-target="#porque-brainfuck"><span class="header-section-number">7.4.2</span> Porque Brainfuck?</a></li>
+  <li><a href="#detalhes-de-implementação" id="toc-detalhes-de-implementação" class="nav-link" data-scroll-target="#detalhes-de-implementação"><span class="header-section-number">7.4.3</span> Detalhes de Implementação</a></li>
+  </ul></li>
+  <li><a href="#passos" id="toc-passos" class="nav-link" data-scroll-target="#passos"><span class="header-section-number">7.5</span> Passos</a>
+  <ul class="collapse">
+  <li><a href="#estrutura-do-projeto" id="toc-estrutura-do-projeto" class="nav-link" data-scroll-target="#estrutura-do-projeto"><span class="header-section-number">7.5.1</span> Estrutura do Projeto</a></li>
+  <li><a href="#criando-um-passo" id="toc-criando-um-passo" class="nav-link" data-scroll-target="#criando-um-passo"><span class="header-section-number">7.5.2</span> Criando um Passo</a></li>
+  </ul></li>
+  <li><a href="#sec-llvm-consid-finais" id="toc-sec-llvm-consid-finais" class="nav-link" data-scroll-target="#sec-llvm-consid-finais"><span class="header-section-number">7.6</span> Considerações Finais</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">7.7</span> Referências</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/llvm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./llvm-resumo.html">Minicurso: Introdução à Infraestrutura de Compilação do LLVM</a></li><li class="breadcrumb-item"><a href="./llvm.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introdução à Infraestrutura de Compilação do LLVM</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introdução à Infraestrutura de Compilação do LLVM</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>– João Victor Briganti de Oliveira <br> <a href="mailto:joliveira.2022@alunos.utfpr.edu.br" class="email">joliveira.2022@alunos.utfpr.edu.br</a></p>
+<blockquote class="blockquote">
+<p><strong>Resumo:</strong> Este minicurso tem como objetivo introduzir o LLVM, abordando desde a instalação e configuração da ferramenta até sua utilização prática. Ao longo do conteúdo, exploraremos a criação de um JIT (Just-In-Time compiler) e a implementação de passes, além de apresentar, de forma breve, conceitos técnicos fundamentais de compiladores. A proposta é oferecer uma visão prática e aplicada, permitindo que o participante compreenda o funcionamento básico do LLVM e saiba como utilizá-lo em seus próprios projetos.</p>
+</blockquote>
+<section id="sec-llvm-intro" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="sec-llvm-intro"><span class="header-section-number">7.1</span> Introdução</h2>
+<p>O LLVM foi criado como um projeto de pesquisa por Chris Lattner e Vikram Adve nos anos 2000, com o objetivo de oferecer suporte a compilação de diferentes linguagens de programação. O nome LLVM surgiu como um acronimo para “Low Level Virtual Machine”, mas atualmente ele já não é mais válido e LLVM já é o próprio nome do projeto.</p>
+<p>O LLVM atualmente é um guarda-chuva para diferentes projetos que são centrados na construção de compiladores e ferramentas relacionadas. Entre os principais projetos desse ecossistema, destacam-se:</p>
+<ul>
+<li><strong>LLVM Core:</strong> Um conjunto de bibliotecas que permitem realizar otimizações e gerar cócigo para diversas arquiteturas, todas baseadas em uma representação intermediária comum, o LLVM IR(<em>Intermediate Representation</em>);</li>
+<li><strong>Clang:</strong> Um compilador para as linguagens C, C++ e Objective-C que utiliza as bibliotecas do LLVM para análise e geração de código.</li>
+</ul>
+<p>Além desses, há outros componentes importantes, como o LLDB(um <em>debugger</em> semalhante ao GDB), <em>linker</em>, bibliotecas, e várias outras ferramentas que continuam sendo desenvolvidas e incorporadas ao ecossistema.</p>
+<section id="infraestrutura" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="infraestrutura"><span class="header-section-number">7.1.1</span> Infraestrutura</h3>
+<p>Usualmente, um compilador é composto por várias fases necessárias para a geração do código final. Cada uma dessas etapas, desde a análise do código-fonte até a otimização e geração do código de máquina, desempenha um papel específico e, juntas, formam o compilador completo.</p>
+<p>De forma mais abstrata, podemos agrupar as diferentes partes do compilador em três grandes fases:</p>
+<ul>
+<li><strong>Front End:</strong> Responsável pelo processamento inicial do código-fonte. Nesta etapa, o texto é analisado lexical e sintaticamente, e a <strong>AST (Abstract Syntax Tree)</strong> é construída. A AST representa a estrutura hierárquica do programa de forma estruturada e manipulável.</li>
+<li><strong>Middle End:</strong> Transforma a AST em uma <strong>Representação Intermediária (IR)</strong>, que é uma forma mais próxima do código de máquina, porém ainda independente da arquitetura alvo. É também nesta fase que ocorrem a maior parte das otimizações, visando melhorar o desempenho e reduzir o consumo de recursos.</li>
+<li><strong>Back End:</strong> Etapa final do processo, responsável por transformar o código intermediário otimizado em <strong>Código de Máquina</strong> (assembly) específico para uma determinada arquitetura.</li>
+</ul>
+<div id="fig-compiler-design" class="quarto-float quarto-figure quarto-figure-center anchored" alt="compiler-design">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-compiler-design-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/llvm/compiler_design.png" title="Compiler Design" class="img-fluid figure-img" alt="compiler-design">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-compiler-design-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.1: Compiler Design
+</figcaption>
+</figure>
+</div>
+<p>A imagem acima ilustra essas três etapas e as estruturas associadas a cada uma delas ao longo do processo de compilação.</p>
+<p>Historicamente, compiladores eram construídos de forma monolítica e pouco modular, o que dificultava sua reutilização em contextos distintos. O grande diferencial introduzido pelo LLVM foi a sua modularização, ele foi projetado como um conjunto de bibliotecas ao invés do compilador monolítico tradicional. Essa estrutura permite que cada componente do compilador seja desenvolvido, mantido e usado de forma independente.</p>
+<p>O coração dessa modularidade está no <strong>Middle End</strong>, que implementa a maioria das transformações e análises sobre a Representação Intermediária (IR) do LLVM. Essas transformações são organizadas em unidades chamadas de passes, que englobam otimizações como simplificação de expressões, eliminação de código morto, <em>inlining</em> de funções e outras análises estáticas. Cada passe é implementado como uma classe C++ que, idealmente, funciona de forma independente e especifica suas dependências quando existem. Essa abordagem permite a composição dinâmica de pipelines de passes, possibilitando que compiladores configurem sua sequência de otimizações de acordo com as características da linguagem, domínio ou restrições de performance.</p>
+<p>Para garantir flexibilidade e facilitar a manutenção, o LLVM utiliza arquivos de descrição denominados <strong>Target Description Files</strong> (<code>.td</code>), escritos em uma linguagem de domínio específico. Esses arquivos definem as propriedades fundamentais da arquitetura alvo, como classes de registradores, formatos e codificações de instruções, restrições de operandos, e outras características essenciais para a geração correta e eficiente do código.</p>
+<p>Essas descrições são processadas pela ferramenta <strong>TableGen</strong>, que gera automaticamente grande parte do código C++ necessário para implementar o gerador de código, incluindo a definição de instruções, regras de seleção, escalonamento de registrados e outros componentes. Essa geração automatizada garante consistência entre os diversos subsistemas do compilador e facilita o suporte a novas arquiteturas.</p>
+</section>
+</section>
+<section id="instalação-e-ferramentas" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="instalação-e-ferramentas"><span class="header-section-number">7.2</span> Instalação e Ferramentas</h2>
+<section id="ubuntu" class="level4" data-number="7.2.0.1">
+<h4 data-number="7.2.0.1" class="anchored" data-anchor-id="ubuntu"><span class="header-section-number">7.2.0.1</span> Ubuntu</h4>
+<p>Para instalar no Ubuntu, execute:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apt</span> update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">apt</span> upgrade</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">apt</span> install llvm llvm-dev clang</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="fedora" class="level4" data-number="7.2.0.2">
+<h4 data-number="7.2.0.2" class="anchored" data-anchor-id="fedora"><span class="header-section-number">7.2.0.2</span> Fedora</h4>
+<p>Para instalar no Fedora, execute:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">apt</span> dnf update</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">apt</span> dnf install llvm llvm-devel clang</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Em ambos os casos o <code>clang</code> é opcional, mas como estaremos desenvolvendo com a infraestrutura do LLVM, é uma boa prática utilizá-lo para manter consistência no ambiente de desenvolvimento.</p>
+<p>Após a instalação, verificamos se tudo ocorreu corretamente com o comando:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">llvm-config</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Esse comando é essencial, pois será usado posteriormente para a <em>linkage</em> com as bibliotecas do LLVM.</p>
+</section>
+<section id="compilando-a-infraestrutura-build-manual" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="compilando-a-infraestrutura-build-manual"><span class="header-section-number">7.2.1</span> Compilando a Infraestrutura (Build Manual)</h3>
+<p>Em cenários mais específicos, pode ser necessário compilar o LLVM manulamente. Para isso é necessário clonar o repositório oficial e configurar o ambiente de build. O LLVM utiliza o CMake como sistema de configuração, logo, é necessário tê-lo instalado para realizar o processo.</p>
+<p><strong>Passos básicos:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/llvm/llvm-project.git</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llvm-project</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-S</span> llvm <span class="at">-B</span> build <span class="at">-G</span> Ninja <span class="pp">[</span><span class="ss">opções</span><span class="pp">]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Nota</strong></p>
+<p>Se quiser aprender mais sobre como usar o CMake, esta <a href="https://www.youtube.com/playlist?list=PLQMs5svASiXOraccrnEbkd_kVHbAdC2mp">playlist</a> tem algumas explicações sobre o uso da ferramenta.</p>
+</blockquote>
+<p>O comando <code>-G</code> define o sistema que será usado para realizar o <em>build</em> do sistema, ele é similar ao Make, porém em projetos grandes como é o caso do LLVM ele costuma ser mais rápido e eficiente. No entanto, se preferir usar Makefiles, basta substituir essa flag com o comando <code>-G "Unix Makefiles"</code>.</p>
+<section id="opções-importantes-do-cmake" class="level4" data-number="7.2.1.1">
+<h4 data-number="7.2.1.1" class="anchored" data-anchor-id="opções-importantes-do-cmake"><span class="header-section-number">7.2.1.1</span> Opções Importantes do CMake</h4>
+<p>Durante as configurações da build com CMake, é possível ajustar diversas opções. As principais são: - <code>-DCMAKE_BUILD_TYPE=</code> - Este comando define o tipo da <em>build</em> do sistema, os tipos disponíveis são divididos em: - <code>Release</code>: Build otimizada para uso final. - <code>Debug</code>: Build com símbolos de debug, este é um comando que costuma usar muita memória; - <code>RelWithDebInfo</code>: Versão recomendada para desenvolvimento com debug leve e otimizações. - <code>MinSizeRel</code>: Otimizada para gerar binários pequenos; - <code>-DCMAKE_ENABLE_PROJECTS=</code> - Lista os subprojtos que devem ser compilados (por padrão, todos são compilados). A <a href="">documentação oficial</a> possui a lista completa das opções. - <code>-DLLVM_PARALLEL_COMPILE_JOBS=</code> - Define o número de threads usadas na compilação. - <code>-DLLVM_PARALLEL_LINK_JOBS=</code> -Define o número de threads usadas na etapa de linkagem.</p>
+</section>
+</section>
+<section id="ferramentas-comuns" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="ferramentas-comuns"><span class="header-section-number">7.2.2</span> Ferramentas Comuns</h3>
+<section id="clang" class="level4" data-number="7.2.2.1">
+<h4 data-number="7.2.2.1" class="anchored" data-anchor-id="clang"><span class="header-section-number">7.2.2.1</span> Clang</h4>
+<p>O <code>clang</code> é o compilador C/C++ da infraestrutura LLVM. Ele é responsável por converter o código-fonte em código intermediário LLVM IR (Intermediate Representation), que pode ser analisado, transformado e otimizado pelas demais ferramentas do ecossistema LLVM.</p>
+<p>Para gerar o IR a partir de um código C:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clang</span> <span class="at">-S</span> emit <span class="at">-llvm</span> exemplo.c <span class="at">-o</span> exemplo.ll</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Além da geração de código intermediário o <code>clang</code> é um compilador que pode ser utilizado em produção, e que pode até mesmo substituir o GCC.</p>
+</section>
+<section id="opt" class="level4" data-number="7.2.2.2">
+<h4 data-number="7.2.2.2" class="anchored" data-anchor-id="opt"><span class="header-section-number">7.2.2.2</span> Opt</h4>
+<p>O <code>opt</code> é a ferramenta responsável por aplicar <strong>passes de otimização e análise</strong> sobre o código LLVM IR. Ele permite executar otimizações específicas, combiná-las, e até depurar o efeito de cada transformação individualmente, o que é especialmente útil durante o desenvolvimento dos passos.</p>
+<p>Exemplo de uso, aplicando o passe <code>print&lt;loops&gt;</code> (mostra os loops no código)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">opt</span> <span class="at">-S</span> <span class="at">-passes</span><span class="op">=</span><span class="st">"print&lt;loops&gt;"</span> exemplo.ll <span class="at">-o</span> exemplo-opt.ll</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="lli" class="level4" data-number="7.2.2.3">
+<h4 data-number="7.2.2.3" class="anchored" data-anchor-id="lli"><span class="header-section-number">7.2.2.3</span> LLI</h4>
+<p>O <code>lli</code> é o interpretador do LLVM IR. Ele permite executar diretamente arquivos <code>.ll</code> (textuais) ou <code>.bc</code> (bitcode), sem a necessidade de gerar binários nativos. É útil para testes rápidos e validar otimizações.</p>
+<p>Exemplo de uso:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lli</span> exemplo.ll</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="llc" class="level4" data-number="7.2.2.4">
+<h4 data-number="7.2.2.4" class="anchored" data-anchor-id="llc"><span class="header-section-number">7.2.2.4</span> LLC</h4>
+<p>O <code>llc</code> é o compilador <em>backend</em> do LLVM. Ele transforma código IR em código assembly específico da arquitetura-alvo. Essa é uma etapa intermediária antes de gerar o binário final.</p>
+<p>Exemplo de uso:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">llc</span> exemplo.ll</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+</section>
+<section id="geração-de-código" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="geração-de-código"><span class="header-section-number">7.3</span> Geração de Código</h2>
+<p>Para que o compilador consiga gerar código de máquina, ele precisa antes passar por diversas etapas intermediárias. Não entraremos em detalhes sobre o <em>front end</em> do compilador, mas é importante saber que, após a análise do código-fonte e a coleta das informações necessárias, o LLVM transforma a representação da árvore sintática em um código intermediário, chamado de <strong>Intermediate Representation</strong> (IR).</p>
+<section id="código-intermediário-ir" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="código-intermediário-ir"><span class="header-section-number">7.3.1</span> Código Intermediário (IR)</h3>
+<p>No contexto de compiladores, existem diferentes formas de representar o código intermediário. O LLVM adota o formato conhecido como <em>three-address code</em>, no qual cada instrução opera sobre, no máximo, três operandos e segue alguns padrões básicos: - Operações <span class="math display">\[x = y\ \text{op}\ z\]</span> - Acessos á memória: <span class="math display">\[x[y] = z\]</span> <span class="math display">\[x = y[z]\]</span> - Branch/Jump: <span class="math display">\[\text{if}\ \text{False}\ x\ \text{goto}\ \text{L}\]</span> <span class="math display">\[\text{if}\ \text{True}\ x\ \text{goto}\ \text{L}\]</span> Esses formatos se assemelham bastante ao estilo de instruções de máquinas RISC. Por exemplo, na arquitetura RISC-V, uma operação de adição pode ser representada da seguinte forma:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode asm code-with-copy"><code class="sourceCode fasm"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">add</span> <span class="dt">rd</span><span class="op">,</span> rs1<span class="op">,</span> rs2 <span class="co">; rd = rs1 + rs2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A mesma operação no LLVM IR seria escrita assim:</p>
+<pre class="llvm-ir"><code>%0 = add i32 %1, %2 ; %0 = %1 + %2</code></pre>
+<p>Note que, no LLVM IR, as instruções são fortemente tipadas, o tipo dos operandos (como <code>i32</code> para inteiros de 32 bits) é sempre declarado explicitamente. Isso permite maior controle e consistência durante as otimizações e facilita a geração de código para diferentes arquiteturas.</p>
+<p>Algumas instruções e processos que são dependentes da arquitetura, costumam ser abstraídas, como é o caso das seguintes funções: - <code>call</code> para chamadas de função; - <code>ret</code> para retorno de função;</p>
+</section>
+<section id="static-single-assignment-ssa" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="static-single-assignment-ssa"><span class="header-section-number">7.3.2</span> Static Single Assignment (SSA)</h3>
+<p>Além do formato <em>three-address code</em>, outro conceito essencial na infraestrutura do LLVM é o <strong>SSA (Static Single Assignment)</strong>. Nesse formato, cada variável é atribuída apenas uma única vez. Sempre que uma variável precisar ser atualizada, um novo nome (ou registrador virtual) será criado para representar a nova versão daquele valor.</p>
+<p>Um exemplo desse formato seria o seguinte:</p>
+<pre><code>x = 2 * 4
+y = 5 + 10
+x = y</code></pre>
+<p>No formato SSA, teríamos o seguinte:</p>
+<pre><code>x1 = 2 * 4
+y1 = 5 + 10
+x2 = y1</code></pre>
+<p>Note que o valor de <code>x</code> nunca é sobrescrito: ele passa a existir como duas versões distintas (<code>x1</code> e <code>x2</code>). Isso é interessante para otimizações, pois evita ambiguidade no uso de variáveis, facilita a identificação de código morto, permite a eliminação de redundâncias, dispensa a análise de histórico de alterações de uma variável dentre outras otimizações que passam a ser possíveis devido esse formato.</p>
+<p>Apesar de ser ótimo para otimizações, esse formato apresenta problemas quando estamos lidando com estruturas de controle como é o caso de laços, em que o valor de uma variável precisa ser atualizada a cada iteração.</p>
+<p>Considere o seguinte exemplo em C:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> sum_vec<span class="op">(</span><span class="dt">int</span> <span class="op">*</span>vec<span class="op">,</span> <span class="dt">int</span> n<span class="op">)</span> <span class="op">{</span>  </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int acc <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>  </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span>  </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;acc <span class="op">+=</span> vec<span class="op">[</span>i<span class="op">];</span>  </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return acc<span class="op">;</span>  </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span>  </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ao compilarmos esse código com o <code>clang</code>, usando a flag <code>-S -emit-llvm</code>, teremos o seguinte código:</p>
+<pre class="llvm-ir"><code>define dso_local i32 @sum_vec(ptr noundef %0, i32 noundef %1) #0 {  
+&nbsp;%3 = alloca ptr, align 8  
+&nbsp;%4 = alloca i32, align 4  
+&nbsp;%5 = alloca i32, align 4  
+&nbsp;%6 = alloca i32, align 4  
+&nbsp;store ptr %0, ptr %3, align 8  
+&nbsp;store i32 %1, ptr %4, align 4  
+&nbsp;store i32 0, ptr %5, align 4  
+&nbsp;store i32 0, ptr %6, align 4  
+&nbsp;br label %7  
+  
+7: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+&nbsp;%8 = load i32, ptr %6, align 4  
+&nbsp;%9 = load i32, ptr %4, align 4  
+&nbsp;%10 = icmp slt i32 %8, %9  
+&nbsp;br i1 %10, label %11, label %22  
+  
+11: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+&nbsp;%12 = load ptr, ptr %3, align 8  
+&nbsp;%13 = load i32, ptr %6, align 4  
+&nbsp;%14 = sext i32 %13 to i64  
+&nbsp;%15 = getelementptr inbounds i32, ptr %12, i64 %14  
+&nbsp;%16 = load i32, ptr %15, align 4  
+&nbsp;%17 = load i32, ptr %5, align 4  
+&nbsp;%18 = add nsw i32 %17, %16  
+&nbsp;store i32 %18, ptr %5, align 4  
+&nbsp;br label %19  
+  
+19: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+&nbsp;%20 = load i32, ptr %6, align 4  
+&nbsp;%21 = add nsw i32 %20, 1  
+&nbsp;store i32 %21, ptr %6, align 4  
+&nbsp;br label %7, !llvm.loop !4  
+  
+22: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+&nbsp;%23 = load i32, ptr %5, align 4  
+&nbsp;ret i32 %23  
+}</code></pre>
+<p>Apesar de parecer complexo a primeira vista, o código gerado aqui é bastante simples. Não entrarei em todos os detalhes da execução, pois o objetivo principal é ilustrar como um valor é atualizado ao longo do tempo. O foco está na variável de indução, representada aqui por <code>%6</code>, que corresponde a variável de indução <code>i</code>.</p>
+<p>Inicialmente, <code>%6</code> é alocado na pilha com a instrução <code>alloca</code>. No bloco <code>7</code>, seu valor é carregado na memória para ser comparado com o limite superior da iteração (<code>n</code>), ou seja, temos essencialmente a condição <code>i&lt; n</code>. No bloco <code>11</code>, esse valor é utilizado para indexar o vetor (<code>vec[i]</code>). Por fim, no bloco <code>19</code>, o valor de <code>%6</code> é carregado em memória para o registrador <code>%20</code>, incrementado em 1, e armazenado de volta na memória, representado a atualização de <code>i</code> a cada iteração.</p>
+<section id="phi-nodes-phi" class="level4" data-number="7.3.2.1">
+<h4 data-number="7.3.2.1" class="anchored" data-anchor-id="phi-nodes-phi"><span class="header-section-number">7.3.2.1</span> PHI Nodes (<span class="math inline">\(\phi\)</span>)</h4>
+<p>A maneira de resolver esse problema é utilizando o que chamamos de <strong>PHI nodes</strong>, que nada mais é do que uma instrução especial suada para selecionar um valor com base no caminho de execução que levou a um determinado ponto. Em outras palavras, ele permite representa atualização de um variável sem violar o SSA.</p>
+<p>Ao recompilarmos o exemplo com a otimização básica (<code>-O1</code>), obtemos o seguinte:</p>
+<pre class="llvm-ir"><code>define dso_local i32 @sum_vec(ptr nocapture noundef readonly %0, i32 noundef %1) local_unnamed_addr #0 {  
+&nbsp;%3 = icmp sgt i32 %1, 0  
+&nbsp;br i1 %3, label %4, label %6  
+  
+4:
+&nbsp;%5 = zext nneg i32 %1 to i64  
+&nbsp;br label %8  
+  
+6:
+ %7 = phi i32 [ 0, %2 ], [ %13, %8 ]  
+&nbsp;ret i32 %7  
+  
+8:
+&nbsp;%9 = phi i64 [ 0, %4 ], [ %14, %8 ]  
+&nbsp;%10 = phi i32 [ 0, %4 ], [ %13, %8 ]  
+&nbsp;%11 = getelementptr inbounds nuw i32, ptr %0, i64 %9  
+&nbsp;%12 = load i32, ptr %11, align 4, !tbaa !3  
+&nbsp;%13 = add nsw i32 %12, %10  
+&nbsp;%14 = add nuw nsw i64 %9, 1  
+&nbsp;%15 = icmp eq i64 %14, %5  
+&nbsp;br i1 %15, label %6, label %8, !llvm.loop !7  
+}</code></pre>
+<p>Percebam que o código ficou menor, isso porque as variáveis que antes estavam sendo alocadas na pilha estão sendo manipuladas diretamente pelo registrador. Isso é possível pois agora temos as instruções PHI, se observarmos o fluxo de atualização da variável de indução (<code>i</code>), temos que ela estará sendo representada unicamente pelo registrador <code>%9</code>, que está na seguinte instrução:</p>
+<pre class="llvm-ir"><code>%9 = phi i64 [0, %4], [%14, %8]</code></pre>
+<p>Podemos interpretar essa execução da seguinte maneira, caso o fluxo de execução esteja vindo do bloco 4 o valor de <code>i</code> será 0, caso ele esteja vindo do próprio bloco <code>%8</code>, seu valor será <code>%14</code>, que se observarmos nada mais é do que <code>%9 + 1</code>.</p>
+</section>
+</section>
+<section id="bloco-básico" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="bloco-básico"><span class="header-section-number">7.3.3</span> Bloco Básico</h3>
+<p>Até agora, discutimos como as instruções são representadas dentro do LLVM. No entanto, além das instruções individuais, um programa também é compost por <strong>Blocos Básicos</strong> (<em>Basic Blocks</em>), que são estruturas fundamentais para o controle de fluxo da execução.</p>
+<p>Um bloco básico é definido como uma sequência contínua de instruções, sem desvios ou saltos internos, ou seja, é executado de maneira linear do início ao fim. Cada bloco é precedido por um rótulo (<em>label</em>), que possui uma única entrada e uma única saída, apesar dessa saída poder a diferentes blocos básicos. Na prática o máximo de instruções possíveis são unificadas em um único bloco básico, e ele é quebrado somente quando temos uma alteração no fluxo de execução.</p>
+<p>Na imagem abaixo temos um exemplo do fluxo de controle do código de soma dos elementos de um vetor:</p>
+<div id="fig-sum-vec" class="quarto-float quarto-figure quarto-figure-center anchored" alt="sum_vec">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sum-vec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/llvm/sum_vec.png" title="Soma de um vetor" class="img-fluid figure-img" alt="sum_vec">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sum-vec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.2: Soma de um vetor
+</figcaption>
+</figure>
+</div>
+<p>Cada um desses blocos tem um significado diferente durante a execução do algoritmo: - <strong>Bloco 2:</strong> Esse bloco é o que chamamos de <em>loop guard</em>, ele verifica se a execução do loop vai ou não acontecer. No caso aqui ele está verificando se <code>n</code> é maior que 0; - <strong>Bloco 4:</strong> Esse seria o cabeçalho do <em>loop</em>, aqui ele está apenas fazendo uma conversão de <code>n</code> para um inteiro de 64 bits com sinal. - <strong>Bloco 8:</strong> Aqui é onde temos a execução do <em>loop</em> em si, enquanto sua condição de saída for falsa ele irá continuar executando. - <strong>Bloco 6:</strong> Esse é o último bloco de código, nele temos o retorno da função como um todo.</p>
+<blockquote class="blockquote">
+<p><strong>Nota</strong></p>
+<p>O comando para gerar esse gráfico com o LLVM é o seguinte:</p>
+<pre><code>opt -passes=dot-cfg example.s --disable-output
+dot -Tpng .func_example.dot -o func_example.png </code></pre>
+</blockquote>
+</section>
+<section id="control-flow-graph" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="control-flow-graph"><span class="header-section-number">7.3.4</span> Control Flow Graph</h3>
+<p>Percebam que esse conjunto de blocos formam um grafo, que tem o nome de <strong>Grafo de Fluxo de Controle</strong> (<em>Control Flow Graph</em>, CFG). Esse grafo representa todos os caminhos possíveis de execução dentro de uma função.</p>
+<p>Essa representação em grafo de blocos básicos nós permite realizar transformações de código, tal qual: Detecção de código morto, transformações e fusões de laço, predição de desvio, reordenação de instruções, propagação de constante.</p>
+<p>Além disso, o formato em grafo permite a análise de propriedades como dominação, essencial para entender a estrutura de controle do programa. Dizemos que um bloco A domina um bloco B se todo caminho possível até B passa necessariamente por A. Ou seja, A sempre é executado antes de B, em qualquer fluxo de controle válido. Essa dominação nós permite construir a chamada árvore de dominação, que basicamente nós diz quem manda em quem, isso é importante pois permite determinar onde é seguro movimentar código e identifica pontos de junção onde múltiplos fluxos se encontram, permitindo que o compilador faça transformações mais agressivas com a garantia que o programa continuara correto.</p>
+</section>
+</section>
+<section id="implementando-um-jit" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="implementando-um-jit"><span class="header-section-number">7.4</span> Implementando um JIT</h2>
+<p>Linguagens interpretadas existem há muito tempo e são amplamente difundidas. Nelas, o código-fonte é executado por um interpretado, que lê e executa as instruções uma a uma. Esse modelo é comum em linguagens como Python, Lua e Javascript, e tem como principal vantagem a portabilidade: O mesmo código pode ser executado em diferentes plataformas sem necessidade de compilação prévia. Foi justamente essa características que ajudou a tornar a linguagem Java tão popular, ao permitir que programas fossem executados em qualquer dispositivo com uma máquina virtual compatível.</p>
+<p>O problema desse modelo usualmente está no seu desempenho que geralmente é inferior ao de programas compilados, pois o código não é convertido diretamente em instruções de máquina. Para contornar essa limitação, surgiu o JIT (<em>Just-In-Time</em>), uma técnica de compilação, que combina a flexibilidade dos interpretadores com a eficiência dos compiladores. Em vez de interpretar todo o código, o JIT identifica trechos críticos durante a execução e os compila dinamicamente para código nativo, melhorando significativamente o desempenho.</p>
+<section id="jit-na-prática" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="jit-na-prática"><span class="header-section-number">7.4.1</span> JIT na prática</h3>
+<p>Diversas linguagens interpretadas hoje possuem algum tipo de compilador JIT, como é o caso de Java (com a JVM), Lua (com LuaJIT) e JavaScript (com o V8). A linguagem Julia, por exemplo, também adota esse modelo usando o LLVM como backend para compilar funções á medida que são chamadas.</p>
+<p>Abaixo temos um benchmark da aplicação Mandelbrot, comparando diretamente as linguagens Julia e C. Observando a coluna <em>secs</em>, vemos que a implementação mais rápida em C executa em 1,23 segundos, enquanto a mais rápida em Julia conclui em 1,54 segundos, uma diferença de apenas 31 milissegundos. Esse resultado evidencia como a compilação JIT pode elevar significativamente o desempenho de linguagens interpretadas, a ponto de competirem diretamente com linguagens tradicionalmente conhecidas pela sua eficiência, como o C.</p>
+<div id="fig-mandelbrot" class="quarto-float quarto-figure quarto-figure-center anchored" alt="mandelbrot">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mandelbrot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/llvm/mandelbrot.png" title="Mandelbrot" class="img-fluid figure-img" alt="mandelbrot">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mandelbrot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.3: Mandelbrot
+</figcaption>
+</figure>
+</div>
+<p>Uma das grandes vantagens do JIT é a capacidade de realizar otimizações específicas para o hardware em que o programa está sendo executado. Como a compilação ocorre em tempo de execução, o compilador pode gerar instruções otimizadas para a arquitetura exata do processador em uso, o que um compilador tradicional geralmente não consegue fazer sem uma configuração prévia.</p>
+<p>Além disso, o JIT tem acesso a informações dinâmicas sobre a execução do programa, o que permite aplicar otimizações adaptativas com base no comportante real do código em tempo de execução. Isso é particularmente poderoso, pois muitas otimizações envolvem algum trade-off, uma transformação que melhora o desempenho em um cenário pode piorá-lo em outro. Com o JIT é possível evitar isso, ajustando as otimizações as características do programa em execução naquele momento específico.</p>
+</section>
+<section id="porque-brainfuck" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="porque-brainfuck"><span class="header-section-number">7.4.2</span> Porque Brainfuck?</h3>
+<p>Brainfuck é uma linguagem de programação criada em 1993 por Urban Müller. Ela ficou conhecida por seu estilo extremamente criptográfico e minimalista: seus programas são difíceis de escrever e ler, e seu propósito nunca foi ser uma linguagem prática ou de uso real, mas sim uma linguagem esotérica, criada como um experimento.</p>
+<p>Apesar disso, Brainfuck é uma escolha interessante para o estudo da implementação de linguagens. Isso porque ela possui uma semântica extremamente simples, o que facilita o entendimento e a construção de interpretadores, compiladores ou JITs.</p>
+<p>Nessa linguagem todos os programas operam em cima de uma “fita”, uma região de memória que possui ao menos 30000 células (basicamente um array) inicializados com zero, e um ponteiro que nós diz qual a posição inicial nessas células. Toda computação se dá por meio da movimentação do ponteiro e da manipulação dos valores das células. Seus comandos são codificados em ASCII, e incluem:</p>
+<ul>
+<li><strong>+</strong>: Incrementa em 1 o valor da célula indicada pelo ponteiro;</li>
+<li><strong>-</strong>: Decrementa em 1 o valor da célula indicada pelo ponteiro;</li>
+<li><strong>&gt;</strong>: Move o ponteiro uma posição para a direita;</li>
+<li><strong>&lt;</strong>: Move o ponteiro uma posição para a esquerda;</li>
+<li><strong>[</strong>: Se o valor da célula atual for zero, pula para o comando após o <code>]</code> correspondente;</li>
+<li><strong>]</strong>: Se o valor da célula atual for diferente de zero, volta para o comando após o <code>[</code> correspondente;</li>
+<li><strong>.</strong>: Imprime o valor da célula atual;</li>
+<li><strong>,</strong>: Lê um valor de entrada e armazena na célula atual;</li>
+</ul>
+<p>Qualquer outro caractere presente no programa é ignorado. Existem variações e extensões da linguagem com novos comandos, mas esses são os únicos necessários para implementar um interpretador funcional.</p>
+</section>
+<section id="detalhes-de-implementação" class="level3" data-number="7.4.3">
+<h3 data-number="7.4.3" class="anchored" data-anchor-id="detalhes-de-implementação"><span class="header-section-number">7.4.3</span> Detalhes de Implementação</h3>
+<p>Nesta seção, exploramos os detalhes de implementação de um JIT para Brainfuck. Vamos analisar as principais partes do código que compõem o programa, explicando como cada uma contribui para a geração e execução dinâmica do código.</p>
+<p>Para melhorar organizar sua explicação, os detalhes de implementação serão divididos em blocos conforme a responsabilidade de cada conjunto de funções. Iniciamos pelas estruturas básicas utilizadas pelo LLVM e declaração de funções externas, passando pela alocação de memória, criação das funções principais, até a geração do IR com base no código Brainfuck.</p>
+<section id="inicialização-do-módulo" class="level4" data-number="7.4.3.1">
+<h4 data-number="7.4.3.1" class="anchored" data-anchor-id="inicialização-do-módulo"><span class="header-section-number">7.4.3.1</span> Inicialização do Módulo</h4>
+<p>Antes de iniciarmos a compilação dos comandos em si, é necessário criar o módulo de compilação que será utilizado. É nesse módulo que todo o código gerado será inserido. Ele é responsável por armazenar a lista de variáveis globais, funções, referências externas (como bibliotecas), tabela de símbolos e as características da arquitetura alvo.</p>
+<p>Além do módulo, também é necessário criar o contexto LLVM, que deve ser inicializado antes do módulo. O <code>LLVMContext</code> pode ser entendido como a estrutura que armazena o estado interno do LLVM. Ele gerencia todos os tipos, constantes e metadados utilizados durante a geração de código, funcionando como o “ambiente” onde o IR será construído.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> InitializeModule<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    ctx <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>LLVMContext<span class="op">&gt;();</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    mod <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>Module<span class="op">&gt;(</span>MODULE_LABEL<span class="op">,</span> <span class="op">*</span>ctx<span class="op">);</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Após a inicialização dessas estruturas, realizamos a definição de algumas funções externas que serão utilizadas durante a execução do programa. No caso do brainfuck somente duas funções são necessárias, <code>getchar</code> e <code>putchar</code>, abaixo temos a definição desse código:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> DeclareExternFunctions<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    getChar <span class="op">=</span> mod<span class="op">-&gt;</span>getOrInsertFunction<span class="op">(</span><span class="st">"getchar"</span><span class="op">,</span> IntegerType<span class="op">::</span>getInt8Ty<span class="op">(*</span>ctx<span class="op">));</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    putChar <span class="op">=</span> mod<span class="op">-&gt;</span>getOrInsertFunction<span class="op">(</span><span class="st">"putchar"</span><span class="op">,</span> IntegerType<span class="op">::</span>getInt8Ty<span class="op">(*</span>ctx<span class="op">),</span> IntegerType<span class="op">::</span>getInt8Ty<span class="op">(*</span>ctx<span class="op">));</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="alocação-de-memória" class="level4" data-number="7.4.3.2">
+<h4 data-number="7.4.3.2" class="anchored" data-anchor-id="alocação-de-memória"><span class="header-section-number">7.4.3.2</span> Alocação de Memória</h4>
+<p>No Brainfuck, temos duas estruturas principais que precisam ser alocadas: a <em>tape</em> (fita), que representa a memória do programa, e o <em>head</em>, que é o ponteiro para a posição atual nessa fita.</p>
+<p>Embora teoricamente o <em>head</em> não precise ser uma variável global, algumas otimizações aplicadas pelo LLVM durante a geração do IR podem acabar quebrando a aplicação. Por isso, optamos por mantê-lo como uma variável global, garantindo consistência no acesso à memória.</p>
+<p>Abaixo está o código responsável pela alocação da <em>tape</em>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> AllocateTape<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    Type <span class="op">*</span>I <span class="op">=</span> IntegerType<span class="op">::</span>getInt8Ty<span class="op">(*</span>ctx<span class="op">);</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    ArrayType <span class="op">*</span>A <span class="op">=</span> ArrayType<span class="op">::</span>get<span class="op">(</span>I<span class="op">,</span> TAPE_SIZE<span class="op">);</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    tapePtr <span class="op">=</span> <span class="kw">new</span> GlobalVariable<span class="op">(*</span>mod<span class="op">,</span> A<span class="op">,</span> <span class="kw">false</span><span class="op">,</span> Function<span class="op">::</span>InternalLinkage<span class="op">,</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    ConstantAggregateZero<span class="op">::</span>get<span class="op">(</span>A<span class="op">),</span> TAPE_LABEL<span class="op">);</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Aqui, estamos criando um array global com <code>TAPE_SIZE = 655360</code>, composto por inteiros de 8 bits. O tipo de linkagem usado é <code>InternalLinkage</code>, o que significa que essa variável é “privada” ao módulo. A fita é inicializada com zeros (<code>ConstantAggregateZero</code>), e seu rótulo é definido como <code>TAPE_LABEL = "tape"</code>.</p>
+<p>A alocação da variável <em>head</em> segue a mesma lógica, com pequenas diferenças no tipo utilizado:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> AllocateHeadPosition<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    Type <span class="op">*</span>I <span class="op">=</span> IntegerType<span class="op">::</span>getInt32Ty<span class="op">(*</span>ctx<span class="op">);</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    headPositionVar <span class="op">=</span> <span class="kw">new</span> GlobalVariable<span class="op">(*</span>mod<span class="op">,</span> I<span class="op">,</span> <span class="kw">false</span><span class="op">,</span> Function<span class="op">::</span>InternalLinkage<span class="op">,</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    ConstantAggregateZero<span class="op">::</span>get<span class="op">(</span>I<span class="op">),</span> HEAD_LABEL<span class="op">);</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="criação-de-funções" class="level4" data-number="7.4.3.3">
+<h4 data-number="7.4.3.3" class="anchored" data-anchor-id="criação-de-funções"><span class="header-section-number">7.4.3.3</span> Criação de Funções</h4>
+<p>Para que os códigos gerados possam ser executados corretamente, é necessário definir um ponto de entrada, o que neste caso é feito por meio da criação de funções dentro do módulo LLVM. Neste projeto, utilizamos duas funções: a <code>main</code>, que serve principalmente como suporte durante o processo de geração do IR e é útil para executar o código e verificar o estado do ambiente de compilação, e a função <code>brain</code>, que é onde o código Brainfuck compilado será inserido.</p>
+<p>Abaixo temos o código que implementa a função do <code>brain</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> InsertBrainFunction<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    FunctionType <span class="op">*</span>brainDecl <span class="op">=</span> FunctionType<span class="op">::</span>get<span class="op">(</span>Type<span class="op">::</span>getVoidTy<span class="op">(</span>mod<span class="op">-&gt;</span>getContext<span class="op">()),</span> <span class="op">{},</span> <span class="kw">false</span><span class="op">);</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    Function <span class="op">*</span>brainFunc <span class="op">=</span> Function<span class="op">::</span>Create<span class="op">(</span>brainDecl<span class="op">,</span> Function<span class="op">::</span>InternalLinkage<span class="op">,</span> <span class="st">"brain"</span><span class="op">,</span> <span class="op">*</span>mod<span class="op">);</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    BasicBlock <span class="op">*</span>BB <span class="op">=</span> InsertBrainIR<span class="op">(</span>brainFunc<span class="op">);</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    ReturnInst<span class="op">::</span>Create<span class="op">(</span>mod<span class="op">-&gt;</span>getContext<span class="op">(),</span> BB<span class="op">);</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Percebam que na criação dessa função, começamos definindo seu tipo com <code>FunctionType::get</code>, indicando que ela não retorna nenhum valor (<code>void</code>), não possui parâmetros e não é variádica. Em seguida, a função é criada com <code>Function::Create</code>, utilizando <code>InternalLinkage</code>, o que significa que sua visibilidade está restrita ao módulo atual, e fornecemos a ela o nome <code>"brain"</code>. Logo após, é criado um bloco básico com <code>InsertBrainIR</code>, que será explicado futuramente, e finalmente finalizamos a função com a definição com uma instrução de retorno simples, inserida com <code>ReturnInst::Create</code>.</p>
+<p>Abaixo temos o código que implementa a função do <code>main</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> InsertMainFunction<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    FunctionType <span class="op">*</span>mainDecl <span class="op">=</span> FunctionType<span class="op">::</span>get<span class="op">(</span>Type<span class="op">::</span>getInt32Ty<span class="op">(</span>mod<span class="op">-&gt;</span>getContext<span class="op">()),</span> <span class="op">{</span>Type<span class="op">::</span>getInt32Ty<span class="op">(</span>mod<span class="op">-&gt;</span>getContext<span class="op">()),</span> PointerType<span class="op">::</span>getUnqual<span class="op">(</span>mod<span class="op">-&gt;</span>getContext<span class="op">())},</span> <span class="kw">false</span><span class="op">);</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    Function <span class="op">*</span>mainFunction <span class="op">=</span> Function<span class="op">::</span>Create<span class="op">(</span> mainDecl<span class="op">,</span> Function<span class="op">::</span>InternalLinkage<span class="op">,</span> MAIN_FUNC_LABEL<span class="op">,</span> <span class="op">*</span>mod<span class="op">);</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>arg <span class="op">=</span> mainFunction<span class="op">-&gt;</span>getArg<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    arg<span class="op">-&gt;</span>setName<span class="op">(</span><span class="st">"argc"</span><span class="op">);</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    arg <span class="op">=</span> mainFunction<span class="op">-&gt;</span>getArg<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    arg<span class="op">-&gt;</span>setName<span class="op">(</span><span class="st">"argv"</span><span class="op">);</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    BasicBlock <span class="op">*</span>BB <span class="op">=</span> BasicBlock<span class="op">::</span>Create<span class="op">(</span>mod<span class="op">-&gt;</span>getContext<span class="op">(),</span> MAIN_FUNC_LABEL<span class="op">,</span> mainFunction<span class="op">);</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    CallInst <span class="op">*</span>brainf_call <span class="op">=</span> CallInst<span class="op">::</span>Create<span class="op">(</span>mod<span class="op">-&gt;</span>getFunction<span class="op">(</span>BRAIN_FUNC_LABEL<span class="op">),</span> <span class="st">""</span><span class="op">,</span> BB<span class="op">);</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    brainf_call<span class="op">-&gt;</span>setTailCall<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    ReturnInst<span class="op">::</span>Create<span class="op">(</span>mod<span class="op">-&gt;</span>getContext<span class="op">(),</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    ConstantInt<span class="op">::</span>get<span class="op">(</span>mod<span class="op">-&gt;</span>getContext<span class="op">(),</span> APInt<span class="op">(</span><span class="dv">32</span><span class="op">,</span> <span class="dv">0</span><span class="op">)),</span> BB<span class="op">);</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Já na definição da função <code>main</code>, seguimos uma estrutura parecida, mas com pequenas diferenças. Aqui, o tipo de retorno é um inteiro de 32 bits, e os parâmetros são um inteiro (<code>argc</code>) e um ponteiro não qualificado (<code>argv</code>), definido com <code>PointerType::getUnqual</code>. Após declarar a função com <code>InternalLinkage</code>, também nomeamos seus parâmetros para facilitar o entendimento do IR gerado. Em seguida, é criado um bloco básico inicial onde realizamos a chamada para a função <code>brain</code>, usando <code>CallInst::Create</code>, e por fim, adicionamos um <code>return 0</code>, representado por uma constante inteira de valor zero. Com isso, temos um ponto de entrada funcional e estruturado tanto para testes quanto para a execução do programa compilado.</p>
+</section>
+<section id="geração-do-copo-da-função-brain" class="level4" data-number="7.4.3.4">
+<h4 data-number="7.4.3.4" class="anchored" data-anchor-id="geração-do-copo-da-função-brain"><span class="header-section-number">7.4.3.4</span> Geração do Copo da Função <code>brain</code></h4>
+<p>Até este ponto, construímos toda a infraestrutura de suporte necessária para gerar o código compilado a partir de Brainfuck. O próximo passo é definir a estrutura do código que realizará o <em>parser</em> e inserirá as instruções no módulo <code>brain</code>.</p>
+<p>O processo de identificação das instruções de Brainfuck é bastante simples, com exceção dos loops (<code>[</code> e <code>]</code>), que exigem um tratamento especial, por isso, seu processamento é dividido em duas etapas. Isso será melhor detalhado na sessão de construção dos loops.</p>
+<p>Começamos pela seguinte função</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>BasicBlock <span class="op">*</span>InsertBrainIR<span class="op">(</span>Function <span class="op">*</span>brainFunc<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    BasicBlock <span class="op">*</span>BB <span class="op">=</span> BasicBlock<span class="op">::</span>Create<span class="op">(*</span>ctx<span class="op">,</span> <span class="st">"init"</span><span class="op">,</span> brainFunc<span class="op">);</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    IRBuilder<span class="op">&lt;&gt;</span> builder<span class="op">(</span>BB<span class="op">);</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>CreateStore<span class="op">(</span>builder<span class="op">.</span>getInt32<span class="op">(</span>HEAD_POS<span class="op">),</span> headPositionVar<span class="op">);</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> InsertBrainIR_r<span class="op">(</span>brainFunc<span class="op">,</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>IRBuilder<span class="op">&lt;&gt;&gt;(</span>BB<span class="op">),</span> BB<span class="op">);</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Essa função é responsável por criar o bloco básico inicial da função <code>brain</code>, nomeado como <code>init</code>. Em seguida, adicionamos uma instrução de <em>store</em>, que armazena a posição inicial da <em>head</em> na memória do programa. Essa posição é definida por <code>HEAD_POS = 655360 / 2</code>, ou seja, a cabeça começa no meio da fita (<em>tape</em>). Após isso, iniciamos a inserção das instruções de Brainfuck nesse mesmo bloco, através da chamada recursiva <code>InsertBrainIR_r</code>.</p>
+<p>A função <code>InsertBrainIR_r</code> é a seguinte:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>BasicBlock <span class="op">*</span>InsertBrainIR_r<span class="op">(</span>Function <span class="op">*</span>brainfck<span class="op">,</span> <span class="bu">std::</span>unique_ptr<span class="op">&lt;</span>IRBuilder<span class="op">&lt;&gt;&gt;</span> builder<span class="op">,</span> BasicBlock <span class="op">*</span>BB<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">char</span> input<span class="op">;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>file<span class="op">.</span>get<span class="op">(</span>input<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">switch</span> <span class="op">(</span>input<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="ch">'-'</span><span class="op">:</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="ch">'+'</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>            InsertIncIR<span class="op">(*</span>builder<span class="op">,</span> input <span class="op">==</span> <span class="ch">'+'</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="ch">'&lt;'</span><span class="op">:</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="ch">'&gt;'</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>            InsertPtrIncIR<span class="op">(*</span>builder<span class="op">,</span> input <span class="op">==</span> <span class="ch">'&gt;'</span> <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="op">-</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="ch">','</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>            InsertGetCharIR<span class="op">(*</span>builder<span class="op">);</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="ch">'.'</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>            InsertPutCharIR<span class="op">(*</span>builder<span class="op">);</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="ch">'['</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>            numBrackets<span class="op">++;</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>            BB <span class="op">=</span> InsertStartLoopIR<span class="op">(*</span>builder<span class="op">,</span> brainfck<span class="op">);</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>            builder <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>IRBuilder<span class="op">&lt;&gt;&gt;(</span>BB<span class="op">);</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">case</span> <span class="ch">']'</span><span class="op">:</span> <span class="op">{</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>numBrackets <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>                <span class="bu">std::</span>string err <span class="op">=</span> <span class="st">"Error: ']' found without a pair </span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>                <span class="cf">throw</span> err<span class="op">;</span></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>            numBrackets<span class="op">--;</span></span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> InsertLoopExitCondIR<span class="op">(*</span>builder<span class="op">,</span> brainfck<span class="op">);</span></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>numBrackets <span class="op">!=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">std::</span>string err <span class="op">=</span> <span class="st">"Error: Incorrect number of pair brackets</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span></span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">throw</span> err<span class="op">;</span></span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> BB<span class="op">;</span></span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Essa função atua como um interpretador recursivo. Seu papel é analisar o conteúdo do arquivo e traduzir cada caractere em instruções equivalentes no IR do LLVM.</p>
+</section>
+<section id="tradução-de-comandos-brainfuck" class="level4" data-number="7.4.3.5">
+<h4 data-number="7.4.3.5" class="anchored" data-anchor-id="tradução-de-comandos-brainfuck"><span class="header-section-number">7.4.3.5</span> Tradução de Comandos Brainfuck</h4>
+<p>Finalmente chegamos a geração das instruções de código que representam os comandos do Brainfuck. Começamos pelas instruções <code>+</code> e <code>-</code>, que são tratadas pela função <code>InsertIncIR</code>, abaixo temos o seu código:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> InsertIncIR<span class="op">(</span>IRBuilder<span class="op">&lt;&gt;</span> <span class="op">&amp;</span>builder<span class="op">,</span> <span class="dt">int</span> inc<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>pos <span class="op">=</span> builder<span class="op">.</span>CreateLoad<span class="op">(</span>builder<span class="op">.</span>getInt32Ty<span class="op">(),</span> headPositionVar<span class="op">);</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>cellPtr <span class="op">=</span> builder<span class="op">.</span>CreateGEP<span class="op">(</span>builder<span class="op">.</span>getInt8Ty<span class="op">(),</span> tapePtr<span class="op">,</span> pos<span class="op">);</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>cell <span class="op">=</span> builder<span class="op">.</span>CreateLoad<span class="op">(</span>builder<span class="op">.</span>getInt8Ty<span class="op">(),</span> cellPtr<span class="op">);</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>newValue <span class="op">=</span> builder<span class="op">.</span>CreateAdd<span class="op">(</span>cell<span class="op">,</span> builder<span class="op">.</span>getInt8<span class="op">(</span>inc<span class="op">));</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>CreateStore<span class="op">(</span>newValue<span class="op">,</span> cellPtr<span class="op">);</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Nessa função, o primeiro passo é obter a posição atual da <em>head</em>, armazenada em uma variável global. Como globais em LLVM são representadas como ponteiros, realizamos um carregamento (<code>load</code>) do valor da <em>head</em> a partir desse ponteiro. Com essa posição em mãos, usamos a instrução <code>GEP</code> (GetElementPtr) para calcular o endereço exato na memória onde o valor da célula correspondente se encontra. Após isso, realizamos o carregamento do valor contido na célula, aplicamos a operação de adição com o incremento recebido (que pode ser positivo ou negativo), e então armazenamos o novo valor de volta nesse endereço.</p>
+<p>As instruções <code>&lt;</code> e <code>&gt;</code> são tratadas de forma similar, com a diferença de que elas apenas modificam a posição da <em>head</em>. A função responsável por isso é a <code>InsertPtrIncIR</code>, representada pelo código abaixo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> InsertPtrIncIR<span class="op">(</span>IRBuilder<span class="op">&lt;&gt;</span> <span class="op">&amp;</span>builder<span class="op">,</span> <span class="dt">int</span> inc<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>pos <span class="op">=</span> builder<span class="op">.</span>CreateLoad<span class="op">(</span>builder<span class="op">.</span>getInt32Ty<span class="op">(),</span> headPositionVar<span class="op">);</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>newValue <span class="op">=</span> builder<span class="op">.</span>CreateAdd<span class="op">(</span>pos<span class="op">,</span> builder<span class="op">.</span>getInt32<span class="op">(</span>inc<span class="op">));</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>CreateStore<span class="op">(</span>newValue<span class="op">,</span> headPositionVar<span class="op">);</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Nessa função temos um carregamento da posição atual da <em>head</em>, onde aplicamos a operação de incremento ou decremento, e então por fim armazenamos o novo valor na variável global que representa a posição da cabeça da fita.</p>
+<p>Por fim temos as instruções <code>.</code> e <code>,</code>, que correspondem respectivamente às chamadas às funções <code>putchar</code> e <code>getchar</code>. Ambas compartilham uma estrutura muito parecida, como apresentado nos códigos abaixo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> InsertPutCharIR<span class="op">(</span>IRBuilder<span class="op">&lt;&gt;</span> <span class="op">&amp;</span>builder<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>pos <span class="op">=</span> builder<span class="op">.</span>CreateLoad<span class="op">(</span>builder<span class="op">.</span>getInt32Ty<span class="op">(),</span> headPositionVar<span class="op">);</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>cellPtr <span class="op">=</span> builder<span class="op">.</span>CreateGEP<span class="op">(</span>builder<span class="op">.</span>getInt8Ty<span class="op">(),</span> tapePtr<span class="op">,</span> pos<span class="op">);</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>cell <span class="op">=</span> builder<span class="op">.</span>CreateLoad<span class="op">(</span>builder<span class="op">.</span>getInt8Ty<span class="op">(),</span> cellPtr<span class="op">);</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>putcharParams<span class="op">[]</span> <span class="op">=</span> <span class="op">{</span>cell<span class="op">};</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    CallInst <span class="op">*</span>putcharCall <span class="op">=</span> builder<span class="op">.</span>CreateCall<span class="op">(</span>putChar<span class="op">,</span> putcharParams<span class="op">);</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    putcharCall<span class="op">-&gt;</span>setTailCall<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> InsertGetCharIR<span class="op">(</span>IRBuilder<span class="op">&lt;&gt;</span> <span class="op">&amp;</span>builder<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    CallInst <span class="op">*</span>getCharCall <span class="op">=</span> builder<span class="op">.</span>CreateCall<span class="op">(</span>getChar<span class="op">);</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    getCharCall<span class="op">-&gt;</span>setTailCall<span class="op">(</span><span class="kw">false</span><span class="op">);</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>read <span class="op">=</span> builder<span class="op">.</span>CreateTrunc<span class="op">(</span>getCharCall<span class="op">,</span> builder<span class="op">.</span>getInt8Ty<span class="op">());</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>pos <span class="op">=</span> builder<span class="op">.</span>CreateLoad<span class="op">(</span>builder<span class="op">.</span>getInt32Ty<span class="op">(),</span> headPositionVar<span class="op">);</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>cellPtr <span class="op">=</span> builder<span class="op">.</span>CreateGEP<span class="op">(</span>builder<span class="op">.</span>getInt8Ty<span class="op">(),</span> tapePtr<span class="op">,</span> pos<span class="op">);</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>CreateStore<span class="op">(</span>read<span class="op">,</span> cellPtr<span class="op">);</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>No caso da <code>InsertPutCharIR</code>, recuperamos novamente a posição da <em>head</em>, calculamos o endereço da célula com <code>GEP</code>, carregamos o valor armazenado e o passamos como argumento para a chamada da função <code>putchar</code>. Já na função <code>InsertGetCharIR</code>, realizamos a chamada da função <code>getchar</code>, truncamos o valor retornado para um byte (já que as células da fita têm tamanho de 8 bits), determinamos a posição atual da <em>head</em>, e armazenamos esse valor na célula apropriada.</p>
+<p>É interessante perceber como essas funções, apesar de lidarem com diferentes comandos, seguem padrões muito semelhantes de operação. Todas elas manipulam valores diretamente relacionados à posição da <em>head</em> na fita, realizam operações simples como incrementos, carregamentos ou chamadas de função, e utilizam instruções bem definidas e diretas do LLVM. Cada comando é mapeado para um pequeno conjunto de instruções IR, o que torna o código resultante próximo de um código de máquina.</p>
+</section>
+<section id="construção-de-loops" class="level4" data-number="7.4.3.6">
+<h4 data-number="7.4.3.6" class="anchored" data-anchor-id="construção-de-loops"><span class="header-section-number">7.4.3.6</span> Construção de Loops</h4>
+<p>A estrutura de um loop no Brainfuck é, um dos componentes mais complexos de se implementar. Isso acontece porque ela exige certo conhecimento prévio sobre como a construção de fluxo de controle funciona no LLVM. Como já foi explicado anteriormente, o LLVM trabalha com a ideia de blocos básicos. Cada bloco básico deve, obrigatoriamente, ser encerrado por uma instrução que defina claramente o próximo passo no fluxo de execução. Isso é feito geralmente por meio de instruções de <em>branch</em>, que direcionam o fluxo para outro bloco básico, ou por instruções de término, como um <code>return</code>.</p>
+<p>Diante disso, antes mesmo de gerarmos o código para a criação dos loops do Brainfuck, precisamos compreender que essa estrutura de controle precisa ser devidamente respeitada dentro do modelo do LLVM. Em Brainfuck, os loops seguem uma lógica bem específica: ao encontrarmos um caractere <code>[</code>, é necessário verificar se o valor da célula atual é igual a zero. Se for, podemos pular diretamente para o final do loop. Caso contrário, o corpo do loop precisa ser executado. Após executar esse corpo, a próxima verificação ocorre quando encontramos o caractere <code>]</code>, momento em que voltamos a verificar o valor da célula atual. Se o valor for zero, encerramos o loop, se não, voltamos à execução do corpo do laço.</p>
+<p>Uma maneira clara de visualizar essa estrutura é por meio da seguinte imagem:</p>
+<div id="fig-loop-ir" class="quarto-float quarto-figure quarto-figure-center anchored" alt="loop-ir">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-loop-ir-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/llvm/brain.png" title="Loop IR" class="img-fluid figure-img" alt="loop-ir">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-loop-ir-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7.4: Loop IR
+</figcaption>
+</figure>
+</div>
+<p>A imagem acima representa a compilação da linha de código <code>[+&gt;]</code> em Brainfuck. Podemos observar que, antes do início do loop, existe um bloco qualquer, neste caso é o <code>init</code>, que representa a porção de código que precede o loop. Em seguida, temos o <code>loop.guard</code>, que é o bloco responsável por verificar se o loop deve ou não ser executado. Esse bloco é a tradução direta do caractere <code>[</code>. Se a condição for falsa, saltamos diretamente para o <code>loop.end</code>, que representa o final do loop (e que poderia apontar para qualquer outro ponto do programa). Se a condição for verdadeira, prosseguimos para o bloco <code>loop.body</code>, onde estão as instruções internas do loop, no nosso exemplo é a instrução <code>+&gt;</code>. Ao final da execução do corpo, há um salto para o bloco <code>loop.cond</code>, que realiza uma nova verificação da condição de parada, funcionando como o caractere <code>]</code>.</p>
+<p>A função que estrutura esse comportamento é a <code>InsertStartLoopIR</code>, responsável por criar os blocos básicos que formam a estrutura do laço. Veja seu código a seguir:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insertCondBranchIR<span class="op">(</span>BasicBlock <span class="op">*</span>predBlock<span class="op">,</span> BasicBlock <span class="op">*</span>thenBlock<span class="op">,</span> BasicBlock <span class="op">*</span>elseBlock<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>unique_ptr<span class="op">&lt;</span>IRBuilder<span class="op">&lt;&gt;&gt;</span> builder <span class="op">=</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>IRBuilder<span class="op">&lt;&gt;&gt;(</span>predBlock<span class="op">);</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>pos <span class="op">=</span> builder<span class="op">-&gt;</span>CreateLoad<span class="op">(</span>builder<span class="op">-&gt;</span>getInt32Ty<span class="op">(),</span> headPositionVar<span class="op">);</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>cellPtr <span class="op">=</span> builder<span class="op">-&gt;</span>CreateGEP<span class="op">(</span>builder<span class="op">-&gt;</span>getInt8Ty<span class="op">(),</span> tapePtr<span class="op">,</span> pos<span class="op">);</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>cell <span class="op">=</span> builder<span class="op">-&gt;</span>CreateLoad<span class="op">(</span>builder<span class="op">-&gt;</span>getInt8Ty<span class="op">(),</span> cellPtr<span class="op">);</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    Value <span class="op">*</span>cond <span class="op">=</span> builder<span class="op">-&gt;</span>CreateICmpNE<span class="op">(</span>cell<span class="op">,</span> builder<span class="op">-&gt;</span>getInt8<span class="op">(</span><span class="dv">0</span><span class="op">));</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">-&gt;</span>CreateCondBr<span class="op">(</span>cond<span class="op">,</span> thenBlock<span class="op">,</span> elseBlock<span class="op">);</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>BasicBlock <span class="op">*</span>InsertStartLoopIR<span class="op">(</span>IRBuilder<span class="op">&lt;&gt;</span> <span class="op">&amp;</span>builder<span class="op">,</span> Function <span class="op">*</span>brainfck<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    BasicBlock <span class="op">*</span>LoopGuard <span class="op">=</span> BasicBlock<span class="op">::</span>Create<span class="op">(*</span>ctx<span class="op">,</span> LOOP_GUARD_LABEL<span class="op">,</span> brainfck<span class="op">);</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    BasicBlock <span class="op">*</span>LoopBody <span class="op">=</span> BasicBlock<span class="op">::</span>Create<span class="op">(*</span>ctx<span class="op">,</span> LOOP_BODY_LABEL<span class="op">,</span> brainfck<span class="op">);</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    BasicBlock <span class="op">*</span>LoopEnd <span class="op">=</span> BasicBlock<span class="op">::</span>Create<span class="op">(*</span>ctx<span class="op">,</span> LOOP_END_LABEL<span class="op">,</span> brainfck<span class="op">);</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>CreateBr<span class="op">(</span>LoopGuard<span class="op">);</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>SetInsertPoint<span class="op">(</span>LoopGuard<span class="op">);</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    insertCondBranchIR<span class="op">(</span>LoopGuard<span class="op">,</span> LoopBody<span class="op">,</span> LoopEnd<span class="op">);</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>SetInsertPoint<span class="op">(</span>LoopGuard<span class="op">);</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>    BasicBlock <span class="op">*</span>LoopCond <span class="op">=</span> InsertBrainIR_r<span class="op">(</span>brainfck<span class="op">,</span> <span class="bu">std::</span>make_unique<span class="op">&lt;</span>IRBuilder<span class="op">&lt;&gt;&gt;(</span>LoopBody<span class="op">),</span> LoopBody<span class="op">);</span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>    insertCondBranchIR<span class="op">(</span>LoopCond<span class="op">,</span> LoopBody<span class="op">,</span> LoopEnd<span class="op">);</span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>SetInsertPoint<span class="op">(</span>LoopEnd<span class="op">);</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> LoopEnd<span class="op">;</span></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Observe que, inicialmente, são definidos os três blocos básicos principais: <code>LoopGuard</code>, <code>LoopBody</code> e <code>LoopEnd</code>. A execução do bloco anterior ao laço é redirecionada para <code>LoopGuard</code>, que passa a ser o ponto de inserção das próximas instruções. A seguir, a função <code>insertCondBranchIR</code> é chamada para inserir a verificação da célula atual, decidindo se seguimos para o corpo do loop ou para o final.</p>
+<p>Logo após, é chamada a função recursiva <code>InsertBrainIR_r</code>, que é responsável por inserir todas as instruções contidas dentro dos colchetes. Ao retornar dessa chamada, inserimos novamente uma verificação de condição, agora a partir do bloco <code>LoopCond</code>, o qual, dependendo do valor da célula atual, direciona o fluxo de volta para o <code>LoopBody</code>, reiniciando o loop, ou para o <code>LoopEnd</code>. Por fim, apontamos o <code>LoopEnd</code> como o novo ponto de inserção de instruções e retornamos esse bloco.</p>
+<p>A última função relevante nesse contexto é a <code>InsertLoopExitCondIR</code>, que cria o bloco de condição do laço (<code>loop.cond</code>) e conecta a ele ao <code>loop.body</code>. Esse bloco é então utilizado posteriormente como base para a nova verificação de condição, formando o par com o colchete <code>[</code> que iniciou a criação do laço. O seu código é dado pelo seguinte:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>BasicBlock <span class="op">*</span>InsertLoopExitCondIR<span class="op">(</span>IRBuilder<span class="op">&lt;&gt;</span> <span class="op">&amp;</span>builder<span class="op">,</span> Function <span class="op">*</span>brainfck<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    BasicBlock <span class="op">*</span>LoopCond <span class="op">=</span> BasicBlock<span class="op">::</span>Create<span class="op">(</span>mod<span class="op">-&gt;</span>getContext<span class="op">(),</span> LOOP_COND_LABEL<span class="op">,</span> brainfck<span class="op">);</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>CreateBr<span class="op">(</span>LoopCond<span class="op">);</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    builder<span class="op">.</span>SetInsertPoint<span class="op">(</span>LoopCond<span class="op">);</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> LoopCond<span class="op">;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+</section>
+<section id="passos" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="passos"><span class="header-section-number">7.5</span> Passos</h2>
+<p>O núcleo das bibliotecas do LLVM é responsável por otimizar o código IR (Intermediate Representation) gerado pelo compilador. Para isso, o LLVM utiliza um processo baseado em <strong>passes</strong>, unidades independentes de análise ou otimização que são aplicadas sobre o IR para melhorar ao máximo a eficiência do código final.</p>
+<p>Uma das grandes vantagens desse modelo é a modularidade. Isso permite separar o compilador em diversas etapas independentes e utilizar apenas aquelas que fazem sentido para um caso de uso específico. Para desenvolvedores de compiladores, isso é especialmente útil: conhecendo bem as características de sua linguagem, eles podem escolher quais passes aplicar e em qual ordem, obtendo otimizações mais adequadas.</p>
+<p>No LLVM, os passes são categorizados principalmente em: - <strong>Module</strong>: Operam sobre o módulo inteiro (<code>Module</code>), analisando ou transformando o programa como um todo. São comuns em análises que envolvem múltiplas funções. - <strong>Call Graph</strong>: Operam sobre Componentes Fortemente Conexos, também chamados SCCs, do grafo de chamadas. Parecidos com passes de módulo, mas focados nas funções que estão interligadas, geralmente processando-as na ordem <em>bottom-up</em>. - <strong>Function</strong>: Aplicados diretamente em funções. - <strong>Loop</strong>: Aplicados a loops.</p>
+<p>Além das transformações, os passes também desempenham um papel fundamental na análise do código. É por meio deles que o compilador identifica a hierarquia de funções, a relação entre blocos e instruções, e outras informações estruturais. Muitas análises são compartilhadas com passes de transformação, fornecendo dados que permitam uma otimização mais acertada.</p>
+<section id="estrutura-do-projeto" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="estrutura-do-projeto"><span class="header-section-number">7.5.1</span> Estrutura do Projeto</h3>
+<p>Para criar um passo no LLVM, é necessário que o projeto esteja configurado de maneira compatível com a biblioteca. Como mencionado anteriormente, o LLVM utiliza o CMake como sistema de <em>build</em>, por esse motivo também iremos utilizar esse sistema para construir o passo.</p>
+<p>O arquivo a ser configurado tem o nome <code>CMakeLists.txt</code> e deve estar no diretório raiz do projeto. Segue abaixo o seu arquivo de configuração:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode cmake code-with-copy"><code class="sourceCode cmake"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">cmake_minimum_required</span>(<span class="ot">VERSION</span> <span class="dt">3.12</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">project</span>(Passes)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="kw">set</span>(<span class="dv">CMAKE_CXX_STANDARD</span> 17)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="kw">find_package</span>(LLVM <span class="ot">REQUIRED</span> <span class="ot">CONFIG</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="kw">include</span>(AddLLVM)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="kw">add_definitions</span>(<span class="dv">${LLVM_DEFINITIONS}</span>)</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="kw">include_directories</span>(<span class="dv">${LLVM_INCLUDE_DIRS}</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="kw">link_directories</span>(<span class="dv">${LLVM_LIBRARY_DIRS}</span>)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="kw">add_subdirectory</span>(passes/FunctionPrint)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Nesse arquivo temos as seguinte configurações: - <code>cmake_minimum_required</code>: Define a versão mínima necessária do CMake; - <code>project</code>: O nome do projeto; - <code>set(CMAKE_CXX_STANDARD 17)</code>: Especifica o padrão C++ utilizado; - <code>find_package(LLVM REQUIRED CONFIG)</code>: Localiza o CMake de configuração do LLVM, que é instalado junto com a sua versão de desenvolvimento; - <code>include(AddLLVM)</code>: Importa macros e funções auxiliares específicas do LLVM para a construção de passos; - <code>add_definitions</code>,<code>include_directoreis</code>,<code>link_directories</code>: São variáveis fornecidas pelo próprio LLVM para garantir que a compilação encontre corretamente os cabeçalhos, definições e bibliotecas necessárias; - <code>add_subdirectory</code>: Inclui os diretórios onde os diferentes passes estão implementados permitindo que eles sejam compilados como parte do projeto;</p>
+<p>A parte mais importante dessa configuração está no comando <code>add_subdirectory</code>, pois é ele que define o caminho para cada passo do LLVM a ser compilado. No exemplo acima, temos o passo <code>FunctionPrint</code>, localizado no diretório <code>passes</code>.</p>
+<p>Tendo então criado esses diretórios teremos a seguinte estrutura:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">passes/</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> FunctionPrint</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> CMakeLists.txt</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> FunctionPrint.cpp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Dentro de cada diretório de passo, é necessário criar um novo arquivo <code>CMakeLists.txt</code>. Neste arquivo iremos definir o nome do passo e os arquivos que precisam ser compilados para formar esse passo. O exemplo para a configuração do passo acima seria:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode cmake code-with-copy"><code class="sourceCode cmake"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add_llvm_pass_plugin</span>(FunctionPrintPass</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    FunctionPrint.cpp</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>O comando <code>add_llvm_pass_plugin</code> indica ao CMake que deve criar um plugin de passo para o LLVM, atribuindo o nome <code>FunctionPrintPass</code> e compilando o arquivo <code>FunctionPrint.cpp</code>.</p>
+</section>
+<section id="criando-um-passo" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="criando-um-passo"><span class="header-section-number">7.5.2</span> Criando um Passo</h3>
+<p>Como mencionado anteriormente, a infraestrutura do LLVM possui diferentes tipos de passos. Iremos apresentar o como implementar alguns exemplos dentro dos principais diferentes tipos.</p>
+<section id="module-pass---functionprinting" class="level4" data-number="7.5.2.1">
+<h4 data-number="7.5.2.1" class="anchored" data-anchor-id="module-pass---functionprinting"><span class="header-section-number">7.5.2.1</span> <em>Module Pass</em> - <code>FunctionPrinting</code></h4>
+<p>Neste exemplo, vamos implementar um passo de módulo que percorre as funções de um módulo e imprime seus nomes, uma espécie de “Hello World” dos passes.</p>
+<p>Para isso é necessário criar uma estrutura que possa fazer parte da pipeline de passos, para isso usamos a seguinte estrutura:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> FunctionPrintingPass <span class="op">:</span> <span class="kw">public</span> PassInfoMixin<span class="op">&lt;</span>FunctionPrintingPass<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    PreservedAnalyses run<span class="op">(</span>Module <span class="op">&amp;</span>M<span class="op">,</span> ModuleAnalysisManager <span class="op">&amp;</span>AM<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">&amp;</span>F <span class="op">:</span> M<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>        errs<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">"Function: "</span> <span class="op">&lt;&lt;</span> F<span class="op">.</span>getName<span class="op">()</span> <span class="op">&lt;&lt;</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span><span class="op">;</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> PreservedAnalyses<span class="op">::</span>all<span class="op">();</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Aqui temos a definição do passo chamado <code>FunctionPrintingPass</code>, que herda de <code>PassInfoMixin</code>. O método <code>run</code> é a função mais importante do passo, é ela que recebe o módulo sobre o qual o passo será aplicado e realiza o processamento.</p>
+<p>No exemplo, iteramos sobre todas as funções do módulo <code>M</code> e imprimimos seus nomes usando <code>errs()</code> (basicamente o <code>cerr</code> só do que do LLVM).</p>
+<p>O valor de retorno informa ao gerenciador de passes se o código foi modificado (e, portanto, se outras análises precisam ser refeitas). Como não modificamos nada aqui, indicamos que todas as análises são preservadas.</p>
+<p>Após implementar o passo, é necessário registrá-lo para que o LLVM o reconheça e possa executá-lo. Para isso usamos o seguinte código:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="at">extern</span> <span class="st">"C"</span> LLVM_ATTRIBUTE_WEAK <span class="op">::</span>llvm<span class="op">::</span>PassPluginLibraryInfo llvmGetPassPluginInfo<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">{</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>APIVersion <span class="op">=</span> LLVM_PLUGIN_API_VERSION<span class="op">,</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>PluginName <span class="op">=</span> <span class="st">"Function Naming Pass"</span><span class="op">,</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>PluginVersion <span class="op">=</span> <span class="st">"v0.1"</span><span class="op">,</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>        <span class="op">.</span>RegisterPassBuilderCallbacks <span class="op">=</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>            <span class="op">[](</span>PassBuilder <span class="op">&amp;</span>PB<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>                PB<span class="op">.</span>registerPipelineParsingCallback<span class="op">(</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>                    <span class="op">[](</span>StringRef Name<span class="op">,</span> ModulePassManager <span class="op">&amp;</span>MPM<span class="op">,</span></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>                        ArrayRef<span class="op">&lt;</span>PassBuilder<span class="op">::</span>PipelineElement<span class="op">&gt;)</span> <span class="op">{</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>                            <span class="cf">if</span> <span class="op">(</span>Name <span class="op">==</span> <span class="st">"function-print"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>                                MPM<span class="op">.</span>addPass<span class="op">(</span>FunctionPrintingPass<span class="op">());</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>                                <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>                            <span class="op">}</span></span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>                    <span class="op">});</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>                PB<span class="op">.</span>registerPipelineStartEPCallback<span class="op">([](</span>ModulePassManager <span class="op">&amp;</span>MPM<span class="op">,</span> OptimizationLevel Level<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>                    MPM<span class="op">.</span>addPass<span class="op">(</span>FunctionPrintingPass<span class="op">());</span></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>                <span class="op">});</span></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>            <span class="op">},</span></span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Apesar de parecer complexo, o que estamos fazendo aqui é retornar a estrutura <code>PassPluginLibraryInfo</code>, e nela registramos a seguintes informações: A versão da API do LLVM utilizada; O nome e a versão do plugin; A função que registra o passo junto ao <code>PassBuilder</code>, permitindo que ele seja chamado durante a execução do compilador ou da ferramenta <code>opt</code>.</p>
+<p>Além dessas informações de metadados, temos que registrar um callback ao LLVM, que vai indicar ao sistema o quando esse passo deve ser executado. Acima estamos registrando o passo em dois momentos: - <code>registerPipelineParsingCallback</code>: permite ativar o passo quando executamos <code>opt</code> com a opção <code>-passes=function-print</code>. - <code>registerPipelineStartEPCallback</code>: adiciona o passo automaticamente no início da pipeline padrão, fazendo com que ele seja executado em qualquer otimização aplicada.</p>
+<p>Após esses dois passos podemos compilar o plugin, como fizemos o registro do plugin em dois momentos diferentes, podemos testá-lo de duas formas também.</p>
+<p>A primeira delas é utilizando o próprio compilador e esperando que o mesmo chame esse passo ao longo de suas execução. Isso é feito da seguinte maneira:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clang</span> <span class="at">-fpass-plugin</span><span class="op">=</span>build/passes/FunctionPrint/FunctionPrintPass.so tests/FunctionPrint.c <span class="at">-o</span> tests/FunctionPrint.a</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>O segundo método é compilando o código como IR, e então aplicando o passo nesse arquivo. Isso é feito da seguinte forma:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clang</span> <span class="at">-S</span> <span class="at">-emit-llvm</span> tests/FunctionPrint.c <span class="at">-o</span> tests/FunctionPrint.ll</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="ex">opt</span> <span class="at">-S</span> <span class="at">-load-pass-plugin</span><span class="op">=</span>./build/passes/FunctionPrint/FunctionPrintPass.so <span class="at">-passes</span><span class="op">=</span><span class="st">"function-print"</span> tests/FunctionPrint.ll <span class="at">-disable-output</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Em ambos os casos, o passo é carregado como uma biblioteca dinâmica (<code>.so</code>) para que o compilador reconheça e execute o plugin.</p>
+</section>
+<section id="function-pass---reachableinteger" class="level4" data-number="7.5.2.2">
+<h4 data-number="7.5.2.2" class="anchored" data-anchor-id="function-pass---reachableinteger"><span class="header-section-number">7.5.2.2</span> <em>Function Pass</em> - <code>ReachableInteger</code></h4>
+<p>O objetivo deste passo é identificar todos os inteiros acessíveis por uma função. Trata-se de um passo de análise, ou seja, ele coleta informações sem modificar o código. Além disso, vamos criar um segundo passo responsável por consumir o resultado da análise e exibir as informações encontradas.</p>
+<p>A primeira estrutura a definir é a própria análise, composta por um tipo que representa o resultado (<code>FuncReachableInt</code>) e a implementação do passo (<code>ReachableInteger</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> FuncReachableInt <span class="op">{</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span>llvm<span class="op">::</span>Value <span class="op">*&gt;</span> Globals<span class="op">;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>vector<span class="op">&lt;</span>llvm<span class="op">::</span>Value <span class="op">*&gt;</span> Args<span class="op">;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    llvm<span class="op">::</span>MapVector<span class="op">&lt;</span>llvm<span class="op">::</span>BasicBlock <span class="at">const</span> <span class="op">*,</span> <span class="bu">std::</span>vector<span class="op">&lt;</span>llvm<span class="op">::</span>Value <span class="op">*&gt;&gt;</span> Inst<span class="op">;</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> ReachableInteger <span class="op">:</span> <span class="kw">public</span> llvm<span class="op">::</span>AnalysisInfoMixin<span class="op">&lt;</span>ReachableInteger<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">using</span> Result <span class="op">=</span> FuncReachableInt<span class="op">;</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    Result run<span class="op">(</span>llvm<span class="op">::</span>Function <span class="op">&amp;</span>F<span class="op">,</span> llvm<span class="op">::</span>FunctionAnalysisManager <span class="op">&amp;</span>FAM<span class="op">);</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">static</span> <span class="dt">bool</span> isRequired<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">static</span> llvm<span class="op">::</span>AnalysisKey Key<span class="op">;</span></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">friend</span> <span class="kw">struct</span> llvm<span class="op">::</span>AnalysisInfoMixin<span class="op">&lt;</span>ReachableInteger<span class="op">&gt;;</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Nessa estrutura temos o seguinte: - <code>FuncReachableInt</code> armazena os inteiros encontrados, separados em globais argumentos e instruções; - O método <code>run</code> já explicado; - O método <code>isRequired</code> retorna <code>true</code> para forçar a execução do passo, mesmo quando o compilador tenta pular otimizações, como é o caso do <code>optnone</code>; - <code>AnalysisKey</code> que é uma chave única usada internamente pelo LLVM para identificar a análise; - <code>ReachablIntegerPrinter</code> não faz parte da estrutura em si, mas é importante resaltar que ele foi especificado aqui para poder acessar as estruturas do passo de análise;</p>
+<p>O <code>ReachablIntegerPrinter</code> é uma estrutura simples que aqui é usada para imprimir os diferentes inteiros presentes no passo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ReachableIntegerPrinter <span class="op">:</span> <span class="kw">public</span> llvm<span class="op">::</span>PassInfoMixin<span class="op">&lt;</span>ReachableIntegerPrinter<span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    llvm<span class="op">::</span>raw_ostream <span class="op">&amp;</span>OS<span class="op">;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">explicit</span> ReachableIntegerPrinter<span class="op">(</span>llvm<span class="op">::</span>raw_ostream <span class="op">&amp;</span>OS<span class="op">)</span> <span class="op">:</span> OS<span class="op">(</span>OS<span class="op">)</span> <span class="op">{}</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    llvm<span class="op">::</span>PreservedAnalyses run<span class="op">(</span>llvm<span class="op">::</span>Function <span class="op">&amp;</span>F<span class="op">,</span> llvm<span class="op">::</span>FunctionAnalysisManager <span class="op">&amp;</span>FAM<span class="op">);</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">static</span> <span class="dt">bool</span> isRequired<span class="op">()</span> <span class="op">{</span> <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A única diferença nessa estrutura está no fato de que ela recebe um <code>raw_ostream</code>, que é uma estrutura usada no LLVM, que permite que as informações sejam imprimidas. Muito usado em passos de debug, para auxiliar o desenvolvedor.</p>
+<p>Abaixo temos o código da implementação da análise:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>AnalysisKey ReachableInteger<span class="op">::</span>Key<span class="op">;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>ReachableInteger<span class="op">::</span>Result</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>ReachableInteger<span class="op">::</span>run<span class="op">(</span>llvm<span class="op">::</span>Function <span class="op">&amp;</span>F<span class="op">,</span> llvm<span class="op">::</span>FunctionAnalysisManager <span class="op">&amp;</span>FAM<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>FuncReachableInt FRI<span class="op">;</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">&amp;</span>G <span class="op">:</span> F<span class="op">.</span>getParent<span class="op">()-&gt;</span>globals<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>G<span class="op">.</span>getValueType<span class="op">()-&gt;</span>isIntegerTy<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>            FRI<span class="op">.</span>Globals<span class="op">.</span>push_back<span class="op">(&amp;</span>G<span class="op">);</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">&amp;</span>A <span class="op">:</span> F<span class="op">.</span>args<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>A<span class="op">.</span>getType<span class="op">()-&gt;</span>isIntegerTy<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>            FRI<span class="op">.</span>Args<span class="op">.</span>push_back<span class="op">(&amp;</span>A<span class="op">);</span></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">&amp;</span>BB <span class="op">:</span> F<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="kw">auto</span> <span class="op">&amp;</span>I <span class="op">:</span> BB<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="op">(</span>I<span class="op">.</span>getType<span class="op">()-&gt;</span>isIntegerTy<span class="op">())</span> <span class="op">{</span></span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>                FRI<span class="op">.</span>Inst<span class="op">[&amp;</span>BB<span class="op">].</span>push_back<span class="op">(&amp;</span>I<span class="op">);</span></span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> FRI<span class="op">;</span></span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Aqui percorremos as principais estruturas da função buscando os interios visíveis a essa função. Aqui no caso são as variáveis globais, os argumentos da função e demais inteiros que façam parte de alguma instrução.</p>
+<p>Abaixo temos a implementação do passo de impressão:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>llvm<span class="op">::</span>PreservedAnalyses</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>ReachableIntegerPrinter<span class="op">::</span>run<span class="op">(</span>llvm<span class="op">::</span>Function <span class="op">&amp;</span>F<span class="op">,</span> llvm<span class="op">::</span>FunctionAnalysisManager <span class="op">&amp;</span>FAM<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    ReachableInteger<span class="op">::</span>Result InstMap <span class="op">=</span> FAM<span class="op">.</span>getResult<span class="op">&lt;</span>ReachableInteger<span class="op">&gt;(</span>F<span class="op">);</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    printOpcodeCounterResult<span class="op">(</span>OS<span class="op">,</span> F<span class="op">.</span>getName<span class="op">(),</span> InstMap<span class="op">);</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> PreservedAnalyses<span class="op">::</span>all<span class="op">();</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>O passo da impressão recebe o resultado da análise (<code>FAM.getResult&lt;ReachableInteger&gt;</code>) e a partir disso chama a função (<code>printOpCodeCounterResult</code>) para exibir os dados.</p>
+<p>Por fim temos o código de registro do passo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode c++ code-with-copy"><code class="sourceCode cpp"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>PassPluginLibraryInfo getPassPluginInfo<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">{</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>        LLVM_PLUGIN_API_VERSION<span class="op">,</span> <span class="st">"reach-int"</span><span class="op">,</span> LLVM_VERSION_STRING<span class="op">,</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>        <span class="op">[](</span>PassBuilder <span class="op">&amp;</span>PB<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>            PB<span class="op">.</span>registerPipelineParsingCallback<span class="op">(</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>                <span class="op">[&amp;](</span>StringRef Name<span class="op">,</span> FunctionPassManager <span class="op">&amp;</span>FPM<span class="op">,</span> ArrayRef<span class="op">&lt;</span>PassBuilder<span class="op">::</span>PipelineElement<span class="op">&gt;)</span> <span class="op">{</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> <span class="op">(</span>Name <span class="op">==</span> <span class="st">"print&lt;reach-int&gt;"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>                        FPM<span class="op">.</span>addPass<span class="op">(</span>ReachableIntegerPrinter<span class="op">(</span>errs<span class="op">()));</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>                    <span class="op">}</span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>                <span class="op">});</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>            PB<span class="op">.</span>registerAnalysisRegistrationCallback<span class="op">(</span></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>                <span class="op">[](</span>FunctionAnalysisManager <span class="op">&amp;</span>FAM<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>                    FAM<span class="op">.</span>registerPass<span class="op">([&amp;]</span> <span class="op">{</span> <span class="cf">return</span> ReachableInteger<span class="op">();</span> <span class="op">});</span></span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>                <span class="op">});</span></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a><span class="at">extern</span> <span class="st">"C"</span> LLVM_ATTRIBUTE_WEAK PassPluginLibraryInfo llvmGetPassPluginInfo<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> getPassPluginInfo<span class="op">();</span></span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Aqui registramos os dois passos, o primeiro deles é o <code>print&lt;reach-int&gt;</code> que é o responsável pela impressão dos valores em si, e o segundo é o <code>ReachableInteger</code> usado em <code>FunctionAnalysisManager</code>.</p>
+</section>
+</section>
+</section>
+<section id="sec-llvm-consid-finais" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="sec-llvm-consid-finais"><span class="header-section-number">7.6</span> Considerações Finais</h2>
+<p>Ao longo deste minicurso, procurei abordar o máximo possível de conceitos, exemplos e práticas para que você pudesse ter uma visão ampla do LLVM, desde sua instalação até a criação de um JIT e a implementação de passes. A intenção foi criar uma base sólida que ajude a reduzir aquela sensação de estar completamente perdido ao se deparar com a ferramenta em um projeto real ou em um estudo mais avançado. Ainda assim, o LLVM é vasto e cheio de detalhes que só podem ser explorados a fundo com estudo contínuo e prática. Por isso, tenha sempre em mente que a documentação oficial e os recursos da comunidade são seus melhores amigos. <span class="citation" data-cites="brainfuckAnotherBrainfuck"><span>“<span>Y</span>et Another Brainfuck Reference. — Brainfuck.org”</span></span> <span class="citation" data-cites="llvmLLVMLlvmModule"><span>“<span>L</span><span>L</span><span>V</span><span>M</span>: Llvm::<span>M</span>odule <span>C</span>lass <span>R</span>eference — Llvm.org”</span></span> <span class="citation" data-cites="llvmLLVMLlvmLLVMContext"><span>“<span>L</span><span>L</span><span>V</span><span>M</span>: Llvm::<span>L</span><span>L</span><span>V</span><span>M</span><span>C</span>ontext <span>C</span>lass <span>R</span>eference — Llvm.org”</span></span> <span class="citation" data-cites="llvmLLVMIncludellvmIRDerivedTypesh"><span>“<span>L</span><span>L</span><span>V</span><span>M</span>: Include/Llvm/<span>I</span><span>R</span>/<span>D</span>erived<span>T</span>ypes.h <span>S</span>ource <span>F</span>ile — Llvm.org”</span></span> <span class="citation" data-cites="llvmOftenMisunderstood"><span>“<span>T</span>he <span>O</span>ften <span>M</span>isunderstood <span>G</span><span>E</span><span>P</span> <span>I</span>nstruction &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org”</span></span> <span class="citation" data-cites="aosabookArchitectureOpen"><span>“<span>T</span>he <span>A</span>rchitecture of <span>O</span>pen <span>S</span>ource <span>A</span>pplications (<span>V</span>olume 1)<span>L</span><span>L</span><span>V</span><span>M</span> — Aosabook.org”</span></span> <span class="citation" data-cites="llvmLLVMLanguage"><span>“<span>L</span><span>L</span><span>V</span><span>M</span> <span>L</span>anguage <span>R</span>eference <span>M</span>anual &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org”</span></span> <span class="citation" data-cites="mcyoungGentleIntroduction"><span>“<span>A</span> <span>G</span>entle <span>I</span>ntroduction to <span>L</span><span>L</span><span>V</span><span>M</span> <span>I</span><span>R</span> · Mcyoung — Mcyoung.xyz”</span></span> <span class="citation" data-cites="llvmLLVMLoop"><span>“<span>L</span><span>L</span><span>V</span><span>M</span> <span>L</span>oop <span>T</span>erminology (and <span>C</span>anonical <span>F</span>orms) &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org”</span></span> <span class="citation" data-cites="llvmLLVMCompiler"><span>“<span>T</span>he <span>L</span><span>L</span><span>V</span><span>M</span> <span>C</span>ompiler <span>I</span>nfrastructure <span>P</span>roject — Llvm.org”</span></span> <span class="citation" data-cites="llvmLLVMdevName"><span>“[<span>L</span><span>L</span><span>V</span><span>M</span>dev] <span>T</span>he Name of <span>L</span><span>L</span><span>V</span><span>M</span> — Lists.llvm.org”</span></span> <span class="citation" data-cites="llvmGettingStarted"><span>“<span>G</span>etting <span>S</span>tarted with the <span>L</span><span>L</span><span>V</span><span>M</span> <span>S</span>ystem &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org”</span></span> <span class="citation" data-cites="llvmLLVMx2019sAnalysis"><span>“<span>L</span><span>L</span><span>V</span><span>M</span>&amp;#x2019;s <span>A</span>nalysis and <span>T</span>ransform <span>P</span>asses &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org”</span></span> <span class="citation" data-cites="githubGitHubSampsyollvmpassskeleton"><span>“<span>G</span>it<span>H</span>ub - Sampsyo/Llvm-Pass-Skeleton: Example <span>L</span><span>L</span><span>V</span><span>M</span> Pass — Github.com”</span></span> <span class="citation" data-cites="llvmWritingLLVM"><span>“<span>W</span>riting an <span>L</span><span>L</span><span>V</span><span>M</span> <span>P</span>ass &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org”</span></span> <span class="citation" data-cites="llvmUsingPass"><span>“<span>U</span>sing the <span>N</span>ew <span>P</span>ass <span>M</span>anager &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org”</span></span> <span class="citation" data-cites="cornellLLVMGrad"><span>“<span>L</span><span>L</span><span>V</span><span>M</span> for <span>G</span>rad <span>S</span>tudents — Cs.cornell.edu”</span></span> <span class="citation" data-cites="githubGitHubBanachspacellvmtutor"><span>“<span>G</span>it<span>H</span>ub - Banach-Space/Llvm-Tutor: <span>A</span> Collection of Out-of-Tree <span>L</span><span>L</span><span>V</span><span>M</span> Passes for Teaching and Learning — Github.com”</span></span></p>
+</section>
+<section id="referências" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="referências"><span class="header-section-number">7.7</span> Referências</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-mcyoungGentleIntroduction" class="csl-entry" role="listitem">
+<span>“<span>A</span> <span>G</span>entle <span>I</span>ntroduction to <span>L</span><span>L</span><span>V</span><span>M</span> <span>I</span><span>R</span> · Mcyoung — Mcyoung.xyz.”</span> <a href="https://mcyoung.xyz/2023/08/01/llvm-ir/" class="uri">https://mcyoung.xyz/2023/08/01/llvm-ir/</a>.
+</div>
+<div id="ref-llvmGettingStarted" class="csl-entry" role="listitem">
+<span>“<span>G</span>etting <span>S</span>tarted with the <span>L</span><span>L</span><span>V</span><span>M</span> <span>S</span>ystem &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org.”</span> <a href="https://llvm.org/docs/GettingStarted.html" class="uri">https://llvm.org/docs/GettingStarted.html</a>.
+</div>
+<div id="ref-githubGitHubBanachspacellvmtutor" class="csl-entry" role="listitem">
+<span>“<span>G</span>it<span>H</span>ub - Banach-Space/Llvm-Tutor: <span>A</span> Collection of Out-of-Tree <span>L</span><span>L</span><span>V</span><span>M</span> Passes for Teaching and Learning — Github.com.”</span> <a href="https://github.com/banach-space/llvm-tutor/" class="uri">https://github.com/banach-space/llvm-tutor/</a>.
+</div>
+<div id="ref-githubGitHubSampsyollvmpassskeleton" class="csl-entry" role="listitem">
+<span>“<span>G</span>it<span>H</span>ub - Sampsyo/Llvm-Pass-Skeleton: Example <span>L</span><span>L</span><span>V</span><span>M</span> Pass — Github.com.”</span> <a href="https://github.com/sampsyo/llvm-pass-skeleton" class="uri">https://github.com/sampsyo/llvm-pass-skeleton</a>.
+</div>
+<div id="ref-cornellLLVMGrad" class="csl-entry" role="listitem">
+<span>“<span>L</span><span>L</span><span>V</span><span>M</span> for <span>G</span>rad <span>S</span>tudents — Cs.cornell.edu.”</span> <a href="https://www.cs.cornell.edu/~asampson/blog/llvm.html" class="uri">https://www.cs.cornell.edu/~asampson/blog/llvm.html</a>.
+</div>
+<div id="ref-llvmLLVMLanguage" class="csl-entry" role="listitem">
+<span>“<span>L</span><span>L</span><span>V</span><span>M</span> <span>L</span>anguage <span>R</span>eference <span>M</span>anual &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org.”</span> <a href="https://llvm.org/docs/LangRef.html" class="uri">https://llvm.org/docs/LangRef.html</a>.
+</div>
+<div id="ref-llvmLLVMLoop" class="csl-entry" role="listitem">
+<span>“<span>L</span><span>L</span><span>V</span><span>M</span> <span>L</span>oop <span>T</span>erminology (and <span>C</span>anonical <span>F</span>orms) &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org.”</span> <a href="https://llvm.org/docs/LoopTerminology.html" class="uri">https://llvm.org/docs/LoopTerminology.html</a>.
+</div>
+<div id="ref-llvmLLVMIncludellvmIRDerivedTypesh" class="csl-entry" role="listitem">
+<span>“<span>L</span><span>L</span><span>V</span><span>M</span>: Include/Llvm/<span>I</span><span>R</span>/<span>D</span>erived<span>T</span>ypes.h <span>S</span>ource <span>F</span>ile — Llvm.org.”</span> <a href="https://llvm.org/doxygen/DerivedTypes_8h_source.html" class="uri">https://llvm.org/doxygen/DerivedTypes_8h_source.html</a>.
+</div>
+<div id="ref-llvmLLVMLlvmLLVMContext" class="csl-entry" role="listitem">
+<span>“<span>L</span><span>L</span><span>V</span><span>M</span>: Llvm::<span>L</span><span>L</span><span>V</span><span>M</span><span>C</span>ontext <span>C</span>lass <span>R</span>eference — Llvm.org.”</span> <a href="https://llvm.org/doxygen/classllvm_1_1LLVMContext.html" class="uri">https://llvm.org/doxygen/classllvm_1_1LLVMContext.html</a>.
+</div>
+<div id="ref-llvmLLVMLlvmModule" class="csl-entry" role="listitem">
+<span>“<span>L</span><span>L</span><span>V</span><span>M</span>: Llvm::<span>M</span>odule <span>C</span>lass <span>R</span>eference — Llvm.org.”</span> <a href="https://llvm.org/doxygen/classllvm_1_1Module.html" class="uri">https://llvm.org/doxygen/classllvm_1_1Module.html</a>.
+</div>
+<div id="ref-llvmLLVMdevName" class="csl-entry" role="listitem">
+<span>“[<span>L</span><span>L</span><span>V</span><span>M</span>dev] <span>T</span>he Name of <span>L</span><span>L</span><span>V</span><span>M</span> — Lists.llvm.org.”</span> <a href="https://lists.llvm.org/pipermail/llvm-dev/2011-December/046445.html" class="uri">https://lists.llvm.org/pipermail/llvm-dev/2011-December/046445.html</a>.
+</div>
+<div id="ref-llvmLLVMx2019sAnalysis" class="csl-entry" role="listitem">
+<span>“<span>L</span><span>L</span><span>V</span><span>M</span>&amp;#x2019;s <span>A</span>nalysis and <span>T</span>ransform <span>P</span>asses &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org.”</span> <a href="https://llvm.org/docs/Passes.html#loops-natural-loop-information" class="uri">https://llvm.org/docs/Passes.html#loops-natural-loop-information</a>.
+</div>
+<div id="ref-aosabookArchitectureOpen" class="csl-entry" role="listitem">
+<span>“<span>T</span>he <span>A</span>rchitecture of <span>O</span>pen <span>S</span>ource <span>A</span>pplications (<span>V</span>olume 1)<span>L</span><span>L</span><span>V</span><span>M</span> — Aosabook.org.”</span> <a href="https://aosabook.org/en/v1/llvm.html" class="uri">https://aosabook.org/en/v1/llvm.html</a>.
+</div>
+<div id="ref-llvmLLVMCompiler" class="csl-entry" role="listitem">
+<span>“<span>T</span>he <span>L</span><span>L</span><span>V</span><span>M</span> <span>C</span>ompiler <span>I</span>nfrastructure <span>P</span>roject — Llvm.org.”</span> <a href="http://llvm.org/" class="uri">http://llvm.org/</a>.
+</div>
+<div id="ref-llvmOftenMisunderstood" class="csl-entry" role="listitem">
+<span>“<span>T</span>he <span>O</span>ften <span>M</span>isunderstood <span>G</span><span>E</span><span>P</span> <span>I</span>nstruction &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org.”</span> <a href="https://llvm.org/docs/GetElementPtr.html" class="uri">https://llvm.org/docs/GetElementPtr.html</a>.
+</div>
+<div id="ref-llvmUsingPass" class="csl-entry" role="listitem">
+<span>“<span>U</span>sing the <span>N</span>ew <span>P</span>ass <span>M</span>anager &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org.”</span> <a href="https://llvm.org/docs/NewPassManager.html" class="uri">https://llvm.org/docs/NewPassManager.html</a>.
+</div>
+<div id="ref-llvmWritingLLVM" class="csl-entry" role="listitem">
+<span>“<span>W</span>riting an <span>L</span><span>L</span><span>V</span><span>M</span> <span>P</span>ass &amp;#X2014; <span>L</span><span>L</span><span>V</span><span>M</span> 22.0.0git Documentation — Llvm.org.”</span> <a href="https://llvm.org/docs/WritingAnLLVMNewPMPass.html" class="uri">https://llvm.org/docs/WritingAnLLVMNewPMPass.html</a>.
+</div>
+<div id="ref-brainfuckAnotherBrainfuck" class="csl-entry" role="listitem">
+<span>“<span>Y</span>et Another Brainfuck Reference. — Brainfuck.org.”</span> <a href="https://brainfuck.org/brainfuck.html" class="uri">https://brainfuck.org/brainfuck.html</a>.
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/ecp-minicursos");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./llvm-resumo.html" class="pagination-link" aria-label="Minicurso: Introdução à Infraestrutura de Compilação do LLVM">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Minicurso: Introdução à Infraestrutura de Compilação do LLVM</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./freertos-resumo.html" class="pagination-link" aria-label="Minicurso: Introdução à Programação para Sistemas Embarcados com FreeRTOS">
+        <span class="nav-page-text">Minicurso: Introdução à Programação para Sistemas Embarcados com FreeRTOS</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/llvm.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

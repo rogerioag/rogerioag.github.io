@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Introdução à Computação Quântica usando Qiskit – Escola de Computação Paralela: Minicursos e Tutoriais</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./comp-dist-resumo.html" rel="next">
+<link href="./quantica-resumo.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-3bdf4b82c437318dfd870a1db1780efa.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./quantica-resumo.html">Minicurso: Introdução à Computação Quântica usando <code>Qiskit</code></a></li><li class="breadcrumb-item"><a href="./quantica.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introdução à Computação Quântica usando <code>Qiskit</code></span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Escola de Computação Paralela: Minicursos e Tutoriais</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/rogerioag/ecp-minicursos" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bem-vindo</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./pthreads-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Computação Paralela e Programação Multithreading usando Pthreads.</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pthreads.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela e Programação Multithreading usando Pthreads.</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">opemp-resumo.qmd</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./openmp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introdução à Programação Paralela com OpenMP</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./simd-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Programação Paralela: Vetorização</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introdução à Programação Paralela: Vetorização</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./cuda-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Computação Paralela em Sistemas: Heterogêneos: Programação para  GPUs com a Plataforma CUDA</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cuda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela em Sistemas: Heterogêneos: Programação para GPUs com a Plataforma CUDA</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./pytorch-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Implementação de Modelos de Aprendizagem Profunda com pyTorch usando GPUs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pytorch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Introdução à Implementação de Modelos de Aprendizagem Profunda com pyTorch usando GPUs</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./llvm-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Infraestrutura de Compilação do LLVM</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./llvm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Introdução à Infraestrutura de Compilação do LLVM</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./freertos-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Programação para Sistemas Embarcados com FreeRTOS</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./freertos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introdução à Programação para Sistemas Embarcados com FreeRTOS</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./quantica-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Computação Quântica usando `Qiskit`</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quantica.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introdução à Computação Quântica usando <code>Qiskit</code></span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./comp-dist-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Introdução à Compilação Distribuída</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./comp-dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Introdução à Compilação Distribuída</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./sup-acel-lpms-resumo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Minicurso: Suporte a Aceleradores em Linguagens de Programação Modernas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sup-acel-lpms.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Suporte a Aceleradores em Linguagens de Programação em Sistemas Heterogêneos</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./a1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Apêndice A1</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-quant-intro" id="toc-sec-quant-intro" class="nav-link active" data-scroll-target="#sec-quant-intro"><span class="header-section-number">9.1</span> Introdução</a>
+  <ul class="collapse">
+  <li><a href="#breve-história-e-estado-atual-da-tecnologia" id="toc-breve-história-e-estado-atual-da-tecnologia" class="nav-link" data-scroll-target="#breve-história-e-estado-atual-da-tecnologia"><span class="header-section-number">9.1.1</span> Breve História e Estado Atual da Tecnologia</a></li>
+  <li><a href="#tipos-de-computadores-quânticos" id="toc-tipos-de-computadores-quânticos" class="nav-link" data-scroll-target="#tipos-de-computadores-quânticos"><span class="header-section-number">9.1.2</span> Tipos de Computadores Quânticos</a></li>
+  <li><a href="#aplicações-reais-e-promissoras" id="toc-aplicações-reais-e-promissoras" class="nav-link" data-scroll-target="#aplicações-reais-e-promissoras"><span class="header-section-number">9.1.3</span> Aplicações Reais e Promissoras</a></li>
+  <li><a href="#limitações-e-desafios-atuais" id="toc-limitações-e-desafios-atuais" class="nav-link" data-scroll-target="#limitações-e-desafios-atuais"><span class="header-section-number">9.1.4</span> Limitações e Desafios Atuais</a></li>
+  </ul></li>
+  <li><a href="#conceitos-fundamentais" id="toc-conceitos-fundamentais" class="nav-link" data-scroll-target="#conceitos-fundamentais"><span class="header-section-number">9.2</span> Conceitos Fundamentais</a>
+  <ul class="collapse">
+  <li><a href="#qubits" id="toc-qubits" class="nav-link" data-scroll-target="#qubits"><span class="header-section-number">9.2.1</span> Qubits</a></li>
+  <li><a href="#portas-quânticas" id="toc-portas-quânticas" class="nav-link" data-scroll-target="#portas-quânticas"><span class="header-section-number">9.2.2</span> Portas Quânticas</a></li>
+  <li><a href="#propriedades-importantes-das-portas-quânticas" id="toc-propriedades-importantes-das-portas-quânticas" class="nav-link" data-scroll-target="#propriedades-importantes-das-portas-quânticas"><span class="header-section-number">9.2.3</span> Propriedades Importantes das Portas Quânticas</a></li>
+  <li><a href="#portas-universais" id="toc-portas-universais" class="nav-link" data-scroll-target="#portas-universais"><span class="header-section-number">9.2.4</span> Portas Universais</a></li>
+  </ul></li>
+  <li><a href="#simulador-qiskit-ibm" id="toc-simulador-qiskit-ibm" class="nav-link" data-scroll-target="#simulador-qiskit-ibm"><span class="header-section-number">9.3</span> Simulador Qiskit (IBM)</a>
+  <ul class="collapse">
+  <li><a href="#exemplo-1-aplicando-uma-porta-hadamard" id="toc-exemplo-1-aplicando-uma-porta-hadamard" class="nav-link" data-scroll-target="#exemplo-1-aplicando-uma-porta-hadamard"><span class="header-section-number">9.3.1</span> Exemplo 1: Aplicando uma porta Hadamard</a></li>
+  <li><a href="#exemplo-2-pauli-x-seguido-de-hadamard" id="toc-exemplo-2-pauli-x-seguido-de-hadamard" class="nav-link" data-scroll-target="#exemplo-2-pauli-x-seguido-de-hadamard"><span class="header-section-number">9.3.2</span> Exemplo 2: Pauli-X seguido de Hadamard</a></li>
+  <li><a href="#exemplo-3-circuito-com-cnot" id="toc-exemplo-3-circuito-com-cnot" class="nav-link" data-scroll-target="#exemplo-3-circuito-com-cnot"><span class="header-section-number">9.3.3</span> Exemplo 3: Circuito com CNOT</a></li>
+  </ul></li>
+  <li><a href="#medição-e-colapso" id="toc-medição-e-colapso" class="nav-link" data-scroll-target="#medição-e-colapso"><span class="header-section-number">9.4</span> Medição e Colapso</a>
+  <ul class="collapse">
+  <li><a href="#implicações-da-medição" id="toc-implicações-da-medição" class="nav-link" data-scroll-target="#implicações-da-medição"><span class="header-section-number">9.4.1</span> Implicações da Medição</a></li>
+  <li><a href="#medição-no-qiskit" id="toc-medição-no-qiskit" class="nav-link" data-scroll-target="#medição-no-qiskit"><span class="header-section-number">9.4.2</span> Medição no Qiskit</a></li>
+  </ul></li>
+  <li><a href="#exemplos-de-aplicações" id="toc-exemplos-de-aplicações" class="nav-link" data-scroll-target="#exemplos-de-aplicações"><span class="header-section-number">9.5</span> Exemplos de Aplicações</a>
+  <ul class="collapse">
+  <li><a href="#teleporte-quântico" id="toc-teleporte-quântico" class="nav-link" data-scroll-target="#teleporte-quântico"><span class="header-section-number">9.5.1</span> Teleporte Quântico</a></li>
+  <li><a href="#adder-quântico-com-qft" id="toc-adder-quântico-com-qft" class="nav-link" data-scroll-target="#adder-quântico-com-qft"><span class="header-section-number">9.5.2</span> Adder Quântico com QFT</a></li>
+  <li><a href="#quantum-phase-estimation-qpe" id="toc-quantum-phase-estimation-qpe" class="nav-link" data-scroll-target="#quantum-phase-estimation-qpe"><span class="header-section-number">9.5.3</span> Quantum Phase Estimation (QPE)</a></li>
+  <li><a href="#algoritmo-de-grover" id="toc-algoritmo-de-grover" class="nav-link" data-scroll-target="#algoritmo-de-grover"><span class="header-section-number">9.5.4</span> Algoritmo de Grover</a></li>
+  <li><a href="#o-que-é-grover" id="toc-o-que-é-grover" class="nav-link" data-scroll-target="#o-que-é-grover"><span class="header-section-number">9.5.5</span> O que é Grover?</a></li>
+  <li><a href="#como-funciona-2" id="toc-como-funciona-2" class="nav-link" data-scroll-target="#como-funciona-2"><span class="header-section-number">9.5.6</span> Como funciona?</a></li>
+  <li><a href="#deutsch-jozsa" id="toc-deutsch-jozsa" class="nav-link" data-scroll-target="#deutsch-jozsa"><span class="header-section-number">9.5.7</span> Deutsch-Jozsa</a></li>
+  <li><a href="#o-que-é-deutsch-jozsa" id="toc-o-que-é-deutsch-jozsa" class="nav-link" data-scroll-target="#o-que-é-deutsch-jozsa"><span class="header-section-number">9.5.8</span> O que é Deutsch-Jozsa?</a></li>
+  <li><a href="#como-funciona-3" id="toc-como-funciona-3" class="nav-link" data-scroll-target="#como-funciona-3"><span class="header-section-number">9.5.9</span> Como funciona?</a></li>
+  <li><a href="#código-de-shor-shor-code" id="toc-código-de-shor-shor-code" class="nav-link" data-scroll-target="#código-de-shor-shor-code"><span class="header-section-number">9.5.10</span> Código de Shor (Shor Code)</a></li>
+  <li><a href="#o-que-é-o-código-de-shor" id="toc-o-que-é-o-código-de-shor" class="nav-link" data-scroll-target="#o-que-é-o-código-de-shor"><span class="header-section-number">9.5.11</span> O que é o código de Shor?</a></li>
+  <li><a href="#como-funciona-4" id="toc-como-funciona-4" class="nav-link" data-scroll-target="#como-funciona-4"><span class="header-section-number">9.5.12</span> Como funciona?</a></li>
+  </ul></li>
+  <li><a href="#sec-quant-consid-finais" id="toc-sec-quant-consid-finais" class="nav-link" data-scroll-target="#sec-quant-consid-finais"><span class="header-section-number">9.6</span> Considerações Finais</a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências"><span class="header-section-number">9.7</span> Referências</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/quantica.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./quantica-resumo.html">Minicurso: Introdução à Computação Quântica usando <code>Qiskit</code></a></li><li class="breadcrumb-item"><a href="./quantica.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introdução à Computação Quântica usando <code>Qiskit</code></span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introdução à Computação Quântica usando <code>Qiskit</code></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>– William W. T. Rodrigues <br> <a href="mailto:williamwallace@alunos.utfpr.edu.br" class="email">williamwallace@alunos.utfpr.edu.br</a></p>
+<blockquote class="blockquote">
+<p><strong>Resumo:</strong> Este minicurso apresenta uma introdução à computação quântica, explorando seus fundamentos teóricos, arquiteturas físicas de qubits, algoritmos relevantes e aplicações práticas. Utilizando o framework Qiskit da IBM, o curso combina conceitos da mecânica quântica com exemplos de programação, permitindo ao leitor construir e simular circuitos quânticos.</p>
+</blockquote>
+<section id="sec-quant-intro" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-quant-intro"><span class="header-section-number">9.1</span> Introdução</h2>
+<p>A computação quântica é um paradigma de processamento de informação baseado diretamente nos princípios da mecânica quântica, ramo da física que descreve o comportamento da matéria e da energia em escalas extremamente pequenas, como átomos, elétrons e fótons.<br>
+Assim como a física quântica introduziu conceitos contraintuitivos como superposição, entrelaçamento e dualidade onda-partícula, a computação quântica aproveita esses fenômenos para processar informações de maneiras que não têm equivalente direto no mundo clássico.</p>
+<p>Nos computadores tradicionais, a unidade básica de informação é o <em>bit</em>, que só pode assumir um de dois valores: 0 ou 1. Já na computação quântica, a unidade é o <em>qubit</em> (<em>quantum bit</em>), que pode existir não apenas nos estados clássicos (|0) ou (|1), mas também em qualquer combinação linear deles, chamada superposição. Isso significa que um qubit pode representar 0 e 1 ao mesmo tempo, com diferentes amplitudes de probabilidade.</p>
+<p>Fisicamente, um qubit não é apenas um conceito abstrato: ele precisa ser implementado em um sistema físico real capaz de apresentar comportamento quântico. Entre as implementações mais comuns estão:<br>
+- <em>Qubits</em> supercondutores – correntes elétricas oscilando em circuitos supercondutores a temperaturas próximas do zero absoluto (usados pela IBM e Google).<br>
+- <em>Qubits</em> de íons aprisionados – íons individuais suspensos no vácuo e manipulados com feixes de <em>laser</em> (IonQ, Honeywell).<br>
+- <em>Qubits</em> fotônicos – fótons individuais, codificando informação em sua polarização ou caminho (Xanadu, PsiQuantum).<br>
+- <em>Qubits de spin</em> – baseados no spin de elétrons aprisionados em semicondutores ou defeitos em diamantes (NV centers).</p>
+<p>Independentemente da implementação física, todos compartilham as mesmas propriedades fundamentais:<br>
+- Superposição – capacidade de estar em múltiplos estados ao mesmo tempo.<br>
+- Entrelaçamento – correlação profunda entre qubits que persiste mesmo quando estão fisicamente separados.<br>
+- Interferência – manipulação das amplitudes de probabilidade para reforçar resultados corretos e cancelar resultados incorretos.</p>
+<p>Essa diferença fundamental se traduz no espaço de estados disponível: enquanto um processador clássico com (n) bits só pode representar um estado por vez, um processador quântico com (n) <em>qubits</em> pode manipular simultaneamente (2^n) estados, explorando um paralelismo exponencial que pode oferecer vantagens significativas para certos problemas, como simulação de sistemas quânticos, criptografia e otimização complexa.</p>
+<section id="breve-história-e-estado-atual-da-tecnologia" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="breve-história-e-estado-atual-da-tecnologia"><span class="header-section-number">9.1.1</span> Breve História e Estado Atual da Tecnologia</h3>
+<p>A ideia de um computador quântico foi formalmente proposta na década de 1980 por Richard Feynman e Yuri Manin, ao observarem que simular sistemas quânticos usando computadores clássicos é extremamente ineficiente, pois a quantidade de recursos necessários cresce exponencialmente com o tamanho do sistema. Eles sugeriram que apenas máquinas que também obedecessem às leis da mecânica quântica poderiam realizar tais simulações de forma eficiente.</p>
+<p>Nos anos 1990, o campo ganhou força com descobertas marcantes:<br>
+- Algoritmo de <em>Shor (1994)</em> – criado por <em>Peter Shor</em>, mostrou que um computador quântico poderia fatorar números grandes de forma exponencialmente mais rápida do que os melhores algoritmos clássicos conhecidos, ameaçando a criptografia RSA.<br>
+- Algoritmo de <em>Grover (1996)</em> – desenvolvido por <em>Lov Grover</em>, ofereceu uma aceleração quadrática na busca não estruturada, com impacto potencial em diversas áreas.</p>
+<p>Hoje, a tecnologia vive a chamada era NISQ (<em>Noisy Intermediate-Scale Quantum</em>), termo cunhado por <em>John Preskill</em> em 2018. Nessa fase:<br>
+- Os processadores possuem dezenas a poucos centenas de <em>qubits</em>.<br>
+- Os <em>qubits</em> são ruidosos, com tempos de coerência limitados.<br>
+- Os circuitos só podem ter profundidade restrita antes que o ruído degrade os resultados.</p>
+<p>Mesmo assim, grandes avanços foram alcançados:<br>
+- Empresas como <em>IBM, Google, Rigetti, IonQ e Xanadu</em> oferecem acesso a computadores quânticos reais via nuvem, permitindo que pesquisadores e desenvolvedores experimentem com algoritmos quânticos sem possuir o hardware.<br>
+- Em 2019, a <em>Google</em> anunciou ter atingido a chamada supremacia quântica, realizando uma tarefa específica em seu processador <em>Sycamore</em> de 53 <em>qubits</em> que, segundo a empresa, levaria milhares de anos para um supercomputador clássico resolver.<br>
+- A <em>IBM</em> e outras empresas trabalham na escalabilidade, prevendo processadores com mais de 1.000 <em>qubits</em> nos próximos anos.</p>
+<p>Embora um computador quântico universal e tolerante a falhas ainda esteja distante, já é possível explorar aplicações práticas em otimização, simulação de materiais e química quântica, além de pesquisa fundamental. O campo está em rápida evolução, com constantes melhorias na fidelidade dos qubits, técnicas de correção de erros e novos modelos de arquitetura.</p>
+</section>
+<section id="tipos-de-computadores-quânticos" class="level3" data-number="9.1.2">
+<h3 data-number="9.1.2" class="anchored" data-anchor-id="tipos-de-computadores-quânticos"><span class="header-section-number">9.1.2</span> Tipos de Computadores Quânticos</h3>
+<p>A computação quântica pode ser implementada de diferentes maneiras, cada uma explorando fenômenos quânticos específicos para armazenar e manipular informação. As principais arquiteturas são:</p>
+<section id="supercondutores" class="level4" data-number="9.1.2.1">
+<h4 data-number="9.1.2.1" class="anchored" data-anchor-id="supercondutores"><span class="header-section-number">9.1.2.1</span> 1. Supercondutores</h4>
+<p>Os computadores quânticos supercondutores utilizam circuitos feitos de materiais que apresentam supercondutividade, ou seja, resistência elétrica nula, quando resfriados a temperaturas próximas do zero absoluto (cerca de 15–20 <em>milikelvin</em>, obtidos com refrigeradores de diluição).<br>
+O qubit é implementado como um circuito ressonante que pode oscilar entre dois estados de energia, controlados por micro-ondas.<br>
+- Vantagens: Escalabilidade relativamente alta e integração com tecnologias de fabricação já consolidadas na indústria de semicondutores.<br>
+- Desafios: Requerem temperaturas extremamente baixas e possuem tempos de coerência relativamente curtos.<br>
+- Exemplos: <em>IBM (IBM Quantum), Google (Sycamore), Rigetti Computing</em>.</p>
+</section>
+<section id="íons-aprisionados" class="level4" data-number="9.1.2.2">
+<h4 data-number="9.1.2.2" class="anchored" data-anchor-id="íons-aprisionados"><span class="header-section-number">9.1.2.2</span> 2. Íons Aprisionados</h4>
+<p>Nessa abordagem, átomos carregados (íons) são aprisionados em campos eletromagnéticos gerados por armadilhas de <em>Paul</em> ou <em>Penning</em>. Cada íon representa um qubit e seus estados quânticos são manipulados com pulsos de <em>laser</em> altamente precisos. O entrelaçamento é obtido via interações vibracionais compartilhadas entre os íons.<br>
+- Vantagens: Tempos de coerência muito longos e alta fidelidade nas operações.<br>
+- Desafios: Aumentar o número de íons em uma mesma armadilha e manter o controle preciso se torna difícil com a escalabilidade.<br>
+- Exemplos: <em>IonQ, Honeywell Quantum Solutions</em> (agora <em>Quantinuum</em>).</p>
+</section>
+<section id="fotônicos" class="level4" data-number="9.1.2.3">
+<h4 data-number="9.1.2.3" class="anchored" data-anchor-id="fotônicos"><span class="header-section-number">9.1.2.3</span> 3. Fotônicos</h4>
+<p>Nesta arquitetura, fótons (partículas de luz) são usados como qubits, geralmente codificando informação em propriedades como polarização, modo espacial ou tempo de chegada. A manipulação é feita por meio de divisores de feixe, moduladores de fase e detectores fotossensíveis.<br>
+- Vantagens: Operam à temperatura ambiente, com baixíssimo ruído e facilidade de transmissão por fibras ópticas (ideal para comunicação quântica).<br>
+- Desafios: Dificuldade em criar interações fortes entre fótons, o que complica a implementação de portas lógicas universais.<br>
+- Exemplos: Xanadu (fotônica baseada em luz comprimida), PsiQuantum.</p>
+</section>
+<section id="spin-em-pontos-quânticos" class="level4" data-number="9.1.2.4">
+<h4 data-number="9.1.2.4" class="anchored" data-anchor-id="spin-em-pontos-quânticos"><span class="header-section-number">9.1.2.4</span> 4. Spin em Pontos Quânticos</h4>
+<p>Essa abordagem utiliza elétrons confinados em nanodispositivos semicondutores chamados pontos quânticos. O qubit é representado pelo <em>spin</em> do elétron (para cima ou para baixo), manipulado por campos magnéticos ou elétricos.<br>
+- Vantagens: Compatibilidade com técnicas de fabricação de chips de silício e potencial de integração em larga escala.<br>
+- Desafios: Manter o isolamento contra ruído magnético e elétrico, e alcançar tempos de coerência suficientemente longos.<br>
+- Exemplos: Pesquisas da Intel e da Universidade de <em>New South Wales</em>.</p>
+</section>
+<section id="centros-de-vacância-de-nitrogênio-em-diamante-nv-centers" class="level4" data-number="9.1.2.5">
+<h4 data-number="9.1.2.5" class="anchored" data-anchor-id="centros-de-vacância-de-nitrogênio-em-diamante-nv-centers"><span class="header-section-number">9.1.2.5</span> 5. Centros de Vacância de Nitrogênio em Diamante (NV Centers)</h4>
+<p>Aqui, utiliza-se um defeito na rede cristalina do diamante em que um átomo de nitrogênio substitui um de carbono e há uma lacuna (vacância) adjacente. O <em>spin</em> do elétron associado a esse defeito é usado como qubit, controlado por micro-ondas e luz laser.<br>
+- Vantagens: Operam em temperatura ambiente e têm longos tempos de coerência, especialmente em diamantes isotopicamente puros.<br>
+- Desafios: Dificuldade em escalar para muitos qubits interconectados e no controle preciso de múltiplos defeitos.<br>
+- Exemplos: Pesquisa da <em>Element Six, QuTech</em>.</p>
+<hr>
+<p>Cada tecnologia apresenta um equilíbrio diferente entre fidelidade, tempo de coerência, velocidade de operação e escalabilidade. Atualmente, não existe consenso sobre qual será a arquitetura dominante no futuro. É possível que diferentes tipos coexistam, cada um otimizando aplicações específicas.</p>
+</section>
+</section>
+<section id="aplicações-reais-e-promissoras" class="level3" data-number="9.1.3">
+<h3 data-number="9.1.3" class="anchored" data-anchor-id="aplicações-reais-e-promissoras"><span class="header-section-number">9.1.3</span> Aplicações Reais e Promissoras</h3>
+<p>Mesmo na era <em>NISQ</em> (<em>Noisy Intermediate-Scale Quantum</em>), na qual os processadores quânticos possuem limitações de escala e estão sujeitos a ruídos, a computação quântica já apresenta potencial para transformar diversas áreas. Algumas das aplicações mais relevantes incluem:</p>
+<section id="simulação-quântica" class="level4" data-number="9.1.3.1">
+<h4 data-number="9.1.3.1" class="anchored" data-anchor-id="simulação-quântica"><span class="header-section-number">9.1.3.1</span> 1. Simulação Quântica</h4>
+<p>A mecânica quântica descreve naturalmente o comportamento de moléculas, átomos e partículas. Computadores clássicos têm dificuldade em simular sistemas quânticos complexos devido ao crescimento exponencial do espaço de estados. Já os computadores quânticos podem modelar moléculas e reações químicas de forma nativa, permitindo avanços na descoberta de novos medicamentos, catalisadores e materiais com propriedades únicas.</p>
+</section>
+<section id="otimização" class="level4" data-number="9.1.3.2">
+<h4 data-number="9.1.3.2" class="anchored" data-anchor-id="otimização"><span class="header-section-number">9.1.3.2</span> 2. Otimização</h4>
+<p>Muitos problemas do mundo real, como roteirização de transporte, alocação de recursos e planejamento de produção, são combinatórios e difíceis de resolver com eficiência por métodos clássicos. Algoritmos quânticos, como o <em>QAOA (Quantum Approximate Optimization Algorithm)</em>, podem encontrar soluções aproximadas com maior rapidez, tornando-se úteis para logística, telecomunicações e engenharia.</p>
+</section>
+<section id="criptografia" class="level4" data-number="9.1.3.3">
+<h4 data-number="9.1.3.3" class="anchored" data-anchor-id="criptografia"><span class="header-section-number">9.1.3.3</span> 3. Criptografia</h4>
+<p>A computação quântica tem impacto duplo na segurança digital:</p>
+<ul>
+<li><p>Ameaça: Algoritmos como o de <em>Shor</em> podem fatorar grandes números exponencialmente mais rápido que os melhores métodos clássicos, comprometendo sistemas como RSA e ECC.</p></li>
+<li><p>Defesa: Desenvolve-se a criptografia quântica, como a Distribuição Quântica de Chaves (QKD), que utiliza as leis da física quântica para garantir segurança incondicional.</p></li>
+</ul>
+</section>
+<section id="aprendizado-de-máquina-quântico-quantum-machine-learning-qml" class="level4" data-number="9.1.3.4">
+<h4 data-number="9.1.3.4" class="anchored" data-anchor-id="aprendizado-de-máquina-quântico-quantum-machine-learning-qml"><span class="header-section-number">9.1.3.4</span> 4. Aprendizado de Máquina Quântico (Quantum Machine Learning – QML)</h4>
+<p>Algoritmos quânticos podem acelerar partes do treinamento e da inferência de modelos de <em>machine learning</em>, explorando a capacidade de representar e manipular grandes vetores de forma mais eficiente. Isso pode beneficiar áreas como processamento de imagens, análise de dados e reconhecimento de padrões.</p>
+</section>
+<section id="análise-financeira" class="level4" data-number="9.1.3.5">
+<h4 data-number="9.1.3.5" class="anchored" data-anchor-id="análise-financeira"><span class="header-section-number">9.1.3.5</span> 5. Análise Financeira</h4>
+<p>Mercados financeiros são sistemas complexos e probabilísticos. Computadores quânticos podem ajudar a modelar risco, prever tendências de mercado e otimizar carteiras de investimento, possibilitando estratégias mais robustas e rápidas de avaliação de cenários.</p>
+</section>
+</section>
+<section id="limitações-e-desafios-atuais" class="level3" data-number="9.1.4">
+<h3 data-number="9.1.4" class="anchored" data-anchor-id="limitações-e-desafios-atuais"><span class="header-section-number">9.1.4</span> Limitações e Desafios Atuais</h3>
+<p>Apesar do imenso potencial da computação quântica, existem barreiras técnicas e científicas que ainda precisam ser superadas para que essa tecnologia alcance seu uso pleno. Entre os principais desafios, destacam-se:</p>
+<section id="tempo-de-coerência" class="level4" data-number="9.1.4.1">
+<h4 data-number="9.1.4.1" class="anchored" data-anchor-id="tempo-de-coerência"><span class="header-section-number">9.1.4.1</span> 1. Tempo de Coerência</h4>
+<p>Os qubits mantêm seu estado quântico apenas por um intervalo de tempo limitado, chamado tempo de coerência. Passado esse período, efeitos como descoerência e interações com o ambiente fazem com que a informação quântica se perca. Essa limitação exige que os cálculos sejam concluídos rapidamente ou que técnicas de preservação do estado sejam aplicadas.</p>
+</section>
+<section id="escalabilidade" class="level4" data-number="9.1.4.2">
+<h4 data-number="9.1.4.2" class="anchored" data-anchor-id="escalabilidade"><span class="header-section-number">9.1.4.2</span> 2. Escalabilidade</h4>
+<p>Construir sistemas com milhares ou milhões de qubits estáveis é um enorme desafio de engenharia. O aumento no número de qubits requer um controle preciso de cada unidade e de suas interações, mantendo ao mesmo tempo a integridade dos dados e reduzindo o impacto do ruído.</p>
+</section>
+<section id="ruído-e-erros" class="level4" data-number="9.1.4.3">
+<h4 data-number="9.1.4.3" class="anchored" data-anchor-id="ruído-e-erros"><span class="header-section-number">9.1.4.3</span> 3. Ruído e Erros</h4>
+<p>Operações quânticas ainda são imprecisas devido a erros de porta, erros de leitura e *uídos ambientais. Esses problemas afetam a fidelidade dos resultados, tornando essencial o uso de correção de erros quânticos que, por sua vez, aumenta a demanda de qubits físicos para representar um único qubit lógico.</p>
+</section>
+<section id="infraestrutura" class="level4" data-number="9.1.4.4">
+<h4 data-number="9.1.4.4" class="anchored" data-anchor-id="infraestrutura"><span class="header-section-number">9.1.4.4</span> 4. Infraestrutura</h4>
+<p>A maior parte das arquiteturas quânticas exige condições extremas de operação, como resfriamento criogênico próximo ao zero absoluto para qubits supercondutores, ou sistemas complexos de lasers e vácuo para íons aprisionados. Essa infraestrutura é cara, ocupa muito espaço e demanda manutenção altamente especializada.</p>
+</section>
+<section id="algoritmos-limitados" class="level4" data-number="9.1.4.5">
+<h4 data-number="9.1.4.5" class="anchored" data-anchor-id="algoritmos-limitados"><span class="header-section-number">9.1.4.5</span> 5. Algoritmos Limitados</h4>
+<p>Embora existam algoritmos quânticos promissores, como os de <em>Shor</em> e <em>Grover</em>, ainda são poucos os métodos que demonstram vantagem quântica prática sobre algoritmos clássicos em problemas do mundo real. Pesquisas continuam na busca por novos algoritmos capazes de explorar plenamente o potencial dos processadores quânticos.</p>
+</section>
+</section>
+</section>
+<section id="conceitos-fundamentais" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="conceitos-fundamentais"><span class="header-section-number">9.2</span> Conceitos Fundamentais</h2>
+<section id="qubits" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="qubits"><span class="header-section-number">9.2.1</span> Qubits</h3>
+<p>O qubit (<em>quantum bit</em>) é a unidade fundamental de informação na computação quântica, análogo ao bit da computação clássica.<br>
+Enquanto um bit clássico só pode assumir dois valores possíveis, <code>0</code> ou <code>1</code>, um qubit pode estar em uma superposição desses estados, representando simultaneamente <code>0</code> e <code>1</code> com determinadas probabilidades.</p>
+<p>Matematicamente, um qubit é descrito como um vetor no espaço de Hilbert bidimensional:</p>
+<p><span class="math display">\[
+|\psi\rangle = \alpha |0\rangle + \beta |1\rangle
+\]</span></p>
+<p>Onde:</p>
+<ul>
+<li><p><span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span> são números complexos conhecidos como amplitudes de probabilidade.</p></li>
+<li><p><span class="math inline">\(|0\rangle\)</span> e <span class="math inline">\(|1\rangle\)</span> são os estados base (análogos a 0 e 1 clássicos).</p></li>
+<li><p>A normalização exige que:</p></li>
+</ul>
+<p><span class="math display">\[
+|\alpha|^2 + |\beta|^2 = 1
+\]</span></p>
+<p>O ato de medir um qubit faz com que ele colapse para <code>|0⟩</code> com probabilidade <span class="math inline">\(|\alpha|^2\)</span> ou para <code>|1⟩</code> com probabilidade <span class="math inline">\(|\beta|^2\)</span>.</p>
+<section id="representação-no-esfera-de-bloch" class="level4" data-number="9.2.1.1">
+<h4 data-number="9.2.1.1" class="anchored" data-anchor-id="representação-no-esfera-de-bloch"><span class="header-section-number">9.2.1.1</span> Representação no Esfera de Bloch</h4>
+<p>Todo qubit puro pode ser representado na Esfera de <em>Bloch</em> por dois ângulos <span class="math inline">\((\theta, \phi)\)</span>:</p>
+<p><span class="math display">\[
+|\psi\rangle = \cos\left(\frac{\theta}{2}\right)|0\rangle + e^{i\phi} \sin\left(\frac{\theta}{2}\right)|1\rangle
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\theta\)</span> controla a proporção entre os estados <code>|0⟩</code> e <code>|1⟩</code>.</p></li>
+<li><p><span class="math inline">\(\phi\)</span> determina a fase relativa entre eles.</p></li>
+<li><p>Essa representação é útil para visualizar operações quânticas como rotações e portas lógicas.</p></li>
+</ul>
+</section>
+<section id="natureza-física-dos-qubits" class="level4" data-number="9.2.1.2">
+<h4 data-number="9.2.1.2" class="anchored" data-anchor-id="natureza-física-dos-qubits"><span class="header-section-number">9.2.1.2</span> Natureza Física dos Qubits</h4>
+<p>Qubits não são apenas abstrações matemáticas — eles são implementados fisicamente de várias formas: - Fótons, utilizando polarização ou caminho óptico. - Elétrons, aproveitando o spin ou carga. - Estados de corrente em circuitos supercondutores. - Íons aprisionados, manipulados por lasers.</p>
+<p>Cada tecnologia apresenta vantagens e limitações em termos de tempo de coerência, facilidade de manipulação e taxa de erro.</p>
+<p>Em resumo, enquanto os bits clássicos representam informação de forma discreta e estática, os qubits permitem superposição e entrelaçamento, proporcionando um espaço de estados exponencialmente maior e habilitando algoritmos com vantagens significativas sobre os métodos clássicos.</p>
+</section>
+</section>
+<section id="portas-quânticas" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="portas-quânticas"><span class="header-section-number">9.2.2</span> Portas Quânticas</h3>
+<p>As portas quânticas são os blocos fundamentais que permitem manipular o estado dos qubits durante o processamento quântico. Elas são análogas às portas lógicas na computação clássica (como AND, OR, NOT), mas operam em estados quânticos que podem estar em superposição e entrelaçamento.</p>
+<p>Diferentemente das portas clássicas, as portas quânticas são representadas por matrizes unitárias que atuam sobre o vetor de estado do(s) qubit(s). Essa operação é reversível, preservando a normalização do estado.</p>
+<hr>
+</section>
+<section id="propriedades-importantes-das-portas-quânticas" class="level3" data-number="9.2.3">
+<h3 data-number="9.2.3" class="anchored" data-anchor-id="propriedades-importantes-das-portas-quânticas"><span class="header-section-number">9.2.3</span> Propriedades Importantes das Portas Quânticas</h3>
+<ul>
+<li>Unitariedade: Toda porta quântica é representada por uma matriz unitária (U), o que garante reversibilidade e preservação da normalização:<br>
+[ U^U = U U^= I ]</li>
+<li>Reversibilidade: Diferente das portas clássicas que podem ser irreversíveis, as operações quânticas podem ser invertidas.</li>
+<li>Composição: Portas quânticas podem ser compostas para formar circuitos complexos que realizam algoritmos completos.</li>
+</ul>
+<hr>
+<section id="portas-de-um-qubit" class="level4" data-number="9.2.3.1">
+<h4 data-number="9.2.3.1" class="anchored" data-anchor-id="portas-de-um-qubit"><span class="header-section-number">9.2.3.1</span> Portas de Um Qubit</h4>
+<section id="porta-hadamard-h" class="level5" data-number="9.2.3.1.1">
+<h5 data-number="9.2.3.1.1" class="anchored" data-anchor-id="porta-hadamard-h"><span class="header-section-number">9.2.3.1.1</span> 1. Porta Hadamard (H)</h5>
+<ul>
+<li><strong>Função:</strong> Cria superposição ao transformar os estados base ( |0) e ( |1) em combinações iguais.<br>
+</li>
+<li><strong>Operação:</strong> [ H|0= , H|1= ]</li>
+<li><strong>Matriz:</strong> [ H =
+<span class="math display">\[\begin{bmatrix}
+1 &amp; 1 \\
+1 &amp; -1
+\end{bmatrix}\]</span>
+]</li>
+<li><strong>Uso comum:</strong> Preparar qubits para criar estados em superposição.</li>
+</ul>
+<hr>
+</section>
+<section id="porta-pauli-x-not-quântico" class="level5" data-number="9.2.3.1.2">
+<h5 data-number="9.2.3.1.2" class="anchored" data-anchor-id="porta-pauli-x-not-quântico"><span class="header-section-number">9.2.3.1.2</span> 2. Porta Pauli-X (NOT quântico)</h5>
+<ul>
+<li><strong>Função:</strong> Equivale à porta NOT clássica, invertendo os estados (|0|1).<br>
+</li>
+<li><strong>Operação:</strong><br>
+[ X|0= |1, X|1= |0 ]</li>
+<li><strong>Matriz:</strong> [ X =
+<span class="math display">\[\begin{bmatrix}
+0 &amp; 1 \\
+1 &amp; 0
+\end{bmatrix}\]</span>
+]</li>
+<li><strong>Uso comum:</strong> Flips simples de estado quântico.</li>
+</ul>
+<hr>
+</section>
+<section id="porta-pauli-y" class="level5" data-number="9.2.3.1.3">
+<h5 data-number="9.2.3.1.3" class="anchored" data-anchor-id="porta-pauli-y"><span class="header-section-number">9.2.3.1.3</span> 3. Porta Pauli-Y</h5>
+<ul>
+<li><strong>Função:</strong> Realiza uma rotação combinada com inversão e mudança de fase.<br>
+</li>
+<li><strong>Matriz:</strong> [ Y =
+<span class="math display">\[\begin{bmatrix}
+0 &amp; -i \\
+i &amp; 0
+\end{bmatrix}\]</span>
+]</li>
+</ul>
+<hr>
+</section>
+<section id="porta-pauli-z" class="level5" data-number="9.2.3.1.4">
+<h5 data-number="9.2.3.1.4" class="anchored" data-anchor-id="porta-pauli-z"><span class="header-section-number">9.2.3.1.4</span> 4. Porta Pauli-Z</h5>
+<ul>
+<li><strong>Função:</strong> Aplica uma mudança de fase, deixando (|0) inalterado e invertendo o sinal de (|1).<br>
+</li>
+<li><strong>Operação:</strong> [ Z|0= |0, Z|1= -|1 ]</li>
+<li><strong>Matriz:</strong> [ Z =
+<span class="math display">\[\begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; -1
+\end{bmatrix}\]</span>
+]</li>
+<li><strong>Uso comum:</strong> Portas de fase e correções.</li>
+</ul>
+<hr>
+</section>
+<section id="porta-de-fase-s-e-t" class="level5" data-number="9.2.3.1.5">
+<h5 data-number="9.2.3.1.5" class="anchored" data-anchor-id="porta-de-fase-s-e-t"><span class="header-section-number">9.2.3.1.5</span> 5. Porta de Fase (S e T)</h5>
+<ul>
+<li><strong>Função:</strong> Aplicam mudanças graduais de fase ao estado (|1).<br>
+</li>
+<li><strong>Matriz S:</strong> [ S =
+<span class="math display">\[\begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; i
+\end{bmatrix}\]</span>
+]</li>
+<li><strong>Matriz T:</strong> [ T =
+<span class="math display">\[\begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; e^{i\pi/4}
+\end{bmatrix}\]</span>
+]</li>
+<li><strong>Uso comum:</strong> Construção de circuitos universais e correção de erros.</li>
+</ul>
+<hr>
+</section>
+<section id="porta-de-rotação-r_x-r_y-r_z" class="level5" data-number="9.2.3.1.6">
+<h5 data-number="9.2.3.1.6" class="anchored" data-anchor-id="porta-de-rotação-r_x-r_y-r_z"><span class="header-section-number">9.2.3.1.6</span> 6. Porta de Rotação (R_x, R_y, R_z)</h5>
+<ul>
+<li><strong>Função:</strong> Rotaciona o vetor de estado do qubit ao redor dos eixos X, Y ou Z da esfera de Bloch por um ângulo ().<br>
+</li>
+<li><strong>Exemplo (R_z()):</strong><br>
+[ R_z() =
+<span class="math display">\[\begin{bmatrix}
+e^{-i\theta/2} &amp; 0 \\
+0 &amp; e^{i\theta/2}
+\end{bmatrix}\]</span>
+]</li>
+<li><strong>Uso comum:</strong> Ajustes finos de fase e manipulações de estado.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="portas-de-dois-ou-mais-qubits" class="level4" data-number="9.2.3.2">
+<h4 data-number="9.2.3.2" class="anchored" data-anchor-id="portas-de-dois-ou-mais-qubits"><span class="header-section-number">9.2.3.2</span> Portas de Dois ou Mais Qubits</h4>
+<section id="porta-cnot-controlled-not" class="level5" data-number="9.2.3.2.1">
+<h5 data-number="9.2.3.2.1" class="anchored" data-anchor-id="porta-cnot-controlled-not"><span class="header-section-number">9.2.3.2.1</span> 1. Porta CNOT (Controlled-NOT)</h5>
+<ul>
+<li><strong>Função:</strong> Porta fundamental para criar entrelaçamento; inverte o estado do qubit alvo se o qubit controle estiver em (|1).<br>
+</li>
+<li><strong>Operação:</strong> [ |c, t|c, t c ] onde (c) é o qubit controle e (t) o qubit alvo.<br>
+</li>
+<li><strong>Matriz (base computacional ( {|00, |01, |10, |11} )):</strong> [ =
+<span class="math display">\[\begin{bmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 1 &amp; 0
+\end{bmatrix}\]</span>
+]</li>
+<li><strong>Uso comum:</strong> Criar estados entrelaçados e construir circuitos universais.</li>
+</ul>
+<hr>
+</section>
+<section id="porta-toffoli-ccnot" class="level5" data-number="9.2.3.2.2">
+<h5 data-number="9.2.3.2.2" class="anchored" data-anchor-id="porta-toffoli-ccnot"><span class="header-section-number">9.2.3.2.2</span> 2. Porta Toffoli (CCNOT)</h5>
+<ul>
+<li><strong>Função:</strong> Porta de controle duplo; inverte o alvo somente se ambos os controles estiverem em (|1).<br>
+</li>
+<li><strong>Uso comum:</strong> Construção de portas universais reversíveis.</li>
+</ul>
+<hr>
+</section>
+<section id="porta-swap" class="level5" data-number="9.2.3.2.3">
+<h5 data-number="9.2.3.2.3" class="anchored" data-anchor-id="porta-swap"><span class="header-section-number">9.2.3.2.3</span> 3. Porta SWAP</h5>
+<ul>
+<li><strong>Função:</strong> Troca o estado de dois qubits.<br>
+</li>
+<li><strong>Uso comum:</strong> Permutação de qubits em hardware com restrições de conectividade.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="portas-universais" class="level3" data-number="9.2.4">
+<h3 data-number="9.2.4" class="anchored" data-anchor-id="portas-universais"><span class="header-section-number">9.2.4</span> Portas Universais</h3>
+<p>Um conjunto de portas é dito universal se qualquer operação quântica (unidade) puder ser aproximada arbitrariamente bem por uma sequência dessas portas. Exemplos incluem:<br>
+- Portas de um qubit: (H, T, S, R_x, R_y, R_z)<br>
+- Portas de dois qubits: CNOT</p>
+<p>Com essas portas, é possível construir qualquer circuito quântico.</p>
+</section>
+</section>
+<section id="simulador-qiskit-ibm" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="simulador-qiskit-ibm"><span class="header-section-number">9.3</span> Simulador Qiskit (IBM)</h2>
+<p>O Qiskit é um framework open-source desenvolvido pela IBM para programar computadores quânticos e simuladores quânticos. Ele permite criar, manipular e executar circuitos quânticos, seja em hardware real ou em simuladores clássicos que reproduzem o comportamento quântico.</p>
+<p>Nesta seção, apresentaremos exemplos simples de uso do Qiskit para demonstrar a construção de circuitos básicos, aplicação de portas quânticas e visualização dos circuitos.</p>
+<hr>
+<section id="exemplo-1-aplicando-uma-porta-hadamard" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="exemplo-1-aplicando-uma-porta-hadamard"><span class="header-section-number">9.3.1</span> Exemplo 1: Aplicando uma porta Hadamard</h3>
+<p>A porta Hadamard cria uma superposição, transformando o estado base (|0) em ().</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit_aer <span class="im">import</span> AerSimulator</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Circuito</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>qc.measure(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulador</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>simulator <span class="op">=</span> AerSimulator()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Rodar o circuito</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>job <span class="op">=</span> simulator.run(qc, shots<span class="op">=</span><span class="dv">1024</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> job.result()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> result.get_counts(qc)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Resultado da medição:"</span>, counts)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(qc.draw())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="exemplo-2-pauli-x-seguido-de-hadamard" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="exemplo-2-pauli-x-seguido-de-hadamard"><span class="header-section-number">9.3.2</span> Exemplo 2: Pauli-X seguido de Hadamard</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit_aer <span class="im">import</span> AerSimulator</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando o circuito</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>qc2 <span class="op">=</span> QuantumCircuit(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>qc2.x(<span class="dv">0</span>)    <span class="co"># Porta Pauli-X (NOT quântico)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>qc2.h(<span class="dv">0</span>)    <span class="co"># Porta Hadamard</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>qc2.measure(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando o simulador</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>simulator <span class="op">=</span> AerSimulator()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Executando no simulador</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>job2 <span class="op">=</span> simulator.run(qc2, shots<span class="op">=</span><span class="dv">1024</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>result2 <span class="op">=</span> job2.result()</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>counts2 <span class="op">=</span> result2.get_counts()</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Resultado da medição:"</span>, counts2)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(qc2.draw())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="exemplo-3-circuito-com-cnot" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="exemplo-3-circuito-com-cnot"><span class="header-section-number">9.3.3</span> Exemplo 3: Circuito com CNOT</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar circuito com 2 qubits e 2 bits clássicos</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>qc3 <span class="op">=</span> QuantumCircuit(<span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>qc3.h(<span class="dv">0</span>)      <span class="co"># Hadamard no qubit 0</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>qc3.cx(<span class="dv">0</span>, <span class="dv">1</span>)  <span class="co"># CNOT: qubit 0 controla qubit 1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>qc3.measure([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Desenhar o circuito colorido usando matplotlib</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>qc3.draw(output<span class="op">=</span><span class="st">'mpl'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="medição-e-colapso" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="medição-e-colapso"><span class="header-section-number">9.4</span> Medição e Colapso</h2>
+<p>Na computação quântica, a medição é o processo pelo qual extraímos informação de um qubit. Diferente da computação clássica, onde o estado é sempre definido como 0 ou 1, o qubit pode estar em uma superposição desses estados, representado por:</p>
+<p>[ |= |0+ |1 ]</p>
+<p>Quando realizamos uma medição no qubit, o estado colapsa para um dos estados base clássicos, ( |0) ou ( |1), com probabilidades determinadas pelas amplitudes:</p>
+<ul>
+<li>Probabilidade de medir ( |0): ( ||^2 )</li>
+<li>Probabilidade de medir ( |1): ( ||^2 )</li>
+</ul>
+<p>Este fenômeno é conhecido como colapso da função de onda e é fundamental para a computação quântica, pois define a transição do mundo quântico probabilístico para o mundo clássico determinístico.</p>
+<hr>
+<section id="implicações-da-medição" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="implicações-da-medição"><span class="header-section-number">9.4.1</span> Implicações da Medição</h3>
+<ul>
+<li>Colapso irreversível: Após a medição, o estado do qubit deixa de estar em superposição e fica fixo no estado medido.</li>
+<li>Destruição da superposição: A medição destrói a informação contida na superposição, portanto, medir cedo demais em um circuito pode impedir o funcionamento correto de algoritmos quânticos.</li>
+<li>Medidas em múltiplos qubits: Quando qubits estão entrelaçados, medir um deles instantaneamente define o estado dos outros, independente da distância, refletindo o fenômeno do entrelaçamento.</li>
+</ul>
+<hr>
+</section>
+<section id="medição-no-qiskit" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="medição-no-qiskit"><span class="header-section-number">9.4.2</span> Medição no Qiskit</h3>
+<p>No Qiskit, a medição é realizada conectando os qubits aos bits clássicos correspondentes para armazenar o resultado da medição. Por exemplo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="dv">0</span>)           <span class="co"># Cria superposição</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>qc.measure(<span class="dv">0</span>, <span class="dv">0</span>)  <span class="co"># Mede o qubit 0 e armazena no bit clássico 0</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(qc.draw())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Após a medição, ao executar o circuito no simulador, obtemos um resultado clássico (0 ou 1) com probabilidades aproximadas conforme a superposição criada.</p>
+</section>
+</section>
+<section id="exemplos-de-aplicações" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="exemplos-de-aplicações"><span class="header-section-number">9.5</span> Exemplos de Aplicações</h2>
+<section id="teleporte-quântico" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="teleporte-quântico"><span class="header-section-number">9.5.1</span> Teleporte Quântico</h3>
+<p>O teleporte quântico é um dos protocolos mais incríveis da computação quântica. Ele permite transferir o estado quântico de uma partícula (um qubit) de um local para outro, sem que o qubit original seja enviado fisicamente. É como se a informação quântica “saltasse” de um ponto para o outro — uma ideia que desafia nossa intuição clássica.</p>
+<p>O protocolo usa duas ferramentas fundamentais da mecânica quântica:</p>
+<ul>
+<li>Entrelaçamento (entanglement): dois qubits são preparados de forma que seus estados fiquem interligados, mesmo que estejam separados no espaço.<br>
+</li>
+<li>Medidas e operações condicionais: ao medir um dos qubits entrelaçados e usar o resultado para manipular o outro qubit, conseguimos “reconstruir” o estado original.</li>
+</ul>
+<hr>
+<section id="como-funciona-o-protocolo-de-teleporte" class="level4" data-number="9.5.1.1">
+<h4 data-number="9.5.1.1" class="anchored" data-anchor-id="como-funciona-o-protocolo-de-teleporte"><span class="header-section-number">9.5.1.1</span> Como funciona o protocolo de teleporte?</h4>
+<p>Suponha que Alice quer enviar para Bob um qubit desconhecido — ou seja, o estado quântico de um qubit que ela não sabe exatamente como é, mas quer transferir para ele.</p>
+<ol type="1">
+<li>Alice e Bob compartilham um par de qubits entrelaçados. Alice fica com um deles, Bob com o outro.<br>
+</li>
+<li>Alice faz uma operação conjunta (chamada de medida Bell) entre o qubit que deseja enviar e o qubit dela do par entrelaçado. Essa operação resulta em dois bits clássicos, que Alice envia para Bob por um canal clássico.<br>
+</li>
+<li>Com esses dois bits, Bob aplica portas quânticas específicas no seu qubit (que estava entrelaçado com o de Alice), e assim recupera exatamente o estado original do qubit que Alice queria enviar.</li>
+</ol>
+<blockquote class="blockquote">
+<p>Importante: depois do teleporte, o qubit original de Alice deixa de existir, preservando o princípio da não clonagem.</p>
+</blockquote>
+<hr>
+</section>
+<section id="código" class="level4" data-number="9.5.1.2">
+<h4 data-number="9.5.1.2" class="anchored" data-anchor-id="código"><span class="header-section-number">9.5.1.2</span> Código</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit, QuantumRegister, ClassicalRegister, transpile</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit_aer <span class="im">import</span> AerSimulator</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit.visualization <span class="im">import</span> plot_histogram</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>, category<span class="op">=</span><span class="pp">UserWarning</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Criação dos registradores quânticos e clássicos ---</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>alice <span class="op">=</span> QuantumRegister(<span class="dv">2</span>, <span class="st">'alice'</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>bob <span class="op">=</span> QuantumRegister(<span class="dv">1</span>, <span class="st">'bob'</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>cr_alice <span class="op">=</span> ClassicalRegister(<span class="dv">2</span>, <span class="st">'c_alice'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>cr_bob <span class="op">=</span> ClassicalRegister(<span class="dv">1</span>, <span class="st">'c_bob'</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(alice, bob, cr_alice, cr_bob)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Inicialização do estado a ser teleportado ---</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>qc.ry(np.pi<span class="op">/</span><span class="dv">4</span>, alice[<span class="dv">0</span>])</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>qc.barrier()</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Preparação do par entrelaçado (Bell state) ---</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>qc.h(alice[<span class="dv">1</span>])</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>qc.cx(alice[<span class="dv">1</span>], bob[<span class="dv">0</span>])</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>qc.barrier()</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Medidas de Alice ---</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>qc.cx(alice[<span class="dv">0</span>], alice[<span class="dv">1</span>])</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>qc.h(alice[<span class="dv">0</span>])</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>qc.barrier()</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>qc.measure(alice, cr_alice)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>qc.barrier()</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Correções condicionais no qubit de Bob ---</span></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>qc.cx(alice[<span class="dv">1</span>], bob[<span class="dv">0</span>])</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>qc.cz(alice[<span class="dv">0</span>], bob[<span class="dv">0</span>])</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>qc.barrier()</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>qc.measure(bob, cr_bob)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Desenho do circuito ---</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>display(qc.draw(output<span class="op">=</span><span class="st">'mpl'</span>))</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Simulação QASM para contagens ---</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>simulator <span class="op">=</span> AerSimulator()</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>compiled <span class="op">=</span> transpile(qc, simulator)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>shots <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> simulator.run(compiled, shots<span class="op">=</span>shots).result()</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> result.get_counts()</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Contagem dos resultados (medidas de Alice e Bob):"</span>)</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(counts)</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Histograma das contagens ---</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>plot_histogram(counts)</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="adder-quântico-com-qft" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="adder-quântico-com-qft"><span class="header-section-number">9.5.2</span> Adder Quântico com QFT</h3>
+<p>O Adder Quântico utiliza a Transformada Quântica de Fourier (QFT) para realizar a soma de dois números binários representados por qubits.</p>
+<hr>
+<section id="como-funciona" class="level4" data-number="9.5.2.1">
+<h4 data-number="9.5.2.1" class="anchored" data-anchor-id="como-funciona"><span class="header-section-number">9.5.2.1</span> Como funciona?</h4>
+<ul>
+<li>Cada número a ser somado é representado em um registrador de qubits.<br>
+</li>
+<li>Aplica-se a QFT para transformar o estado dos qubits para o domínio da frequência, onde a soma pode ser feita por operações de fase.<br>
+</li>
+<li>Após a adição no domínio da frequência, aplica-se a Transformada Quântica de Fourier Inversa (IQFT) para retornar ao domínio computacional, obtendo o resultado da soma.<br>
+</li>
+<li>Por fim, os qubits são medidos para revelar o valor da soma.</li>
+</ul>
+<hr>
+</section>
+<section id="benefícios" class="level4" data-number="9.5.2.2">
+<h4 data-number="9.5.2.2" class="anchored" data-anchor-id="benefícios"><span class="header-section-number">9.5.2.2</span> Benefícios</h4>
+<ul>
+<li>A operação é feita em paralelo e pode ser mais eficiente em circuitos quânticos.<br>
+</li>
+<li>Demonstra um uso prático da QFT, fundamental em muitos algoritmos quânticos.</li>
+</ul>
+<hr>
+</section>
+<section id="código-1" class="level4" data-number="9.5.2.3">
+<h4 data-number="9.5.2.3" class="anchored" data-anchor-id="código-1"><span class="header-section-number">9.5.2.3</span> Código</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit, QuantumRegister, ClassicalRegister, transpile</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit.circuit.library <span class="im">import</span> QFT, DraperQFTAdder</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit.visualization <span class="im">import</span> plot_histogram</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit_aer <span class="im">import</span> AerSimulator</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Exemplo 1: Soma usando DraperQFTAdder ---</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(<span class="bu">format</span>(a <span class="op">+</span> b, <span class="st">'0b'</span>))  <span class="co"># número de qubits necessários para soma</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>na <span class="op">=</span> <span class="bu">len</span>(<span class="bu">format</span>(a, <span class="st">'0b'</span>))</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>nb <span class="op">=</span> <span class="bu">len</span>(<span class="bu">format</span>(b, <span class="st">'0'</span> <span class="op">+</span> <span class="bu">str</span>(n) <span class="op">+</span> <span class="st">'b'</span>))</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>qa <span class="op">=</span> QuantumRegister(na, <span class="st">'a'</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>qb <span class="op">=</span> QuantumRegister(nb, <span class="st">'b'</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>cr <span class="op">=</span> ClassicalRegister(nb, <span class="st">'c'</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(qa, qb, cr)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicializar registradores com os números a e b (em binário, invertido)</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>a_bin <span class="op">=</span> <span class="bu">format</span>(a, <span class="st">'0b'</span>)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>b_bin <span class="op">=</span> <span class="bu">format</span>(b, <span class="st">'0b'</span>)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, bit <span class="kw">in</span> <span class="bu">enumerate</span>(a_bin):</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> bit <span class="op">==</span> <span class="st">'1'</span>:</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        qc.x(qa[i])</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, bit <span class="kw">in</span> <span class="bu">enumerate</span>(b_bin):</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> bit <span class="op">==</span> <span class="st">'1'</span>:</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        qc.x(qb[i])</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Adder via Draper QFT</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>qc.append(DraperQFTAdder(n), qc.qubits)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Medir resultado</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>qc.measure(qb, cr)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Executar no simulador</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>simulator <span class="op">=</span> AerSimulator()</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>compiled <span class="op">=</span> transpile(qc, simulator)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> simulator.run(compiled, shots<span class="op">=</span><span class="dv">10000</span>).result().get_counts()</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>soma_bin <span class="op">=</span> <span class="bu">max</span>(result, key<span class="op">=</span>result.get)  <span class="co"># pega o resultado com maior frequência</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"O resultado da soma é </span><span class="sc">{</span>soma_bin<span class="sc">}</span><span class="ss"> (binário) = </span><span class="sc">{</span><span class="bu">int</span>(soma_bin, <span class="dv">2</span>)<span class="sc">}</span><span class="ss"> (decimal)"</span>)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>plot_histogram(result, figsize<span class="op">=</span>(<span class="dv">4</span>,<span class="dv">3</span>))</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Exemplo 2: QFT simples ---</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>qr <span class="op">=</span> QuantumRegister(n, <span class="st">'q'</span>)</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(qr)</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    qc.h(i)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>        qc.cp(np.pi<span class="op">/</span>(<span class="dv">2</span><span class="op">**</span>(i<span class="op">-</span>j)), i, j)</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    qc.barrier()</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Swap qubits para inverter ordem</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">//</span><span class="dv">2</span>):</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>    qc.swap(i, n <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>qc.draw(<span class="st">'mpl'</span>, scale<span class="op">=</span><span class="fl">0.9</span>, style<span class="op">=</span><span class="st">'iqx'</span>)</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Exemplo 3: Circuito com QFT seguido de IQFT ---</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> qft(n):</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    qc <span class="op">=</span> QuantumCircuit(n)</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>        qc.h(i)</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i<span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>            qc.cp(np.pi<span class="op">/</span>(<span class="dv">2</span><span class="op">**</span>(i<span class="op">-</span>j)), i, j)</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> qc.to_gate(label<span class="op">=</span><span class="st">'QFT'</span>)</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> iqft(n):</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    qc <span class="op">=</span> QuantumCircuit(n)</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    qc.append(qft(n), <span class="bu">range</span>(n))</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    qc <span class="op">=</span> qc.inverse()</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> qc.to_gate(label<span class="op">=</span><span class="st">'IQFT'</span>)</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(n)</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>qc.append(qft(n), <span class="bu">range</span>(n))</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>qc.append(iqft(n), <span class="bu">range</span>(n))</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>qc.draw(<span class="st">'mpl'</span>, style<span class="op">=</span><span class="st">'iqx'</span>, scale<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Exemplo 4: Soma via QFT personalizada (mais detalhada) ---</span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>ints <span class="op">=</span> [<span class="dv">3</span>, <span class="dv">5</span>]</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>qubits_qft <span class="op">=</span> <span class="bu">len</span>(<span class="bu">format</span>(<span class="bu">sum</span>(ints), <span class="st">'0b'</span>))</span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>qubits_x <span class="op">=</span> <span class="bu">len</span>(<span class="bu">format</span>(<span class="bu">max</span>(ints), <span class="st">'0b'</span>))</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>qr_data_int <span class="op">=</span> QuantumRegister(qubits_x, <span class="st">"data_x"</span>)</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>qr_data_qft <span class="op">=</span> QuantumRegister(qubits_qft, <span class="st">"qft"</span>)</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>cr1 <span class="op">=</span> ClassicalRegister(qubits_qft, <span class="st">'c_qft'</span>)</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(qr_data_int, qr_data_qft, cr1)</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>qc.append(qft(qubits_qft), qr_data_qft)</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> ints:</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>    k <span class="op">=</span> <span class="bu">format</span>(x, <span class="st">'0b'</span>)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, bit <span class="kw">in</span> <span class="bu">enumerate</span>(k):</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> bit <span class="op">==</span> <span class="st">'1'</span>:</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>            qc.x(qr_data_int[i])</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(qr_data_int)):</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(j, <span class="bu">len</span>(qr_data_qft)):</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>            qc.cp(<span class="dv">2</span><span class="op">*</span>np.pi <span class="op">/</span> <span class="dv">2</span><span class="op">**</span>(i <span class="op">+</span> <span class="dv">1</span> <span class="op">-</span> j), qr_data_int[j], qr_data_qft[i])</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>        qc.barrier()</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, bit <span class="kw">in</span> <span class="bu">enumerate</span>(k):</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> bit <span class="op">==</span> <span class="st">'1'</span>:</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>            qc.x(qr_data_int[i])</span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>    qc.barrier()</span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>qc.append(iqft(qubits_qft), qr_data_qft)</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>qc.measure(qr_data_qft, cr1)</span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>compiled <span class="op">=</span> transpile(qc, simulator)</span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> simulator.run(compiled, shots<span class="op">=</span><span class="dv">10000</span>).result().get_counts()</span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Soma dos números </span><span class="sc">{</span>ints<span class="sc">}</span><span class="ss"> via QFT é aproximadamente:"</span>)</span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>plot_histogram(result, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="quantum-phase-estimation-qpe" class="level3" data-number="9.5.3">
+<h3 data-number="9.5.3" class="anchored" data-anchor-id="quantum-phase-estimation-qpe"><span class="header-section-number">9.5.3</span> Quantum Phase Estimation (QPE)</h3>
+<p>Quantum Phase Estimation (QPE) é um dos algoritmos mais importantes da computação quântica, usado para estimar o valor do autovalor (fase) de um operador unitário.</p>
+<hr>
+<section id="o-que-é-qpe" class="level4" data-number="9.5.3.1">
+<h4 data-number="9.5.3.1" class="anchored" data-anchor-id="o-que-é-qpe"><span class="header-section-number">9.5.3.1</span> O que é QPE?</h4>
+<ul>
+<li><p>O algoritmo QPE estima a fase () em um autovetor (|u) de um operador unitário (U), tal que:</p>
+<p>[ U|u= e^{2i } |u ]</p></li>
+<li><p>A fase () é um número real entre 0 e 1, e a estimativa dessa fase é crucial para algoritmos como o de Shor e simulações quânticas.</p></li>
+</ul>
+<hr>
+</section>
+<section id="como-funciona-1" class="level4" data-number="9.5.3.2">
+<h4 data-number="9.5.3.2" class="anchored" data-anchor-id="como-funciona-1"><span class="header-section-number">9.5.3.2</span> Como funciona?</h4>
+<ul>
+<li>Usa-se um registrador de qubits para armazenar a estimativa da fase.<br>
+</li>
+<li>Inicializa-se os qubits com portas Hadamard para criar superposição.<br>
+</li>
+<li>Aplica-se o operador controlado (U<sup>{2</sup>j}) para diferentes potências.<br>
+</li>
+<li>Aplica-se a Transformada Quântica de Fourier Inversa (IQFT) para extrair a informação da fase.<br>
+</li>
+<li>Mede-se o registrador para obter a estimativa binária da fase.</li>
+</ul>
+<hr>
+</section>
+<section id="código-2" class="level4" data-number="9.5.3.3">
+<h4 data-number="9.5.3.3" class="anchored" data-anchor-id="código-2"><span class="header-section-number">9.5.3.3</span> Código</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.linalg <span class="im">import</span> expm</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit.circuit.library <span class="im">import</span> UnitaryGate</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit_aer <span class="im">import</span> AerSimulator</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> transpile</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit.visualization <span class="im">import</span> plot_histogram</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de qubits para o registrador de fase (controle)</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz identidade 2x2</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>Id <span class="op">=</span> np.eye(<span class="dv">2</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Definindo o ângulo theta da fase que queremos estimar</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> <span class="fl">0.15</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Construindo a porta unitária U = exp(2*pi*i*theta*I)</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>U_matrix <span class="op">=</span> expm(<span class="dv">2</span> <span class="op">*</span> <span class="ot">1j</span> <span class="op">*</span> np.pi <span class="op">*</span> theta <span class="op">*</span> Id)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>U_gate <span class="op">=</span> UnitaryGate(U_matrix, label<span class="op">=</span><span class="st">'U'</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando a porta controlada-U</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>controlled_U <span class="op">=</span> U_gate.control(<span class="dv">1</span>)  <span class="co"># substitui add_control</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Expected phase (theta):'</span>, theta)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para construir o circuito QPE</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> qpe(n, controlled_u):</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Registradores: n qubits de controle + 1 alvo</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    qc <span class="op">=</span> QuantumCircuit(n <span class="op">+</span> <span class="dv">1</span>, n)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Aplicar Hadamard a todos os qubits de controle</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>        qc.h(i)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Preparar o qubit alvo no estado |1&gt;</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    qc.x(n)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Aplicar os controlled-U^(2^i) nos qubits de controle</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span><span class="op">**</span>i):</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>            qc.append(controlled_u, [i, n])</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Aplicar inversa da QFT nos qubits de controle</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    qft_circ <span class="op">=</span> qft(QuantumCircuit(n), n)</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    invqft_circ <span class="op">=</span> qft_circ.inverse()</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    qc.append(invqft_circ, qc.qubits[:n])</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Medir os qubits de controle</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>    qc.measure(<span class="bu">range</span>(n), <span class="bu">range</span>(n))</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> qc</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para construir o circuito da QFT</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> qft(qc, n):</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>        qc.h(n <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>            qc.cp(np.pi <span class="op">/</span> (<span class="dv">2</span> <span class="op">**</span> (n <span class="op">-</span> i <span class="op">-</span> j <span class="op">-</span> <span class="dv">1</span>)), n <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span>, j)</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>        qc.barrier()</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Swap para inverter ordem dos qubits</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n <span class="op">//</span> <span class="dv">2</span>):</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>        qc.swap(i, n <span class="op">-</span> i <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> qc</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Construindo circuito QPE</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> qpe(n, controlled_U)</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar circuito</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>display(qc.draw(<span class="st">'mpl'</span>))</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Executar em simulador</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>simulator <span class="op">=</span> AerSimulator()</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>compiled <span class="op">=</span> transpile(qc, simulator)</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>shots <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> simulator.run(compiled, shots<span class="op">=</span>shots).result().get_counts()</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordenar resultados por probabilidade</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>states <span class="op">=</span> <span class="bu">sorted</span>([[result[i] <span class="op">/</span> shots, i] <span class="cf">for</span> i <span class="kw">in</span> result], reverse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>res <span class="op">=</span> [<span class="bu">int</span>(i[<span class="dv">1</span>], <span class="dv">2</span>) <span class="cf">for</span> i <span class="kw">in</span> states]</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a><span class="co"># Análise do resultado</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(res) <span class="op">&gt;</span> <span class="dv">1</span> <span class="kw">and</span> states[<span class="dv">1</span>][<span class="dv">0</span>] <span class="op">&gt;</span> <span class="fl">0.1</span>:</span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The phase is between:'</span>, res[<span class="dv">0</span>] <span class="op">/</span> <span class="dv">2</span> <span class="op">**</span> n, res[<span class="dv">1</span>] <span class="op">/</span> <span class="dv">2</span> <span class="op">**</span> n)</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'The phase is:'</span>, res[<span class="dv">0</span>] <span class="op">/</span> <span class="dv">2</span> <span class="op">**</span> n)</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Measured integers:'</span>, res[:<span class="dv">2</span>])</span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotar histograma dos resultados</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>plot_histogram(result, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="algoritmo-de-grover" class="level3" data-number="9.5.4">
+<h3 data-number="9.5.4" class="anchored" data-anchor-id="algoritmo-de-grover"><span class="header-section-number">9.5.4</span> Algoritmo de Grover</h3>
+<p>O algoritmo de Grover é um algoritmo quântico usado para buscar estados específicos em uma superposição com complexidade quadrática mais rápida que a busca clássica. Ele é útil quando queremos encontrar alvos em grandes bases de dados não estruturadas.</p>
+<hr>
+</section>
+<section id="o-que-é-grover" class="level3" data-number="9.5.5">
+<h3 data-number="9.5.5" class="anchored" data-anchor-id="o-que-é-grover"><span class="header-section-number">9.5.5</span> O que é Grover?</h3>
+<p>Dado um conjunto de N = 2^n estados possíveis, e um subconjunto de M estados alvo, o algoritmo de <em>Grover</em> aumenta a probabilidade de medir os estados desejados.</p>
+<p>Enquanto uma busca clássica precisa de O(N) tentativas, <em>Grover</em> consegue localizar os alvos em O(sqrt(N/M)) iterações.</p>
+<hr>
+</section>
+<section id="como-funciona-2" class="level3" data-number="9.5.6">
+<h3 data-number="9.5.6" class="anchored" data-anchor-id="como-funciona-2"><span class="header-section-number">9.5.6</span> Como funciona?</h3>
+<ol type="1">
+<li>Inicialização: todos os qubits são colocados em superposição usando portas Hadamard.<br>
+</li>
+<li>Oráculo: identifica os estados alvo e inverte a fase deles.<br>
+</li>
+<li>Difusor (inversão sobre a média): amplifica a probabilidade dos estados alvo.<br>
+</li>
+<li>Iterações de <em>Grover</em>: repete o oráculo e o difusor um número ideal de vezes: iterações ≈ (π / 4) * sqrt(N / M)</li>
+<li>Medição: mede os qubits, aumentando significativamente a chance de encontrar os estados desejados.</li>
+</ol>
+<hr>
+<section id="código-3" class="level4" data-number="9.5.6.1">
+<h4 data-number="9.5.6.1" class="anchored" data-anchor-id="código-3"><span class="header-section-number">9.5.6.1</span> Código</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit, transpile</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit_aer <span class="im">import</span> AerSimulator</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit.visualization <span class="im">import</span> plot_histogram</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> math <span class="im">import</span> floor, pi, sqrt</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># CONFIGURAÇÕES</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span>  <span class="co"># número de qubits</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>targets <span class="op">=</span> [<span class="st">'01'</span>, <span class="st">'10'</span>]  <span class="co"># estados desejados</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>shots <span class="op">=</span> <span class="dv">1024</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> execute_quantum_circuit(circuit):</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    start_transpile <span class="op">=</span> time.perf_counter()</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    compiled_circuit <span class="op">=</span> transpile(circuit, simulator)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    end_transpile <span class="op">=</span> time.perf_counter()</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    start_execute <span class="op">=</span> time.perf_counter()</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    sim_result <span class="op">=</span> simulator.run(compiled_circuit, shots<span class="op">=</span><span class="dv">1024</span>).result()</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    end_execute <span class="op">=</span> time.perf_counter()</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    counts <span class="op">=</span> sim_result.get_counts()</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    transpile_time <span class="op">=</span> end_transpile <span class="op">-</span> start_transpile</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    execute_time <span class="op">=</span> end_execute <span class="op">-</span> start_execute</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    total_time <span class="op">=</span> end_execute <span class="op">-</span> start_transpile</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> counts, transpile_time, execute_time, total_time</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Função: aplica um oráculo que marca vários estados (inverte fase de cada alvo)</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_oracle(qc, targets):</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> target <span class="kw">in</span> targets:</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i, bit <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">reversed</span>(target)):</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> bit <span class="op">==</span> <span class="st">'0'</span>:</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>                qc.x(i)</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        qc.h(n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>            qc.cz(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>            qc.mcx(<span class="bu">list</span>(<span class="bu">range</span>(n <span class="op">-</span> <span class="dv">1</span>)), n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        qc.h(n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i, bit <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">reversed</span>(target)):</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> bit <span class="op">==</span> <span class="st">'0'</span>:</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>                qc.x(i)</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Função: aplica difusor de Grover (inversão sobre a média)</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_diffuser(qc):</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    qc.h(<span class="bu">range</span>(n))</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    qc.x(<span class="bu">range</span>(n))</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>    qc.h(n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>        qc.cx(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>        qc.mcx(<span class="bu">list</span>(<span class="bu">range</span>(n <span class="op">-</span> <span class="dv">1</span>)), n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    qc.h(n <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    qc.x(<span class="bu">range</span>(n))</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    qc.h(<span class="bu">range</span>(n))</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Número ideal de iterações</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">2</span> <span class="op">**</span> n</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> <span class="bu">len</span>(targets)</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>iterations <span class="op">=</span> floor((pi <span class="op">/</span> <span class="dv">4</span>) <span class="op">*</span> sqrt(N <span class="op">/</span> M))</span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicialização</span></span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>simulator <span class="op">=</span> AerSimulator()</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(n, n)</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="bu">range</span>(n))  <span class="co"># Superposição inicial</span></span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterações de Grover</span></span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(iterations):</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>    apply_oracle(qc, targets)</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>    apply_diffuser(qc)</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Medição</span></span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>qc.measure(<span class="bu">range</span>(n), <span class="bu">range</span>(n))</span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>warmup_circuit <span class="op">=</span> QuantumCircuit(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>warmup_circuit.h(<span class="dv">0</span>)</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>warmup_circuit.measure(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> execute_quantum_circuit(warmup_circuit)</span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="co"># Transpilação e execução</span></span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>start_transpile <span class="op">=</span> time.perf_counter()</span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>transpiled <span class="op">=</span> transpile(qc, backend<span class="op">=</span>simulator, optimization_level<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>end_transpile <span class="op">=</span> time.perf_counter()</span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>transpile_time <span class="op">=</span> end_transpile <span class="op">-</span> start_transpile</span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a>start_exec <span class="op">=</span> time.perf_counter()</span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> simulator.run(transpiled, shots<span class="op">=</span>shots).result()</span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a>end_exec <span class="op">=</span> time.perf_counter()</span>
+<span id="cb8-89"><a href="#cb8-89" aria-hidden="true" tabindex="-1"></a>exec_time <span class="op">=</span> end_exec <span class="op">-</span> start_exec</span>
+<span id="cb8-90"><a href="#cb8-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados</span></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> result.get_counts()</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"🎯 Estados alvos:"</span>, targets)</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"🔍 Resultado da busca:"</span>, counts)</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"⏱️ Tempo de transpilar: </span><span class="sc">{</span>transpile_time<span class="sc">:.6f}</span><span class="ss"> segundos"</span>)</span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"⏱️ Tempo de execução:  </span><span class="sc">{</span>exec_time<span class="sc">:.6f}</span><span class="ss"> segundos"</span>)</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>qc.draw(output<span class="op">=</span><span class="st">'mpl'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="deutsch-jozsa" class="level3" data-number="9.5.7">
+<h3 data-number="9.5.7" class="anchored" data-anchor-id="deutsch-jozsa"><span class="header-section-number">9.5.7</span> Deutsch-Jozsa</h3>
+<p>O algoritmo de <em>Deutsch-Jozsa</em> é um dos primeiros algoritmos quânticos que demonstra vantagem sobre algoritmos clássicos. Ele decide, com uma única execução, se uma função booleana é constante ou balanceada.</p>
+<hr>
+</section>
+<section id="o-que-é-deutsch-jozsa" class="level3" data-number="9.5.8">
+<h3 data-number="9.5.8" class="anchored" data-anchor-id="o-que-é-deutsch-jozsa"><span class="header-section-number">9.5.8</span> O que é Deutsch-Jozsa?</h3>
+<ul>
+<li>Dada uma função (f: {0,1}^n {0,1}), a função é:
+<ul>
+<li>Constante: retorna o mesmo valor para todas as entradas.</li>
+<li>Balanceada: retorna 0 para metade das entradas e 1 para a outra metade.</li>
+</ul></li>
+<li>Classicamente, precisamos de até (2^{n-1} + 1) avaliações para ter certeza.</li>
+<li>Com Deutsch-Jozsa, conseguimos determinar com uma única execução quântica.</li>
+</ul>
+<hr>
+</section>
+<section id="como-funciona-3" class="level3" data-number="9.5.9">
+<h3 data-number="9.5.9" class="anchored" data-anchor-id="como-funciona-3"><span class="header-section-number">9.5.9</span> Como funciona?</h3>
+<ol type="1">
+<li>Inicialização:
+<ul>
+<li>Preparamos (n) qubits de entrada no estado (|0) e 1 qubit auxiliar em (|1).<br>
+</li>
+<li>Aplicamos portas Hadamard nos qubits de entrada para criar superposição.</li>
+</ul></li>
+<li>Oráculo:
+<ul>
+<li>Marca os estados conforme a função (f).<br>
+</li>
+<li>Para funções balanceadas, aplica CNOTs do qubit de entrada para o auxiliar.</li>
+</ul></li>
+<li>Hadamard novamente:
+<ul>
+<li>Aplica portas Hadamard nos qubits de entrada para interferência quântica.</li>
+</ul></li>
+<li>Medição:
+<ul>
+<li>Medimos os qubits de entrada.<br>
+</li>
+<li>Se todos forem 0 → função constante, senão → função balanceada.</li>
+</ul></li>
+</ol>
+<hr>
+<section id="código-4" class="level4" data-number="9.5.9.1">
+<h4 data-number="9.5.9.1" class="anchored" data-anchor-id="código-4"><span class="header-section-number">9.5.9.1</span> Código</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit, transpile</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit_aer <span class="im">import</span> AerSimulator</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Função de aquecimento para evitar overhead da primeira transpilação/execução</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> warmup(simulator):</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    warmup_circuit <span class="op">=</span> QuantumCircuit(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    warmup_circuit.h(<span class="dv">0</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    warmup_circuit.measure(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    dummy_compiled <span class="op">=</span> transpile(warmup_circuit, simulator)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    _ <span class="op">=</span> simulator.run(dummy_compiled, shots<span class="op">=</span><span class="dv">1</span>).result()</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Função do oráculo de Deutsch-Jozsa (função balanceada)</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> deutsch_jozsa_oracle(qc, n):</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Aplica CNOTs do qubit i para o auxiliar (último qubit)</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># para vários qubits de entrada, deixando a função balanceada e mais complexa.</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        qc.cx(i, n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> qc</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de qubits</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">10</span>  </span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(n, n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Preparação dos qubits</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>qc.x(n<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicando o oráculo</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> deutsch_jozsa_oracle(qc, n)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Hadamard novamente nos qubits de entrada</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Medição dos qubits de entrada</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>qc.measure(<span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>), <span class="bu">range</span>(n<span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicializando o simulador</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>simulator <span class="op">=</span> AerSimulator()</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Warmup para evitar overhead da primeira execução</span></span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>warmup(simulator)</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Medição do tempo de transpilar com alta precisão</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>start_transpile <span class="op">=</span> time.perf_counter()</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>compiled_circuit <span class="op">=</span> transpile(qc, simulator, optimization_level<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>end_transpile <span class="op">=</span> time.perf_counter()</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Medição do tempo de execução com alta precisão</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>start_execute <span class="op">=</span> time.perf_counter()</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> simulator.run(compiled_circuit, shots<span class="op">=</span><span class="dv">1024</span>).result()</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>end_execute <span class="op">=</span> time.perf_counter()</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados</span></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> result.get_counts()</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Resultado do Deutsch-Jozsa:"</span>, counts)</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tempo de transpilar: </span><span class="sc">{</span>end_transpile <span class="op">-</span> start_transpile<span class="sc">:.6f}</span><span class="ss"> segundos"</span>)</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tempo de execução: </span><span class="sc">{</span>end_execute <span class="op">-</span> start_execute<span class="sc">:.6f}</span><span class="ss"> segundos"</span>)</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tempo total de execução: </span><span class="sc">{</span>end_execute <span class="op">-</span> start_transpile<span class="sc">:.6f}</span><span class="ss"> segundos"</span>)</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>qc.draw(output<span class="op">=</span><span class="st">'mpl'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="código-de-shor-shor-code" class="level3" data-number="9.5.10">
+<h3 data-number="9.5.10" class="anchored" data-anchor-id="código-de-shor-shor-code"><span class="header-section-number">9.5.10</span> Código de Shor (Shor Code)</h3>
+<p>O código de Shor é um código de correção de erros quânticos que protege um qubit contra <em>bit-flip</em> e <em>phase-flip</em> usando 9 <em>qubits</em> físicos para codificar 1 <em>qubit lógico</em>.</p>
+<hr>
+</section>
+<section id="o-que-é-o-código-de-shor" class="level3" data-number="9.5.11">
+<h3 data-number="9.5.11" class="anchored" data-anchor-id="o-que-é-o-código-de-shor"><span class="header-section-number">9.5.11</span> O que é o código de Shor?</h3>
+<ul>
+<li>Codifica 1 <em>qubit</em> lógico em 9 <em>qubits</em> físicos.<br>
+</li>
+<li>Capaz de corrigir qualquer erro de <em>bit-flip</em> ou <em>phase-flip</em> em um único qubit.<br>
+</li>
+<li>Combina repetição de três <em>qubits</em> para <em>bit-flip</em> e codificação de três <em>qubits</em> para <em>phase-flip</em>.</li>
+</ul>
+<hr>
+</section>
+<section id="como-funciona-4" class="level3" data-number="9.5.12">
+<h3 data-number="9.5.12" class="anchored" data-anchor-id="como-funciona-4"><span class="header-section-number">9.5.12</span> Como funciona?</h3>
+<ol type="1">
+<li>Codificação:
+<ul>
+<li>Qubit lógico é expandido para 9 <em>qubits</em> usando portas CNOT e Hadamard.<br>
+</li>
+<li>Primeiro grupo de três qubits protege contra phase-flip.<br>
+</li>
+<li>Cada qubit do grupo é expandido para proteger contra bit-flip.</li>
+</ul></li>
+<li>Simulação de erro:
+<ul>
+<li>Pode-se simular um erro, por exemplo, aplicando X (bit-flip) em um <em>qubits</em>.</li>
+</ul></li>
+<li>Decodificação:
+<ul>
+<li>Aplica as portas inversas da codificação para detectar e corrigir o erro.</li>
+</ul></li>
+<li>Medição:
+<ul>
+<li>Mede os 9 <em>qubits</em> para verificar a correção e recuperar o estado lógico.</li>
+</ul></li>
+</ol>
+<hr>
+<section id="código-5" class="level4" data-number="9.5.12.1">
+<h4 data-number="9.5.12.1" class="anchored" data-anchor-id="código-5"><span class="header-section-number">9.5.12.1</span> Código</h4>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit <span class="im">import</span> QuantumCircuit, transpile</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> qiskit_aer <span class="im">import</span> AerSimulator</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> perf_counter <span class="im">as</span> time_perf</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> execute_quantum_circuit(circuit, simulator):</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Dummy para aquecer</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    warmup <span class="op">=</span> QuantumCircuit(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    warmup.h(<span class="dv">0</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    warmup.measure(<span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    compiled_warmup <span class="op">=</span> transpile(warmup, simulator)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    simulator.run(compiled_warmup, shots<span class="op">=</span><span class="dv">1</span>).result()</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Transpilação</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    start_transpile <span class="op">=</span> time_perf()</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    compiled <span class="op">=</span> transpile(circuit, simulator)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    end_transpile <span class="op">=</span> time_perf()</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Execução</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    start_exec <span class="op">=</span> time_perf()</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> simulator.run(compiled, shots<span class="op">=</span><span class="dv">1024</span>).result()</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    end_exec <span class="op">=</span> time_perf()</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result.get_counts(), end_transpile <span class="op">-</span> start_transpile, end_exec <span class="op">-</span> start_exec, end_exec <span class="op">-</span> start_transpile</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Circuito de codificação de Shor</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>qc <span class="op">=</span> QuantumCircuit(<span class="dv">9</span>, <span class="dv">9</span>)</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Codificação lógica</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="dv">0</span>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">0</span>, <span class="dv">3</span>)</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">0</span>, <span class="dv">6</span>)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">6</span>, <span class="dv">7</span>)</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="dv">0</span>)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="dv">3</span>)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="dv">6</span>)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular erro (opcional)</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>qc.x(<span class="dv">4</span>)  <span class="co"># Simula erro de bit-flip em um dos qubits</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Decodificação</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="dv">0</span>)</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="dv">3</span>)</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>qc.h(<span class="dv">6</span>)</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">6</span>, <span class="dv">7</span>)</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">0</span>, <span class="dv">3</span>)</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>qc.cx(<span class="dv">0</span>, <span class="dv">6</span>)</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Medição</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>qc.measure(<span class="bu">range</span>(<span class="dv">9</span>), <span class="bu">range</span>(<span class="dv">9</span>))</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Execução</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>simulator <span class="op">=</span> AerSimulator()</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>counts, t_transpile, t_exec, t_total <span class="op">=</span> execute_quantum_circuit(qc, simulator)</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Resultado da Codificação de Shor:"</span>, counts)</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tempo de transpilar: </span><span class="sc">{</span>t_transpile<span class="sc">:.6f}</span><span class="ss"> segundos"</span>)</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tempo de execução: </span><span class="sc">{</span>t_exec<span class="sc">:.6f}</span><span class="ss"> segundos"</span>)</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tempo total de execução: </span><span class="sc">{</span>t_total<span class="sc">:.6f}</span><span class="ss"> segundos"</span>)</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>qc.draw(output<span class="op">=</span><span class="st">'mpl'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+</section>
+<section id="sec-quant-consid-finais" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="sec-quant-consid-finais"><span class="header-section-number">9.6</span> Considerações Finais</h2>
+<p>Este minicurso teve como objetivo introduzir os fundamentos da computação quântica de forma acessível e prática, utilizando a biblioteca Qiskit como ferramenta principal. Ao longo dos tópicos, exploramos conceitos essenciais da mecânica quântica, discutimos diferentes arquiteturas de qubits e mergulhamos em aplicações reais que já estão moldando o futuro da tecnologia.</p>
+<p>Mais do que apresentar códigos e teorias, a proposta foi despertar a curiosidade e incentivar o pensamento crítico sobre as possibilidades e limitações dessa área emergente. A computação quântica ainda está em seus primeiros passos, mas já oferece um campo fértil para inovação, pesquisa e descobertas.</p>
+<p>Espero que este material tenha servido como ponto de partida para quem deseja se aprofundar nesse universo fascinante. Que ele inspire novas ideias, projetos e, quem sabe, futuras contribuições para o avanço da ciência quântica.</p>
+</section>
+<section id="referências" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="referências"><span class="header-section-number">9.7</span> Referências</h2>
+<ol type="1">
+<li><p>Qiskit Documentation. IBM Quantum. Disponível em: <a href="https://qiskit.org/documentation/">https://qiskit.org/documentation/</a></p></li>
+<li><p>R. S. Santos, E. A. Oliveira, “Introdução à Computação Quântica: Conceitos e Aplicações”, <em>Revista Brasileira de Ensino de Física</em>, vol.&nbsp;43, 2021. DOI: <a href="https://doi.org/10.1590/1806-9126-RBEF-2021-0033">10.1590/1806-9126-RBEF-2021-0033</a></p></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/ecp-minicursos");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./quantica-resumo.html" class="pagination-link" aria-label="Minicurso: Introdução à Computação Quântica usando `Qiskit`">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Minicurso: Introdução à Computação Quântica usando <code>Qiskit</code></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./comp-dist-resumo.html" class="pagination-link" aria-label="Minicurso: Introdução à Compilação Distribuída">
+        <span class="nav-page-text">Minicurso: Introdução à Compilação Distribuída</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/ecp-minicursos/edit/master/quantica.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
