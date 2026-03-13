@@ -8,6 +8,8 @@ Tenho experiência na área de Ciência da Computação, tendo como principais l
 
 ## Livros e Materiais
 
+Tenho disponibilizado aqui no _GitHub_ os materiais que iniciei a produção para as disciplinas do Bacharelado em Ciência da Computação e do Mestrado em Ciência da Computação da UTFPR, campus Campo Mourão. Estão sendo produzidos novos materiais ou atualizações do conteúdo existente nos Projetos de Extensão `Escola de Computação Paralela` e `Academia Blockchain`.
+
 * [Escola de Computação Paralela: Minicursos e Tutoriais](https://rogerioag.github.io/ecp-minicursos-e-tutoriais/)
 
 Material produzido para minicursos sobre temas de Computação Paralela no Projeto de Extensão `Escola de Computação Paralela`, nas edições 2017, 2018, 2024 e 2026.
