@@ -18,6 +18,12 @@ Material produzido para minicursos sobre temas de Computação Paralela no Proje
 
 Este material reune as práticas sobre o tema Tecnologias _Blockchain_ da disciplina. O material e as práticas tem sido utilizado na disciplina PPGCC17 - Tópicos em Redes de Computadores e Cibersegurança do [Mestrado em Ciência da Computação da UTFPR-CM](https://www.utfpr.edu.br/cursos/programas-de-pos-graduacao/ppgcc-cm). O material está sendo atualizado no Projeto de Extensão `Academia Blockchain` com o objetivo de ministrarmos minicursos sobre os temas.
 
+
+
+* [OpenMP: Além das Diretivas de Compilação](https://rogerioag.github.io/openmp-alem-das-diretivas-de-compilacao)
+
+Este material reune o conteúdo e as práticas sobre o tema Computação Paralela. O material e as práticas tem sido utilizado na disciplina _PPGCC18 - Computação Paralela e Distribuída_ do [Mestrado em Ciência da Computação da UTFPR-CM](https://www.utfpr.edu.br/cursos/programas-de-pos-graduacao/ppgcc-cm). O material está sendo atualizado ao longo do semestre.
+
 ## Atividade
 
 <div>
@@ -26,7 +32,7 @@ Este material reune as práticas sobre o tema Tecnologias _Blockchain_ da discip
 <img height="180em" src="https://github-readme-stats.vercel.app/api?username=rogerioag&show_icons=true&theme=dracula&include_all_commits=true&count_private=true"/>
 </a>
 </div>
-  
+
 ## Contatos
 
 <div width="100%">
