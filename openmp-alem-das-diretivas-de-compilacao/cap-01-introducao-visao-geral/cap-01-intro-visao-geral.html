@@ -260,6 +260,10 @@ window.Quarto = {
   <li><a href="#sec-multicore-smt" id="toc-sec-multicore-smt" class="nav-link" data-scroll-target="#sec-multicore-smt"><span class="header-section-number">1.2.3</span> Arquiteturas de Múltiplos Núcleos com SMT</a></li>
   </ul></li>
   <li><a href="#sec-suporte-so" id="toc-sec-suporte-so" class="nav-link" data-scroll-target="#sec-suporte-so"><span class="header-section-number">1.3</span> Suporte do Sistema Operacional</a></li>
+  <li><a href="#prática" id="toc-prática" class="nav-link" data-scroll-target="#prática"><span class="header-section-number">1.4</span> Prática</a></li>
+  <li><a href="#sec-intro-consid-finais" id="toc-sec-intro-consid-finais" class="nav-link" data-scroll-target="#sec-intro-consid-finais"><span class="header-section-number">1.5</span> Considerações Finais</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">1.6</span> <em>Word Cloud</em></a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao/edit/master/cap-01-introducao-visao-geral/cap-01-intro-visao-geral.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -353,7 +357,7 @@ Figure&nbsp;1.II: Comparativo de Execução dos Modelos Arquiteturais
 <div id="fig-multicore" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-multicore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./multicore-01-1787174247423-5.png" class="img-fluid figure-img">
+<img src="figuras/multicore-01-1787174247423-5.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multicore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.III: Multicore
@@ -364,7 +368,7 @@ Figure&nbsp;1.III: Multicore
 <div id="fig-multicore-02" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-multicore-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./multicore-02.png" class="img-fluid figure-img">
+<img src="figuras/multicore-02.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multicore-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1.IV: Multicore
@@ -375,22 +379,22 @@ Figure&nbsp;1.IV: Multicore
 </section>
 <section id="sec-suporte-so" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="sec-suporte-so"><span class="header-section-number">1.3</span> Suporte do Sistema Operacional</h2>
-<p>O <em>Sistema Operacional (SO)</em> é o responsável pelo gerenciamento de recursos disponíveis na máquina, gerenciamento e escalonamento dos processos.</p>
-<p>Estamos em um ambiente multiprogramado e multiprocessado, mas nem sempre foi assim. Lá no começo, podíamos encontrar a seguinte situação: uma máquina com apenas um processador, com apenas um núcleo, o que conhecemos por <em>single core</em>. Além desses recursos de <em>hardware</em> restrito, se comparado com a situação atual, poderia também ter um Sistema Operacional monoprogramado, isto é, que executa apenas um programa por vez, exemplo, MS-DOS.</p>
-<p>Em um ambiente mais comum de hoje, de <em>hardware</em> com múltiplos elementos de processamento, de Sistema Operacional capaz de gerenciar a execução de múltiplos processos, temos a possibilidade de executar diversos aplicativos ao mesmo tempo: <em>browser</em>, <em>player</em> de músicas, editor de textos… O que antes tinha uma executação intercalada, através do compartilhamento de tempo.</p>
-<p>Quando executamos um programa qualquer em uma máquina, um processo será criado. Então processos são programas executando em um computador. Cada processo tem um identificador, um <em>pid</em> e vai executar o código associado à sua imagem/segmento de código.</p>
-<p>O <a href="#lst-exemplo-pid-ppid" class="quarto-xref">Código&nbsp;<span>1.II</span></a> apresenta um exemplo de código que recupera os identificadores relacionados ao processo.</p>
-<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-thread.c">
+<p>O <em>Sistema Operacional (SO)</em> é responsável pelo gerenciamento de recursos disponíveis na máquina, gerenciamento e escalonamento dos processos.</p>
+<p>Estamos em um ambiente multiprogramado e multiprocessado, mas nem sempre foi assim. Lá no começo, podíamos encontrar a seguinte situação: <em>uma máquina com apenas um processador, com apenas um núcleo, o que conhecemos por <code>single core</code></em>. Além desses recursos de <em>hardware</em> restrito, se comparado com a situação atual, poderia também ter um Sistema Operacional monoprogramado, isto é, que executa apenas um programa por vez, exemplo, MS-DOS.</p>
+<p>Em um ambiente mais comum de hoje, de <em>hardware</em> com múltiplos elementos de processamento, de Sistema Operacional capaz de gerenciar a execução de múltiplos processos, temos a possibilidade de executar diversos aplicações ao mesmo tempo: <em>browser</em>, <em>player</em> de músicas, editor de textos, que antes tinham uma execução intercalada, através do compartilhamento de tempo e de uso de CPU.</p>
+<p>Quando executamos um programa qualquer em uma máquina, um <code>processo</code> será criado. Então processos são programas executando em um computador. Cada processo tem um identificador, um <em>pid</em> e vai executar o código associado à sua imagem/segmento de código.</p>
+<p>O <span class="quarto-unresolved-ref">?lst-exemplo-pid-ppid</span> apresenta um exemplo de código que recupera os identificadores relacionados ao processo.</p>
+<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-pid-ppid.c">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Código&nbsp;1.I: Código do arquivo exemplo-thread.c.
+Código&nbsp;1.I: Recuperandos os identificadores do processo
 </figcaption>
 <div aria-describedby="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>exemplo-thread.c</strong></pre>
+<pre><strong>exemplo-pid-ppid.c</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="exemplo-thread.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define </span><span class="ot">_GNU_SOURCE</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="exemplo-pid-ppid.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define </span><span class="ot">_GNU_SOURCE</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/syscall.h&gt;</span></span>
@@ -407,36 +411,29 @@ Código&nbsp;1.I: Código do arquivo exemplo-thread.c.
 </div>
 </figure>
 </div>
-<div id="lst-exemplo-pid-ppid" class="C listing quarto-float quarto-figure quarto-figure-left anchored" data-code-file="./src/exemplo-pid-ppid/exemplo-pid-ppid.c" data-filename="exemplo-pid-ppid.c">
+<p><strong><code>getpid()</code></strong>: Retorna o <code>PID</code> do processo.</p>
+<p><strong><code>getppid()</code></strong>: Retorna o <code>ID</code> do processo pai.</p>
+<p><strong><code>syscall(SYS_gettid)</code></strong>: Retorna o <code>ID</code> da <em>Thread</em> (TID) no <em>kernel</em> do <code>Linux</code>, que identifica unicamente uma <em>thread</em>.</p>
+<p><strong><code>pthread_self()</code></strong>: Retorna <code>POSIX</code> <em>thread</em> <code>ID</code> (<code>pthread_t</code>), convertido para <em>unsigned long</em> com <code>(unsigned long)pthread_self()</code>.</p>
+<!--
+[, [2](https://stackoverflow.com/questions/21091000/how-to-get-thread-id-of-a-pthread-in-linux-c-program), [3](https://stackoverflow.com/questions/21303970/how-to-get-thread-pid-on-linux-from-c-code), [4](https://man7.org/linux/man-pages/man2/getpid.2.html), [5](https://courses.cs.vt.edu/cs3214/spring2022/questions/threadid)]
+-->
+<p>Todos os processos interagem com o Sistema Operacional por meio de chamadas ao sistema. Quando abrimos um terminal (<em>prompt</em> de comando) e executamos um comando qualquer, como por exemplo, o <code>pwd</code>. O processo do programa <code>terminal</code> é duplicado através da chamada de sistema <code>fork</code> e depois executa uma outra chamada de sistema da família <code>execv</code> para trocar a imagem do código do processo clonado, para que execute o código do programa desejado.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/rag</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A chamada <code>fork</code> cria um processo filho que diferencia-se a partir do processo pai somente em seus <code>PID</code> e <code>PPID</code>. Arquivos abertos, sinais pendentes e todo o espaço de endereçamento do processo pai não são herdados pelo filho. Em caso de sucesso, o <code>PID</code> do processo filho é devolvido para o pai, e um <span class="math inline">\(0\)</span> é retornado para o filho. Caso contrário, um <span class="math inline">\(-1\)</span> será retornado no contexto pai, e nenhum processo filho será criado, e um erro será selecionado adequadamente. O <a href="#lst-cod-fork" class="quarto-xref">Código&nbsp;<span>1.II</span></a> apresenta um exemplo do uso da chamada de sistema <code>fork</code> para a criação de um processo.</p>
+<div id="lst-cod-fork" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-fork.c">
 <figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-exemplo-pid-ppid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Código&nbsp;1.II: Recuperando os id's do Processo
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-fork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.II: Exemplo do uso de FORK
 </figcaption>
-<div aria-describedby="lst-exemplo-pid-ppid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="lst-cod-fork-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>exemplo-pid-ppid.c</strong></pre>
+<pre><strong>exemplo-fork.c</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-filename="exemplo-pid-ppid.c" data-code-file="./src/exemplo-pid-ppid/exemplo-pid-ppid.c"><pre class="sourceCode C code-with-copy"><code class="sourceCode c"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</figure>
-</div>
-<p><strong><code>getpid()</code></strong>: Returns the PID of the calling process.</p>
-<p><strong><code>getppid()</code></strong>: Returns the parent’s process ID.</p>
-<p><strong><code>syscall(SYS_gettid)</code></strong>: Returns the Linux kernel thread ID (TID), which uniquely identifies the individual thread.</p>
-<p><strong><code>pthread_self()</code></strong>: Returns the POSIX thread ID (<code>pthread_t</code>), which can be printed as an address or number depending on the system implementation (cast with <code>(unsigned long)pthread_self()</code>). [, <a href="https://stackoverflow.com/questions/21091000/how-to-get-thread-id-of-a-pthread-in-linux-c-program">2</a>, <a href="https://stackoverflow.com/questions/21303970/how-to-get-thread-pid-on-linux-from-c-code">3</a>, <a href="https://man7.org/linux/man-pages/man2/getpid.2.html">4</a>, <a href="https://courses.cs.vt.edu/cs3214/spring2022/questions/threadid">5</a>]</p>
-<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-thread.c">
-<figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Código&nbsp;1.III: Código do arquivo exemplo-thread.c.
-</figcaption>
-<div aria-describedby="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>exemplo-thread.c</strong></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-filename="exemplo-thread.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-filename="exemplo-fork.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span> <span class="op">){</span></span>
@@ -444,74 +441,59 @@ Código&nbsp;1.III: Código do arquivo exemplo-thread.c.
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  valor <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    pai <span class="op">=</span> fork<span class="op">(</span> <span class="op">);</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>pai<span class="op">){</span>   <span class="co">/* este trecho é executado pelo pai */</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pai<span class="op">){</span> <span class="co">/* este trecho é executado pelo pai */</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Pai </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>       <span class="op">{</span>   <span class="co">/* este trecho é executado pelo filho */</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Filho </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>       <span class="op">}</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>   exit<span class="op">(</span><span class="dv">0</span><span class="op">);</span>        </span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="op">{</span> <span class="co">/* este trecho é executado pelo filho */</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Filho </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    exit<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </figure>
 </div>
-<p>Outros recursos pode ser obtidos do gerenciamento feito pelo SO, utilizando chamadas de sistema. Todos os processos interagem com o Sistema Operacional por meio de chamadas ao sistema.</p>
-<p>Quando abrimos um terminal (<em>prompt</em> de comando) e executamos um comando qualquer, como por exemplo, o <code>pwd</code>. O processo do programa <code>terminal</code> é duplicado através da chamada de sistema <code>fork</code> e depois executa uma outra chamada de sistema da família <code>execv</code> para trocar a imagem do código do processo clonado, para que execute o código do programa desejado.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/rag</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>A chamada <code>fork</code> cria um processo filho que diferencia-se a partir do processo pai somente em seus <code>PID</code> e <code>PPID</code>. Arquivos abertos, sinais pendentes e todo o espaço de endereçamento do processo pai não são herdados pelo filho. Em caso de sucesso, a <code>PID</code> do processo filho é devolvido para o pai, e um <span class="math inline">\(0\)</span> é retornado para o filho. Caso contrário, um <span class="math inline">\(-1\)</span> será retornado no contexto pai, e nenhum processo filho será criado, e um erro será selecionado adequadamente.</p>
-<p>O <span class="quarto-unresolved-ref">?lst-mycode</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| lst-label: lst-mycode</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| lst-cap: "An example script"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Exemplo de fork.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span> <span class="op">){</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  pai<span class="op">;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  valor <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    pai <span class="op">=</span> fork<span class="op">(</span> <span class="op">);</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pai<span class="op">){</span>   <span class="co">/* este trecho é executado pelo pai */</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Pai </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span> <span class="op">{</span><span class="co">/* este trecho é executado pelo filho */</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>       printf<span class="op">(</span><span class="st">"Eu Sou o Processo Filho </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>       valor <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>       printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>   exit<span class="op">(</span><span class="dv">0</span><span class="op">);</span>        </span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Exemplo de execv.</p>
-<p>Para alocar memória, sua aplicação faz uma chamada à função <code>malloc(...)</code> da biblioteca, que por sua vez faz uma chamada de sistema para alocação de memória no segmento de dados, a <code>heap</code>. Para alocações cotínuas e pequenas a chamada <code>brk</code> / <code>sbrk</code> são utilizadas e deslocam o fim do segmento de dados do processo, já para alocações grandes, a chamada <code>mmap</code> é usada. Essa chamada cria um novo mapeamento de memória virtual independente no espaço de endereçamento do processo. No Linux, o limite padrão para disparar o <code>mmap</code> geralmente é de <strong>128 KB</strong> (configurável via <code>M_MMAP_THRESHOLD</code>).</p>
-<ul>
-<li><ul>
-<li>Evita a fragmentação do <em>heap</em> principal.</li>
-<li>Devolve a memória diretamente ao sistema operacional assim que o <code>free()</code> é chamado. [<a href="https://pt.stackoverflow.com/questions/347648/quando-realmente-usar-malloc-e-ou-calloc">1</a>, <a href="https://www.ic.unicamp.br/~norton/disciplinas/mc1022s2005/03_11.html">2</a>, <a href="https://www.mentebinaria.com.br/artigos/tudo/entendendo-malloc-e-heap-na-glibc-r70/">3</a>]</li>
-</ul></li>
-</ul>
-<p>O SO tem recursos para a criação de novos processos Desde memória às unidades de processamento.</p>
-<p>A família de funções exec substitui a imagem do processo atual por uma imagem de um novo processo.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Antes do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">// execl("/bin/ls", "/bin/ls", "-r", "-t", "-l", (char *) 0);</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Depois do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A família de funções <code>exec</code> substituem a imagem do processo atual por uma imagem de código do novo processo que será executado. O <a href="#lst-cod-exec-comment" class="quarto-xref">Código&nbsp;<span>1.III</span></a> e o <a href="#lst-cod-exec" class="quarto-xref">Código&nbsp;<span>1.IV</span></a> ilustram o funcionamento da chamada <code>exec</code>.</p>
+<div id="lst-cod-exec-comment" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-exec-comment.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-exec-comment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.III: Exemplo do uso da chamada EXEC
+</figcaption>
+<div aria-describedby="lst-cod-exec-comment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>exemplo-exec-comment.c</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" data-filename="exemplo-exec-comment.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Antes do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>   <span class="co">// execl("/bin/ls", "/bin/ls", "-r", "-t", "-l", (char *) 0);</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Depois do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span><span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<p>A execução do exemplo do <a href="#lst-cod-fork" class="quarto-xref">Código&nbsp;<span>1.II</span></a> no terminal vai apresentar o resultado que aparece na <a href="#fig-execucao-exemplo-exec-comment" class="quarto-xref">Figure&nbsp;<span>1.V</span></a>.</p>
+<div id="fig-execucao-exemplo-exec-comment" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-execucao-exemplo-exec-comment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/execucao-exemplo-exec-comment.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-execucao-exemplo-exec-comment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.V: Execução do exec
+</figcaption>
+</figure>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -525,189 +507,265 @@ Nota
 <p>Note que a linha que contém a chamada à função <code>execl(...)</code> está comentada, assim as mensagens <em>“Antes do exec”</em> e <em>“Depois do exec”</em> serão escritas na tela.</p>
 </div>
 </div>
-<p>:::</p>
-<p>Conforme apresentado na <span class="quarto-unresolved-ref">?nte-comando-compilacao</span>, bla</p>
-<div id="cau-comando-compilacao" class="callout callout-style-default callout-caution no-icon callout-titled" title="Terminal">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Precaução&nbsp;1.I: Terminal
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Antes do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">// execl("/bin/ls", "/bin/ls", "-r", "-t", "-l", (char *) 0);</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Depois do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Filename</p>
-<p>Conforme apresentado no <a href="#lst-compilacao" class="quarto-xref">Código&nbsp;<span>1.IV</span></a>, o programa é compilado utilizando a flag <code>-pthread</code>.</p>
-<div id="lst-compilacao" class="bash listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="Terminal">
+<p>Sem o comentário na linha do <code>execl(...)</code> conforme apresentado no <a href="#lst-cod-exec" class="quarto-xref">Código&nbsp;<span>1.IV</span></a>, o que aconteceu? A mensagem <em>“Depois do exec”</em> não foi escrita na tela.</p>
+<div id="lst-cod-exec" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-exec.c">
 <figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-compilacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Código&nbsp;1.IV: Comandos de compilação e execução do programa.
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-exec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.IV: Exemplo do uso da chamada EXEC
 </figcaption>
-<div aria-describedby="lst-compilacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="lst-cod-exec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>Terminal</strong></pre>
+<pre><strong>exemplo-exec.c</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Saída</span> do programa aqui...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-filename="exemplo-exec.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Antes do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>   execl<span class="op">(</span><span class="st">"/bin/ls"</span><span class="op">,</span> <span class="st">"/bin/ls"</span><span class="op">,</span> <span class="st">"-r"</span><span class="op">,</span> <span class="st">"-t"</span><span class="op">,</span> <span class="st">"-l"</span><span class="op">,</span> <span class="op">(</span><span class="dt">char</span> <span class="op">*)</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Depois do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span><span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </figure>
 </div>
-<p>O <a href="#lst-codigo" class="quarto-xref">Código&nbsp;<span>1.VI</span></a> apresenta um exemplo de código que utiliza pthreads.</p>
-<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-code-file="./src/exemplo-pthreads/exemplo-thread.c" data-filename="Exemplo de Thread">
-<figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Código&nbsp;1.V: Código do arquivo teste.c.
+<p>A execução exemplo do <a href="#lst-cod-exec" class="quarto-xref">Código&nbsp;<span>1.IV</span></a> no terminal vai apresentar o resultado que aparece na <a href="#fig-execucao-exemplo-exec" class="quarto-xref">Figure&nbsp;<span>1.VI</span></a>.</p>
+<div id="fig-execucao-exemplo-exec" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-execucao-exemplo-exec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/execucao-exemplo-exec.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-execucao-exemplo-exec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.VI: Execução do exec
 </figcaption>
-<div aria-describedby="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</figure>
+</div>
+<p>A segunda mensagem não foi escrita, pois no momento que a chamada <code>execl</code> é executada, a imagem de código do processo é trocada pelo código do comando <code>ls</code>, isto é, o código do processo original que imprimia as duas mensagens em torno da chamada <code>execl</code> deixa de existir.</p>
+<p>Além da criação de processos, outros recursos podem ser obtidos do gerenciamento feito pelo <code>SO</code>, utilizando chamadas de sistema. Para alocar memória, sua aplicação faz uma chamada à função <code>malloc(...)</code> da biblioteca, que por sua vez faz uma chamada de sistema para alocação de memória no segmento de dados, a <code>heap</code>. Para alocações cotínuas e pequenas a chamada <code>brk</code> / <code>sbrk</code> são utilizadas e deslocam o fim do segmento de dados do processo, já para alocações grandes, a chamada <code>mmap</code> é usada. Essa chamada cria um novo mapeamento de memória virtual independente no espaço de endereçamento do processo. No Linux, o limite padrão para disparar o <code>mmap</code> geralmente é de <strong>128 KB</strong> (configurável via <code>M_MMAP_THRESHOLD</code>). As regiões de memória alocadas são liberadas pela chamada à função <code>free()</code>.</p>
+<!--
+[[1](https://pt.stackoverflow.com/questions/347648/quando-realmente-usar-malloc-e-ou-calloc), [2](https://www.ic.unicamp.br/~norton/disciplinas/mc1022s2005/03_11.html), [3](https://www.mentebinaria.com.br/artigos/tudo/entendendo-malloc-e-heap-na-glibc-r70/)]
+-->
+<p>Vimos que na criação de um novo processo, os processos pai e filho, são uma cópia do código, das variáveis, do espaço de endereçamento do momento da chamada <code>fork</code>. E que a partir da próxima linha cada processo segue um caminho independente. Através do chaveamento feito com o valor da variável <em>pai</em> que recebe o resultado da chamada <code>fork</code> podemos separar o que é executado pelo processo <code>pai</code> e o que será executado pelo <code>filho</code>.</p>
+<p>Essa independência dos espaços de endereçamento garante a seguraça do sistema e o isolamento entre os processos.</p>
+<p>O que dificulta a execuções para a resolução cooperativa de problemas. Não há compartilhamento natural de dados entre os processos, é necessário utilizar algum mecanismo de comunicação entre processos (IPC – <em>Inter Processs Communication</em>). Os recursos disponíveis que podemos citar são: <em>pipe</em>, <em>fifo</em>, <em>shm</em>, <em>troca de mensagens</em>, <em>sockets</em> cada mecanismo com sua finalidade e suas limitações.</p>
+<div id="lst-cod-shm-client" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-shm-client.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-shm-client-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.V: Exemplo do uso Memória Compartilhada
+</figcaption>
+<div aria-describedby="lst-cod-shm-client-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>Exemplo de Thread</strong></pre>
+<pre><strong>exemplo-shm-client.c</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-filename="Exemplo de Thread" data-code-file="./src/exemplo-pthreads/exemplo-thread.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-filename="exemplo-shm-client.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * Fonte: http://www.cs.cf.ac.uk/Dave/C/node27.html</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"> * shm-client - client program to demonstrate shared memory.</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/ipc.h&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/shm.h&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#define SHMSZ </span><span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span><span class="pp">tshare</span><span class="op">))</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> tshare <span class="op">{</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> ii<span class="op">;</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> ff<span class="op">;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> str<span class="op">[</span><span class="dv">10</span><span class="op">];</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> alterou<span class="op">;</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> tshare<span class="op">;</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> shmid<span class="op">;</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  key_t key<span class="op">;</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  tshare <span class="op">*</span>shm<span class="op">,</span> <span class="op">*</span>s<span class="op">;</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* É preciso pegar o segmento nomeado como "5678", criado pelo servidor. */</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  key <span class="op">=</span> <span class="dv">5678</span><span class="op">;</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Localizando o segmento (locate). */</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">((</span>shmid <span class="op">=</span> shmget<span class="op">(</span>key<span class="op">,</span> SHMSZ<span class="op">,</span> <span class="bn">0666</span><span class="op">))</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    perror<span class="op">(</span><span class="st">"Erro ao tentar acessar o segmento de shm (shmget)."</span><span class="op">);</span></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Acoplamento do segmento ao espaço de endereços de dados. */</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">((</span>shm <span class="op">=</span> shmat<span class="op">(</span>shmid<span class="op">,</span> NULL<span class="op">,</span> <span class="dv">0</span><span class="op">))</span> <span class="op">==</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    perror<span class="op">(</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Erro ao acoplar o segmento ao espaço de dados do programa (shmat)."</span><span class="op">);</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Lendo o que o servidor colocou na região de memória. */</span></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>  s <span class="op">=</span> shm<span class="op">;</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Inteiro: </span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span> s<span class="op">-&gt;</span>ii<span class="op">);</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Float: </span><span class="sc">%f\n</span><span class="st">"</span><span class="op">,</span> s<span class="op">-&gt;</span>ff<span class="op">);</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"String: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> s<span class="op">-&gt;</span>str<span class="op">);</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Alterou: </span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span> s<span class="op">-&gt;</span>alterou<span class="op">);</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Modificando o primeiro caracter do segmento para '*', indicando que os</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="co">   * dados já foram lidos. */</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>  shm<span class="op">-&gt;</span>ii <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>  shm<span class="op">-&gt;</span>ff <span class="op">=</span> <span class="fl">100.0</span><span class="op">;</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>  strncpy<span class="op">(</span>shm<span class="op">-&gt;</span>str<span class="op">,</span> <span class="st">"Alterado</span><span class="sc">\0</span><span class="st">"</span><span class="op">,</span> <span class="dv">9</span><span class="op">);</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>  shm<span class="op">-&gt;</span>alterou <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Elimina a região de memória compartilhada. */</span></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>shmdt<span class="op">(</span>shm<span class="op">)</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>    perror<span class="op">(</span><span class="st">"Erro ao desacoplar a região de memória compartilhada (shmdt)."</span><span class="op">);</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>    exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> EXIT_SUCCESS<span class="op">;</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </figure>
 </div>
-<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-thread.c">
+<div id="lst-cod-shm-server" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-shm-server.c">
 <figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Código&nbsp;1.VI: Código do arquivo exemplo-thread.c.
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-shm-server-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.VI: Exemplo do uso Memória Compartilhada
 </figcaption>
-<div aria-describedby="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="lst-cod-shm-server-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
-<pre><strong>exemplo-thread.c</strong></pre>
+<pre><strong>exemplo-shm-server.c</strong></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-filename="exemplo-thread.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span> <span class="op">){</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  pai<span class="op">;</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  valor <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    pai <span class="op">=</span> fork<span class="op">(</span> <span class="op">);</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>pai<span class="op">){</span>   <span class="co">/* este trecho é executado pelo pai */</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Pai </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>       <span class="op">{</span>   <span class="co">/* este trecho é executado pelo filho */</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Filho </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>       <span class="op">}</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>   exit<span class="op">(</span><span class="dv">0</span><span class="op">);</span>        </span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-filename="exemplo-shm-server.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * Fonte: http://www.cs.cf.ac.uk/Dave/C/node27.html</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;errno.h&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;string.h&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/ipc.h&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/shm.h&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">/* Tamanho do segmento compartilhado. */</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="pp">#define SHMSZ </span><span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span><span class="pp">tshare</span><span class="op">))</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="kw">typedef</span> <span class="kw">struct</span> tshare <span class="op">{</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> ii<span class="op">;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> ff<span class="op">;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="dt">char</span> str<span class="op">[</span><span class="dv">10</span><span class="op">];</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> alterou<span class="op">;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span> tshare<span class="op">;</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> shmid<span class="op">;</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  key_t key<span class="op">;</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  tshare <span class="op">*</span>shm<span class="op">,</span> <span class="op">*</span>s<span class="op">;</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Nome do segmento de memória compartilhada "5678". */</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  key <span class="op">=</span> <span class="dv">5678</span><span class="op">;</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Cria o segmento compartilhado. */</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">((</span>shmid <span class="op">=</span> shmget<span class="op">(</span>key<span class="op">,</span> SHMSZ<span class="op">,</span> IPC_CREAT <span class="op">|</span> <span class="bn">0666</span><span class="op">))</span> <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    perror<span class="op">(</span><span class="st">"Erro ao tentar criar o segmento de shm (shmget)."</span><span class="op">);</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Identificação da região criada: </span><span class="sc">%d</span><span class="st">. </span><span class="sc">\n</span><span class="st">Para verificar use:</span><span class="sc">\n</span><span class="st"> ipcs -m "</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>         <span class="st">"| grep </span><span class="sc">\"%d\"\n</span><span class="st">"</span><span class="op">,</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>         shmid<span class="op">,</span> shmid<span class="op">);</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Acoplamento do segmento criado ao espaço de dados. */</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">((</span>shm <span class="op">=</span> shmat<span class="op">(</span>shmid<span class="op">,</span> NULL<span class="op">,</span> <span class="dv">0</span><span class="op">))</span> <span class="op">==</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*)-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    perror<span class="op">(</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Erro ao acoplar o segmento ao espaço de dados do programa (shmat)."</span><span class="op">);</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Colocando dados para o outro processo ler. */</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>  s <span class="op">=</span> shm<span class="op">;</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>  tshare <span class="op">*</span>novo <span class="op">=</span> <span class="op">(</span>tshare <span class="op">*)</span>malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span>tshare<span class="op">));</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>  novo<span class="op">-&gt;</span>ii <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>  novo<span class="op">-&gt;</span>ff <span class="op">=</span> <span class="fl">1.0</span><span class="op">;</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>  strncpy<span class="op">(</span>novo<span class="op">-&gt;</span>str<span class="op">,</span> <span class="st">"abcdefghi</span><span class="sc">\0</span><span class="st">"</span><span class="op">,</span> <span class="dv">10</span><span class="op">);</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>  novo<span class="op">-&gt;</span>alterou <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>  memcpy<span class="op">(</span>s<span class="op">,</span> novo<span class="op">,</span> <span class="kw">sizeof</span><span class="op">(</span>tshare<span class="op">));</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Aguardando a leitura do outro processo. O client irá mudar o primeiro</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="co">   * caractere da região compartilhada para '*', indicando que já fez a leitura</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="co">   * do que foi posto lá.</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="co">   */</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span>shm<span class="op">-&gt;</span>alterou <span class="op">!=</span> <span class="dv">1</span><span class="op">)</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    sleep<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Inteiro: </span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span> shm<span class="op">-&gt;</span>ii<span class="op">);</span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Float: </span><span class="sc">%f\n</span><span class="st">"</span><span class="op">,</span> shm<span class="op">-&gt;</span>ff<span class="op">);</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"String: </span><span class="sc">%s\n</span><span class="st">"</span><span class="op">,</span> shm<span class="op">-&gt;</span>str<span class="op">);</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Alterou: </span><span class="sc">%d\n</span><span class="st">"</span><span class="op">,</span> shm<span class="op">-&gt;</span>alterou<span class="op">);</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Desacoplamento da região de memória compartilhada. */</span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>shmdt<span class="op">(</span>shm<span class="op">)</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>    perror<span class="op">(</span><span class="st">"Erro ao desacoplar a região de memória compartilhada (shmdt)."</span><span class="op">);</span></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>    exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Destruição do segmento */</span></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>shmctl<span class="op">(</span>shmid<span class="op">,</span> IPC_RMID<span class="op">,</span> NULL<span class="op">)</span> <span class="op">==</span> <span class="op">-</span><span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    perror<span class="op">(</span><span class="st">"Erro ao destruir o segmento compartilhado. (shmctl)."</span><span class="op">);</span></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>    exit<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> EXIT_SUCCESS<span class="op">;</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </figure>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<p>A <a href="#fig-execucao-exemplo-shm" class="quarto-xref">Figure&nbsp;<span>1.VII</span></a> apresenta o resultado da execução do exemplo de compartilhamento de memória.</p>
+<div id="fig-execucao-exemplo-shm" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-execucao-exemplo-shm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/execucao-exemplo-shm.png" class="img-fluid figure-img">
 </div>
-<div class="callout-title-container flex-fill">
-Nota
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-execucao-exemplo-shm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.VII: Execução do SHM
+</figcaption>
+</figure>
 </div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Bloco de Código com callout.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Executando</span> em paralelo...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Terminal">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Terminal
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip no-icon callout-titled" title="Terminal">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Dica</span>Terminal
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
+<p>No arquivo <code>&lt;sys/shm.h&gt;</code> não tem limite fixo do tamanho dos dados que podem ser compartilhados. O limite máximo depende dos parâmetros do kernel (como <code>SHMMAX</code> e <code>SHMALL</code> no Linux) e da arquitetura do processador (32 ou 64 bits), podendo alcançar gigabytes ou frações significativas da memória RAM física e virtual disponíveis.</p>
+<p>O <code>SHMMAX</code> (<code>/proc/sys/kernel/shmmax</code>) define o tamanho máximo (em bytes) permitido para um único segmento de memória compartilhada. Em sistemas modernos de 64 bits, o padrão costuma ser muito grande (próximo ao limite de um <em>unsigned long</em>). E o <code>SHMALL</code> (<code>/proc/sys/kernel/shmall</code>) é o limite total de páginas de memória compartilhada que podem ser alocadas simultaneamente no sistema inteiro. Para verificar qual o valor desse parâmetro basta executar os comandos:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat /proc/sys/kernel/shmmax</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">18446744073692774399</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat /proc/sys/kernel/shmall</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">18446744073692774399</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sysctl kernel.shmmax</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">kernel.shmmax</span> = 18446744073692774399</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sysctl kernel.shmall</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">kernel.shmall</span> = 18446744073692774399</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Em sistemas de <span class="math inline">\(32\)</span> bits, o espaço de endereçamento por processo restringe o tamanho prático de um segmento a menos de 4 GB, enquanto sistemas de 64 bits suportam segmentos massivos limitados apenas pela RAM e swap. Caso seja necessário alterar esses limites ou verificar a configuração atual no seu sistema, o conteúdo do arquivo <code>/proc/sys/kernel/shmmax</code> pode ser alterado temporariamente pelo comando:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> sysctl <span class="at">-w</span> kernel.shmmax=VALOR</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Ou pode editar diretamente o arquivo <code>/etc/sysctl.conf</code> incluindo no final ou alterando valores existentes para</p>
+<p>as variáveis <code>kernel.shmmax = VALOR_EM_BYTES</code> e <code>kernel.shmall = VALOR_EM_PAGINAS</code>. Para aplicar as mudanças sem a necessidade de reiniciar a máquina, o comando <code>sudo sysctl -p</code> pode ser executado.</p>
+</section>
 <section id="prática" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="prática"><span class="header-section-number">1.4</span> Prática</h2>
 <ol type="1">
-<li>Com base nos exemplos de <code>fork</code> e de comunicação entre processos altere o código do soma de vetores para dividir o trabalho entre mais processos.</li>
+<li>Com base nos exemplos de <code>fork</code> e memória compartilhada <code>shm</code> altere o código do exemplo <code>vectoradd</code> para que soma de vetores seja feita por mais processos.</li>
 </ol>
-<ul>
-<li></li>
-<li><p><strong>Thread:</strong> parte de um programa. Processo Leve. Tarefa.</p></li>
-<li><p>Cada processo pode possuir uma ou múltiplas <em>threads</em>.</p></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figuras/processos-threads.png" class="img-fluid figure-img"></p>
-<figcaption>Processos e Threads</figcaption>
-</figure>
-</div>
-<ul>
-<li><p><strong>Exemplos:</strong></p>
-<ul>
-<li>Um editor de textos, várias tarefas <em>(typing, spell checking, printing…)</em></li>
-<li>Um servidor web, cada requisição atendida por uma <em>thread</em>.</li>
-</ul></li>
-<li><p><strong>Em um computador convencional <em>(single core)</em>:</strong></p>
-<ul>
-<li>Cada processo gera pelo menos uma <em>thread</em> (fluxo de execução principal).</li>
-<li>Um processo é escalonado para execução, logo uma <em>thread</em> está em execução por vez.</li>
-<li>Quando uma thread pára (por exemplo, devido a um <strong><em>page fault</em></strong>:</li>
-<li>O estado da <em>thread</em> é guardado (registradores, …)
-<ul>
-<li>O estado de outra <em>thread</em> em espera é carregado no processador e inicia-se sua execução.</li>
-<li>O que é chamado de troca de contexto <strong><em>(context switching)</em></strong>.</li>
-</ul></li>
-<li>Para o usuário parece que todas as <em>threads</em> executam simultaneamente.</li>
-</ul></li>
-<li><p>Em um computador com processador <em>multicore</em> tem-se a possibilidade de paralelismo físico.</p></li>
-<li><p><strong><em>Concorrência:</em></strong> Múltiplas tarefas estão logicamente ativas em um mesmo momento.</p></li>
-<li><p><strong><em>Paralelismo:</em></strong> Múltiplas tarefas estão realmente ativas em um mesmo momento.</p></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figuras/concorrencia-paralelismo.png" class="img-fluid figure-img"></p>
-<figcaption>Concorrência e Paralelismo</figcaption>
-</figure>
-</div>
 </section>
 <section id="sec-intro-consid-finais" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="sec-intro-consid-finais"><span class="header-section-number">1.5</span> Considerações Finais</h2>
+<p>Neste Capítulo revisamos conceitos sobre suporte do <em>hardware</em> e do Sistema Operacional ao paralelismo. A criação de múltiplos processos e os mecanismos de comunicação entre processos. Em específico o compartilhamento de memória entre os processos independentes para a resolução de problemas cooperativos.</p>
 </section>
 <section id="word-cloud" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">1.6</span> <em>Word Cloud</em></h2>
@@ -766,9 +824,6 @@ Twenty-Seventh Hawaii International Conference on System Sciences</em>
 </div>
 
 
-</section>
-</div>
-</div>
 </section>
 
 </main> <!-- /main -->
