@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Introdução à Computação Paralela – OpenMP: Além das Diretivas de Compilação</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../index.html" rel="prev">
+<link href="../images/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aaa6b99a32e66148052db2563ee2fdad.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">OpenMP: Além das Diretivas de Compilação</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+  <li><a href="#sec-intro-geral" id="toc-sec-intro-geral" class="nav-link active" data-scroll-target="#sec-intro-geral"><span class="header-section-number">1.1</span> Introdução</a></li>
+  <li><a href="#sec-suporte-hardware" id="toc-sec-suporte-hardware" class="nav-link" data-scroll-target="#sec-suporte-hardware"><span class="header-section-number">1.2</span> Suporte do Hardware</a>
+  <ul class="collapse">
+  <li><a href="#arquiteturas-superescalares" id="toc-arquiteturas-superescalares" class="nav-link" data-scroll-target="#arquiteturas-superescalares"><span class="header-section-number">1.2.1</span> Arquiteturas Superescalares</a></li>
+  <li><a href="#arquiteturas-smt" id="toc-arquiteturas-smt" class="nav-link" data-scroll-target="#arquiteturas-smt"><span class="header-section-number">1.2.2</span> Arquiteturas SMT</a></li>
+  <li><a href="#sec-multicore-smt" id="toc-sec-multicore-smt" class="nav-link" data-scroll-target="#sec-multicore-smt"><span class="header-section-number">1.2.3</span> Arquiteturas de Múltiplos Núcleos com SMT</a></li>
+  </ul></li>
+  <li><a href="#sec-suporte-so" id="toc-sec-suporte-so" class="nav-link" data-scroll-target="#sec-suporte-so"><span class="header-section-number">1.3</span> Suporte do Sistema Operacional</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao/edit/master/cap-01-introducao-visao-geral/cap-01-intro-visao-geral.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>Resumo:</strong> Neste capítulo são apresentados conceitos, técnicas e mecanismos de suporte do <em>hardware</em> e do Sistema Operacional à Computação Paralela. Falamos um pouco sobre as técnicas de melhorias de desempenho ligadas à arquitetura dos processadores até chegarmos ao <em>multicore</em>. Do suporte do Sistema Operacional à implementação de <em>threads</em>.</p>
+</blockquote>
+<section id="sec-intro-geral" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="sec-intro-geral"><span class="header-section-number">1.1</span> Introdução</h2>
+<p>As melhorias de desempenho no decorrer das últimas décadas passaram pelo aumento da velocidade de <em>clock</em>, otimizações do conjunto de instruções, hierarquia de memória e níveis de <em>cache</em> e otimizações do código com compilação.</p>
+<p>Nos dias atuais, as frentes de pesquisa e desenvolvimento buscam soluções voltadas para a computação sustentável, com técnicas e mecanismos de gerenciamento de energia. Plataformas modernas cada vez heterogêneas, com dispositivos de computação cada vez mais distintos, como Unidades de Processamento Gráfico (GPUs), arranjos de coprocessadores e FPGAS. O que nos leva à <em>Computação Paralela e Heterogênea</em>.</p>
+<p>A obtenção de melhorias de desempenho passam atualmente pelo uso de <em>diretivas de compilação</em>, para anotações em código legado e ferramentas como compiladores paralelizantes que com base em diretivas de compilação ou pelo uso de técnicas de paralelização automática, geram versões paralelas dos códigos.</p>
+<p>Nesse esforço, fabricantes fornecem bibliotecas otimizadas para suas plataformas ou dispositivos que permitem uma modernização do código, pela substituição de trechos de código legado ou versões ingênuas de algoritmos, por chamadas a versões otimizadas.</p>
+</section>
+<section id="sec-suporte-hardware" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-suporte-hardware"><span class="header-section-number">1.2</span> Suporte do Hardware</h2>
+<p>Tecnologias mais rápidas possibilitam projetos mais eficientes. Partindo-se de um modelo básico de computação foram sendo adicionados aos projetos arquiteturais recursos para a melhoria de desempenho. Entre esses recursos, estão Hierarquia de Memória (Cache) visando mitigar a diferença de tecnologias na construção de CPUs e Memórias. A divisão do ciclo de execução de uma instrução em estágios de um <em>pipeline</em>, que levou a técnicas de previsão de desvios para evitar penalidades de busca de instruções em caminhos errados.</p>
+<p>As Arquiteturas Superescalares buscam o <em>Paralelismo em Nível de Instrução (ILP)</em> com escalonamento dinâmico de instruções <span class="citation" data-cites="tomasulo:1967">(<a href="cap-01-intro-visao-geral.html#ref-tomasulo:1967" role="doc-biblioref">Tomasulo 1967</a>)</span> e o mecanismos para a <em>execução fora de ordem</em>. Porém, ainda que processem múltiplas instruções ao mesmo tempo, elas ainda sofrem com ineficiência e subutilização de recursos. O número de instruções executadas por ciclo (IPC) não é muito alto, isto é, <em>hardware</em> fica ocioso.</p>
+<p>Para solucionar isso e maximizar o desempenho, surgiu a <strong>execução simultânea de diferentes tarefas</strong> (como o <em>Simultaneous Multithreading</em> - SMT), uma abordagem que otimiza o uso do processador ao aproveitar tanto o paralelismo das instruções quanto o das próprias tarefas, <em>Paralelismo em Nível de Tarefas (TLP)</em>. A execução de múltiplas tarefas diferentes, isto é, aplicações diferentes, garante uma ocupação mais efetiva dos recursos do processador que ficariam ociosos, podem ser utilizados pelas instruções de outras tarefas.</p>
+<p>A multiplicidade de núcleos trazida pelos processadores <em>multicore</em> garante um paralelismo em núcleos de processamento diferentes.</p>
+<section id="arquiteturas-superescalares" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="arquiteturas-superescalares"><span class="header-section-number">1.2.1</span> Arquiteturas Superescalares</h3>
+<p>As arquiteturas superescalares expandiram a capacidade em largura através de <em>pipelines</em> distintos para cada unidade funcional, fazendo com que múltiplas instruções sejam buscadas, decodificadas e despachadas para a execução. Mesmo as arquiteturas superescalares, ainda não atingem níveis de paralelismo desejados e acabam sendo subutilizadas ou utilizadas ineficientemente.</p>
+<p>Diante da necessidade de melhoria no desempenho e da utilização mais eficiente dos recursos, surgiu a idéia de remessa e execução de instruções de tarefas distintas, caracterizando a execução simultânea de tarefas com o objetivo de intensificar a utilização de recursos e explorar o grau de paralelismo existente entre essas instruções e ainda o grau de paralelismo existente entre tarefas.</p>
+<p>O conceito de superescalar é implementado na maioria dos processadores modernos, dando-lhes a capacidade de explorar o paralelismo no nível de instruções (ILP). Em uma arquitetura superescalar típica, o processador busca e decodifica várias instruções tentando garantir um fluxo contínuo de instruções prevendo antecipadamente os resultados de instruções de desvio. As instruções são analisadas e as dependências de dados e de controle são reduzidas, e instruções são despachadas e distribuídas para as estações de reserva associadas e na sequência são emitidas para a execução em suas respectivas unidades funcionais <span class="citation" data-cites="smith:sohi:1995">(<a href="cap-01-intro-visao-geral.html#ref-smith:sohi:1995" role="doc-biblioref">Smith and Sohi 1995</a>)</span>.</p>
+<p>A execução em paralelo baseia-se na disponibilidade de operandos ao invés de restringir-se à sequência original do programa, proporcionando um escalonamento dinâmico de instruções, no qual os operandos pendentes em outras instruções são atualizados à medida em que são calculados, permitindo que a execução das instruções que aguardam esses operandos possa então prosseguir. A arquitetura utiliza-se de uma estrutura de reordenação, um <em>buffer</em> ou uma fila, para que após a execução e obtenção dos resultados, o estado do programa seja finalizado na mesma ordem estabelecida pelo código, mantendo assim a semântica do código original.</p>
+<p>A execução fora de ordem é obtida sobre as instruções que estão com os operandos prontos, não respeitando a ordem original do código, mas sim o fluxo de dados. Esse paralelismo é implícito no código e ocorre de forma transparente ao usuário, não sendo necessário recompilar as aplicações existentes para a arquitetura alvo.</p>
+<p>A execução de instruções em paralelo envolve questões relacionadas à dependência de controle e de dados entre as instruções, ao hardware para suportar a execução de múltiplas instruções em paralelo, às estratégias para determinar quando uma instrução está pronta e à passagem de valores entre instruções que estão em execução.</p>
+<p>Instruções de desvio condicional podem levar o fluxo de execução a um caminho tomado pela decisão das técnicas de previsão de desvios, de forma que as instruções executadas desse caminho são executadas em um contexto especulativo, podendo mais tarde serem descartadas ou efetivadas, dependendo da conformidade da previsão. As operações realizadas especulativamente são efetivadas no estado real da máquina somente quando as previsões de desvios são confirmadas. O controle da visibilidade desse novo estado e da manutenção da aparência de execução seqüencial sem prejuízos para a semântica do código original é uma tarefa complexa, exigindo para isso um hardware também complexo.</p>
+<p>As técnicas de previsão de desvio tentam prever o caminho a ser seguido pelo fluxo de execução, procurando minimizar os erros de forma que sempre instruções de um caminho correto sejam buscadas, decodificadas e executadas.</p>
+</section>
+<section id="arquiteturas-smt" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="arquiteturas-smt"><span class="header-section-number">1.2.2</span> Arquiteturas SMT</h3>
+<p>A denominação <em>Simultaneous Multithreading</em> (SMT) teve origem na publicação de <span class="citation" data-cites="Tullsen:1995:SMM:225830.224449">(<a href="cap-01-intro-visao-geral.html#ref-Tullsen:1995:SMM:225830.224449" role="doc-biblioref">Tullsen et al. 1995</a>)</span>, embora o conceito tenha sido apresentado por idéias semelhantes em trabalhos anteriores como a arquitetura <em>Simultaneous Instruction Issuing</em> <span class="citation" data-cites="10.1145/139669.139710">(<a href="cap-01-intro-visao-geral.html#ref-10.1145/139669.139710" role="doc-biblioref">Hirata et al. 1992</a>)</span> e a arquitetura chamada <em>Multistreamed Superscalar</em> <span class="citation" data-cites="323172">(<a href="cap-01-intro-visao-geral.html#ref-323172" role="doc-biblioref">Yamamoto et al. 1994</a>)</span>, ambos com a capacidade de executar instruções provenientes de diferentes fluxos simultaneamente.</p>
+<p>As arquiteturas SMT têm como objetivo a execução simultânea de tarefas, remetendo à execução instruções de diferentes tarefas durante o mesmo ciclo do processador. Cada tarefa detém, durante a execução, o uso de alguns recursos que constituem o seu contexto de execução, compartilhando diversos outros com outras tarefas em execução. O contexto de cada tarefa é formado pelo conteúdo dos registradores que estão sendo utilizados, pelo seu contador de programa e pelos recursos que estão sob seu domínio.</p>
+<p>Através do embaralhamento das instruções das diversas tarefas em execução simultânea, a arquitetura explora o paralelismo em nível de tarefas (TLP), em adição ao ILP, o qual é típico das arquiteturas superescalares convencionais. Esta característica proporciona melhor aproveitamento dos recursos existentes, pois aqueles que estariam ociosos com a execução de uma única tarefa poderão ser aproveitados pela execução simultânea de outras tarefas.</p>
+<p>A execução de tarefas simultâneas garante um paralelismo maior em relação à execução convencional, permitindo uma exploração maior dos recursos do <em>hardware</em>. A unidade de busca, entre outros recursos é compartilhada pelas diversas tarefas, permite que as instruções das tarefas sejam buscadas e inseridas no caminho de execução, onde a coexistência de vários contextos permite aproveitar melhor as oportunidades de execução enquanto as tarefas concorrentes alternam seus momentos de <em>cpu-bound</em> e <em>io-bound</em>. A <a href="#fig-smt-arq" class="quarto-xref">Figure&nbsp;<span>1.I</span></a> apresenta o projeto arquitetural de uma arquitetura SMT.</p>
+<div id="fig-smt-arq" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-smt-arq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/smt-01.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-smt-arq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.I: SMT
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-mixed-inst" class="quarto-xref">Figure&nbsp;<span>1.II</span></a> apresenta a ideia geral da utilização de recursos na execução em um núcleo SMT, fazendo um comparativo com a utilização dos recursos na execução em um processador de núcleo simples e em um processador de núcleo duplo. Os recursos são representados pelos quadrados, as linhas representam os recursos que podem ser utilizados em paralelo e as colunas mostram a utilização efetiva de cada recurso no decorrer do tempo.</p>
+<div id="fig-mixed-inst" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mixed-inst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/comparativoExecucaoModArq.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixed-inst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.II: Comparativo de Execução dos Modelos Arquiteturais
+</figcaption>
+</figure>
+</div>
+<p>O compartilhamento de recursos e estruturas internas do processador pode ser feito de diversas maneiras e da forma que melhor se adequar ao projeto arquitetural. Por exemplo, a implementação da Intel, denominada tecnologia <em>Hyper-Threading</em>, implementa um <em>pipeline</em> para a execução simultânea de duas tarefas através da duplicação do estado arquitetural, como sendo dois processadores lógicos, porém a execução das instruções é simultânea sobre os recursos compartilhados do mesmo processador físico <span class="citation" data-cites="marr2002hyper">(<a href="cap-01-intro-visao-geral.html#ref-marr2002hyper" role="doc-biblioref">Marr et al. 2002</a>)</span>, sendo vistos pelo SO como sendo dois processadores físicos.</p>
+<p>A tecnologia <em>Hyper-Threading</em> (HT) da Intel <span class="citation" data-cites="marr2002hyper">(<a href="cap-01-intro-visao-geral.html#ref-marr2002hyper" role="doc-biblioref">Marr et al. 2002</a>)</span> executa duas tarefas simultaneamente, enquanto que na proposta inicial do conceito SMT <span class="citation" data-cites="Tullsen:1995:SMM:225830.224449">(<a href="cap-01-intro-visao-geral.html#ref-Tullsen:1995:SMM:225830.224449" role="doc-biblioref">Tullsen et al. 1995</a>)</span> foram realizados experimentos com até 8 tarefas, o que leva a crer que é alta a complexidade envolvida no controle e no compartilhamento de recursos.</p>
+<p>A tecnologia <code>HT</code> faz com que um único núcleo físico seja visto como múltiplos núcleos lógicos, pois há uma cópia do estado arquitetural para cada processador lógico que compartilha os mesmos recursos físicos durante a execução. Esses núcleos lógicos são percebidos pelo Sistema Operacional (SO) como se fossem núcleos físicos, podendo escalonar processos ou tarefas para eles como se estivessem em um sistema multiprocessado.</p>
+<p>A primeira implementação da <code>HT</code> foi feita para a família de processadores Intel <em>Xeon</em>, com dois processadores lógicos por processador físico. Sua implementação custou menos de 5% no aumento na área do <em>chip</em> e nos requisitos de consumo de potência, fornecendo uma melhoria considerável no desempenho.</p>
+<p>O estado arquitetural mantido por cada processador lógico é formado pelos registradores de propósito geral e de controle, por registradores relacionados ao controlador de interrupção e alguns registradores de estado. Todos os outros recursos do núcleo físico são compartilhados, tais como <em>caches</em>, unidades de execução, previsores de desvios, lógica de controle e barramentos.</p>
+<p>Cada processador lógico tem seu próprio controlador de interrupção (APIC), favorecendo a idéia de que para o SO é como se fosse um sistema com dois processadores físicos. Assim, interrupções enviadas via software (<em>trap</em>) ou via hardware são tratadas somente pelo processador lógico ao qual são endereçadas.</p>
+<p>Um processador lógico pode ter seu funcionamento suspenso temporariamente enquanto falhas na <em>cache</em> e erros de previsão de desvios são tratados ou enquanto aguarda por resultados de instruções executadas anteriormente. Porém, devido ao particionamento dos recursos ser estático, cada tarefa tem seu conjunto particular de recursos. Em um cenário de execução com uma única tarefa, os recursos que seriam compartilhados, provavelmente serão subutilizados momentaneamente, mas este fato não poderá prejudicar as demais tarefas que vierem a ser executadas simultaneamente. Um dos objetivos de <code>SMT</code> é que contextos com uma única tarefa ativa tenham o mesmo desempenho com a tecnologia <code>HT</code>, como teriam em um processador sem essa tecnologia.</p>
+</section>
+<section id="sec-multicore-smt" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="sec-multicore-smt"><span class="header-section-number">1.2.3</span> Arquiteturas de Múltiplos Núcleos com SMT</h3>
+<p>Com o surgimento de arquiteturas de múltiplos núcleos em um único processador físico ou <em>Chip Multiprocessors</em> (CMP) <span class="citation" data-cites="10.1145/248209.237140">(<a href="cap-01-intro-visao-geral.html#ref-10.1145/248209.237140" role="doc-biblioref">Olukotun et al. 1996</a>)</span>, houve certa redução nas pesquisas em SMT. Entretanto, devido aos limites de desempenho alcançado por esta nova abordagem, o desejo atual é que os processadores passem a combinar as duas estratégias em uma única arquitetura. Com isso, surgem as arquiteturas <em>Chip Multi-Threaded</em> (CMT) <span class="citation" data-cites="10.1109/HPCA.2005.10">(<a href="cap-01-intro-visao-geral.html#ref-10.1109/HPCA.2005.10" role="doc-biblioref">Spracklen and Abraham 2005</a>)</span> como sendo processadores que suportam a execução simultânea de muitas tarefas via combinação do suporte a múltiplos núcleos com SMT. A aplicação de SMT em cada núcleo é feita para os mesmos fins que em processadores de núcleo único, melhor aproveitando os recursos e as oportunidades de execução durante a latência de operações de memória. A <a href="#fig-multicore" class="quarto-xref">Figure&nbsp;<span>1.III</span></a> apresenta o diagrama de um processador multinúcleos.</p>
+<div id="fig-multicore" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multicore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./multicore-01-1787174247423-5.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multicore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.III: Multicore
+</figcaption>
+</figure>
+</div>
+<p>A <a href="#fig-multicore-02" class="quarto-xref">Figure&nbsp;<span>1.IV</span></a> apresenta algumas imagens de <em>chips</em> de processadores que conhecidos.</p>
+<div id="fig-multicore-02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multicore-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./multicore-02.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multicore-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.IV: Multicore
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="sec-suporte-so" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-suporte-so"><span class="header-section-number">1.3</span> Suporte do Sistema Operacional</h2>
+<p>O <em>Sistema Operacional (SO)</em> é o responsável pelo gerenciamento de recursos disponíveis na máquina, gerenciamento e escalonamento dos processos.</p>
+<p>Estamos em um ambiente multiprogramado e multiprocessado, mas nem sempre foi assim. Lá no começo, podíamos encontrar a seguinte situação: uma máquina com apenas um processador, com apenas um núcleo, o que conhecemos por <em>single core</em>. Além desses recursos de <em>hardware</em> restrito, se comparado com a situação atual, poderia também ter um Sistema Operacional monoprogramado, isto é, que executa apenas um programa por vez, exemplo, MS-DOS.</p>
+<p>Em um ambiente mais comum de hoje, de <em>hardware</em> com múltiplos elementos de processamento, de Sistema Operacional capaz de gerenciar a execução de múltiplos processos, temos a possibilidade de executar diversos aplicativos ao mesmo tempo: <em>browser</em>, <em>player</em> de músicas, editor de textos… O que antes tinha uma executação intercalada, através do compartilhamento de tempo.</p>
+<p>Quando executamos um programa qualquer em uma máquina, um processo será criado. Então processos são programas executando em um computador. Cada processo tem um identificador, um <em>pid</em> e vai executar o código associado à sua imagem/segmento de código.</p>
+<p>O <a href="#lst-exemplo-pid-ppid" class="quarto-xref">Código&nbsp;<span>1.II</span></a> apresenta um exemplo de código que recupera os identificadores relacionados ao processo.</p>
+<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-thread.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.I: Código do arquivo exemplo-thread.c.
+</figcaption>
+<div aria-describedby="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>exemplo-thread.c</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-filename="exemplo-thread.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define </span><span class="ot">_GNU_SOURCE</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/syscall.h&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;sys/types.h&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;pthread.h&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"Main PID: </span><span class="sc">%d</span><span class="st">, PPID: </span><span class="sc">%d</span><span class="st">, Main TID: </span><span class="sc">%ld</span><span class="st">, TID: </span><span class="sc">%ld\n</span><span class="st">"</span><span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>           getpid<span class="op">(),</span> getppid<span class="op">(),</span> syscall<span class="op">(</span>SYS_gettid<span class="op">),</span> pthread_self<span class="op">());</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<div id="lst-exemplo-pid-ppid" class="C listing quarto-float quarto-figure quarto-figure-left anchored" data-code-file="./src/exemplo-pid-ppid/exemplo-pid-ppid.c" data-filename="exemplo-pid-ppid.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-exemplo-pid-ppid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.II: Recuperando os id's do Processo
+</figcaption>
+<div aria-describedby="lst-exemplo-pid-ppid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>exemplo-pid-ppid.c</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-filename="exemplo-pid-ppid.c" data-code-file="./src/exemplo-pid-ppid/exemplo-pid-ppid.c"><pre class="sourceCode C code-with-copy"><code class="sourceCode c"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<p><strong><code>getpid()</code></strong>: Returns the PID of the calling process.</p>
+<p><strong><code>getppid()</code></strong>: Returns the parent’s process ID.</p>
+<p><strong><code>syscall(SYS_gettid)</code></strong>: Returns the Linux kernel thread ID (TID), which uniquely identifies the individual thread.</p>
+<p><strong><code>pthread_self()</code></strong>: Returns the POSIX thread ID (<code>pthread_t</code>), which can be printed as an address or number depending on the system implementation (cast with <code>(unsigned long)pthread_self()</code>). [, <a href="https://stackoverflow.com/questions/21091000/how-to-get-thread-id-of-a-pthread-in-linux-c-program">2</a>, <a href="https://stackoverflow.com/questions/21303970/how-to-get-thread-pid-on-linux-from-c-code">3</a>, <a href="https://man7.org/linux/man-pages/man2/getpid.2.html">4</a>, <a href="https://courses.cs.vt.edu/cs3214/spring2022/questions/threadid">5</a>]</p>
+<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-thread.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.III: Código do arquivo exemplo-thread.c.
+</figcaption>
+<div aria-describedby="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>exemplo-thread.c</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-filename="exemplo-thread.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span> <span class="op">){</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  pai<span class="op">;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  valor <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    pai <span class="op">=</span> fork<span class="op">(</span> <span class="op">);</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>pai<span class="op">){</span>   <span class="co">/* este trecho é executado pelo pai */</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Pai </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>       <span class="op">{</span>   <span class="co">/* este trecho é executado pelo filho */</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Filho </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>       <span class="op">}</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>   exit<span class="op">(</span><span class="dv">0</span><span class="op">);</span>        </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<p>Outros recursos pode ser obtidos do gerenciamento feito pelo SO, utilizando chamadas de sistema. Todos os processos interagem com o Sistema Operacional por meio de chamadas ao sistema.</p>
+<p>Quando abrimos um terminal (<em>prompt</em> de comando) e executamos um comando qualquer, como por exemplo, o <code>pwd</code>. O processo do programa <code>terminal</code> é duplicado através da chamada de sistema <code>fork</code> e depois executa uma outra chamada de sistema da família <code>execv</code> para trocar a imagem do código do processo clonado, para que execute o código do programa desejado.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pwd</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/rag</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A chamada <code>fork</code> cria um processo filho que diferencia-se a partir do processo pai somente em seus <code>PID</code> e <code>PPID</code>. Arquivos abertos, sinais pendentes e todo o espaço de endereçamento do processo pai não são herdados pelo filho. Em caso de sucesso, a <code>PID</code> do processo filho é devolvido para o pai, e um <span class="math inline">\(0\)</span> é retornado para o filho. Caso contrário, um <span class="math inline">\(-1\)</span> será retornado no contexto pai, e nenhum processo filho será criado, e um erro será selecionado adequadamente.</p>
+<p>O <span class="quarto-unresolved-ref">?lst-mycode</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| lst-label: lst-mycode</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| lst-cap: "An example script"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Exemplo de fork.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span> <span class="op">){</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  pai<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  valor <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    pai <span class="op">=</span> fork<span class="op">(</span> <span class="op">);</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>pai<span class="op">){</span>   <span class="co">/* este trecho é executado pelo pai */</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Pai </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span> <span class="op">{</span><span class="co">/* este trecho é executado pelo filho */</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>       printf<span class="op">(</span><span class="st">"Eu Sou o Processo Filho </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>       valor <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>       printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>   exit<span class="op">(</span><span class="dv">0</span><span class="op">);</span>        </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Exemplo de execv.</p>
+<p>Para alocar memória, sua aplicação faz uma chamada à função <code>malloc(...)</code> da biblioteca, que por sua vez faz uma chamada de sistema para alocação de memória no segmento de dados, a <code>heap</code>. Para alocações cotínuas e pequenas a chamada <code>brk</code> / <code>sbrk</code> são utilizadas e deslocam o fim do segmento de dados do processo, já para alocações grandes, a chamada <code>mmap</code> é usada. Essa chamada cria um novo mapeamento de memória virtual independente no espaço de endereçamento do processo. No Linux, o limite padrão para disparar o <code>mmap</code> geralmente é de <strong>128 KB</strong> (configurável via <code>M_MMAP_THRESHOLD</code>).</p>
+<ul>
+<li><ul>
+<li>Evita a fragmentação do <em>heap</em> principal.</li>
+<li>Devolve a memória diretamente ao sistema operacional assim que o <code>free()</code> é chamado. [<a href="https://pt.stackoverflow.com/questions/347648/quando-realmente-usar-malloc-e-ou-calloc">1</a>, <a href="https://www.ic.unicamp.br/~norton/disciplinas/mc1022s2005/03_11.html">2</a>, <a href="https://www.mentebinaria.com.br/artigos/tudo/entendendo-malloc-e-heap-na-glibc-r70/">3</a>]</li>
+</ul></li>
+</ul>
+<p>O SO tem recursos para a criação de novos processos Desde memória às unidades de processamento.</p>
+<p>A família de funções exec substitui a imagem do processo atual por uma imagem de um novo processo.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Antes do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">// execl("/bin/ls", "/bin/ls", "-r", "-t", "-l", (char *) 0);</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Depois do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note que a linha que contém a chamada à função <code>execl(...)</code> está comentada, assim as mensagens <em>“Antes do exec”</em> e <em>“Depois do exec”</em> serão escritas na tela.</p>
+</div>
+</div>
+<p>:::</p>
+<p>Conforme apresentado na <span class="quarto-unresolved-ref">?nte-comando-compilacao</span>, bla</p>
+<div id="cau-comando-compilacao" class="callout callout-style-default callout-caution no-icon callout-titled" title="Terminal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Precaução&nbsp;1.I: Terminal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;unistd.h&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(){</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Antes do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>   <span class="co">// execl("/bin/ls", "/bin/ls", "-r", "-t", "-l", (char *) 0);</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>   printf<span class="op">(</span><span class="st">"Depois do exec</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Filename</p>
+<p>Conforme apresentado no <a href="#lst-compilacao" class="quarto-xref">Código&nbsp;<span>1.IV</span></a>, o programa é compilado utilizando a flag <code>-pthread</code>.</p>
+<div id="lst-compilacao" class="bash listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="Terminal">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-compilacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.IV: Comandos de compilação e execução do programa.
+</figcaption>
+<div aria-describedby="lst-compilacao-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Terminal</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" data-filename="Terminal"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Saída</span> do programa aqui...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<p>O <a href="#lst-codigo" class="quarto-xref">Código&nbsp;<span>1.VI</span></a> apresenta um exemplo de código que utiliza pthreads.</p>
+<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-code-file="./src/exemplo-pthreads/exemplo-thread.c" data-filename="Exemplo de Thread">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.V: Código do arquivo teste.c.
+</figcaption>
+<div aria-describedby="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>Exemplo de Thread</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-filename="Exemplo de Thread" data-code-file="./src/exemplo-pthreads/exemplo-thread.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-thread.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;1.VI: Código do arquivo exemplo-thread.c.
+</figcaption>
+<div aria-describedby="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>exemplo-thread.c</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" data-filename="exemplo-thread.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span> <span class="op">){</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  pai<span class="op">;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span>  valor <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    pai <span class="op">=</span> fork<span class="op">(</span> <span class="op">);</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>   <span class="cf">if</span> <span class="op">(</span>pai<span class="op">){</span>   <span class="co">/* este trecho é executado pelo pai */</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Pai </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>   <span class="op">}</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>   <span class="cf">else</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>       <span class="op">{</span>   <span class="co">/* este trecho é executado pelo filho */</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Eu Sou o Processo Filho </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> pai<span class="op">);</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        valor <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        printf<span class="op">(</span><span class="st">"Valor: </span><span class="sc">%d</span><span class="st"> </span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> valor<span class="op">);</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>       <span class="op">}</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>   exit<span class="op">(</span><span class="dv">0</span><span class="op">);</span>        </span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Bloco de Código com callout.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Executando</span> em paralelo...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled" title="Terminal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Terminal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled" title="Terminal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Terminal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> gcc <span class="at">-pthread</span> programa.c <span class="at">-o</span> programa</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./programa</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<section id="prática" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="prática"><span class="header-section-number">1.4</span> Prática</h2>
+<ol type="1">
+<li>Com base nos exemplos de <code>fork</code> e de comunicação entre processos altere o código do soma de vetores para dividir o trabalho entre mais processos.</li>
+</ol>
+<ul>
+<li></li>
+<li><p><strong>Thread:</strong> parte de um programa. Processo Leve. Tarefa.</p></li>
+<li><p>Cada processo pode possuir uma ou múltiplas <em>threads</em>.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/processos-threads.png" class="img-fluid figure-img"></p>
+<figcaption>Processos e Threads</figcaption>
+</figure>
+</div>
+<ul>
+<li><p><strong>Exemplos:</strong></p>
+<ul>
+<li>Um editor de textos, várias tarefas <em>(typing, spell checking, printing…)</em></li>
+<li>Um servidor web, cada requisição atendida por uma <em>thread</em>.</li>
+</ul></li>
+<li><p><strong>Em um computador convencional <em>(single core)</em>:</strong></p>
+<ul>
+<li>Cada processo gera pelo menos uma <em>thread</em> (fluxo de execução principal).</li>
+<li>Um processo é escalonado para execução, logo uma <em>thread</em> está em execução por vez.</li>
+<li>Quando uma thread pára (por exemplo, devido a um <strong><em>page fault</em></strong>:</li>
+<li>O estado da <em>thread</em> é guardado (registradores, …)
+<ul>
+<li>O estado de outra <em>thread</em> em espera é carregado no processador e inicia-se sua execução.</li>
+<li>O que é chamado de troca de contexto <strong><em>(context switching)</em></strong>.</li>
+</ul></li>
+<li>Para o usuário parece que todas as <em>threads</em> executam simultaneamente.</li>
+</ul></li>
+<li><p>Em um computador com processador <em>multicore</em> tem-se a possibilidade de paralelismo físico.</p></li>
+<li><p><strong><em>Concorrência:</em></strong> Múltiplas tarefas estão logicamente ativas em um mesmo momento.</p></li>
+<li><p><strong><em>Paralelismo:</em></strong> Múltiplas tarefas estão realmente ativas em um mesmo momento.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figuras/concorrencia-paralelismo.png" class="img-fluid figure-img"></p>
+<figcaption>Concorrência e Paralelismo</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-intro-consid-finais" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="sec-intro-consid-finais"><span class="header-section-number">1.5</span> Considerações Finais</h2>
+</section>
+<section id="word-cloud" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">1.6</span> <em>Word Cloud</em></h2>
+<p><img src="figuras/cap-01-introducao-visao-geral.md.png" class="img-fluid" style="width:100.0%"></p>
+</section>
+<section id="referências" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-10.1145/139669.139710" class="csl-entry" role="listitem">
+Hirata, Hiroaki, Kozo Kimura, Satoshi Nagamine, et al. 1992. <span>“An
+Elementary Processor Architecture with Simultaneous Instruction Issuing
+from Multiple Threads.”</span> <em>Proceedings of the 19th Annual
+International Symposium on Computer Architecture</em> (New York, NY,
+USA), ISCA ’92, 136–45. <a href="https://doi.org/10.1145/139669.139710">https://doi.org/10.1145/139669.139710</a>.
+</div>
+<div id="ref-marr2002hyper" class="csl-entry" role="listitem">
+Marr, Deborah T., Frank Binns, David L. Hill, et al. 2002.
+<span>“Hyper-Threading Technology Architecture and
+Microarchitecture.”</span> <em>Intel Technology Journal</em> 6 (1):
+4–15.
+</div>
+<div id="ref-10.1145/248209.237140" class="csl-entry" role="listitem">
+Olukotun, Kunle, Basem A. Nayfeh, Lance Hammond, Ken Wilson, and Kunyung
+Chang. 1996. <span>“The Case for a Single-Chip Multiprocessor.”</span>
+<em>SIGPLAN Not.</em> (New York, NY, USA) 31 (9): 2–11. <a href="https://doi.org/10.1145/248209.237140">https://doi.org/10.1145/248209.237140</a>.
+</div>
+<div id="ref-smith:sohi:1995" class="csl-entry" role="listitem">
+Smith, J. E., and G. S. Sohi. 1995. <span>“The Microarchitecture of
+Superscalar Processors.”</span> <em>Proceedings of the IEEE</em> 83
+(12): 1609–24. <a href="https://doi.org/10.1109/5.476078">https://doi.org/10.1109/5.476078</a>.
+</div>
+<div id="ref-10.1109/HPCA.2005.10" class="csl-entry" role="listitem">
+Spracklen, Lawrence, and Santosh G. Abraham. 2005. <span>“Chip
+Multithreading: Opportunities and Challenges.”</span> <em>Proceedings of
+the 11th International Symposium on High-Performance Computer
+Architecture</em> (USA), HPCA ’05, 248–52. <a href="https://doi.org/10.1109/HPCA.2005.10">https://doi.org/10.1109/HPCA.2005.10</a>.
+</div>
+<div id="ref-tomasulo:1967" class="csl-entry" role="listitem">
+Tomasulo, R. M. 1967. <span>“An Efficient Algorithm for Exploiting
+Multiple Arithmetic Units.”</span> <em>IBM Journal of Research and
+Development</em> 11 (1): 25–33. <a href="https://doi.org/10.1147/rd.111.0025">https://doi.org/10.1147/rd.111.0025</a>.
+</div>
+<div id="ref-Tullsen:1995:SMM:225830.224449" class="csl-entry" role="listitem">
+Tullsen, Dean M., Susan J. Eggers, and Henry M. Levy. 1995.
+<span>“Simultaneous Multithreading: Maximizing on-Chip
+Parallelism.”</span> <em>SIGARCH Comput. Archit. News</em> (New York,
+NY, USA) 23 (2): 392–403. <a href="https://doi.org/10.1145/225830.224449">https://doi.org/10.1145/225830.224449</a>.
+</div>
+<div id="ref-323172" class="csl-entry" role="listitem">
+Yamamoto, W., M. J. Serrano, A. R. Talcott, R. C. Wood, and M.
+Nemirosky. 1994. <span>“Performance Estimation of Multistreamed,
+Superscalar Processors.”</span> <em>1994 Proceedings of the
+Twenty-Seventh Hawaii International Conference on System Sciences</em>
+1: 195–204. <a href="https://doi.org/10.1109/HICSS.1994.323172">https://doi.org/10.1109/HICSS.1994.323172</a>.
+</div>
+</div>
+
+
+</section>
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/openmp-alem-das-diretivas-de-compilacao");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link" aria-label="Prefácio">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Prefácio</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link" aria-label="Referências">
+        <span class="nav-page-text">Referências</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao/edit/master/cap-01-introducao-visao-geral/cap-01-intro-visao-geral.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

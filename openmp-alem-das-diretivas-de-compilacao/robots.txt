@@ -1,0 +1,1 @@
+Sitemap: https://rogerioag.github.io/openmp-alem-das-diretivas-de-compilacao/sitemap.xml

@@ -1,0 +1,78 @@
+/* Configurações de exibição em Modo Tela Cheia (F11) */
+
+:fullscreen #quarto-sidebar,
+:fullscreen #quarto-margin-sidebar,
+:fullscreen #TOC,
+:fullscreen .quarto-secondary-nav,
+:-webkit-full-screen #quarto-sidebar,
+:-webkit-full-screen #quarto-margin-sidebar,
+:-webkit-full-screen #TOC,
+:-webkit-full-screen .quarto-secondary-nav,
+:-moz-full-screen #quarto-sidebar,
+:-moz-full-screen #quarto-margin-sidebar,
+:-moz-full-screen #TOC,
+:-moz-full-screen .quarto-secondary-nav {
+  display: none !important;
+}
+
+:fullscreen #quarto-content,
+:fullscreen #quarto-document-content,
+:fullscreen main.content,
+:-webkit-full-screen #quarto-content,
+:-webkit-full-screen #quarto-document-content,
+:-webkit-full-screen main.content,
+:-moz-full-screen #quarto-content,
+:-moz-full-screen #quarto-document-content,
+:-moz-full-screen main.content {
+  max-width: 95% !important;
+  width: 95% !important;
+  margin: 0 auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Alinhamento justificado para parágrafos */
+p {
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Estilo de Janela de Terminal Bash */
+.terminal-window {
+  border-radius: 0px;
+  background-color: #727280;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  margin: 1.5em 0;
+  overflow: hidden;
+  border: 1px solid #313244;
+}
+
+.terminal-window::before {
+  content: "Terminal";
+  display: block;
+  background-color: #181825;
+  color: #a6adc8;
+  padding: 8px 14px;
+  font-size: 0.82em;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  border-bottom: 1px solid #313244;
+  background-image: radial-gradient(circle at 14px 50%, #ff5f56 5px, transparent 6px),
+    radial-gradient(circle at 30px 50%, #ffbd2e 5px, transparent 6px),
+    radial-gradient(circle at 46px 50%, #27c93f 5px, transparent 6px);
+  padding-left: 62px;
+}
+
+.terminal-window pre {
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background-color: #1e1e2e !important;
+  padding: 14px 16px !important;
+}
+
+.terminal-window code {
+  color: #cdd6f4 !important;
+  font-family: 'Fira Code', 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace !important;
+  font-size: 0.9em;
+}
