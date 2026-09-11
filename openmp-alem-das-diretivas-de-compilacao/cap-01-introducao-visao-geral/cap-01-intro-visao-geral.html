@@ -90,7 +90,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../references.html" rel="next">
+<link href="../cap-02-pthreads/cap-02-pthreads.html" rel="next">
 <link href="../index.html" rel="prev">
 <link href="../images/logo.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -234,6 +234,24 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-02-pthreads/cap-02-pthreads.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Multithreading com Pthreads</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-03-openmp-intro/cap-03-openmp-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introdução ao OpenMP: Diretivas de Compilação, Variáveis de Ambiente e Funções de Biblioteca</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Regiões Paralelas</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -383,13 +401,13 @@ Figure&nbsp;1.IV: Multicore
 <p>Estamos em um ambiente multiprogramado e multiprocessado, mas nem sempre foi assim. Lá no começo, podíamos encontrar a seguinte situação: <em>uma máquina com apenas um processador, com apenas um núcleo, o que conhecemos por <code>single core</code></em>. Além desses recursos de <em>hardware</em> restrito, se comparado com a situação atual, poderia também ter um Sistema Operacional monoprogramado, isto é, que executa apenas um programa por vez, exemplo, MS-DOS.</p>
 <p>Em um ambiente mais comum de hoje, de <em>hardware</em> com múltiplos elementos de processamento, de Sistema Operacional capaz de gerenciar a execução de múltiplos processos, temos a possibilidade de executar diversos aplicações ao mesmo tempo: <em>browser</em>, <em>player</em> de músicas, editor de textos, que antes tinham uma execução intercalada, através do compartilhamento de tempo e de uso de CPU.</p>
 <p>Quando executamos um programa qualquer em uma máquina, um <code>processo</code> será criado. Então processos são programas executando em um computador. Cada processo tem um identificador, um <em>pid</em> e vai executar o código associado à sua imagem/segmento de código.</p>
-<p>O <span class="quarto-unresolved-ref">?lst-exemplo-pid-ppid</span> apresenta um exemplo de código que recupera os identificadores relacionados ao processo.</p>
-<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-pid-ppid.c">
+<p>O <a href="#lst-exemplo-pid-ppid" class="quarto-xref">Código&nbsp;<span>1.I</span></a> apresenta um exemplo de código que recupera os identificadores relacionados ao processo.</p>
+<div id="lst-exemplo-pid-ppid" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="exemplo-pid-ppid.c">
 <figure class="quarto-float quarto-float-lst figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-exemplo-pid-ppid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Código&nbsp;1.I: Recuperandos os identificadores do processo
 </figcaption>
-<div aria-describedby="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="lst-exemplo-pid-ppid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>exemplo-pid-ppid.c</strong></pre>
@@ -774,12 +792,36 @@ Figure&nbsp;1.VII: Execução do SHM
 <section id="referências" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="referências">Referências</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Chapman:2007" class="csl-entry" role="listitem">
+Chapman, Barbara, Gabriele Jost, and Ruud van der Pas. 2007. <em>Using
+OpenMP: Portable Shared Memory Parallel Programming (Scientific and
+Engineering Computation)</em>. The MIT Press.
+</div>
+<div id="ref-clang:site" class="csl-entry" role="listitem">
+Clang, Site. 2013. <span>“Clang Site <span>@ONLINE</span>.”</span> <a href="http://clang.llvm.org/">http://clang.llvm.org/</a>.
+</div>
+<div id="ref-gcc:2020" class="csl-entry" role="listitem">
+GCC. 2020. <em>GCC, the GNU Compiler Collection</em>. <a href="http://gcc.gnu.org/onlinedocs">http://gcc.gnu.org/onlinedocs</a>.
+</div>
+<div id="ref-libgomp:site:manual" class="csl-entry" role="listitem">
+GNU Libgomp. 2015. <em><span class="nocase">GNU libgomp, GNU Offloading
+and Multi Processing Runtime Library documentation (Online
+manual)</span></em>. <a href="https://gcc.gnu.org/onlinedocs/libgomp/">https://gcc.gnu.org/onlinedocs/libgomp/</a>.
+</div>
 <div id="ref-10.1145/139669.139710" class="csl-entry" role="listitem">
 Hirata, Hiroaki, Kozo Kimura, Satoshi Nagamine, et al. 1992. <span>“An
 Elementary Processor Architecture with Simultaneous Instruction Issuing
 from Multiple Threads.”</span> <em>Proceedings of the 19th Annual
 International Symposium on Computer Architecture</em> (New York, NY,
 USA), ISCA ’92, 136–45. <a href="https://doi.org/10.1145/139669.139710">https://doi.org/10.1145/139669.139710</a>.
+</div>
+<div id="ref-intel:openmprtl:2016" class="csl-entry" role="listitem">
+Intel. 2016. <em><span>Intel® OpenMP* Runtime Library
+Interface</span></em>. Intel. <a href="https://www.openmprtl.org/sites/default/files/resources/libomp_20160322_manual.pdf">https://www.openmprtl.org/sites/default/files/resources/libomp_20160322_manual.pdf</a>.
+</div>
+<div id="ref-icc:2019" class="csl-entry" role="listitem">
+Intel. 2019. <em>Intel® c++ Compiler 19.1 Developer Guide and
+Reference</em>. <a href="https://software.intel.com/en-us/cpp-compiler-developer-guide-and-reference">https://software.intel.com/en-us/cpp-compiler-developer-guide-and-reference</a>.
 </div>
 <div id="ref-marr2002hyper" class="csl-entry" role="listitem">
 Marr, Deborah T., Frank Binns, David L. Hill, et al. 2002.
@@ -792,6 +834,26 @@ Olukotun, Kunle, Basem A. Nayfeh, Lance Hammond, Ken Wilson, and Kunyung
 Chang. 1996. <span>“The Case for a Single-Chip Multiprocessor.”</span>
 <em>SIGPLAN Not.</em> (New York, NY, USA) 31 (9): 2–11. <a href="https://doi.org/10.1145/248209.237140">https://doi.org/10.1145/248209.237140</a>.
 </div>
+<div id="ref-openmp:site" class="csl-entry" role="listitem">
+OpenMP API Site. 2020. <em>The <span class="nocase">OpenMP(r) API</span>
+Specification for Parallel Programming</em>. <a href="http://openmp.org">http://openmp.org</a>.
+</div>
+<div id="ref-openmp:api:2011" class="csl-entry" role="listitem">
+OpenMP-ARB. 2011. <em><span>OpenMP Application Program Interface Version
+3.1</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/OpenMP3.1.pdf">http://www.openmp.org/mp-documents/OpenMP3.1.pdf</a>.
+</div>
+<div id="ref-openmp:api:2013" class="csl-entry" role="listitem">
+OpenMP-ARB. 2013. <em><span>OpenMP Application Program Interface Version
+4.0</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf">http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf</a>.
+</div>
+<div id="ref-openmp:examples:2014" class="csl-entry" role="listitem">
+OpenMP-ARB. 2014. <em><span>OpenMP Application Program Interface
+Examples 4.0.1</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://openmp.org/mp-documents/OpenMP_Examples_4.0.1.pdf">http://openmp.org/mp-documents/OpenMP_Examples_4.0.1.pdf</a>.
+</div>
+<div id="ref-openmp:api:2015" class="csl-entry" role="listitem">
+OpenMP-ARB. 2015. <em><span>OpenMP Application Program Interface Version
+4.5</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/openmp-4.5.pdf">http://www.openmp.org/mp-documents/openmp-4.5.pdf</a>.
+</div>
 <div id="ref-smith:sohi:1995" class="csl-entry" role="listitem">
 Smith, J. E., and G. S. Sohi. 1995. <span>“The Microarchitecture of
 Superscalar Processors.”</span> <em>Proceedings of the IEEE</em> 83
@@ -802,6 +864,10 @@ Spracklen, Lawrence, and Santosh G. Abraham. 2005. <span>“Chip
 Multithreading: Opportunities and Challenges.”</span> <em>Proceedings of
 the 11th International Symposium on High-Performance Computer
 Architecture</em> (USA), HPCA ’05, 248–52. <a href="https://doi.org/10.1109/HPCA.2005.10">https://doi.org/10.1109/HPCA.2005.10</a>.
+</div>
+<div id="ref-openacc:site" class="csl-entry" role="listitem">
+Standard, OpenACC. 2012. <span>“OpenACC Directives for Accelerators Site
+<span>@ONLINE</span>.”</span> March. <a href="http://www.openacc-standard.org/">http://www.openacc-standard.org/</a>.
 </div>
 <div id="ref-tomasulo:1967" class="csl-entry" role="listitem">
 Tomasulo, R. M. 1967. <span>“An Efficient Algorithm for Exploiting
@@ -1234,8 +1300,8 @@ Twenty-Seventh Hawaii International Conference on System Sciences</em>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../references.html" class="pagination-link" aria-label="Referências">
-        <span class="nav-page-text">Referências</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../cap-02-pthreads/cap-02-pthreads.html" class="pagination-link" aria-label="Multithreading com Pthreads">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Multithreading com Pthreads</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

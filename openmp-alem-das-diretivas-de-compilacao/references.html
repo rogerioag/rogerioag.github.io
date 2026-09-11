@@ -55,7 +55,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html" rel="prev">
+<link href="./cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.html" rel="prev">
 <link href="./images/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -95,6 +95,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -173,6 +202,24 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cap-02-pthreads/cap-02-pthreads.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Multithreading com Pthreads</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap-03-openmp-intro/cap-03-openmp-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introdução ao OpenMP: Diretivas de Compilação, Variáveis de Ambiente e Funções de Biblioteca</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Regiões Paralelas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Referências</span></a>
   </div>
@@ -208,11 +255,587 @@ div.csl-indent {
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-77130" class="csl-entry" role="listitem">
+Abellard, P., G. Nolibe, and N. Razafindrakoto. 1990. <span>“A Data Flow Architecture for Parallel Computation.”</span> <em>Databases, Parallel Architectures and Their Applications,. PARBASE-90, International Conference on</em>, March, 129–31. <a href="https://doi.org/10.1109/PARBSE.1990.77130">https://doi.org/10.1109/PARBSE.1990.77130</a>.
+</div>
+<div id="ref-ackerman:dataflow:1653938" class="csl-entry" role="listitem">
+Ackerman, W. B. 1982. <span>“Data Flow Languages.”</span> <em>Computer</em> 15 (2): 15–25. <a href="https://doi.org/10.1109/MC.1982.1653938">https://doi.org/10.1109/MC.1982.1653938</a>.
+</div>
+<div id="ref-Adriaens2012" class="csl-entry" role="listitem">
+Adriaens, Jacob T., Katherine Compton, Nam Sung Kim, and Michael J. Schulte. 2012. <span>“The Case for GPGPU Spatial Multitasking.”</span> <em>IEEE International Symposium on High-Performance Comp Architecture</em>, February, 1–12. <a href="https://doi.org/10.1109/HPCA.2012.6168946">https://doi.org/10.1109/HPCA.2012.6168946</a>.
+</div>
+<div id="ref-Adve" class="csl-entry" role="listitem">
+Adve, Vikram, Chris Lattner, Michael Brukman, Anand Shukla, and Brian Gaeke. 2003a. <span>“LLVA: A Low-Level Virtual Instruction Set Architecture.”</span> <em>22nd Digital Avionics Systems Conference. Proceedings (Cat. No.03CH37449)</em> (San Diego, California), December, 205–16. <a href="https://doi.org/10.1109/MICRO.2003.1253196">https://doi.org/10.1109/MICRO.2003.1253196</a>.
+</div>
+<div id="ref-albsg:micro36" class="csl-entry" role="listitem">
+Adve, Vikram, Chris Lattner, Michael Brukman, Anand Shukla, and Brian Gaeke. 2003b. <span>“<span class="nocase">LLVA: A Low-level Virtual Instruction Set Architecture</span>.”</span> <em><span class="nocase">Proceedings of the 36th annual ACM/IEEE international symposium on Microarchitecture (MICRO-36)</span></em> (San Diego, California), December.
+</div>
+<div id="ref-Alegre2011" class="csl-entry" role="listitem">
+Alegre, Porto. 2011. <em>hiCUDA e OpenMPC</em>.
+</div>
+<div id="ref-ilic2015catc" class="csl-entry" role="listitem">
+Aleksandar Ilic, Frederico Pratas, and Leonel Sousa. 2015. <span>“<span class="nocase">CARM: Cache-Aware Performance, Power and Energy-Efficiency Roofline Modeling</span>.”</span> <em>Compiler, Architecture and Tools Conference</em> (Intel Haifa, Israel), CATC’15.
+</div>
+<div id="ref-Alexandru1988" class="csl-entry" role="listitem">
+Alexandru, Alexander, and Aiken Nicolau. 1988. <em>Optimal Loop Parallelization*</em>. 308–17.
+</div>
+<div id="ref-Allen1999" class="csl-entry" role="listitem">
+Allen, Randy, Language Design, and Ken Kennedy. 1999. <em>Automatic Loop Interchange</em>. 75–90.
+</div>
+<div id="ref-6449791" class="csl-entry" role="listitem">
+Al-Mouhamed, M., and A. ul Hassan Khan. 2012. <span>“Exploration of Automatic Optimization for CUDA Programming.”</span> <em>Parallel Distributed and Grid Computing (PDGC), 2012 2nd IEEE International Conference on</em>, December, 55–60. <a href="https://doi.org/10.1109/PDGC.2012.6449791">https://doi.org/10.1109/PDGC.2012.6449791</a>.
+</div>
+<div id="ref-AMD2013" class="csl-entry" role="listitem">
+AMD. 2013a. <em>AMD Heterogeneous Computing Site</em>. <a href="http://developer.amd.com/tools-and-sdks/heterogeneous-computing/">http://developer.amd.com/tools-and-sdks/heterogeneous-computing/</a>.
+</div>
+<div id="ref-amd:hetero:site" class="csl-entry" role="listitem">
+AMD. 2013b. <span>“AMD Heterogeneous Computing Site <span>@ONLINE</span>.”</span> <a href="http://developer.amd.com/tools-and-sdks/heterogeneous-computing/">http://developer.amd.com/tools-and-sdks/heterogeneous-computing/</a>.
+</div>
+<div id="ref-Amdahl1967" class="csl-entry" role="listitem">
+Amdahl, Gene M. 1967. <span>“Validity of the Single Processor Approach to Achieving Large Scale Computing Capabilities.”</span> <em>Proceedings of the April 18-20, 1967, Spring Joint Computer Conference on - AFIPS ’67 (Spring)</em> (New York, New York, USA), April, 483. <a href="https://doi.org/10.1145/1465482.1465560">https://doi.org/10.1145/1465482.1465560</a>.
+</div>
+<div id="ref-amini2011pips" class="csl-entry" role="listitem">
+Amini, Mehdi, Corinne Ancourt, Fabien Coelho, et al. 2011. <span>“PIPS Is Not (Just) Polyhedral Software.”</span> <em>International Workshop on Polyhedral Compilation Techniques (IMPACT’11), Chamonix, France</em>.
+</div>
+<div id="ref-Amini2011" class="csl-entry" role="listitem">
+Amini, Mehdi, Fabien Coelho, Serge Guelton, et al. 2011. <em>PIPS: Internal Representation of Fortran and c Code</em>. 1–33.
+</div>
+<div id="ref-amini2012par4all" class="csl-entry" role="listitem">
+Amini, Mehdi, Béatrice Creusillet, Stéphanie Even, et al. 2012. <span>“Par4All: From Convex Array Regions to Heterogeneous Computing.”</span> <em>2nd International Workshop on Polyhedral Compilation Techniques, Impact (Jan 2012)</em>.
+</div>
+<div id="ref-Amini2012" class="csl-entry" role="listitem">
+Amini, Mehdi, Amaury Darsch, Onil Goubier, et al. 2012. <em>Par4All Developer Guide — HPC Project</em>.
+</div>
+<div id="ref-Amini2012a" class="csl-entry" role="listitem">
+Amini, Mehdi, Onil Goubier, Serge Guelton, Ronan Keryell, and Janice Onanian-mcmahon. 2012. <em>Par4All User Guide P4a — HPC Project</em>. 1–14.
+</div>
+<div id="ref-Amini2012b" class="csl-entry" role="listitem">
+Amini, Mehdi, and Ronan Keryell. 2012. <em>SoSlang: SOurce-to-Source Clang</em>.
+</div>
+<div id="ref-Analysis" class="csl-entry" role="listitem">
+Analysis, Locality. n.d. <em>• a Dependence d = ( d 1 , . . . , d</em>.
+</div>
+<div id="ref-Analysis2011" class="csl-entry" role="listitem">
+Analysis, Program. 2011. <em>LLVM to PTX Backend</em>. 1–15.
+</div>
+<div id="ref-Ancourt2010" class="csl-entry" role="listitem">
+Ancourt, Corinne, Fabien Coelho, and Guillaume Oget. 2010. <em>Tpips: Command Line Interpreter</em>. 2010 (revision 15925).
+</div>
+<div id="ref-Ancourt2012" class="csl-entry" role="listitem">
+Ancourt, Corinne, Ronan Keryell, and Mines Paristech. 2012. <em>Par4All <span>&amp;</span> PIPS Programming Rules</em>. 1–7.
+</div>
+<div id="ref-Angeles2012" class="csl-entry" role="listitem">
+Angeles, Los. 2012. <em>Polyhedral Optimizations for Low-Level Compilers</em>. 1–46.
+</div>
+<div id="ref-Antao2014" class="csl-entry" role="listitem">
+Antão, Diogo, Luı́s Taniça, Aleksandar Ilic, Frederico Pratas, Pedro Tomás, and Leonel Sousa. 2014. <span>“Monitoring Performance and Power for Application Characterization with the Cache-Aware Roofline Model.”</span> In <em>Parallel Processing and Applied Mathematics SE - 70</em>, edited by Roman Wyrzykowski, Jack Dongarra, Konrad Karczewski, and Jerzy Waśniewski, vol. 8384. Lecture Notes in Computer Science. Springer Berlin Heidelberg. <a href="https://doi.org/10.1007/978-3-642-55224-3{\_}70">https://doi.org/10.1007/978-3-642-55224-3{\_}70</a>.
+</div>
+<div id="ref-Anvik" class="csl-entry" role="listitem">
+Anvik, J., S. MacDonald, D. Szafron, J. Schaeffer, and S. Bromling. n.d. <span>“Generating Parallel Programs from the Wavefront Design Pattern.”</span> <em>Proceedings 16th International Parallel and Distributed Processing Symposium</em>, 104. <a href="https://doi.org/10.1109/IPDPS.2002.1016487">https://doi.org/10.1109/IPDPS.2002.1016487</a>.
+</div>
+<div id="ref-aparapi:2011" class="csl-entry" role="listitem">
+Aparapi. 2011. <span>“Aparapi. API for Data Parallel Java.”</span> <a href="https://code.google.com/p/aparapi/">https://code.google.com/p/aparapi/</a>.
+</div>
+<div id="ref-Arandi2010" class="csl-entry" role="listitem">
+Arandi, Samer, and Paraskevas Evripidou. 2010. <em>Programming Multi-Core Architectures Using Data-Flow Techniques 1</em>.
+</div>
+<div id="ref-Architecture2011" class="csl-entry" role="listitem">
+Architecture, Openmp, and Review Board. 2011. <em>OpenMP Application Program Interface</em>. no. July.
+</div>
+<div id="ref-Argollo" class="csl-entry" role="listitem">
+Argollo, Eduardo, and Martin Griebl. n.d. <em>Loop Parallelization for a Grid Master- Worker Framework ∗</em>. no. 004265.
+</div>
+<div id="ref-Arora" class="csl-entry" role="listitem">
+Arora, Nipun. n.d. <em>COMPASS: Community Driven Parallelization Advisor for Legacy Software Systems</em>.
+</div>
+<div id="ref-Arts" class="csl-entry" role="listitem">
+Arts, T H E, Child Policy, Civil Justice, National Security, Public Safety, and Homeland Security. n.d. <em>Support RAND</em>.
+</div>
+<div id="ref-Asanovic:EECS-2006-183" class="csl-entry" role="listitem">
+Asanovic, Krste, Ras Bodik, Bryan Christopher Catanzaro, et al. 2006. <em>The Landscape of Parallel Computing Research: A View from Berkeley</em>. UCB/EECS-2006-183. EECS Department, University of California, Berkeley. <a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-183.html">http://www.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-183.html</a>.
+</div>
+<div id="ref-Asanovic2009" class="csl-entry" role="listitem">
+Asanovic, Krste, Rastislav Bodik, James Demmel, et al. 2009. <span>“<span class="nocase">A View of the Parallel Computing Landscape</span>.”</span> <em>Communications of the ACM</em> (New York, NY, USA) 52 (10): 56–67. <a href="https://doi.org/10.1145/1562764.1562783">https://doi.org/10.1145/1562764.1562783</a>.
+</div>
+<div id="ref-Aug2011" class="csl-entry" role="listitem">
+Aug, Adam Simpson. 2011. <em>C Ompute u Nified d Evice a Rchitecture</em>.
+</div>
+<div id="ref-augonnet:inria-00467677" class="csl-entry" role="listitem">
+Augonnet, Cédric, Samuel Thibault, and Raymond Namyst. 2010. <em><span class="nocase">StarPU: a Runtime System for Scheduling Tasks over Accelerator-Based Multicore Machines</span></em>. Research Report RR-7240. <span>INRIA</span>. <a href="https://hal.inria.fr/inria-00467677">https://hal.inria.fr/inria-00467677</a>.
+</div>
+<div id="ref-Aumage2012" class="csl-entry" role="listitem">
+Aumage, Olivier, Nathalie Furmento, Raymond Namyst, and Samuel Thibault. 2012. <em>StarPU-MPI: Task Programming over Clusters of Machines Enhanced with Accelerators</em>. 7490 (EuroMPI): 1–2.
+</div>
+<div id="ref-Avresky1998" class="csl-entry" role="listitem">
+Avresky, Dimiter R., and David R. Kaeli. 1998. <em>Fault-Tolerant Parallel and Distributed Systems</em>. Springer US. <a href="https://doi.org/10.1007/978-1-4615-5449-3">https://doi.org/10.1007/978-1-4615-5449-3</a>.
+</div>
+<div id="ref-OpenMPTasks2009" class="csl-entry" role="listitem">
+Ayguade, E, N Copty, A Duran, et al. 2009. <span>“The Design of OpenMP Tasks.”</span> <em>Parallel and Distributed Systems, IEEE Transactions on</em> 20 (3): 404–18. <a href="https://doi.org/10.1109/TPDS.2008.105">https://doi.org/10.1109/TPDS.2008.105</a>.
+</div>
+<div id="ref-Azimi2005" class="csl-entry" role="listitem">
+Azimi, Reza, Michael Stumm, and Robert W. Wisniewski. 2005. <span>“Online Performance Analysis by Statistical Sampling of Microprocessor Performance Counters.”</span> <em>Proceedings of the 19th Annual International Conference on Supercomputing - ICS ’05</em> (New York, New York, USA), June, 101. <a href="https://doi.org/10.1145/1088149.1088163">https://doi.org/10.1145/1088149.1088163</a>.
+</div>
+<div id="ref-Bacon94compilertransformations" class="csl-entry" role="listitem">
+Bacon, David F., Susan L. Graham, Oliver, and J. Sharp. 1994. <span>“Compiler Transformations for High-Performance Computing.”</span> <em>ACM Computing Surveys</em> 26: 345–420.
+</div>
+<div id="ref-Bacon:CSD-93-781" class="csl-entry" role="listitem">
+Bacon, David F., Susan L. Graham, and Oliver J. Sharp. 1993. <em>Compiler Transformations for High-Performance Computing</em>. UCB/CSD-93-781. EECS Department, University of California, Berkeley. <a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/1993/6309.html">http://www.eecs.berkeley.edu/Pubs/TechRpts/1993/6309.html</a>.
+</div>
+<div id="ref-Bacon:1994:CTH:197405.197406" class="csl-entry" role="listitem">
+Bacon, David F., Susan L. Graham, and Oliver J. Sharp. 1994. <span>“Compiler Transformations for High-Performance Computing.”</span> <em>ACM Comput. Surv.</em> (New York, NY, USA) 26: 345–420. https://doi.org/<a href="http://doi.acm.org/10.1145/197405.197406">http://doi.acm.org/10.1145/197405.197406</a>.
+</div>
+<div id="ref-Bacon:2013:FPM:2436696.2443836" class="csl-entry" role="listitem">
+Bacon, David, Rodric Rabbah, and Sunil Shukla. 2013. <span>“FPGA Programming for the Masses.”</span> <em>Queue</em> (New York, NY, USA) 11 (2): 40:40–52. <a href="https://doi.org/10.1145/2436696.2443836">https://doi.org/10.1145/2436696.2443836</a>.
+</div>
+<div id="ref-Badia" class="csl-entry" role="listitem">
+Badia, Rosa M, Francisco D Igual, and Rafael Mayo. n.d. <em>An Extension of the StarSs Programming Model for Platforms with Multiple GPUs</em>.
+</div>
+<div id="ref-Baghdadi" class="csl-entry" role="listitem">
+Baghdadi, Soufiane, and Albert Cohen. n.d. <em>Putting Automatic Polyhedral Compilation for GPGPU to Work</em>.
+</div>
+<div id="ref-Baines" class="csl-entry" role="listitem">
+Baines, Paul. n.d. <em>Journal of Statistical Software</em>. VV (Ii).
+</div>
+<div id="ref-Bala" class="csl-entry" role="listitem">
+Bala, Vasanth, Evelyn Duesterwald, and Sanjeev Banerjia. n.d. <em>Dynamo: A Transparent Dynamic Optimization System</em>. 1–12.
+</div>
+<div id="ref-Balfour2011" class="csl-entry" role="listitem">
+Balfour, James. 2011. <em>CUDA Threads and Atomics</em>. no. April.
+</div>
+<div id="ref-Basaran2012a" class="csl-entry" role="listitem">
+Basaran, Can, and Kyoung-Don Kang. 2012. <span>“Supporting Preemptive Task Executions and Memory Copies in GPGPUs.”</span> <em>2012 24th Euromicro Conference on Real-Time Systems</em>, July, 287–96. <a href="https://doi.org/10.1109/ECRTS.2012.15">https://doi.org/10.1109/ECRTS.2012.15</a>.
+</div>
+<div id="ref-Baskaran:2010:ACC:2175462.2175482" class="csl-entry" role="listitem">
+Baskaran, Muthu Manikandan, J. Ramanujam, and P. Sadayappan. 2010a. <span>“Automatic c-to-CUDA Code Generation for Affine Programs.”</span> <em>Proceedings of the 19th Joint European Conference on Theory and Practice of Software, International Conference on Compiler Construction</em> (Berlin, Heidelberg), CC’10/ETAPS’10, 244–63. <a href="https://doi.org/10.1007/978-3-642-11970-5_14">https://doi.org/10.1007/978-3-642-11970-5_14</a>.
+</div>
+<div id="ref-Baskaran2010" class="csl-entry" role="listitem">
+Baskaran, Muthu Manikandan, J Ramanujam, and P Sadayappan. 2010b. <em>LNCS 6011 - Automatic c-to-CUDA Code Generation for Affine Programs</em>. 244–63.
+</div>
+<div id="ref-bastoul:hal-00017260" class="csl-entry" role="listitem">
+Bastoul, Cédric. 2004a. <span>“<span class="nocase">Code Generation in the Polyhedral Model Is Easier Than You Think</span>.”</span> 29 september - 3 october 2004, antibes juan-les-pins, france, 7–16.
+</div>
+<div id="ref-Bastoul2004" class="csl-entry" role="listitem">
+Bastoul, Cédric. 2004c. <span>“Code Generation in the Polyhedral Model Is Easier Than You Think.”</span> <em>PACT’13 IEEE International Conference on Parallel Architecture and Compilation Techniques</em> (Juan-les-Pins, France), 7–16.
+</div>
+<div id="ref-Bas04b" class="csl-entry" role="listitem">
+Bastoul, Cédric. 2004b. <span>“Code Generation in the Polyhedral Model Is Easier Than You Think.”</span> <em>PACT’13 IEEE International Conference on Parallel Architecture and Compilation Techniques</em> (Juan-les-Pins, France), 7–16.
+</div>
+<div id="ref-Bastoul:2004:CGP:1025127.1025992" class="csl-entry" role="listitem">
+Bastoul, Cédric. 2004d. <span>“<span class="nocase">Code Generation in the Polyhedral Model Is Easier Than You Think</span>.”</span> <em>Proceedings of the 13th International Conference on Parallel Architectures and Compilation Techniques</em> (Washington, DC, USA), PACT ’04, 7–16. <a href="https://doi.org/10.1109/PACT.2004.11">https://doi.org/10.1109/PACT.2004.11</a>.
+</div>
+<div id="ref-Bastoul2011" class="csl-entry" role="listitem">
+Bastoul, Cédric. 2011c. <em>OpenScop: A Specification and a Library for Data Exchange in Polyhedral Compilation Tools</em>. Paris-Sud University, France.
+</div>
+<div id="ref-Bas11:openscop" class="csl-entry" role="listitem">
+Bastoul, Cédric. 2011b. <em>OpenScop: A Specification and a Library for Data Exchange in Polyhedral Compilation Tools</em>. Paris-Sud University, France.
+</div>
+<div id="ref-Bas11" class="csl-entry" role="listitem">
+Bastoul, Cédric. 2011a. <em>OpenScop: A Specification and a Library for Data Exchange in Polyhedral Compilation Tools</em>. Paris-Sud University, France.
+</div>
+<div id="ref-Bastoul08clana" class="csl-entry" role="listitem">
+Bastoul, Cedric, Albert Cohen, Sylvain Girbal, Saurabh Sharma, and Olivier Temam. 2008. <em>Clan a Polyhedral Representation Extractor for High Level Programs Edition 1.0, for Clan 1.0.0</em>.
+</div>
+<div id="ref-BastoulCohenGirbalEtAl2003" class="csl-entry" role="listitem">
+Bastoul, Cédric, Albert Cohen, Sylvain Girbal, Saurabh Sharma, and Olivier Temam. 2003b. <span>“Putting Polyhedral Loop Transformations to Work.”</span> <em>LCPC’16 International Workshop on Languages and Compilers for Parallel Computers, LNCS 2958</em> (College Station, Texas), 209–25.
+</div>
+<div id="ref-Bas03" class="csl-entry" role="listitem">
+Bastoul, Cédric, Albert Cohen, Sylvain Girbal, Saurabh Sharma, and Olivier Temam. 2003a. <span>“Putting Polyhedral Loop Transformations to Work.”</span> <em>LCPC’16 International Workshop on Languages and Compilers for Parallel Computers, LNCS 2958</em> (College Station, Texas), 209–25.
+</div>
+<div id="ref-Basupalli:2011" class="csl-entry" role="listitem">
+Basupalli, V, T Yuki, S Rajopadhye, et al. 2011. <span>“ompVerify: Polyhedral Analysis for the OpenMP Programmer.”</span> In <em>OpenMP in the Petascale Era</em>, edited by BarbaraM. Chapman, WilliamD. Gropp, Kalyan Kumaran, and MatthiasS. Müller, vol. 6665. Lecture Notes in Computer Science. Springer Berlin Heidelberg. <a href="https://doi.org/10.1007/978-3-642-21487-5{\_}4">https://doi.org/10.1007/978-3-642-21487-5{\_}4</a>.
+</div>
+<div id="ref-Bataev" class="csl-entry" role="listitem">
+Bataev, Alexey, Andrey Bokhanko, and James Cownie. n.d. <em>Towards OpenMP Support in LLVM</em>. 1–23.
+</div>
+<div id="ref-Bauer" class="csl-entry" role="listitem">
+Bauer, Michael, Henry Cook, and Brucek Khailany. n.d. <em>CudaDMA: Optimizing GPU Memory Bandwidth via Warp ∗ Specialization</em>.
+</div>
+<div id="ref-Bauer2010" class="csl-entry" role="listitem">
+Bauer, Sebastian, Sebastian Kohler, Konrad Doll, and Ulrich Brunsmann. 2010. <span>“FPGA-GPU Architecture for Kernel SVM Pedestrian Detection.”</span> <em>2010 IEEE Computer Society Conference on Computer Vision and Pattern Recognition - Workshops</em>, June, 61–68. <a href="https://doi.org/10.1109/CVPRW.2010.5543772">https://doi.org/10.1109/CVPRW.2010.5543772</a>.
+</div>
+<div id="ref-Becchi2010" class="csl-entry" role="listitem">
+Becchi, Michela, Surendra Byna, Srihari Cadambi, and Srimat Chakradhar. 2010. <span>“Data-Aware Scheduling of Legacy Kernels on Heterogeneous Platforms with Distributed Memory.”</span> <em>Proceedings of the 22nd ACM Symposium on Parallelism in Algorithms and Architectures - SPAA ’10</em> (New York, New York, USA), June, 82. <a href="https://doi.org/10.1145/1810479.1810498">https://doi.org/10.1145/1810479.1810498</a>.
+</div>
+<div id="ref-Begeman2008" class="csl-entry" role="listitem">
+Begeman, Nate. 2008. <em>Building an Efficient JIT</em>.
+</div>
+<div id="ref-Bell2012" class="csl-entry" role="listitem">
+Bell, Nathan, and Jared Hoberock. 2012. <em>Thrust: A Productivity-Oriented Library for CUDA 26</em>. 359–72.
+</div>
+<div id="ref-Bellard:2005:QFP:1247360.1247401" class="csl-entry" role="listitem">
+Bellard, Fabrice. 2005. <span>“QEMU, a Fast and Portable Dynamic Translator.”</span> <em>Proceedings of the Annual Conference on USENIX Annual Technical Conference</em> (Berkeley, CA, USA), ATEC ’05, 41–41. <a href="http://dl.acm.org/citation.cfm?id=1247360.1247401">http://dl.acm.org/citation.cfm?id=1247360.1247401</a>.
+</div>
+<div id="ref-Benabderrahmane" class="csl-entry" role="listitem">
+Benabderrahmane, Mohamed-walid, and Albert Cohen. n.d. <em>A Conservative Approach to Handle Full Functions in the Polyhedral Model</em>. no. 6814.
+</div>
+<div id="ref-Benabderrahmane:2010:PMM:2175462.2175484" class="csl-entry" role="listitem">
+Benabderrahmane, Mohamed-Walid, Louis-Noël Pouchet, Albert Cohen, and Cédric Bastoul. 2010. <span>“The Polyhedral Model Is More Widely Applicable Than You Think.”</span> <em>Proceedings of the 19th Joint European Conference on Theory and Practice of Software, International Conference on Compiler Construction</em> (Berlin, Heidelberg), CC’10/ETAPS’10, 283–303. <a href="https://doi.org/10.1007/978-3-642-11970-5_16">https://doi.org/10.1007/978-3-642-11970-5_16</a>.
+</div>
+<div id="ref-Ben-Ari:1990" class="csl-entry" role="listitem">
+Ben-Ari, M. 1990. <em>Principles of Concurrent and Distributed Programming</em>. Prentice-Hall, Inc.
+</div>
+<div id="ref-ben1999thinking" class="csl-entry" role="listitem">
+Ben-Ari, Mordechai, and Yifat Ben-David Kolikant. 1999. <span>“Thinking Parallel: The Process of Learning Concurrency.”</span> <em>ACM SIGCSE Bulletin</em> 31: 13–16.
+</div>
+<div id="ref-Berlin" class="csl-entry" role="listitem">
+Berlin, Daniel, David Edelsohn, and Sebastian Pop. n.d. <em>High-Level Loop Optimizations for GCC</em>.
+</div>
+<div id="ref-Bernstein1966" class="csl-entry" role="listitem">
+Bernstein, A J. 1966. <em>Analysis Programs Processing</em>. 8 (5): 306–7.
+</div>
+<div id="ref-7069297" class="csl-entry" role="listitem">
+Bertolli, C., S. F. F Antao, A. E. E Eichenberger, et al. 2014. <span>“Coordinating GPU Threads for OpenMP 4.0 in LLVM.”</span> <em>LLVM Compiler Infrastructure in HPC (LLVM-HPC), 2014</em>, November, 12–21. <a href="https://doi.org/10.1109/LLVM-HPC.2014.10">https://doi.org/10.1109/LLVM-HPC.2014.10</a>.
+</div>
+<div id="ref-Bertolli2014" class="csl-entry" role="listitem">
+Bertolli, C., S. F. Antao, A. E. Eichenberger, et al. 2014. <em>LLVM Compiler Infrastructure in HPC (LLVM-HPC), 2014</em>. <a href="https://doi.org/10.1109/LLVM-HPC.2014.10">https://doi.org/10.1109/LLVM-HPC.2014.10</a>.
+</div>
+<div id="ref-Bienia" class="csl-entry" role="listitem">
+Bienia, Christian, Sanjeev Kumar, Jaswinder Pal Singh, and Kai Li. n.d. <em>The PARSEC Benchmark Suite: Characterization and Architectural Implications</em>.
+</div>
+<div id="ref-pluto:site:2012" class="csl-entry" role="listitem">
+Bondhugula, Uday. 2012. <span>“PLUTO - an Automatic Parallelizer and Locality Optimizer for Multicores <span>@ONLINE</span>.”</span> <a href="http://pluto-compiler.sourceforge.net/">http://pluto-compiler.sourceforge.net/</a>.
+</div>
+<div id="ref-Bondhugula2010" class="csl-entry" role="listitem">
+Bondhugula, Uday, Albert Cohen, J. Ramanujam, P. Sadayappan, Louis-Noel Pouchet, and Cedric Bastoul. 2010. <span>“Combined Iterative and Model-Driven Optimization in an Automatic Parallelization Framework.”</span> <em>2010 ACM/IEEE International Conference for High Performance Computing, Networking, Storage and Analysis</em>, no. November (November): 1–11. <a href="https://doi.org/10.1109/SC.2010.14">https://doi.org/10.1109/SC.2010.14</a>.
+</div>
+<div id="ref-Bondhugula2011" class="csl-entry" role="listitem">
+Bondhugula, Uday, Albert Cohen, J Ramanujam, P Sadayappan, and Nicolas Vasilache. 2011. <em>Loop Transformations: Convexity, Pruning and Optimization</em>.
+</div>
+<div id="ref-BondhugulaHartonoRamanujamEtAl2008" class="csl-entry" role="listitem">
+Bondhugula, Uday, Albert Hartono, J. Ramanujam, and P. Sadayappan. 2008b. <span>“A Practical Automatic Polyhedral Parallelizer and Locality Optimizer.”</span> <em>Proceedings of the 2008 ACM SIGPLAN Conference on Programming Language Design and Implementation</em> (New York, NY, USA), PLDI ’08, 101–13. <a href="https://doi.org/10.1145/1375581.1375595">https://doi.org/10.1145/1375581.1375595</a>.
+</div>
+<div id="ref-Bondhugula:2008:PAP:1375581.1375595" class="csl-entry" role="listitem">
+Bondhugula, Uday, Albert Hartono, J. Ramanujam, and P. Sadayappan. 2008a. <span>“A Practical Automatic Polyhedral Parallelizer and Locality Optimizer.”</span> <em>Proceedings of the 2008 ACM SIGPLAN Conference on Programming Language Design and Implementation</em> (New York, NY, USA), PLDI ’08, 101–13. <a href="https://doi.org/10.1145/1375581.1375595">https://doi.org/10.1145/1375581.1375595</a>.
+</div>
+<div id="ref-Bondhugula:2008:PAP:1379022.1375595" class="csl-entry" role="listitem">
+Bondhugula, Uday, Albert Hartono, J. Ramanujam, and P. Sadayappan. 2008c. <span>“A Practical Automatic Polyhedral Parallelizer and Locality Optimizer.”</span> <em>SIGPLAN Not.</em> (New York, NY, USA) 43 (6): 101–13. <a href="https://doi.org/10.1145/1379022.1375595">https://doi.org/10.1145/1379022.1375595</a>.
+</div>
+<div id="ref-uday08pldi" class="csl-entry" role="listitem">
+Bondhugula, Uday, Albert Hartono, J. Ramanujam, and P. Sadayappan. 2008d. <span>“A Practical Automatic Polyhedral Program Optimization System.”</span> <em>ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI)</em>, June.
+</div>
+<div id="ref-Bondhugula08pluto:a" class="csl-entry" role="listitem">
+<span class="nocase">Bondhugula, Uday, J. Ramanujam, and et al.</span> 2008. <span>“PLuTo: A Practical and Fully Automatic Polyhedral Program Optimization System.”</span> <em>IN: PROCEEDINGS OF THE ACM SIGPLAN 2008 CONFERENCE ON PROGRAMMING LANGUAGE DESIGN AND IMPLEMENTATION (PLDI 08</em>.
+</div>
+<div id="ref-uday07tr70" class="csl-entry" role="listitem">
+Bondhugula, Uday, J. Ramanujam, and P. Sadayappan. 2007. <em>PLuTo: A Practical and Fully Automatic Polyhedral Parallelizer and Locality Optimizer</em>. OSU-CISRC-10/07-TR70. The Ohio State University.
+</div>
+<div id="ref-Borin" class="csl-entry" role="listitem">
+Borin, Edson, Youfeng Wu, Cheng Wang, et al. n.d. <em>TAO: Two-Level Atomicity for Dynamic Binary Optimizations</em>. 12–21.
+</div>
+<div id="ref-brodtkorb2010state" class="csl-entry" role="listitem">
+Brodtkorb, A. R., C. Dyken, T. R. Hagen, J. M. Hjelmervik, and O. O. Storaasli. 2010. <span>“State-of-the-Art in Heterogeneous Computing.”</span> <em>Scientific Programming</em> 18 (1): 1–33.
+</div>
+<div id="ref-4145100" class="csl-entry" role="listitem">
+Buck, I. 2007. <span>“GPU Computing: Programming a Massively Parallel Processor.”</span> <em>International Symposium on Code Generation and Optimization (CGO’07)</em>, 17–17. <a href="https://doi.org/10.1109/CGO.2007.13">https://doi.org/10.1109/CGO.2007.13</a>.
+</div>
+<div id="ref-Buck" class="csl-entry" role="listitem">
+Buck, Ian. n.d. <em>Data Parallel Computing on Graphics Hardware</em>.
+</div>
+<div id="ref-Buck:2004:BGS:1186562.1015800" class="csl-entry" role="listitem">
+Buck, Ian, Tim Foley, Daniel Horn, et al. 2004a. <span>“Brook for GPUs: Stream Computing on Graphics Hardware.”</span> <em>ACM SIGGRAPH 2004 Papers</em> (New York, NY, USA), SIGGRAPH ’04, 777–86. <a href="https://doi.org/10.1145/1186562.1015800">https://doi.org/10.1145/1186562.1015800</a>.
+</div>
+<div id="ref-Buck:2004:BGS:1015706.1015800" class="csl-entry" role="listitem">
+Buck, Ian, Tim Foley, Daniel Horn, et al. 2004b. <span>“Brook for GPUs: Stream Computing on Graphics Hardware.”</span> <em>ACM Trans. Graph.</em> (New York, NY, USA) 23 (3): 777–86. <a href="https://doi.org/10.1145/1015706.1015800">https://doi.org/10.1145/1015706.1015800</a>.
+</div>
+<div id="ref-Buck04brookfor" class="csl-entry" role="listitem">
+Buck, Ian, Tim Foley, Daniel Horn, et al. 2004c. <span>“Brook for GPUs: Stream Computing on Graphics Hardware.”</span> <em>ACM TRANSACTIONS ON GRAPHICS</em> 23: 777–86.
+</div>
+<div id="ref-apollo:camus:site" class="csl-entry" role="listitem">
+CAMUS. 2015. <span>“<span class="nocase">Apollo: Automatic speculative POLyhedral Loop Optimizer</span>.”</span> <a href="https://team.inria.fr/camus/apollo/">https://team.inria.fr/camus/apollo/</a>.
+</div>
+<div id="ref-bottleneck:cabezas:2014" class="csl-entry" role="listitem">
+Caparrós Cabezas, Victoria, and Markus Püschel. 2014. <span>“<span class="nocase">Extending the Roofline Model: Bottleneck Analysis with Microarchitectural Constraints</span>.”</span> <em>2014 IEEE International Symposium on Workload Characterization (IISWC)</em>, October, 222–31. <a href="https://doi.org/10.1109/IISWC.2014.6983061">https://doi.org/10.1109/IISWC.2014.6983061</a>.
+</div>
+<div id="ref-polybench:acc:site" class="csl-entry" role="listitem">
+Cavazos, John, Scott Grauer-Gray, Robert Searles, William Killian, Lifan Xu, and Sudhee Ayalasomayajula. 2012. <em><span class="nocase">PolyBench/ACC The Polyhedral Benchmark Suite Targeting Multicore CPUs, GPUs, and Accelerators</span></em>. <a href="http://cavazos-lab.github.io/PolyBench-ACC/">http://cavazos-lab.github.io/PolyBench-ACC/</a>.
+</div>
+<div id="ref-Chapman:2007" class="csl-entry" role="listitem">
+Chapman, Barbara, Gabriele Jost, and Ruud van der Pas. 2007. <em>Using OpenMP: Portable Shared Memory Parallel Programming (Scientific and Engineering Computation)</em>. The MIT Press.
+</div>
+<div id="ref-UniversityEmory" class="csl-entry" role="listitem">
+Cheung, Shun Yan. 2013. <span>“Introduction to Parallel Processing. OpenMP.”</span> <a href="http://www.mathcs.emory.edu/{~}cheung/Courses/355/Syllabus/91-pthreads/openMP.html">http://www.mathcs.emory.edu/{~}cheung/Courses/355/Syllabus/91-pthreads/openMP.html</a>.
+</div>
+<div id="ref-clang:site" class="csl-entry" role="listitem">
+Clang, Site. 2013. <span>“Clang Site <span>@ONLINE</span>.”</span> <a href="http://clang.llvm.org/">http://clang.llvm.org/</a>.
+</div>
+<div id="ref-coulomb:hal-00707236" class="csl-entry" role="listitem">
+COULOMB, Kevin, Augustin DEGOMME, Mathieu Faverge, and François TRAHAY. 2011. <span>“<span class="nocase">An open source tool chain for performance analysis</span>.”</span> <em><span>5th Parallel Tools Workshop</span></em> (Dresden, Germany), September. <a href="https://hal.archives-ouvertes.fr/hal-00707236">https://hal.archives-ouvertes.fr/hal-00707236</a>.
+</div>
+<div id="ref-creusillet1996interprocedural" class="csl-entry" role="listitem">
+Creusillet, Béatrice, and François Irigoin. 1996. <span>“Interprocedural Array Region Analyses.”</span> <em>Languages and Compilers for Parallel Computing</em>, 46–60.
+</div>
+<div id="ref-nvidia:cublas:xt" class="csl-entry" role="listitem">
+<span>“cuBLAS-XT ? Accelerate BLAS Calls with Multiple GPUs!”</span> 2014. <a href="http://developer.nvidia.com/cublasxt">http://developer.nvidia.com/cublasxt</a>.
+</div>
+<div id="ref-Cytron:1989:EMC:75277.75280" class="csl-entry" role="listitem">
+Cytron, R., J. Ferrante, B. K. Rosen, M. N. Wegman, and F. K. Zadeck. 1989. <span>“An Efficient Method of Computing Static Single Assignment Form.”</span> <em>Proceedings of the 16th ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages</em> (New York, NY, USA), POPL ’89, 25–35. <a href="https://doi.org/10.1145/75277.75280">https://doi.org/10.1145/75277.75280</a>.
+</div>
+<div id="ref-Dagum:1998:OIA:615255.615542" class="csl-entry" role="listitem">
+Dagum, Leonardo, and Ramesh Menon. 1998. <span>“<span class="nocase">OpenMP: An Industry-Standard API for Shared-Memory Programming</span>.”</span> <em>IEEE Computational Science and Engineering</em> 5 (1): 46–55. <a href="https://doi.org/10.1109/99.660313">https://doi.org/10.1109/99.660313</a>.
+</div>
+<div id="ref-cetus-5353460" class="csl-entry" role="listitem">
+Dave, C., Hansang Bae, Seung-Jai Min, Seyong Lee, R. Eigenmann, and S. Midkiff. 2009. <span>“Cetus: A Source-to-Source Compiler Infrastructure for Multicores.”</span> <em>Computer</em> 42 (12): 36–42. <a href="https://doi.org/10.1109/MC.2009.385">https://doi.org/10.1109/MC.2009.385</a>.
+</div>
+<div id="ref-Bae" class="csl-entry" role="listitem">
+Dave, Chirag, Hansang Bae, Seung-jai Min, et al. 2009. <span>“Cetus: A Source-to-Source Compiler Infrastructure for Multicores.”</span> <em>Computer</em> 42 (12): 36–42. <a href="https://doi.org/10.1109/MC.2009.385">https://doi.org/10.1109/MC.2009.385</a>.
+</div>
+<div id="ref-Dean:2004:MSD:1251254.1251264" class="csl-entry" role="listitem">
+Dean, Jeffrey, and Sanjay Ghemawat. 2004. <span>“MapReduce: Simplified Data Processing on Large Clusters.”</span> <em>Proceedings of the 6th Conference on Symposium on Opearting Systems Design &amp; Implementation - Volume 6</em> (Berkeley, CA, USA), OSDI’04, 10–10. <a href="http://dl.acm.org/citation.cfm?id=1251254.1251264">http://dl.acm.org/citation.cfm?id=1251254.1251264</a>.
+</div>
+<div id="ref-Dean:2008:MSD:1327452.1327492" class="csl-entry" role="listitem">
+Dean, Jeffrey, and Sanjay Ghemawat. 2008. <span>“MapReduce: Simplified Data Processing on Large Clusters.”</span> <em>Commun. ACM</em> (New York, NY, USA) 51 (1): 107–13. <a href="https://doi.org/10.1145/1327452.1327492">https://doi.org/10.1145/1327452.1327492</a>.
+</div>
+<div id="ref-6065054" class="csl-entry" role="listitem">
+Delistavrou, C T, and K G Margaritis. 2011. <span>“Towards an Integrated Teaching Environment for Parallel Programming.”</span> <em>Informatics (PCI), 2011 15th Panhellenic Conference on</em>, 3–7. <a href="https://doi.org/10.1109/PCI.2011.16">https://doi.org/10.1109/PCI.2011.16</a>.
+</div>
+<div id="ref-dollinger:hal-01095890" class="csl-entry" role="listitem">
+Dollinger, Jean-François, and Vincent Loechner. 2015. <span>“<span class="nocase">CPU+GPU Load Balance Guided by Execution Time Prediction</span>.”</span> <em><span class="nocase">Fifth International Workshop on Polyhedral Compilation Techniques (IMPACT 2015)</span></em> (Amsterdam, Netherlands), January. <a href="https://hal.inria.fr/hal-01095890">https://hal.inria.fr/hal-01095890</a>.
+</div>
+<div id="ref-dongarra:1994:top500" class="csl-entry" role="listitem">
+Dongarra, Jack J, Hans W Meuer, and Erich Strohmaier. 1994. <em><span>TOP500 Supercomputer Sites</span></em>. RUM 37/94, University of Mannheim, June 30, 1994; University of Mannheim. <a href="https://www.netlib.org/benchmark/top500/lists/rum3894.ps">www.netlib.org/benchmark/top500/lists/rum3894.ps</a>.
+</div>
+<div id="ref-dongarra:1996:top500" class="csl-entry" role="listitem">
+Dongarra, Jack J, Hans W Meuer, and Erich Strohmaier. 1996. <em><span>TOP500 Supercomputer Sites</span></em>. RUM 48/96, University of Mannheim, November 18, 1996; University of Mannheim. <a href="http://www.netlib.org/utk/people/JackDongarra/pdf/top500_9611.pdf">http://www.netlib.org/utk/people/JackDongarra/pdf/top500_9611.pdf</a>.
+</div>
+<div id="ref-dongarra1997top500" class="csl-entry" role="listitem">
+<span class="nocase">Dongarra, Jack J, Hans W Meuer, Erich Strohmaier, et al.</span> 1997. <span>“TOP500 Supercomputer Sites.”</span> <em>Supercomputer</em> 13: 89–111.
+</div>
+<div id="ref-dragonegg:2013" class="csl-entry" role="listitem">
+DragonEgg. 2013. <span>“DragonEgg - Using LLVM as a GCC Backend.”</span> <a href="http://dragonegg.llvm.org/">http://dragonegg.llvm.org/</a>.
+</div>
+<div id="ref-Du2012391" class="csl-entry" role="listitem">
+Du, Peng, Rick Weber, Piotr Luszczek, Stanimire Tomov, Gregory Peterson, and Jack Dongarra. 2012a. <span>“From {CUDA} to OpenCL: Towards a Performance-Portable Solution for Multi-Platform {GPU} Programming.”</span> <em>Parallel Computing</em> 38 (8): 391–407. https://doi.org/<a href="http://dx.doi.org/10.1016/j.parco.2011.10.002">http://dx.doi.org/10.1016/j.parco.2011.10.002</a>.
+</div>
+<div id="ref-Du:2012:COT:2318325.2318445" class="csl-entry" role="listitem">
+Du, Peng, Rick Weber, Piotr Luszczek, Stanimire Tomov, Gregory Peterson, and Jack Dongarra. 2012b. <span>“<span class="nocase">From CUDA to OpenCL: Towards a Performance-portable Solution for Multi-platform GPU Programming</span>.”</span> <em>Parallel Computing</em> (Amsterdam, The Netherlands, The Netherlands) 38 (8): 391–407. <a href="https://doi.org/10.1016/j.parco.2011.10.002">https://doi.org/10.1016/j.parco.2011.10.002</a>.
+</div>
+<div id="ref-Rendell2013" class="csl-entry" role="listitem">
+Eichenberger, Alexandre E., John Mellor-Crummey, Martin Schulz, et al. 2013. <em>OpenMP in the Era of Low Power Devices and Accelerators</em>. Edited by Alistair P. Rendell, Barbara M. Chapman, and Matthias S. Müller. Vol. 8122. Lecture Notes in Computer Science. Springer Berlin Heidelberg. <a href="https://doi.org/10.1007/978-3-642-40698-0">https://doi.org/10.1007/978-3-642-40698-0</a>.
+</div>
+<div id="ref-openhmpp:2012" class="csl-entry" role="listitem">
+Entreprise, CAPS. 2012. <span>“OpenHMPP Directives.”</span> November. <a href="http://www.caps-entreprise.com/openhmpp-directives/">http://www.caps-entreprise.com/openhmpp-directives/</a>.
+</div>
+<div id="ref-Faber2007" class="csl-entry" role="listitem">
+Faber, Peter. 2007. <em>Code Optimization in the Polyhedron Model – Improving the Efficiency of Parallel Loop Nests</em>.
+</div>
+<div id="ref-Faber2001" class="csl-entry" role="listitem">
+Faber, Peter, Martin Griebl, and Christian Lengauer. 2001. <em>Loop-Carried Code Placement</em>. 230–35.
+</div>
+<div id="ref-Faber2003" class="csl-entry" role="listitem">
+Faber, Peter, Martin Griebl, and Christian Lengauer. 2003. <em>Replicated Placements in the Polyhedron Model</em>. 303–8.
+</div>
+<div id="ref-Fabera" class="csl-entry" role="listitem">
+Faber, Peter, Martin Griebl, and Christian Lengauer. n.d. <em>Issues of the Automatic Generation of HPF Loop Programs</em>.
+</div>
+<div id="ref-6565518" class="csl-entry" role="listitem">
+Falcao, G. 2013. <span>“How Fast Can Parallel Programming Be Taught to Undergraduate Students?”</span> <em>Potentials, IEEE</em> 32 (4): 28–29. <a href="https://doi.org/10.1109/MPOT.2012.2234507">https://doi.org/10.1109/MPOT.2012.2234507</a>.
+</div>
+<div id="ref-Fastest" class="csl-entry" role="listitem">
+Fastest, The. n.d. <em>Kepler GK110</em>.
+</div>
+<div id="ref-Feautrier96automaticparallelization" class="csl-entry" role="listitem">
+Feautrier, Paul. 1996. <span>“Automatic Parallelization in the Polytope Model.”</span> <em>Laboratoire PRiSM, Universit� Des Versailles St-Quentin En Yvelines, 45, Avenue Des �Tats-Unis, f-78035 Versailles Cedex</em>, 79–103. <a href="http://link.springer.com/chapter/10.1007/3-540-61736-1{\_}44">http://link.springer.com/chapter/10.1007/3-540-61736-1{\_}44</a>.
+</div>
+<div id="ref-Feautrier2009" class="csl-entry" role="listitem">
+Feautrier, Paul. 2009. <em>The Polytope Model: Past, Present, Future</em>.
+</div>
+<div id="ref-Feiner2012" class="csl-entry" role="listitem">
+Feiner, Peter, Angela Demke Brown, and Ashvin Goel. 2012. <span>“Comprehensive Kernel Instrumentation via Dynamic Binary Translation.”</span> <em>Proceedings of the Seventeenth International Conference on Architectural Support for Programming Languages and Operating Systems - ASPLOS ’12</em> (New York, New York, USA), 135. <a href="https://doi.org/10.1145/2150976.2150992">https://doi.org/10.1145/2150976.2150992</a>.
+</div>
+<div id="ref-6651019" class="csl-entry" role="listitem">
+Ferner, C, B Wilkinson, and B Heath. 2013. <span>“Toward Using Higher-Level Abstractions to Teach Parallel Computing.”</span> <em>Parallel and Distributed Processing Symposium Workshops PhD Forum (IPDPSW), 2013 IEEE 27th International</em>, 1291–96. <a href="https://doi.org/10.1109/IPDPSW.2013.71">https://doi.org/10.1109/IPDPSW.2013.71</a>.
+</div>
+<div id="ref-Fifield2011" class="csl-entry" role="listitem">
+Fifield, Jeff. 2011. <em>SKIR: Just-in-Time Compilation for Parallelism with LLVM</em>.
+</div>
+<div id="ref-Flynn" class="csl-entry" role="listitem">
+Flynn, Michael J. n.d. <em>Using FPGAs for HPC* Acceleration: Now and in 20 Years</em>.
+</div>
+<div id="ref-For2012" class="csl-entry" role="listitem">
+For, Techniques, and Scalable Performance. 2012. <em>C Ov Er f e at u Re</em>. 26–32.
+</div>
+<div id="ref-Fpgas2010" class="csl-entry" role="listitem">
+Fpgas, Xilinx, and High Performance Computing. 2010. <em>Xilinx WP375 High Performance Computing Using FPGAs, White Paper</em>. 375: 1–15.
+</div>
+<div id="ref-Frost2012" class="csl-entry" role="listitem">
+Frost, Gary, and Andrew Sheppard. 2012. <em>Aparapi <span>~</span> the Easy Way to Program Java+GPU</em>.
+</div>
+<div id="ref-Fujita" class="csl-entry" role="listitem">
+Fujita, Syoyo. n.d. <em>Adding LLVM JIT Facility to Your Program.</em>
+</div>
+<div id="ref-Gad2014" class="csl-entry" role="listitem">
+Gad, Ramy, Tim Suss, and Andre Brinkmann. 2014. <span>“Compiler Driven Automatic Kernel Context Migration for Heterogeneous Computing.”</span> <em>2014 IEEE 34th International Conference on Distributed Computing Systems</em>, June, 389–98. <a href="https://doi.org/10.1109/ICDCS.2014.47">https://doi.org/10.1109/ICDCS.2014.47</a>.
+</div>
+<div id="ref-Gautier2013" class="csl-entry" role="listitem">
+Gautier, Thierry, Joao V. F. Lima, Nicolas Maillard, Bruno Raffin, and Distributed Processing. 2013. <span>“XKaapi: A Runtime System for Data-Flow Task Programming on Heterogeneous Architectures.”</span> <em>2013 IEEE 27th International Symposium on Parallel and Distributed Processing</em>, May, 1299–308. <a href="https://doi.org/10.1109/IPDPS.2013.66">https://doi.org/10.1109/IPDPS.2013.66</a>.
+</div>
+<div id="ref-gcc:2012" class="csl-entry" role="listitem">
+GCC. 2012. <span>“Manual Do GCC: The c Preprocessor <span>@ONLINE</span>.”</span> <a href="http://gcc.gnu.org/onlinedocs/cpp/index.html">http://gcc.gnu.org/onlinedocs/cpp/index.html</a>.
+</div>
+<div id="ref-gcc:site:2015" class="csl-entry" role="listitem">
+GCC. 2015. <em>GCC, the GNU Compiler Collection</em>. <a href="https://gcc.gnu.org/">https://gcc.gnu.org/</a>.
+</div>
+<div id="ref-gcc:2020" class="csl-entry" role="listitem">
+GCC. 2020. <em>GCC, the GNU Compiler Collection</em>. <a href="http://gcc.gnu.org/onlinedocs">http://gcc.gnu.org/onlinedocs</a>.
+</div>
+<div id="ref-Gedell2005" class="csl-entry" role="listitem">
+Gedell, Tobias. 2005. <em>Automating Verification of Loops by Parallelization</em>.
+</div>
+<div id="ref-cloog:site" class="csl-entry" role="listitem">
+Generator, CLooG: The Chunky Loop. n.d. <span>“CLooG Site <span>@ONLINE</span>.”</span> <a href="http://www.cloog.org/">http://www.cloog.org/</a>.
+</div>
+<div id="ref-glaskowsky:fermi" class="csl-entry" role="listitem">
+Glaskowsky, Peter N. 2009. <em>NVIDIA’s Fermi: The First Complete GPU Computing Architecture</em>. Whitepaper. NVIDIA. <a href="http://www.nvidia.com/content/PDF/fermi_white_papers/P.Glaskowsky_NVIDIA\%27s_Fermi-The_First_Complete_GPU_Architecture.pdf">http://www.nvidia.com/content/PDF/fermi_white_papers/P.Glaskowsky_NVIDIA\%27s_Fermi-The_First_Complete_GPU_Architecture.pdf</a>.
+</div>
+<div id="ref-libgomp:site:manual" class="csl-entry" role="listitem">
+GNU Libgomp. 2015a. <em><span class="nocase">GNU libgomp, GNU Offloading and Multi Processing Runtime Library documentation (Online manual)</span></em>. <a href="https://gcc.gnu.org/onlinedocs/libgomp/">https://gcc.gnu.org/onlinedocs/libgomp/</a>.
+</div>
+<div id="ref-libgomp:2015:a" class="csl-entry" role="listitem">
+GNU Libgomp. 2015b. <em><span class="nocase">GNU Offloading and Multi Processing Runtime Library: The GNU OpenMP and OpenACC Implementation</span></em>. GNU. <a href="https://gcc.gnu.org/onlinedocs/gcc-5.2.0/libgomp.pdf">https://gcc.gnu.org/onlinedocs/gcc-5.2.0/libgomp.pdf</a>.
+</div>
+<div id="ref-libgomp:2015:b" class="csl-entry" role="listitem">
+GNU Libgomp. 2015c. <em><span class="nocase">GNU Offloading and Multi Processing Runtime Library: The GNU OpenMP and OpenACC Implementation</span></em>. GNU libgomp. <a href="https://gcc.gnu.org/onlinedocs/gcc-5.3.0/libgomp.pdf">https://gcc.gnu.org/onlinedocs/gcc-5.3.0/libgomp.pdf</a>.
+</div>
+<div id="ref-libgomp:2016:b" class="csl-entry" role="listitem">
+GNU Libgomp. 2016b. <em><span class="nocase">GNU Offloading and Multi Processing Runtime Library: The GNU OpenMP and OpenACC Implementation</span></em>. GNU libgomp. <a href="https://gcc.gnu.org/onlinedocs/gcc-5.4.0/libgomp.pdf">https://gcc.gnu.org/onlinedocs/gcc-5.4.0/libgomp.pdf</a>.
+</div>
+<div id="ref-libgomp:2016:a" class="csl-entry" role="listitem">
+GNU Libgomp. 2016a. <em><span class="nocase">GNU Offloading and Multi Processing Runtime Library: The GNU OpenMP and OpenACC Implementation</span></em>. GNU libgomp. <a href="https://gcc.gnu.org/onlinedocs/gcc-6.1.0/libgomp.pdf">https://gcc.gnu.org/onlinedocs/gcc-6.1.0/libgomp.pdf</a>.
+</div>
 <div id="ref-openmp_cap3" class="csl-entry" role="listitem">
 Gonçalves, Rogério Aparecido. 2017. <em>Capítulo 3: Introdução à Programação Paralela Com OpenMP: Além Das Diretivas de Compilação</em>. ResearchGate. <a href="https://www.researchgate.net/publication/320775430_Capitulo_3_Introducao_a_Programacao_Paralela_com_OpenMP_Alem_das_Diretivas_de_Compilacao">https://www.researchgate.net/publication/320775430_Capitulo_3_Introducao_a_Programacao_Paralela_com_OpenMP_Alem_das_Diretivas_de_Compilacao</a>.
 </div>
+<div id="ref-Gorlatch" class="csl-entry" role="listitem">
+Gorlatch, Sergei, Martin Griebl, and Christian Lengauer. n.d. <em>Making a Task Farm Component Parallelize Loops for the Grid</em>.
+</div>
+<div id="ref-Govindu2004" class="csl-entry" role="listitem">
+Govindu, Gokul, Ling Zhuo, Seonil Choi, Viktor Prasanna, and Los Angeles. 2004. <em>Analysis of High-Performance Floating-Point Arithmetic on FPGAs ∗</em>. 00 (C).
+</div>
+<div id="ref-Gpu2011" class="csl-entry" role="listitem">
+Gpu, A M D, and The Aparapi-team. 2011. <em>Aparapi: OpenCL in Java</em>. no. August: 1–3.
+</div>
+<div id="ref-Gpu" class="csl-entry" role="listitem">
+Gpu, Fastest, Delivering Great, Gaming Performance, and True Geometric Realism. n.d. <em>Nvidia Gf100</em>. 1–31.
+</div>
+<div id="ref-Gr2009" class="csl-entry" role="listitem">
+Gr, Armin. 2009a. <em>Armin Gr¨ o<span>ß</span>linger</em>. no. October.
+</div>
+<div id="ref-Gr2009a" class="csl-entry" role="listitem">
+Gr, Armin. 2009b. <em>Precise Management of Scratchpad Memories for Localising Array Accesses in Scientific Codes</em>. 236–50.
+</div>
+<div id="ref-polybench:gpu:site" class="csl-entry" role="listitem">
+Grauer-Gray, Scott, Will Killian, and Louis-Noël Pouchet. 2012. <em><span class="nocase">PolyBench/GPU Implementation of PolyBench codes for GPU processing</span></em>. <a href="http://web.cse.ohio-state.edu/~pouchet/software/polybench/GPU/">http://web.cse.ohio-state.edu/~pouchet/software/polybench/GPU/</a>.
+</div>
+<div id="ref-6339595" class="csl-entry" role="listitem">
+Grauer-Gray, S., Lifan Xu, R. Searles, S. Ayalasomayajula, and J. Cavazos. 2012. <span>“Auto-Tuning a High-Level Language Targeted to GPU Codes.”</span> <em>Innovative Parallel Computing (InPar), 2012</em>, May, 1–10. <a href="https://doi.org/10.1109/InPar.2012.6339595">https://doi.org/10.1109/InPar.2012.6339595</a>.
+</div>
+<div id="ref-green500:site" class="csl-entry" role="listitem">
+GREEN500. 2013, 2014. <span>“Ranking World’s Most Energy-Eficient Supercomputers <span>@ONLINE</span>.”</span> 2013, 2014. <a href="http://www.green500.org">http://www.green500.org</a>.
+</div>
+<div id="ref-5762730" class="csl-entry" role="listitem">
+Gregg, C., and K. Hazelwood. 2011. <span>“Where Is the Data? Why You Cannot Debate CPU Vs. GPU Performance Without the Answer.”</span> <em>Performance Analysis of Systems and Software (ISPASS), 2011 IEEE International Symposium on</em>, 134–44. <a href="https://doi.org/10.1109/ISPASS.2011.5762730">https://doi.org/10.1109/ISPASS.2011.5762730</a>.
+</div>
+<div id="ref-Griebl1997" class="csl-entry" role="listitem">
+Griebl, Martin. 1997. <span>“The Mechanical Parallelization of Loop Nests Containing While Loops.”</span> PhD thesis, Universitat Passau. <a href="http://scholar.google.com/scholar?hl=en{\&amp;}btnG=Search{\&amp;}q=intitle:UNIVERSITaT+PASSAU{\#}0">http://scholar.google.com/scholar?hl=en{\&amp;}btnG=Search{\&amp;}q=intitle:UNIVERSITaT+PASSAU{\#}0</a>.
+</div>
+<div id="ref-griebl2004automatic" class="csl-entry" role="listitem">
+Griebl, Martin. 2004. <em>Automatic Parallelization of Loop Programs for Distributed Memory Architectures</em>. Univ. Passau.
+</div>
+<div id="ref-Griebl2000" class="csl-entry" role="listitem">
+Griebl, Martin, Paul Feautrier, and Christian Lengauer. 2000. <em>Index Set Splitting</em>. no. January: 607–31.
+</div>
+<div id="ref-Griebl96theloop" class="csl-entry" role="listitem">
+Griebl, Martin, and Christian Lengauer. 1996. <span>“The Loop Parallelizer LooPo.”</span> <em>Proc. Sixth Workshop on Compilers for Parallel Computers, Volume 21 of Konferenzen Des Forschungszentrums Jülich</em>, 311–20.
+</div>
+<div id="ref-Griebla" class="csl-entry" role="listitem">
+Griebl, Martin, and Christian Lengauer. n.d. <em>Introducing Non-Linear Parameters to the Polyhedron Model</em>.
+</div>
+<div id="ref-Griebl" class="csl-entry" role="listitem">
+Griebl, M., C. Lengauer, and S. Wetzel. n.d. <span>“Code Generation in the Polytope Model.”</span> <em>Proceedings. 1998 International Conference on Parallel Architectures and Compilation Techniques (Cat. No.98EX192)</em>, 106–11. <a href="https://doi.org/10.1109/PACT.1998.727179">https://doi.org/10.1109/PACT.1998.727179</a>.
+</div>
+<div id="ref-Grosbach" class="csl-entry" role="listitem">
+Grosbach, Jim, and Owen Anderson. n.d. <em>LLVM MC in Practice</em>.
+</div>
+<div id="ref-Grosser2012a" class="csl-entry" role="listitem">
+Grosser, Tobias. 2012. <em>Tobias Grosser ENS - INRIA July 23, 2012 1 / 132</em>.
+</div>
+<div id="ref-polly:grosser:2012" class="csl-entry" role="listitem">
+GROSSER, TOBIAS, ARMIN GROESSLINGER, and CHRISTIAN LENGAUER. 2012. <span>“POLLY - PERFORMING POLYHEDRAL OPTIMIZATIONS ON a LOW-LEVEL INTERMEDIATE REPRESENTATION.”</span> <em>Parallel Processing Letters</em> 22 (04): 1250010. <a href="https://doi.org/10.1142/S0129626412500107">https://doi.org/10.1142/S0129626412500107</a>.
+</div>
+<div id="ref-DBLP:journals/ppl/GrosserGL12" class="csl-entry" role="listitem">
+Grosser, Tobias, Armin Größlinger, and Christian Lengauer. 2012. <span>“Polly - Performing Polyhedral Optimizations on a Low-Level Intermediate Representation.”</span> <em>Parallel Processing Letters</em> 22 (4).
+</div>
+<div id="ref-Grosser:2016:PTC:2925426.2926286" class="csl-entry" role="listitem">
+Grosser, Tobias, and Torsten Hoefler. 2016. <span>“<span class="nocase">Polly-ACC Transparent Compilation to Heterogeneous Hardware</span>.”</span> <em>Proceedings of the 2016 International Conference on Supercomputing</em> (New York, NY, USA), ICS ’16, 1:1–13. <a href="https://doi.org/10.1145/2925426.2926286">https://doi.org/10.1145/2925426.2926286</a>.
+</div>
+<div id="ref-polyhedral:info:site" class="csl-entry" role="listitem">
+Grosser, Tobias, and Andreas Simbürger. 2014. <em><span class="nocase">Polyhedral.info</span></em>. <a href="http://polyhedral.info/">http://polyhedral.info/</a>.
+</div>
+<div id="ref-polly:grosser:2010" class="csl-entry" role="listitem">
+Grosser, Tobias, and Hongbin Zheng. 2010. <span>“<span class="nocase">Polly - Polyhedral Transformations for LLVM</span>.”</span>
+</div>
+<div id="ref-polly:grosser:2011" class="csl-entry" role="listitem">
+Grosser, Tobias, Hongbin Zheng, Raghesh Aloor, Andreas Simbürger, Armin Grösslinger, and Louis-Noël Pouchet. 2011a. <span>“Polly - Polyhedral Optimization in LLVM.”</span> <em>Proceedings of the First International Workshop on Polyhedral Compilation Techniques (IMPACT)</em> 2011. <a href="http://perso.ens-lyon.fr/christophe.alias/impact2011/impact-07.pdf">http://perso.ens-lyon.fr/christophe.alias/impact2011/impact-07.pdf</a>.
+</div>
+<div id="ref-grosser2011polly" class="csl-entry" role="listitem">
+Grosser, Tobias, Hongbin Zheng, Raghesh Aloor, Andreas Simbürger, Armin Grösslinger, and Louis-Noël Pouchet. 2011b. <span>“Polly-Polyhedral Optimization in LLVM.”</span> <em>Proceedings of the First International Workshop on Polyhedral Compilation Techniques (IMPACT)</em> 2011.
+</div>
+<div id="ref-Group2010" class="csl-entry" role="listitem">
+Group, The Portland. 2010. <em>PGI Accelerator Programming Model for Fortran <span>&amp;</span> c</em>. no. November.
+</div>
+<div id="ref-pgi:2013" class="csl-entry" role="listitem">
+Group, The Portland. 2013. <span>“PGI Compiler User Guide.”</span> <a href="http://www.pgroup.com/resources/docs.htm">http://www.pgroup.com/resources/docs.htm</a>.
+</div>
+<div id="ref-Grover" class="csl-entry" role="listitem">
+Grover, Vinod, and Sean Lee. n.d. <em>PLANG: PTX Frontend for LLVM</em>.
+</div>
+<div id="ref-Grovera" class="csl-entry" role="listitem">
+Grover, Vinod, and Yuan Lin. n.d. <em>Compiling CUDA and Other Languages for GPUs - GTC 2012</em>.
+</div>
+<div id="ref-Guan2010" class="csl-entry" role="listitem">
+Guan, Haibing, Bo Liu, Zhengwei Qi, Yindong Yang, Hongbo Yang, and Alei Liang. 2010. <span>“CoDBT: A Multi-Source Dynamic Binary Translator Using Hardware–Software Collaborative Techniques.”</span> <em>Journal of Systems Architecture</em> 56 (10): 500–508. <a href="https://doi.org/10.1016/j.sysarc.2010.07.008">https://doi.org/10.1016/j.sysarc.2010.07.008</a>.
+</div>
+<div id="ref-Guan2012" class="csl-entry" role="listitem">
+Guan, Haibing, Erzhou Zhu, Hongxi Wang, Ruhui Ma, Yindong Yang, and Bin Wang. 2012. <span>“SINOF: A Dynamic-Static Combined Framework for Dynamic Binary Translation.”</span> <em>Journal of Systems Architecture</em> 58 (8): 305–17. <a href="https://doi.org/10.1016/j.sysarc.2012.05.002">https://doi.org/10.1016/j.sysarc.2012.05.002</a>.
+</div>
+<div id="ref-Guelton2012" class="csl-entry" role="listitem">
+Guelton, Serge. 2012. <em>Autotools for PIPS</em>. 1–7.
+</div>
+<div id="ref-gueltonpyps" class="csl-entry" role="listitem">
+Guelton, Serge, Mehdi Amini, Ronan Keryell, Béatrice Creusillet, Télécom Bretagne, and France Plouzané. n.d. <em>PyPs, a Programmable Pass Manager</em>.
+</div>
+<div id="ref-Guelton" class="csl-entry" role="listitem">
+Guelton, Serge, and Ronan Keryell. n.d. <em>Compilation for Heterogeneous Computing: Automating Analyses, Transformations and Decisions</em>.
+</div>
+<div id="ref-Gustafson1988" class="csl-entry" role="listitem">
+Gustafson, John L. 1988. <span>“Reevaluating Amdahl’s Law.”</span> <em>Communications of the ACM</em> 31 (5): 532–33. <a href="https://doi.org/10.1145/42411.42415">https://doi.org/10.1145/42411.42415</a>.
+</div>
+<div id="ref-Haidar2014" class="csl-entry" role="listitem">
+Haidar, Azzam, Chongxiao Cao, Asim Yarkhan, et al. 2014. <span>“Unified Development for Mixed Multi-GPU and Multi-Coprocessor Environments Using a Lightweight Runtime Environment.”</span> <em>2014 IEEE 28th International Parallel and Distributed Processing Symposium</em>, May, 491–500. <a href="https://doi.org/10.1109/IPDPS.2014.58">https://doi.org/10.1109/IPDPS.2014.58</a>.
+</div>
+<div id="ref-UniversityUtah" class="csl-entry" role="listitem">
+Hall, Mary. 2011. <span>“Lecture 9: Task Parallelism in OpenMP.”</span> <a href="https://www.bu.edu/tech/files/2011/09/openmp.ppt">www.bu.edu/tech/files/2011/09/openmp.ppt</a>.
+</div>
+<div id="ref-Han2009" class="csl-entry" role="listitem">
+Han, Tianyi David, and Tarek S. Abdelrahman. 2009. <span>“hiCUDA: A High-Level Directive-Based Language for GPU Programming.”</span> <em>GPGPU-2: Proceedings of 2nd Workshop on General Purpose Processing on Graphics Processing Units</em> (New York, NY, USA), 52–61. https://doi.org/<a href="http://doi.acm.org/10.1145/1513895.1513902">http://doi.acm.org/10.1145/1513895.1513902</a>.
+</div>
+<div id="ref-Han2011" class="csl-entry" role="listitem">
+Han, Tianyi David, and Tarek S. Abdelrahman. 2011. <span>“hiCUDA: High-Level GPGPU Programming.”</span> <em>IEEE Transactions on Parallel and Distributed Systems</em> (Los Alamitos, CA, USA) 22: 78–90. https://doi.org/<a href="http://doi.ieeecomputersociety.org/10.1109/TPDS.2010.62">http://doi.ieeecomputersociety.org/10.1109/TPDS.2010.62</a>.
+</div>
+<div id="ref-Han" class="csl-entry" role="listitem">
+Han, Wookhyun, Hwidong Bae, Hyosu Kim, Jiyoen Lee, Insik Shin, and South Korea. n.d. <em>: Accelerating Parallelism in Multi-GPU Real-Time Systems</em>.
+</div>
+<div id="ref-Harris2012" class="csl-entry" role="listitem">
+Harris, Mark. 2012. <em>CUDA 5 and Beyond</em>.
+</div>
 <div id="ref-hennessy:2003" class="csl-entry" role="listitem">
 HENNESSY, David A., John L.; PATTERSON. 2003. <em>Arquitetura de Computadores: Uma Abordagem Quantitativa</em>. Campus.
+</div>
+<div id="ref-Heterogeneous2013" class="csl-entry" role="listitem">
+Heterogeneous, The, and Computing Dilemma. 2013. <em>Irias Esearch</em>. 1–15.
+</div>
+<div id="ref-Hill2014" class="csl-entry" role="listitem">
+Hill, James H., and Dennis C. Feiock. 2014. <span>“Pin++: An Object-Oriented Framework for Writing Pintools.”</span> <em>ACM SIGPLAN Notices</em> 50 (3): 133–41. <a href="https://doi.org/10.1145/2775053.2658777">https://doi.org/10.1145/2775053.2658777</a>.
 </div>
 <div id="ref-10.1145/139669.139710" class="csl-entry" role="listitem">
 Hirata, Hiroaki, Kozo Kimura, Satoshi Nagamine, et al. 1992a. <span>“An Elementary Processor Architecture with Simultaneous Instruction Issuing from Multiple Threads.”</span> <em>Proceedings of the 19th Annual International Symposium on Computer Architecture</em> (New York, NY, USA), ISCA ’92, 136–45. <a href="https://doi.org/10.1145/139669.139710">https://doi.org/10.1145/139669.139710</a>.
@@ -220,17 +843,509 @@ Hirata, Hiroaki, Kozo Kimura, Satoshi Nagamine, et al. 1992a. <span>“An Elemen
 <div id="ref-10.1145/146628.139710" class="csl-entry" role="listitem">
 Hirata, Hiroaki, Kozo Kimura, Satoshi Nagamine, et al. 1992b. <span>“An Elementary Processor Architecture with Simultaneous Instruction Issuing from Multiple Threads.”</span> <em>SIGARCH Comput. Archit. News</em> (New York, NY, USA) 20 (2): 136–45. <a href="https://doi.org/10.1145/146628.139710">https://doi.org/10.1145/146628.139710</a>.
 </div>
+<div id="ref-Holewinski2011" class="csl-entry" role="listitem">
+Holewinski, Justin. 2011. <em>PTX Back-End: GPU Programming with LLVM</em>.
+</div>
+<div id="ref-Holewinski2012" class="csl-entry" role="listitem">
+Holewinski, Justin, Louis-Noël Pouchet, and P. Sadayappan. 2012. <span>“High-Performance Code Generation for Stencil Computations on GPU Architectures.”</span> <em>Proceedings of the 26th ACM International Conference on Supercomputing - ICS ’12</em> (New York, New York, USA), 311. <a href="https://doi.org/10.1145/2304576.2304619">https://doi.org/10.1145/2304576.2304619</a>.
+</div>
+<div id="ref-Hong2012" class="csl-entry" role="listitem">
+Hong, Ding-yong, Chun-chen Hsu, Pen-chung Yew, et al. 2012. <em>HQEMU: A Multi-Threaded and Retargetable Dynamic Binary Translator on Multicores</em>. 104–13.
+</div>
+<div id="ref-Hong2009" class="csl-entry" role="listitem">
+Hong, Sunpyo, and Hyesoon Kim. 2009. <span>“An Analytical Model for a GPU Architecture with Memory-Level and Thread-Level Parallelism Awareness.”</span> <em>ACM SIGARCH Computer Architecture News</em> 37 (3): 152. <a href="https://doi.org/10.1145/1555815.1555775">https://doi.org/10.1145/1555815.1555775</a>.
+</div>
+<div id="ref-Hoshino2013" class="csl-entry" role="listitem">
+Hoshino, T., N. Maruyama, S. Matsuoka, and R. Takaki. 2013. <span>“CUDA Vs OpenACC: Performance Case Studies with Kernel Benchmarks and a Memory-Bound CFD Application.”</span> <em>2013 13th IEEE/ACM International Symposium on Cluster, Cloud, and Grid Computing</em>, May, 136–43. <a href="https://doi.org/10.1109/CCGrid.2013.12">https://doi.org/10.1109/CCGrid.2013.12</a>.
+</div>
+<div id="ref-hou2011asfermi" class="csl-entry" role="listitem">
+Hou, Yunqing, J Lai, and D Mikushin. 2011. <span>“AsFermi: An Assembler for the NVIDIA Fermi Instruction Set.”</span> <em>URL: Http://Code.google.com/p/Asfermi/</em>.
+</div>
 <div id="ref-icmc_pthreads" class="csl-entry" role="listitem">
 ICMC-USP. 2020. <em>Aula 03 – Pthreads</em>. <a href="http://wiki.icmc.usp.br/images/3/30/Aula-03-_Pthreads.pdf">http://wiki.icmc.usp.br/images/3/30/Aula-03-_Pthreads.pdf</a>.
+</div>
+<div id="ref-ilic2014cal" class="csl-entry" role="listitem">
+Ilic, Aleksandar, Frederico Pratas, and Leonel Sousa. 2014. <span>“<span class="nocase">Cache-aware Roofline Model: Upgrading the Loft</span>.”</span> <em>IEEE Computer Architecture Letters</em> 13 (1): 21–24. <a href="https://doi.org/10.1109/L-CA.2013.6">https://doi.org/10.1109/L-CA.2013.6</a>.
+</div>
+<div id="ref-In2012" class="csl-entry" role="listitem">
+In, Rocessing. 2012. <em>Gpgpu p</em>. 3 (1): 105–20.
+</div>
+<div id="ref-intel:xeon:phi" class="csl-entry" role="listitem">
+Intel. 2013. <span>“O Coprocessador Intel(r) Xeon Phi(tm) 5110P <span>@ONLINE</span>.”</span> January. <a href="http://www.intel.com.br/content/www/br/pt/processors/xeon/xeon-phi-detail.html">http://www.intel.com.br/content/www/br/pt/processors/xeon/xeon-phi-detail.html</a>.
+</div>
+<div id="ref-intel:2015:prog:manual" class="csl-entry" role="listitem">
+Intel. 2015a. <em>Intel® 64 and IA-32 Architectures Software Developer’s Manual. Volume 3B:system Programming Guide, Part 2</em>. Manual. Intel. <a href="http://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-vol-3b-part-2-manual.pdf">http://www.intel.com/content/dam/www/public/us/en/documents/manuals/64-ia-32-architectures-software-developer-vol-3b-part-2-manual.pdf</a>.
+</div>
+<div id="ref-intel:pcm:site" class="csl-entry" role="listitem">
+Intel. 2015b. <em><span class="nocase">Intel(r) Performance Counter Monitor - A better way to measure CPU utilization</span></em>. <a href="https://software.intel.com/en-us/articles/intel-performance-counter-monitor">https://software.intel.com/en-us/articles/intel-performance-counter-monitor</a>.
+</div>
+<div id="ref-intel:code:modernization:2015" class="csl-entry" role="listitem">
+Intel. 2015c. <em><span class="nocase">What is Code Modernization?</span></em> Edited by Intel. <a href="https://software.intel.com/en-us/articles/what-is-code-modernization">https://software.intel.com/en-us/articles/what-is-code-modernization</a>.
+</div>
+<div id="ref-intel:openmprtl:2016" class="csl-entry" role="listitem">
+Intel. 2016a. <em><span>Intel® OpenMP* Runtime Library Interface</span></em>. Intel. <a href="https://www.openmprtl.org/sites/default/files/resources/libomp_20160322_manual.pdf">https://www.openmprtl.org/sites/default/files/resources/libomp_20160322_manual.pdf</a>.
+</div>
+<div id="ref-intel:openmp" class="csl-entry" role="listitem">
+Intel. 2016b. <em>OpenMP* Support</em>. <a href="https://software.intel.com/pt-br/node/522678">https://software.intel.com/pt-br/node/522678</a>.
+</div>
+<div id="ref-icc:2019" class="csl-entry" role="listitem">
+Intel. 2019. <em>Intel® c++ Compiler 19.1 Developer Guide and Reference</em>. <a href="https://software.intel.com/en-us/cpp-compiler-developer-guide-and-reference">https://software.intel.com/en-us/cpp-compiler-developer-guide-and-reference</a>.
+</div>
+<div id="ref-Interprocedural2010" class="csl-entry" role="listitem">
+Interprocedural, An, and Source-to-source Compiler. 2010. <em>PIPS Tutorial</em>.
+</div>
+<div id="ref-Jablin:2011:ACC:1993498.1993516" class="csl-entry" role="listitem">
+Jablin, Thomas B., Prakash Prabhu, James A. Jablin, Nick P. Johnson, Stephen R. Beard, and David I. August. 2011a. <span>“Automatic CPU-GPU Communication Management and Optimization.”</span> <em>Proceedings of the 32nd ACM SIGPLAN Conference on Programming Language Design and Implementation</em> (New York, NY, USA), PLDI ’11, 142–51. https://doi.org/<a href="http://doi.acm.org/10.1145/1993498.1993516">http://doi.acm.org/10.1145/1993498.1993516</a>.
+</div>
+<div id="ref-Jablin:2011:ACC:1993316.1993516" class="csl-entry" role="listitem">
+Jablin, Thomas B., Prakash Prabhu, James A. Jablin, Nick P. Johnson, Stephen R. Beard, and David I. August. 2011b. <span>“Automatic CPU-GPU Communication Management and Optimization.”</span> <em>SIGPLAN Not.</em> (New York, NY, USA) 46: 142–51. https://doi.org/<a href="http://doi.acm.org/10.1145/1993316.1993516">http://doi.acm.org/10.1145/1993316.1993516</a>.
+</div>
+<div id="ref-Jackson2010" class="csl-entry" role="listitem">
+Jackson, Keith R., Lavanya Ramakrishnan, Krishna Muriki, et al. 2010. <span>“Performance Analysis of High Performance Computing Applications on the Amazon Web Services Cloud.”</span> <em>2010 IEEE Second International Conference on Cloud Computing Technology and Science</em>, November, 159–68. <a href="https://doi.org/10.1109/CloudCom.2010.69">https://doi.org/10.1109/CloudCom.2010.69</a>.
+</div>
+<div id="ref-Jarp2008" class="csl-entry" role="listitem">
+Jarp, S, R Jurga, and A Nowak. 2008. <span>“Perfmon2: A Leap Forward in Performance Monitoring.”</span> <em>Journal of Physics: Conference Series</em> 119 (4): 042017. <a href="https://doi.org/10.1088/1742-6596/119/4/042017">https://doi.org/10.1088/1742-6596/119/4/042017</a>.
+</div>
+<div id="ref-jcuda:site" class="csl-entry" role="listitem">
+JCuda. 2012. <span>“JCuda Site <span>@ONLINE</span>.”</span> June. <a href="http://www.jcuda.org/">http://www.jcuda.org/</a>.
+</div>
+<div id="ref-jimborean:tel-00733850" class="csl-entry" role="listitem">
+Jimborean, Alexandra. 2012. <span>“<span class="nocase">Adapting the polytope model for dynamic and speculative parallelization</span>.”</span> Theses 2012STRAD020. <span>Universit<span>é</span> de Strasbourg</span>. <a href="https://tel.archives-ouvertes.fr/tel-00733850">https://tel.archives-ouvertes.fr/tel-00733850</a>.
+</div>
+<div id="ref-Jin1999" class="csl-entry" role="listitem">
+Jin, H, M Frumkin, J Yan, and Moffett Field. 1999. <em>The OpenMP Implementation of NAS Parallel Benchmarks and Its Performance</em>. no. October.
+</div>
+<div id="ref-jocl:site" class="csl-entry" role="listitem">
+JOCL. 2012. <span>“JOCL Site <span>@ONLINE</span>.”</span> June. <a href="http://www.jocl.org/documentation/documentation.html">http://www.jocl.org/documentation/documentation.html</a>.
+</div>
+<div id="ref-JohnsonLeeFeiEtAl2004" class="csl-entry" role="listitem">
+Johnson, Troy A., Sang-ik Lee, Long Fei, Ayon Basumallik, Rudolf Eigenmann, and Samuel P. Midkiff. 2004b. <span>“Experiences in Using Cetus for Source-to-Source Transformations.”</span> <em>In Proceedings of the 17th International Workshop on Languages and Compilers for Parallel Computing (LCPC</em>.
+</div>
+<div id="ref-Johnson04experiencesin" class="csl-entry" role="listitem">
+Johnson, Troy A., Sang-ik Lee, Long Fei, Ayon Basumallik, Rudolf Eigenmann, and Samuel P. Midkiff. 2004a. <span>“Experiences in Using Cetus for Source-to-Source Transformations.”</span> <em>In Proceedings of the 17th International Workshop on Languages and Compilers for Parallel Computing (LCPC</em>.
+</div>
+<div id="ref-Johnson" class="csl-entry" role="listitem">
+Johnson, Troy A, Sang-ik Lee, Long Fei, Ayon Basumallik, Rudolf Eigenmann, and Samuel P Midkiff. n.d. <em>Experiences in Using Cetus for Source-to-Source Transformations ⋆</em>. no. 9703180.
+</div>
+<div id="ref-Jones" class="csl-entry" role="listitem">
+Jones, Stephen. n.d. <em>Introduction to Dynamic Parallelism</em>.
+</div>
+<div id="ref-Joshi" class="csl-entry" role="listitem">
+Joshi, Shrinivas, and Software Performance Engineer. n.d. <em>Leveraging Aparapi to Help Improve Financial Java Application Performance</em>.
+</div>
+<div id="ref-Journal1987" class="csl-entry" role="listitem">
+Journal, International, Parallel Programming, Received November, Accepted February, Woodfield Drive, and Computer Science. 1987. <em>Loop Skewing: The Wavefront Method Revisited</em>. 15 (4): 279–93.
+</div>
+<div id="ref-jouvelot1989newgen" class="csl-entry" role="listitem">
+Jouvelot, Pierre, and Rémi Triolet. 1989. <span>“Newgen: A Language Independent Program Generator.”</span> <em>Rapport Interne CAII</em> 191: 4.
+</div>
+<div id="ref-Jovanovic2007" class="csl-entry" role="listitem">
+Jovanovic, S., C. Tanougast, and S. Weber. 2007. <span>“A Hardware Preemptive Multitasking Mechanism Based on Scan-Path Register Structure for FPGA-Based Reconfigurable Systems.”</span> <em>Second NASA/ESA Conference on Adaptive Hardware and Systems (AHS 2007)</em>, no. Ahs (August): 358–64. <a href="https://doi.org/10.1109/AHS.2007.4">https://doi.org/10.1109/AHS.2007.4</a>.
+</div>
+<div id="ref-Jovanovic2012" class="csl-entry" role="listitem">
+Jovanović, Ž., and V. Milutinović. 2012. <span>“FPGA Accelerator for Floating-Point Matrix Multiplication.”</span> <em>IET Computers <span>&amp;</span> Digital Techniques</em> 6 (4): 249. <a href="https://doi.org/10.1049/iet-cdt.2011.0132">https://doi.org/10.1049/iet-cdt.2011.0132</a>.
+</div>
+<div id="ref-Jozwik2010" class="csl-entry" role="listitem">
+Jozwik, Krzysztof, Hiroyuki Tomiyama, Shinya Honda, and Hiroaki Takada. 2010. <span>“A Novel Mechanism for Effective Hardware Task Preemption in Dynamically Reconfigurable Systems.”</span> <em>2010 International Conference on Field Programmable Logic and Applications</em>, August, 352–55. <a href="https://doi.org/10.1109/FPL.2010.76">https://doi.org/10.1109/FPL.2010.76</a>.
+</div>
+<div id="ref-Jul2013" class="csl-entry" role="listitem">
+Jul, Thu, Fri Dec, and Fri Apr. 2013. <em>Intel ® OpenMP * Runtime Library</em>.
+</div>
+<div id="ref-Kalaiselvi2000" class="csl-entry" role="listitem">
+Kalaiselvi, S., and V. Rajaraman. 2000. <span>“A Survey of Checkpointing Algorithms for Parallel and Distributed Computers.”</span> <em>Sadhana</em> 25 (5): 489–510. <a href="https://doi.org/10.1007/BF02703630">https://doi.org/10.1007/BF02703630</a>.
+</div>
+<div id="ref-Kennedy:2001:OCM:502981" class="csl-entry" role="listitem">
+Kennedy, Ken, and John R. Allen. 2002. <em>Optimizing Compilers for Modern Architectures: A Dependence-Based Approach</em>. Morgan Kaufmann Publishers Inc.
+</div>
+<div id="ref-Khaldi" class="csl-entry" role="listitem">
+Khaldi, Dounia, and Corinne Ancourt. n.d. <em>Towards Automatic c Programs Optimization and Parallelization Using the PIPS-PoCC Integration</em>.
+</div>
+<div id="ref-khronos:opencl:2013" class="csl-entry" role="listitem">
+Khronos. 2013a. <em><span class="nocase">OpenCL - The open standard for parallel programming of heterogeneous systems</span></em>. <a href="http://www.khronos.org/opencl/">http://www.khronos.org/opencl/</a>.
+</div>
+<div id="ref-khronos:opencl" class="csl-entry" role="listitem">
+Khronos. 2013b. <span>“OpenCL - the Open Standard for Parallel Programming of Heterogeneous Systems <span>@ONLINE</span>.”</span> January. <a href="http://www.khronos.org/opencl/">http://www.khronos.org/opencl/</a>.
+</div>
+<div id="ref-Kim2011" class="csl-entry" role="listitem">
+Kim, Ki-Hwan, KyoungHo Kim, and Q-Han Park. 2011. <span>“<span class="nocase">Performance analysis and optimization of three-dimensional FDTD on GPU using roofline model</span>.”</span> <em>Computer Physics Communications</em> 182 (6): 1201–7. <a href="https://doi.org/10.1016/j.cpc.2011.01.025">https://doi.org/10.1016/j.cpc.2011.01.025</a>.
+</div>
+<div id="ref-Kinsman2011" class="csl-entry" role="listitem">
+Kinsman, Phillip, and Nicola Nicolici. 2011. <span>“Dynamic Binary Translation to a Reconfigurable Target for on-the-Fly Acceleration.”</span> <em>Proceedings of the 48th Design Automation Conference on - DAC ’11</em> (New York, New York, USA), 286. <a href="https://doi.org/10.1145/2024724.2024792">https://doi.org/10.1145/2024724.2024792</a>.
+</div>
+<div id="ref-KirkW.Hwu2010" class="csl-entry" role="listitem">
+Kirk, David B., and Wen-mei W. Hwu. 2010b. <em>Programming Massively Parallel Processors: A Hands-on Approach</em>. 1st ed. Paperback; Morgan Kaufmann. <a href="http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20&amp;path=ASIN/0123814723">http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20&amp;path=ASIN/0123814723</a>.
+</div>
+<div id="ref-Kirk2010" class="csl-entry" role="listitem">
+Kirk, David B., and Wen-mei W. Hwu. 2010a. <em>Programming Massively Parallel Processors: A Hands-on Approach</em>. 1st ed. Paperback; Morgan Kaufmann. <a href="http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20&amp;path=ASIN/0123814723">http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20&amp;path=ASIN/0123814723</a>.
+</div>
+<div id="ref-Kirk:2010" class="csl-entry" role="listitem">
+Kirk, David B., and Wen-mei W. Hwu. 2010c. <em>Programming Massively Parallel Processors: A Hands-on Approach</em>. 1st ed. Paperback; Morgan Kaufmann Publishers Inc. <a href="http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20&amp;path=ASIN/0123814723">http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20&amp;path=ASIN/0123814723</a>.
+</div>
+<div id="ref-kloeckner_pycuda_2012" class="csl-entry" role="listitem">
+Klöckner, Andreas, Nicolas Pinto, Yunsup Lee, B. Catanzaro, Paul Ivanov, and Ahmed Fasih. 2012. <span>“<span class="nocase">PyCUDA and PyOpenCL: A Scripting-Based Approach to GPU Run-Time Code Generation</span>.”</span> <em>Parallel Computing</em> 38 (3): 157–74. <a href="https://doi.org/10.1016/j.parco.2011.09.001">https://doi.org/10.1016/j.parco.2011.09.001</a>.
 </div>
 <div id="ref-knuth84" class="csl-entry" role="listitem">
 Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>Comput. J.</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
 </div>
+<div id="ref-Koch" class="csl-entry" role="listitem">
+Koch, D., A. Ahmadinia, C. Bobda, and H. Kalte. n.d. <span>“FPGA Architecture Extensions for Preemptive Multitasking and Hardware Defragmentation.”</span> <em>Proceedings. 2004 IEEE International Conference on Field- Programmable Technology (IEEE Cat. No.04EX921)</em>, 433–36. <a href="https://doi.org/10.1109/FPT.2004.1393318">https://doi.org/10.1109/FPT.2004.1393318</a>.
+</div>
+<div id="ref-Konstantinidis2015" class="csl-entry" role="listitem">
+Konstantinidis, Elias, and Yiannis Cotronis. 2015. <span>“<span class="nocase">A Practical Performance Model for Compute and Memory Bound GPU Kernels</span>.”</span> <em>2015 23rd Euromicro International Conference on Parallel, Distributed, and Network-Based Processing</em>, March, 651–58. <a href="https://doi.org/10.1109/PDP.2015.51">https://doi.org/10.1109/PDP.2015.51</a>.
+</div>
+<div id="ref-Korn2001" class="csl-entry" role="listitem">
+Korn, W., P. J. Teller, and G. Castillo. 2001. <span>“Just How Accurate Are Performance Counters?”</span> <em>Conference Proceedings of the 2001 IEEE International Performance, Computing, and Communications Conference (Cat. No.01CH37210)</em>, 303–10. <a href="https://doi.org/10.1109/IPCCC.2001.918667">https://doi.org/10.1109/IPCCC.2001.918667</a>.
+</div>
+<div id="ref-CPE:CPE905" class="csl-entry" role="listitem">
+Krawezik, Géraud, and Franck Cappello. 2006. <span>“Performance Comparison of MPI and OpenMP on Shared Memory Multiprocessors.”</span> <em>Concurrency and Computation: Practice and Experience</em> 18 (1): 29–61. <a href="https://doi.org/10.1002/cpe.905">https://doi.org/10.1002/cpe.905</a>.
+</div>
+<div id="ref-Kumar2008" class="csl-entry" role="listitem">
+Kumar, Uday, Reddy Bondhugula, and Dissertation Committee. 2008. <em>Effective Automatic Parallelization and Locality Optimization Using the Polyhedral Model</em>.
+</div>
+<div id="ref-Kyle2012" class="csl-entry" role="listitem">
+Kyle, Stephen, Igor Böhm, Björn Franke, Hugh Leather, and Nigel Topham. 2012. <span>“Efficiently Parallelizing Instruction Set Simulation of Embedded Multi-Core Processors Using Region-Based Just-in-Time Dynamic Binary Translation.”</span> <em>Proceedings of the 13th ACM SIGPLAN/SIGBED International Conference on Languages, Compilers, Tools and Theory for Embedded Systems - LCTES ’12</em> (New York, New York, USA), 21. <a href="https://doi.org/10.1145/2248418.2248422">https://doi.org/10.1145/2248418.2248422</a>.
+</div>
+<div id="ref-Labarta2010" class="csl-entry" role="listitem">
+Labarta, Jesus. 2010. <em>StarSs: A Programming Model for the Multicore Era</em>. 1–35.
+</div>
+<div id="ref-Lam1991" class="csl-entry" role="listitem">
+Lam, S, and E Wolf. 1991. <em>A Data Locality</em>. 30–44.
+</div>
+<div id="ref-Lameed2013" class="csl-entry" role="listitem">
+Lameed, Nurudeen Abiodun. 2013. <em>Dynamic Compiler Optimization Techniques for Matlab</em>. no. April.
+</div>
+<div id="ref-Landau1937" class="csl-entry" role="listitem">
+Landau, LD. 1937. <span>“No Title.”</span> <em>Zhurnal Eksperimental’noi i Teoreticheskoi Fiziki</em>, no. April. <a href="http://scholar.google.com/scholar?hl=en{\&amp;}btnG=Search{\&amp;}q=intitle:No+Title{\#}0">http://scholar.google.com/scholar?hl=en{\&amp;}btnG=Search{\&amp;}q=intitle:No+Title{\#}0</a>.
+</div>
+<div id="ref-lattner2008llvm" class="csl-entry" role="listitem">
+Lattner, Chris. 2008. <span>“LLVM and Clang: Next Generation Compiler Technology.”</span> <em>The BSD Conference, Ottawa, Canada</em>.
+</div>
+<div id="ref-LLVM:CGO04" class="csl-entry" role="listitem">
+Lattner, Chris, and Vikram Adve. 2004. <span>“<span class="nocase">LLVM: A Compilation Framework for Lifelong Program Analysis &amp; Transformation</span>.”</span> <em><span class="nocase">Proceedings of the 2004 International Symposium on Code Generation and Optimization (CGO’04)</span></em> (Palo Alto, California), March.
+</div>
+<div id="ref-Lattner" class="csl-entry" role="listitem">
+Lattner, Chris, Vikram Adve, and David Koes. n.d. <em>The LLVM Compiler Framework and Infrastructure (Part 1)</em>. nos. Part 1: 1–31.
+</div>
+<div id="ref-Layer2010" class="csl-entry" role="listitem">
+Layer, Compute Abstraction. 2010. <em>Programming AMD</em>. no. December.
+</div>
+<div id="ref-threadsProblem:2006" class="csl-entry" role="listitem">
+Lee, E A. 2006. <span>“The Problem with Threads.”</span> <em>Computer</em> 39 (5): 33–42. <a href="https://doi.org/10.1109/MC.2006.180">https://doi.org/10.1109/MC.2006.180</a>.
+</div>
+<div id="ref-Lee2015" class="csl-entry" role="listitem">
+Lee, Kyu-Yean, Seong-Jin Cho, Seung-Hyun Yoon, and Jae-Wook Jeon. 2015. <span>“<span class="nocase">Roofline measurement application</span>.”</span> <em>Proceedings of the 9th International Conference on Ubiquitous Information Management and Communication - IMCOM ’15</em> (New York, New York, USA), January, 1–6. <a href="https://doi.org/10.1145/2701126.2701150">https://doi.org/10.1145/2701126.2701150</a>.
+</div>
+<div id="ref-LeeJohnsonEigenmann2003" class="csl-entry" role="listitem">
+Lee, Sang-ik, Troy A. Johnson, and Rudolf Eigenmann. 2003b. <span>“Cetus - an Extensible Compiler Infrastructure for Source-to-Source Transformation.”</span> <em>Languages and Compilers for Parallel Computing, 16th Intl. Workshop, College Station, TX, USA, Revised Papers, Volume 2958 of LNCS</em>, 539–53.
+</div>
+<div id="ref-Lee03cetus-" class="csl-entry" role="listitem">
+Lee, Sang-ik, Troy A. Johnson, and Rudolf Eigenmann. 2003a. <span>“Cetus - an Extensible Compiler Infrastructure for Source-to-Source Transformation.”</span> <em>Languages and Compilers for Parallel Computing, 16th Intl. Workshop, College Station, TX, USA, Revised Papers, Volume 2958 of LNCS</em>, 539–53.
+</div>
+<div id="ref-Lee2013" class="csl-entry" role="listitem">
+Lee, Sangpil, and Won Woo Ro. 2013. <span>“Parallel GPU Architecture Simulation Framework Exploiting Work Allocation Unit Parallelism.”</span> <em>2013 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)</em>, April, 107–17. <a href="https://doi.org/10.1109/ISPASS.2013.6557151">https://doi.org/10.1109/ISPASS.2013.6557151</a>.
+</div>
+<div id="ref-Lee2008" class="csl-entry" role="listitem">
+Lee, Seung J, David K Raila, and Volodymyr V Kindratenko. 2008. <em>Compilation Environment for FPGAs Using LLVM Compiler Infrastructure and CHiMPS Computational Model</em>.
+</div>
+<div id="ref-LeeEigenmann2010" class="csl-entry" role="listitem">
+Lee, Seyong, and Rudolf Eigenmann. 2010b. <span>“OpenMPC: Extended OpenMP Programming and Tuning for GPUs.”</span> <em>Proceedings of the 2010 ACM/IEEE International Conference for High Performance Computing, Networking, Storage and Analysis</em> (Washington, DC, USA), SC ’10, 1–11. <a href="https://doi.org/10.1109/SC.2010.36">https://doi.org/10.1109/SC.2010.36</a>.
+</div>
+<div id="ref-Lee:2010:OEO:1884643.1884674" class="csl-entry" role="listitem">
+Lee, Seyong, and Rudolf Eigenmann. 2010a. <span>“OpenMPC: Extended OpenMP Programming and Tuning for GPUs.”</span> <em>Proceedings of the 2010 ACM/IEEE International Conference for High Performance Computing, Networking, Storage and Analysis</em> (Washington, DC, USA), SC ’10, 1–11. <a href="https://doi.org/10.1109/SC.2010.36">https://doi.org/10.1109/SC.2010.36</a>.
+</div>
+<div id="ref-LeePPOPP09" class="csl-entry" role="listitem">
+Lee, Seyong, Seung-Jai Min, and Rudolf Eigenmann. 2009. <span>“OpenMP to GPGPU: A Compiler Framework for Automatic Translation and Optimization.”</span> <em>PPoPP ’09: Proceedings of the 14th ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming</em>, 101–10.
+</div>
+<div id="ref-Lee" class="csl-entry" role="listitem">
+Lee, Seyong, Jeffrey Vetter, and Rudolf Eigenmann. n.d. <em>OpenMPC: OpenMP Extended for CUDA</em>.
+</div>
+<div id="ref-Lee2010" class="csl-entry" role="listitem">
+Lee, Victor W., Per Hammarlund, Ronak Singhal, et al. 2010. <span>“Debunking the 100X GPU Vs. CPU Myth.”</span> <em>ACM SIGARCH Computer Architecture News</em> 38 (3): 451. <a href="https://doi.org/10.1145/1816038.1816021">https://doi.org/10.1145/1816038.1816021</a>.
+</div>
+<div id="ref-Len93" class="csl-entry" role="listitem">
+Lengauer, C. 1993. <span>“Loop Parallelization in the Polytope Model.”</span> In <em>CONCUR’93</em>, edited by E. Best. Lecture Notes in Computer Science 715. Springer-Verlag.
+</div>
+<div id="ref-Lengauera" class="csl-entry" role="listitem">
+Lengauer, Christian. n.d. <em>Extending Loop Parallelization for the Grid to Largely Decentralized Communication</em>.
+</div>
+<div id="ref-Lengauer95onthe" class="csl-entry" role="listitem">
+Lengauer, Christian, and Martin Griebl. 1995. <span>“On the Parallelization of Loop Nests Containing While Loops.”</span> <em>Proc. 1st Aizu Int. Symp. On Parallel Algorithm/Architecture Synthesis (pAs’95</em>, 10–18.
+</div>
+<div id="ref-Lengauer" class="csl-entry" role="listitem">
+Lengauer, Christian, and Universitat Passau. n.d. <em>Loop Parallelization in the Polytope Model</em>. 1–19.
+</div>
+<div id="ref-Levinson2000" class="csl-entry" role="listitem">
+Levinson, L., R. Manner, M. Sessler, and H. Simmler. 2000. <span>“Preemptive Multitasking on FPGAs.”</span> <em>Proceedings 2000 IEEE Symposium on Field-Programmable Custom Computing Machines (Cat. No.PR00871)</em>, 301–2. <a href="https://doi.org/10.1109/FPGA.2000.903426">https://doi.org/10.1109/FPGA.2000.903426</a>.
+</div>
+<div id="ref-ligomp:site:manual" class="csl-entry" role="listitem">
+<span class="nocase">libgomp</span>. 2015. <span>“GNU Libgomp.”</span> <a href="https://gcc.gnu.org/onlinedocs/libgomp/">https://gcc.gnu.org/onlinedocs/libgomp/</a>.
+</div>
+<div id="ref-libgomp:2015" class="csl-entry" role="listitem">
+Libgomp, GNU N U. 2015. <em><span class="nocase">GNU Offloading and Multi Processing Runtime Library: The GNU OpenMP and OpenACC Implementation</span></em>. GNU libgomp. <a href="https://gcc.gnu.org/onlinedocs/gcc-5.2.0/libgomp.pdf">https://gcc.gnu.org/onlinedocs/gcc-5.2.0/libgomp.pdf</a>.
+</div>
+<div id="ref-Lin" class="csl-entry" role="listitem">
+Lin, Yuan. n.d. <em>Building GPU Compilers with libNVVM | GTC 2013</em>.
+</div>
+<div id="ref-openmp:llvm:site" class="csl-entry" role="listitem">
+LLVM OpenMP. 2015. <em><span>OpenMP®</span>: Support for the <span>OpenMP</span> Language</em>. <a href="http://openmp.llvm.org/">http://openmp.llvm.org/</a>.
+</div>
+<div id="ref-llvm:site" class="csl-entry" role="listitem">
+LLVM, Projeto. 2013. <span>“The LLVM Compiler Infrastructure Site <span>@ONLINE</span>.”</span> <a href="http://llvm.org">http://llvm.org</a>.
+</div>
+<div id="ref-10.1007/978-3-319-17248-4_7" class="csl-entry" role="listitem">
+Lo, YuJung, Samuel Williams, Brian Van Straalen, et al. 2015. <span>“<span class="nocase">Roofline Model Toolkit: A Practical Tool for Architectural and Program Analysis</span>.”</span> In <em>High Performance Computing Systems. Performance Modeling, Benchmarking, and Simulation</em>, edited by Stephen A. Jarvis, Steven A. Wright, and Simon D. Hammond, vol. 8966. Lecture Notes in Computer Science. Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-17248-4_7">https://doi.org/10.1007/978-3-319-17248-4_7</a>.
+</div>
+<div id="ref-Lomuller2014" class="csl-entry" role="listitem">
+Lomüller, Victor, and Henri-Pierre Charles. 2014. <span>“A LLVM Extension for the Generation of Low Overhead Runtime Program Specializer.”</span> <em>Proceedings of International Workshop on Adaptive Self-Tuning Computing Systems - ADAPT ’14</em> (New York, New York, USA), January, 14–16. <a href="https://doi.org/10.1145/2553062.2553064">https://doi.org/10.1145/2553062.2553064</a>.
+</div>
+<div id="ref-lomuller2013scilab" class="csl-entry" role="listitem">
+Lomüller, Victor, Sylvestre Ledru, and Henri-Pierre Charles. 2013. <span>“Scilab on a Hybrid Platform.”</span> <em>PARCO</em>, 743–52.
+</div>
+<div id="ref-Lopes2014" class="csl-entry" role="listitem">
+Lopes, Luı́s, Julius Žilinskas, Alexandru Costan, et al., eds. 2014. <em>Euro-Par 2014: Parallel Processing Workshops</em>. Vol. 8806. Lecture Notes in Computer Science. Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-14313-2">https://doi.org/10.1007/978-3-319-14313-2</a>.
+</div>
+<div id="ref-Lopez-rodriguez" class="csl-entry" role="listitem">
+Lopez-rodriguez, Ivan. n.d. <em>Improving OpenACC Compatibility Within accULL</em>.
+</div>
+<div id="ref-oglorenzo2013dyrma" class="csl-entry" role="listitem">
+Lorenzo, O G, T F Pena, J C Cabaleiro, J C Pichel, and F F Rivera. 2013. <span>“<span class="nocase">DyRM: A Dynamic Roofline Model Based on Runtime Information</span>.”</span> <em>2013 International Conference on Computational and Mathematical Methods in Science and Engineering</em>, 965–67. <a href="http://citius.usc.es/investigacion/publicacions/listado/490">http://citius.usc.es/investigacion/publicacions/listado/490</a>.
+</div>
+<div id="ref-Lorenzo2014a" class="csl-entry" role="listitem">
+Lorenzo, O. G., T. F. Pena, J. C. Cabaleiro, J. C. Pichel, and F. F. Rivera. 2014a. <span>“<span class="nocase">3DyRM: a dynamic roofline model including memory latency information</span>.”</span> <em>The Journal of Supercomputing</em> 70 (2): 696–708. <a href="https://doi.org/10.1007/s11227-014-1163-4">https://doi.org/10.1007/s11227-014-1163-4</a>.
+</div>
+<div id="ref-Lorenzo2014" class="csl-entry" role="listitem">
+Lorenzo, O. G., T. F. Pena, J. C. Cabaleiro, J. C. Pichel, and F. F. Rivera. 2014b. <span>“Multiobjective Optimization Technique Based on Monitoring Information to Increase the Performance of Thread Migration on Multicores.”</span> <em>2014 IEEE International Conference on Cluster Computing (CLUSTER)</em>, September, 416–23. <a href="https://doi.org/10.1109/CLUSTER.2014.6968733">https://doi.org/10.1109/CLUSTER.2014.6968733</a>.
+</div>
+<div id="ref-lorenzo2014using" class="csl-entry" role="listitem">
+Lorenzo, Oscar G, Tomás F Pena, José C Cabaleiro, Juan C Pichel, and Francisco Fernández Rivera. 2014. <span>“Using an Extended Roofline Model to Understand Data and Thread Affinities on NUMA Systems.”</span> <em>Annals of Multicore and GPU Programming</em> 1 (1): 56–67.
+</div>
+<div id="ref-Ltaief" class="csl-entry" role="listitem">
+Ltaief, Hatem, and Stanimire Tomov. n.d. <em>Solving Linear Algebra Algorithms Using Multiple GPU Accelerators</em>.
+</div>
+<div id="ref-Lu:2008:LMC" class="csl-entry" role="listitem">
+Lu, Shan, Soyeon Park, Eunsoo Seo, and Yuanyuan Zhou. 2008. <span>“Learning from Mistakes: A Comprehensive Study on Real World Concurrency Bug Characteristics.”</span> <em>SIGARCH Comput. Archit. News</em> (New York, NY, USA) 36 (1): 329–39. <a href="https://doi.org/10.1145/1353534.1346323">https://doi.org/10.1145/1353534.1346323</a>.
+</div>
+<div id="ref-Luk2004" class="csl-entry" role="listitem">
+Luk, Chi-keung, Robert Muth, Harish Patil, et al. 2004. <em>Ispike: A Post-Link Optimizer for the Intel Itanium Architecture</em>. no. Cgo.
+</div>
+<div id="ref-Lustig2013" class="csl-entry" role="listitem">
+Lustig, D., and M. Martonosi. 2013. <span>“Reducing GPU Offload Latency via Fine-Grained CPU-GPU Synchronization.”</span> <em>2013 IEEE 19th International Symposium on High Performance Computer Architecture (HPCA)</em>, February, 354–65. <a href="https://doi.org/10.1109/HPCA.2013.6522332">https://doi.org/10.1109/HPCA.2013.6522332</a>.
+</div>
+<div id="ref-Ma2012" class="csl-entry" role="listitem">
+Ma, Kai, Xue Li, Wei Chen, Chi Zhang, and Xiaorui Wang. 2012. <span>“GreenGPU: A Holistic Approach to Energy Efficiency in GPU-CPU Heterogeneous Architectures.”</span> <em>2012 41st International Conference on Parallel Processing</em>, September, 48–57. <a href="https://doi.org/10.1109/ICPP.2012.31">https://doi.org/10.1109/ICPP.2012.31</a>.
+</div>
+<div id="ref-Mado2011" class="csl-entry" role="listitem">
+Mado, Branislav, and Anton Bal. 2011. <em>Data Flow Graph Mapping Techniques of Computer Architecture with Data Driven Computation Model</em>. 355–59.
+</div>
+<div id="ref-Malhotra2003" class="csl-entry" role="listitem">
+Malhotra, M., and London Sw. 2003. <span>“Optimizing the Execution of Independent Multi-Version Programs.”</span> <em>22nd Digital Avionics Systems Conference Proceedings (Cat No 03CH37449) DASC-03</em> 2: 10.A.4–10.1. <a href="https://doi.org/10.1109/DASC.2003.1245930">https://doi.org/10.1109/DASC.2003.1245930</a>.
+</div>
+<div id="ref-6047186" class="csl-entry" role="listitem">
+Malony, AD., S. Biersdorff, S. Shende, et al. 2011. <span>“Parallel Performance Measurement of Heterogeneous Parallel Systems with GPUs.”</span> <em>Parallel Processing (ICPP), 2011 International Conference on</em>, 176–85. <a href="https://doi.org/10.1109/ICPP.2011.71">https://doi.org/10.1109/ICPP.2011.71</a>.
+</div>
+<div id="ref-Malony2011" class="csl-entry" role="listitem">
+Malony, Allen D., Scott Biersdorff, Sameer Shende, et al. 2011. <span>“Parallel Performance Measurement of Heterogeneous Parallel Systems with GPUs.”</span> <em>2011 International Conference on Parallel Processing</em>, September, 176–85. <a href="https://doi.org/10.1109/ICPP.2011.71">https://doi.org/10.1109/ICPP.2011.71</a>.
+</div>
+<div id="ref-Mannert2000" class="csl-entry" role="listitem">
+Mannert, R, M Sesslert, and H Simmlert. 2000. <em>Multitasking on FPGAs*</em>.
+</div>
+<div id="ref-Manual2013" class="csl-entry" role="listitem">
+Manual, A P I Reference. 2013. <em>Libnvvm Api</em>. no. July.
+</div>
+<div id="ref-Manual" class="csl-entry" role="listitem">
+Manual, Compiler Reference. n.d. <em>The Portland Group</em>.
+</div>
+<div id="ref-Mark2001" class="csl-entry" role="listitem">
+Mark, Bill, and Kekoa Proudfoot. 2001. <em>Shading Languages for Graphics Hardware</em>.
+</div>
+<div id="ref-4657555" class="csl-entry" role="listitem">
+Marowka, A. 2008. <span>“Think Parallel: Teaching Parallel Programming Today.”</span> <em>Distributed Systems Online, IEEE</em> 9 (8): 1. <a href="https://doi.org/10.1109/MDSO.2008.24">https://doi.org/10.1109/MDSO.2008.24</a>.
+</div>
 <div id="ref-marr2002hyper" class="csl-entry" role="listitem">
 Marr, Deborah T., Frank Binns, David L. Hill, et al. 2002. <span>“Hyper-Threading Technology Architecture and Microarchitecture.”</span> <em>Intel Technology Journal</em> 6 (1): 4–15.
 </div>
+<div id="ref-6121291" class="csl-entry" role="listitem">
+Martinez, G., M. Gardner, and Wu-chun Feng. 2011a. <span>“CU2CL: A CUDA-to-OpenCL Translator for Multi- and Many-Core Architectures.”</span> <em>Parallel and Distributed Systems (ICPADS), 2011 IEEE 17th International Conference on</em>, 300–307. <a href="https://doi.org/10.1109/ICPADS.2011.48">https://doi.org/10.1109/ICPADS.2011.48</a>.
+</div>
+<div id="ref-cu2cl:martinez:2011" class="csl-entry" role="listitem">
+Martinez, G., M. Gardner, and Wu-chun Feng. 2011c. <span>“<span class="nocase">CU2CL: A CUDA-to-OpenCL Translator for Multi- and Many-Core Architectures</span>.”</span> <em>Parallel and Distributed Systems (ICPADS), 2011 IEEE 17th International Conference on</em>, 300–307. <a href="https://doi.org/10.1109/ICPADS.2011.48">https://doi.org/10.1109/ICPADS.2011.48</a>.
+</div>
+<div id="ref-MartinezGardnerFeng2011" class="csl-entry" role="listitem">
+Martinez, G., M. Gardner, and Wu-chun Feng. 2011b. <span>“CU2CL: A CUDA-to-OpenCL Translator for Multi- and Many-Core Architectures.”</span> <em>Parallel and Distributed Systems (ICPADS), 2011 IEEE 17th International Conference on</em>, 300–307. <a href="https://doi.org/10.1109/ICPADS.2011.48">https://doi.org/10.1109/ICPADS.2011.48</a>.
+</div>
+<div id="ref-Mathur" class="csl-entry" role="listitem">
+Mathur, W., and J. Cook. n.d. <span>“Improved Estimation for Software Multiplexing of Performance Counters.”</span> <em>13th IEEE International Symposium on Modeling, Analysis, and Simulation of Computer and Telecommunication Systems</em>, 23–34. <a href="https://doi.org/10.1109/MASCOTS.2005.34">https://doi.org/10.1109/MASCOTS.2005.34</a>.
+</div>
+<div id="ref-UniversityCalifornia" class="csl-entry" role="listitem">
+Matloff, Norman. 2006. <span>“Introduction to OpenMP. Dijkstra Sample.”</span> <a href="http://heather.cs.ucdavis.edu/{~}matloff/openmp.html{\#}tutorials">http://heather.cs.ucdavis.edu/{~}matloff/openmp.html{\#}tutorials</a>.
+</div>
+<div id="ref-mattson2003good" class="csl-entry" role="listitem">
+Mattson, Timothy G. 2003. <span>“How Good Is OpenMP.”</span> <em>Scientific Programming</em> 11 (2): 81–93. <a href="https://doi.org/10.1155/2003/124373">https://doi.org/10.1155/2003/124373</a>.
+</div>
+<div id="ref-Maxwell" class="csl-entry" role="listitem">
+Maxwell, Featuring First-generation, G P U Technology, and Extreme Performance. n.d. <em>NVIDIA GeForce GTX 750 Ti</em>. 1–11.
+</div>
+<div id="ref-May2001" class="csl-entry" role="listitem">
+May, J. M. 2001. <span>“MPX: Software for Multiplexing Hardware Performance Counters in Multithreaded Programs.”</span> <em>Proceedings 15th International Parallel and Distributed Processing Symposium. IPDPS 2001</em>, April, 8. <a href="https://doi.org/10.1109/IPDPS.2001.924955">https://doi.org/10.1109/IPDPS.2001.924955</a>.
+</div>
 <div id="ref-cilk:2012" class="csl-entry" role="listitem">
 Michael Graf, David Bunde, Andrei Papancea. 2012. <em>Cilk Tutorial</em>. <a href="http://faculty.knox.edu/dbunde/teaching/cilk/">http://faculty.knox.edu/dbunde/teaching/cilk/</a>.
+</div>
+<div id="ref-Micikevicius2011" class="csl-entry" role="listitem">
+Micikevicius, Paulius. 2011. <em>Multi-GPU Programming</em>.
+</div>
+<div id="ref-Micikevicius" class="csl-entry" role="listitem">
+Micikevicius, Paulius. n.d. <em>Optimizing CUDA</em>.
+</div>
+<div id="ref-Midkiff:2012:APO:2371235" class="csl-entry" role="listitem">
+Midkiff, Samuel P. 2012. <em>Automatic Parallelization: An Overview of Fundamental Compiler Techniques</em>. Morgan &amp; Claypool Publishers.
+</div>
+<div id="ref-kernelgen:mikushin:2014" class="csl-entry" role="listitem">
+Mikushin, D., N. Likhogrud, E. Z. Zhang, and C. Bergstrom. 2014. <span>“<span class="nocase">KernelGen – The Design and Implementation of a Next Generation Compiler Platform for Accelerating Numerical Models on GPUs</span>.”</span> <em>Parallel Distributed Processing Symposium Workshops (IPDPSW), 2014 IEEE International</em>, May, 1011–20. <a href="https://doi.org/10.1109/IPDPSW.2014.115">https://doi.org/10.1109/IPDPSW.2014.115</a>.
+</div>
+<div id="ref-Mikushin2012a" class="csl-entry" role="listitem">
+Mikushin, Dmitry, and Sergey Kovylov. 2012. <em>Designing Parallel GPU Kernels Generator Based on LLVM and NVPTX Backend for the COSMO Model</em>.
+</div>
+<div id="ref-Mikushin2013" class="csl-entry" role="listitem">
+Mikushin, Dmitry, Sergey Kovylov, and Nikolay Likhogrud. 2013. <em><span class="nocase">KernelGen – A prototype of auto-parallelizing Fortran/C compiler for NVIDIA GPUs</span></em>. 5.
+</div>
+<div id="ref-kernelgen:mikushin:2012" class="csl-entry" role="listitem">
+Mikushin, Dmitry, and Nicolas Likhogrud. 2012. <em>KERNELGEN - a Toolchain for Automatic GPU-Centric Applications Porting</em>. <a href="http://hgpu.org/?p=8313">http://hgpu.org/?p=8313</a>.
+</div>
+<div id="ref-Mikushin" class="csl-entry" role="listitem">
+Mikushin, Dmitry, Nikolay Likhogrud, and Sergey Kovylov. n.d. <em>KernelGen: Auto-Parallelizing Fortran/c Compiler | GTC 2013</em>.
+</div>
+<div id="ref-Mikushin2012b" class="csl-entry" role="listitem">
+Mikushin, Dmitry, Nikolay Likhogrud, and Hou Yunqing. 2012. <em>KernelGen – a Prototype of Auto-Parallelizing Compiler for NVIDIA GPUs</em>.
+</div>
+<div id="ref-kernelgen:mikushin:2013" class="csl-entry" role="listitem">
+Mikushin, Dmitry, Nikolay Likhogrud, and Eddy Zheng Zhang. 2013a. <span>“<span class="nocase">KERNELGEN - the design and implementation of a next generation compiler platform for accelerating numerical models on GPUs</span>.”</span> In <em>Rutgers Technical Reports</em>. Rutgers.
+</div>
+<div id="ref-mikushin2013kernelgen:paper" class="csl-entry" role="listitem">
+Mikushin, Dmitry, Nikolay Likhogrud, and Eddy Zheng Zhang. 2013b. <span>“KERNELGEN - the Design and Implementation of a Next Generation Compiler Platform for Accelerating Numerical Models on GPUs.”</span> <em>Rutgers Technical Reports</em>.
+</div>
+<div id="ref-mikushin2013kernelgen:report" class="csl-entry" role="listitem">
+Mikushin, Dmitry, Nikolay Likhogrud, Eddy Zheng Zhang, and Christopher Bergström. 2013. <em>KernelGen – the Design and Implementation of a Next Generation Compiler Platform for Accelerating Numerical Models on GPUs</em>. Technical Report 2013/02, University of Lugano, July 2013. http://www.old.inf.usi.ch/file/pub/75/tech_report2013. pdf.
+</div>
+<div id="ref-Miller2009" class="csl-entry" role="listitem">
+Miller, David J., Philip M. Watts, and Andrew W. Moore. 2009. <span>“Motivating Future Interconnects.”</span> <em>Proceedings of the 5th ACM/IEEE Symposium on Architectures for Networking and Communications Systems - ANCS ’09</em> (New York, New York, USA), October, 94. <a href="https://doi.org/10.1145/1882486.1882513">https://doi.org/10.1145/1882486.1882513</a>.
+</div>
+<div id="ref-pomp:mohr:2002" class="csl-entry" role="listitem">
+Mohr, Bernd, Allen D. Malony, Sameer Shende, and Felix Wolf. 2002. <span>“<span class="nocase">Design and Prototype of a Performance Tool Interface for OpenMP</span>.”</span> <em>The Journal of Supercomputing</em> (Hingham, MA, USA) 23 (1): 105–28. <a href="https://doi.org/10.1023/A:1015741304337">https://doi.org/10.1023/A:1015741304337</a>.
+</div>
+<div id="ref-Moseley2007" class="csl-entry" role="listitem">
+Moseley, Tipp, Daniel a. Connors, Dirk Grunwald, and Ramesh Peri. 2007. <span>“Identifying Potential Parallelism via Loop-Centric Profiling.”</span> <em>Proceedings of the 4th International Conference on Computing Frontiers - CF ’07</em> (New York, New York, USA), 143. <a href="https://doi.org/10.1145/1242531.1242554">https://doi.org/10.1145/1242531.1242554</a>.
+</div>
+<div id="ref-Mulati" class="csl-entry" role="listitem">
+Mulati, Mauro Henrique. n.d. <em>Um Algoritmo ACO Paralelo Para ˜ o de Grafos Colorac ¸ a</em>.
+</div>
+<div id="ref-Nath2010" class="csl-entry" role="listitem">
+Nath, Rajib, Stanimire Tomov, and Jack Dongarra. 2010. <em>Accelerating GPU Kernels for Dense Linear Algebra</em>. June, 83–92. <a href="http://dl.acm.org/citation.cfm?id=1964238.1964250">http://dl.acm.org/citation.cfm?id=1964238.1964250</a>.
+</div>
+<div id="ref-Newburn:2013:xeon:phi:runtime" class="csl-entry" role="listitem">
+Newburn, Chris J., Rajiv Deodhar, Serguei Dmitriev, et al. 2013. <span>“<span class="nocase">Offload Compiler Runtime for the Intel(r) Xeon Phi(tm) Coprocessor</span>.”</span> In <em>Supercomputing: 28th International Supercomputing Conference, ISC 2013, Leipzig, Germany, June 16-20, 2013. Proceedings</em>, edited by Julian Martin Kunkel, Thomas Ludwig, and Hans Werner Meuer. Springer Berlin Heidelberg. <a href="https://doi.org/10.1007/978-3-642-38750-0_18">https://doi.org/10.1007/978-3-642-38750-0_18</a>.
+</div>
+<div id="ref-ni2009direct" class="csl-entry" role="listitem">
+Ni, Tianyun. 2009. <span>“Direct Compute–Bring GPU Computing to the Mainstream.”</span> <em>GPU Technology Conference</em>.
+</div>
+<div id="ref-Nickolls" class="csl-entry" role="listitem">
+Nickolls, John, and David Kirk. n.d. <em>Graphics and Computing GPUs</em>.
+</div>
+<div id="ref-Nielson2005" class="csl-entry" role="listitem">
+Nielson, Hanne Riis. 2005. <em>Principles of Program Analysis: A Sampler of Approaches</em>. no. May.
+</div>
+<div id="ref-Nowak:Bitzes:CERN:OpenLab:2014" class="csl-entry" role="listitem">
+Nowak, A., and G. Bitzes. 2014. <em>The Overhead of Profiling Using PMU Hardware Counters</em>. CERN Openlab Report 2014. CERN. <a href="http://openlab.web.cern.ch/publications/technical_documents/overhead-profiling-using-pmu-hardware-counters">http://openlab.web.cern.ch/publications/technical_documents/overhead-profiling-using-pmu-hardware-counters</a>.
+</div>
+<div id="ref-nowak_andrzej_2014_10800" class="csl-entry" role="listitem">
+Nowak, Andrzej, and Georgios Bitzes. 2014. <em>The Overhead of Profiling Using PMU Hardware Counters</em>. CERN Openlab Report 2014. CERN. <a href="https://doi.org/10.5281/zenodo.10800">https://doi.org/10.5281/zenodo.10800</a>.
+</div>
+<div id="ref-Number2012" class="csl-entry" role="listitem">
+Number, Reference. 2012. <em>Intel ® Xeon Phi ™ Coprocessor Instruction Set Architecture Reference Manual</em>.
+</div>
+<div id="ref-NVIDIA2009a" class="csl-entry" role="listitem">
+NVIDIA. 2009a. <em><span>NVIDIA CUDA C Programming Best Practices Guide</span></em>. NVIDIA.
+</div>
+<div id="ref-Nvidia2009" class="csl-entry" role="listitem">
+NVIDIA. 2009b. <em>NVIDIA CUDA c Programming Best Practices Guide</em>. NVIDIA.
+</div>
+<div id="ref-nvidia:fermi:wp" class="csl-entry" role="listitem">
+NVIDIA. 2009c. <em>Whitepaper: NVIDIA’s Next Generation CUDA(tm) Compute Architecture: Fermi(tm)</em>. Version 1.1. NVIDIA. <a href="http://www.nvidia.com/content/PDF/fermi_white_papers/NVIDIA_Fermi_Compute_Architecture_Whitepaper.pdf">http://www.nvidia.com/content/PDF/fermi_white_papers/NVIDIA_Fermi_Compute_Architecture_Whitepaper.pdf</a>.
+</div>
+<div id="ref-nvidia:kepler" class="csl-entry" role="listitem">
+NVIDIA. 2012. <em><span class="nocase">NVIDIA’s Next Generation CUDA Compute Architecture: Kepler GK110</span></em>. NVIDIA Corporation. <a href="http://www.nvidia.com/content/PDF/kepler/NVIDIA-Kepler-GK110-Architecture-Whitepaper.pdf">http://www.nvidia.com/content/PDF/kepler/NVIDIA-Kepler-GK110-Architecture-Whitepaper.pdf</a>.
+</div>
+<div id="ref-nvidia:libnvvm:2013" class="csl-entry" role="listitem">
+NVIDIA. 2013a. <em>LIBNVVM API: API Reference Manual</em>. NVIDIA. <a href="http://http://docs.nvidia.com/cuda/libnvvm-api">http://http://docs.nvidia.com/cuda/libnvvm-api</a>.
+</div>
+<div id="ref-Nvidia2013" class="csl-entry" role="listitem">
+NVIDIA. 2013b. <em>NVIDIA CUDA c Programming Best Practices Guide</em>. NVIDIA.
+</div>
+<div id="ref-nvidia:fermi" class="csl-entry" role="listitem">
+NVIDIA. 2013c. <em>NVIDIA CUDA c Programming Best Practices Guide</em>. NVIDIA.
+</div>
+<div id="ref-NVIDIA:NVML:2013" class="csl-entry" role="listitem">
+NVIDIA. 2013d. <em><span>NVML API Reference Manual</span></em>. NVIDIA. <a href="https://developer.nvidia.com/nvidia-management-library-nvml">https://developer.nvidia.com/nvidia-management-library-nvml</a>.
+</div>
+<div id="ref-nvidia:libnvml:2013" class="csl-entry" role="listitem">
+NVIDIA. 2013e. <em>NVML API REFERENCE MANUAL</em>. NVIDIA. <a href="https://developer.nvidia.com/nvidia-management-library-nvml">https://developer.nvidia.com/nvidia-management-library-nvml</a>.
+</div>
+<div id="ref-nvidia:cublas:2014" class="csl-entry" role="listitem">
+NVIDIA. 2014a. <em><span class="nocase">cuBLAS-XT: Accelerate BLAS calls with multiple GPUs</span></em>. <a href="http://developer.nvidia.com/cublasxt">http://developer.nvidia.com/cublasxt</a>.
+</div>
+<div id="ref-nvidia:2014:bpg" class="csl-entry" role="listitem">
+NVIDIA. 2014b. <em>CUDA c BEST PRACTICES GUIDE</em>. DG-05603-001_v6.5. NVIDIA. <a href="http://docs.nvidia.com/cuda/pdf/CUDA_C_Best_Practices_Guide.pdf">http://docs.nvidia.com/cuda/pdf/CUDA_C_Best_Practices_Guide.pdf</a>.
+</div>
+<div id="ref-nvidia:2014:pg" class="csl-entry" role="listitem">
+NVIDIA. 2014c. <em>CUDA c PROGRAMMING GUIDE</em>. PG-02829-001. NVIDIA. <a href="http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf">http://docs.nvidia.com/cuda/pdf/CUDA_C_Programming_Guide.pdf</a>.
+</div>
+<div id="ref-nvidia:2014:cupti" class="csl-entry" role="listitem">
+NVIDIA. 2014d. <em><span class="nocase">CUPTI User’s Guide</span></em>.
+</div>
+<div id="ref-nvidia:cupti:2014" class="csl-entry" role="listitem">
+NVIDIA. 2014e. <em>CUPTI Users Guide <span class="math inline">\(CUDA Performance Tools Interface\)</span></em>. NVIDIA. <a href="http://docs.nvidia.com/cuda/cupti">http://docs.nvidia.com/cuda/cupti</a>.
+</div>
+<div id="ref-NVIDIA2014" class="csl-entry" role="listitem">
+NVIDIA. 2014f. <em><span class="nocase">Maxwell Compatibility Guide for CUDA Applications</span></em>. February. DA-07172-0.
+</div>
+<div id="ref-nvidia:maxwell" class="csl-entry" role="listitem">
+NVIDIA. 2014g. <em>Whitepaper: NVIDIA GeForce GTX 750 Ti. Featuring First-Generation Maxwell GPU Technology, Designed for Extreme Performance Per Watt</em>. NVIDIA Corporation. <a href="http://international.download.nvidia.com/geforce-com/international/pdfs/GeForce-GTX-750-Ti-Whitepaper.pdf">http://international.download.nvidia.com/geforce-com/international/pdfs/GeForce-GTX-750-Ti-Whitepaper.pdf</a>.
+</div>
+<div id="ref-nvidia:cublas:2015" class="csl-entry" role="listitem">
+NVIDIA. 2015a. <em><span class="nocase">cuBLAS: NVIDIA CUDA Basic Linear Algebra Subroutines</span></em>. <a href="https://developer.nvidia.com/cublas">https://developer.nvidia.com/cublas</a>.
+</div>
+<div id="ref-Nvidia2015" class="csl-entry" role="listitem">
+NVIDIA. 2015b. <em><span>CUDA C Best Practices Guide</span></em>. NVIDIA. <a href="http://docs.nvidia.com/cuda/cuda-c-best-practices-guide">http://docs.nvidia.com/cuda/cuda-c-best-practices-guide</a>.
+</div>
+<div id="ref-cuda:2015:debug:api" class="csl-entry" role="listitem">
+NVIDIA. 2015c. <em><span>CUDA DEBUGGER API: API Reference Manual</span></em>. Tech Report: TRM-06710-001 \_v7.0. NVIDIA. <a href="http://docs.nvidia.com/cuda/pdf/CUDA\_Debugger\_API.pdf">http://docs.nvidia.com/cuda/pdf/CUDA\_Debugger\_API.pdf</a>.
+</div>
+<div id="ref-nvidia:2015:cupti" class="csl-entry" role="listitem">
+NVIDIA. 2015d. <em><span class="nocase">CUPTI User’s Guide</span></em>. NVIDIA.
+</div>
+<div id="ref-Nvidia" class="csl-entry" role="listitem">
+Nvidia, Whitepaper, Next Generation, and Cuda Compute. n.d. <em>Whitepaper NVIDIA’s Next Generation CUDA Compute Architecture:</em> 1–22.
+</div>
+<div id="ref-llvm:nvptx:guide" class="csl-entry" role="listitem">
+NVPTX, LLVM. 2013. <span>“User Guide for NVPTX Back-End <span>@ONLINE</span>.”</span> July. <a href="http://llvm.org/docs/NVPTXUsage.html">http://llvm.org/docs/NVPTXUsage.html</a>.
+</div>
+<div id="ref-Of" class="csl-entry" role="listitem">
+Of, Octor. n.d. <em>Ptimization in the</em>.
+</div>
+<div id="ref-Ofenbeck2014" class="csl-entry" role="listitem">
+Ofenbeck, Georg, Ruedi Steinmann, Victoria Caparros, Daniele G. Spampinato, and Markus Puschel. 2014. <span>“<span class="nocase">Applying the roofline model</span>.”</span> <em>2014 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)</em>, March, 76–85. <a href="https://doi.org/10.1109/ISPASS.2014.6844463">https://doi.org/10.1109/ISPASS.2014.6844463</a>.
+</div>
+<div id="ref-DBLP:conf/ispass/OfenbeckSCSP14" class="csl-entry" role="listitem">
+Ofenbeck, Georg, Ruedi Steinmann, Victoria Caparrós Cabezas, Daniele G. Spampinato, and Markus Püschel. 2014. <span>“<span class="nocase">Applying the Roofline Model</span>.”</span> <em>2014 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS) 2014, Monterey, CA, USA, March 23-25, 2014</em>, 76–85. <a href="https://doi.org/10.1109/ISPASS.2014.6844463">https://doi.org/10.1109/ISPASS.2014.6844463</a>.
+</div>
+<div id="ref-Okuda1996" class="csl-entry" role="listitem">
+Okuda, Kunio. 1996. <em>Encolhimento de Ciclo Por Redu<span>ç</span><span>ã</span>o de Depend<span>ê</span>ncia</em>. <a href="http://www.lbd.dcc.ufmg.br/colecoes/sbac-pad/1995/0036.pdf">http://www.lbd.dcc.ufmg.br/colecoes/sbac-pad/1995/0036.pdf</a>.
+</div>
+<div id="ref-okur2012developers" class="csl-entry" role="listitem">
+Okur, Semih, and Danny Dig. 2012. <span>“How Do Developers Use Parallel Libraries?”</span> <em>Proceedings of the ACM SIGSOFT 20th International Symposium on the Foundations of Software Engineering</em>, 54.
+</div>
+<div id="ref-Olofsson2013" class="csl-entry" role="listitem">
+Olofsson, Andreas. 2013. <em>Parallella: A Love Story</em>. 1–19.
 </div>
 <div id="ref-10.1145/237090.237140" class="csl-entry" role="listitem">
 Olukotun, Kunle, Basem A. Nayfeh, Lance Hammond, Ken Wilson, and Kunyung Chang. 1996a. <span>“The Case for a Single-Chip Multiprocessor.”</span> <em>Proceedings of the Seventh International Conference on Architectural Support for Programming Languages and Operating Systems</em> (New York, NY, USA), ASPLOS VII, 2–11. <a href="https://doi.org/10.1145/237090.237140">https://doi.org/10.1145/237090.237140</a>.
@@ -238,17 +1353,317 @@ Olukotun, Kunle, Basem A. Nayfeh, Lance Hammond, Ken Wilson, and Kunyung Chang. 
 <div id="ref-10.1145/248209.237140" class="csl-entry" role="listitem">
 Olukotun, Kunle, Basem A. Nayfeh, Lance Hammond, Ken Wilson, and Kunyung Chang. 1996b. <span>“The Case for a Single-Chip Multiprocessor.”</span> <em>SIGPLAN Not.</em> (New York, NY, USA) 31 (9): 2–11. <a href="https://doi.org/10.1145/248209.237140">https://doi.org/10.1145/248209.237140</a>.
 </div>
+<div id="ref-openacc:api:2011" class="csl-entry" role="listitem">
+OpenACC. 2011a. <em><span>OpenACC Application Programming Interface. Version 1.0.</span></em> <a href="http://www.openacc.org/sites/default/files/OpenACC.1.0_0.pdf">http://www.openacc.org/sites/default/files/OpenACC.1.0_0.pdf</a>.
+</div>
+<div id="ref-openacc:api" class="csl-entry" role="listitem">
+OpenACC. 2011b. <span>“OpenACC Application Programming Interface. Version 1.0. <span>@ONLINE</span>.”</span> November. <a href="http://www.openacc.org/sites/default/files/OpenACC.1.0\_0.pdf">http://www.openacc.org/sites/default/files/OpenACC.1.0\_0.pdf</a>.
+</div>
+<div id="ref-openacc:site:2012" class="csl-entry" role="listitem">
+OpenACC. 2012. <em><span class="nocase">OpenACC Directives for Accelerators Site</span></em>. <a href="http://www.openacc-standard.org/">http://www.openacc-standard.org/</a>.
+</div>
+<div id="ref-openacc:api:2013" class="csl-entry" role="listitem">
+OpenACC. 2013. <em><span>OpenACC Application Programming Interface. Version 2.0</span></em>. <a href="http://www.openacc.org/sites/default/files/OpenACC.2.0a_1.pdf">http://www.openacc.org/sites/default/files/OpenACC.2.0a_1.pdf</a>.
+</div>
+<div id="ref-openacc:api:2015" class="csl-entry" role="listitem">
+OpenACC. 2015a. <em><span>OpenACC Application Programming Interface. Version 2.5</span></em>. <a href="http://www.openacc.org/sites/default/files/OpenACC_2pt5.pdf">http://www.openacc.org/sites/default/files/OpenACC_2pt5.pdf</a>.
+</div>
+<div id="ref-openacc:site:2015" class="csl-entry" role="listitem">
+OpenACC. 2015b. <em><span class="nocase">OpenACC Directives for Accelerators</span></em>. <a href="http://www.openacc.org/">http://www.openacc.org/</a>.
+</div>
+<div id="ref-openmp:site" class="csl-entry" role="listitem">
+OpenMP API Site. 2020. <em>The <span class="nocase">OpenMP(r) API</span> Specification for Parallel Programming</em>. <a href="http://openmp.org">http://openmp.org</a>.
+</div>
 <div id="ref-openmp_spec" class="csl-entry" role="listitem">
 OpenMP Architecture Review Board. 2021. <em>OpenMP Application Programming Interface</em>. <a href="https://www.openmp.org">https://www.openmp.org</a>.
+</div>
+<div id="ref-Openmp:site" class="csl-entry" role="listitem">
+OpenMP, Site. 2012. <span>“OpenMP Site <span>@ONLINE</span>.”</span> January. <a href="http://openmp.org">http://openmp.org</a>.
+</div>
+<div id="ref-OpenmpAndFork" class="csl-entry" role="listitem">
+OpenmpAndFork. 2008. <span>“Guide into OpenMP: Easy Multithreading Programming for c++.”</span> <a href="http://bisqwit.iki.fi/story/howto/openmp/{\#}OpenmpAndFork">http://bisqwit.iki.fi/story/howto/openmp/{\#}OpenmpAndFork</a>.
+</div>
+<div id="ref-openmp:api:2011" class="csl-entry" role="listitem">
+OpenMP-ARB. 2011. <em><span>OpenMP Application Program Interface Version 3.1</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/OpenMP3.1.pdf">http://www.openmp.org/mp-documents/OpenMP3.1.pdf</a>.
+</div>
+<div id="ref-openmp:api:2013" class="csl-entry" role="listitem">
+OpenMP-ARB. 2013. <em><span>OpenMP Application Program Interface Version 4.0</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf">http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf</a>.
+</div>
+<div id="ref-openmp:examples:2014" class="csl-entry" role="listitem">
+OpenMP-ARB. 2014. <em><span>OpenMP Application Program Interface Examples 4.0.1</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://openmp.org/mp-documents/OpenMP_Examples_4.0.1.pdf">http://openmp.org/mp-documents/OpenMP_Examples_4.0.1.pdf</a>.
+</div>
+<div id="ref-openmp:api:2015" class="csl-entry" role="listitem">
+OpenMP-ARB. 2015. <em><span>OpenMP Application Program Interface Version 4.5</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/openmp-4.5.pdf">http://www.openmp.org/mp-documents/openmp-4.5.pdf</a>.
+</div>
+<div id="ref-Ottoni" class="csl-entry" role="listitem">
+Ottoni, Guilherme, Thomas Hartin, Christopher Weaver, Jason Brandt, Belliappa Kuttanna, and Hong Wang. n.d. <em>Harmonia: A Transparent, Efficient, and Harmonious Dynamic Binary Translator Targeting the Intel Architecture</em>.
+</div>
+<div id="ref-Owaida2011" class="csl-entry" role="listitem">
+Owaida, Muhsen, Nikolaos Bellas, Konstantis Daloukas, and Christos D. Antonopoulos. 2011. <span>“Synthesis of Platform Architectures from OpenCL Programs.”</span> <em>2011 IEEE 19th Annual International Symposium on Field-Programmable Custom Computing Machines</em>, May, 186–93. <a href="https://doi.org/10.1109/FCCM.2011.19">https://doi.org/10.1109/FCCM.2011.19</a>.
+</div>
+<div id="ref-Owens2008" class="csl-entry" role="listitem">
+Owens, J. D., M. Houston, D. Luebke, S. Green, J. E. Stone, and J. C. Phillips. 2008. <span>“GPU Computing.”</span> <em>Proceedings of the IEEE</em> 96 (5): 879–99. <a href="https://doi.org/10.1109/JPROC.2008.917757">https://doi.org/10.1109/JPROC.2008.917757</a>.
+</div>
+<div id="ref-Sengupta2007" class="csl-entry" role="listitem">
+Owens, Shubhabrata Sengupta AND Mark Harris AND Yao Zhang AND John D. 2007. <span>“Scan Primitives for GPU Computing.”</span> <em>Graphics Hardware 2007</em> (San Diego, CA), August, 97–106.
+</div>
+<div id="ref-Paae1991" class="csl-entry" role="listitem">
+Paae, M. 1991. <em>C’omputer NASA MS Moffett</em>. 412–23.
+</div>
+<div id="ref-Padua1986" class="csl-entry" role="listitem">
+Padua, David a., and Michael J. Wolfe. 1986. <span>“Advanced Compiler Optimizations for Supercomputers.”</span> <em>Communications of the ACM</em> 29 (12): 1184–201. <a href="https://doi.org/10.1145/7902.7904">https://doi.org/10.1145/7902.7904</a>.
+</div>
+<div id="ref-Pai2013" class="csl-entry" role="listitem">
+Pai, Sreepathi, Matthew J. Thazhuthaveetil, and R. Govindarajan. 2013. <span>“Improving GPGPU Concurrency with Elastic Kernels.”</span> <em>ACM SIGPLAN Notices</em> 48 (4): 407. <a href="https://doi.org/10.1145/2499368.2451160">https://doi.org/10.1145/2499368.2451160</a>.
+</div>
+<div id="ref-Papakonstantinou2009a" class="csl-entry" role="listitem">
+Papakonstantinou, Alexandros, Karthik Gururaj, John a. Stratton, Deming Chen, Jason Cong, and Wen-Mei W. Hwu. 2009a. <span>“FCUDA: Enabling Efficient Compilation of CUDA Kernels onto FPGAs.”</span> <em>2009 IEEE 7th Symposium on Application Specific Processors</em>, July, 35–42. <a href="https://doi.org/10.1109/SASP.2009.5226333">https://doi.org/10.1109/SASP.2009.5226333</a>.
+</div>
+<div id="ref-Papakonstantinou2009" class="csl-entry" role="listitem">
+Papakonstantinou, Alexandros, Karthik Gururaj, John a. Stratton, Deming Chen, Jason Cong, and Wen-Mei W. Hwu. 2009b. <span>“High-Performance CUDA Kernel Execution on FPGAs.”</span> <em>Proceedings of the 23rd International Conference on Conference on Supercomputing - ICS ’09</em> (New York, New York, USA), 515. <a href="https://doi.org/10.1145/1542275.1542357">https://doi.org/10.1145/1542275.1542357</a>.
+</div>
+<div id="ref-papi:site:manual" class="csl-entry" role="listitem">
+PAPI. 2015. <span>“<span class="nocase">Counting Floating Point Operations on Intel Sandy Bridge and Ivy Bridge</span>.”</span> <a href="http://icl.cs.utk.edu/projects/papi/wiki/PAPITopics:SandyFlops">http://icl.cs.utk.edu/projects/papi/wiki/PAPITopics:SandyFlops</a>.
+</div>
+<div id="ref-par4all:site" class="csl-entry" role="listitem">
+Par4All, Site. 2012. <span>“Par4All Developer Guide <span>@ONLINE</span>.”</span> <a href="http://www.par4all.org/documentation/developers-guide/">http://www.par4all.org/documentation/developers-guide/</a>.
+</div>
+<div id="ref-Parallelism" class="csl-entry" role="listitem">
+Parallelism, Dynamic, and U All. n.d. <em>Dynamic Parallelism in Cuda</em>.
+</div>
+<div id="ref-Parallelization" class="csl-entry" role="listitem">
+Parallelization, I Basic. n.d. <em>Lecture 12</em>. 1–10.
+</div>
+<div id="ref-Parallware:2014" class="csl-entry" role="listitem">
+Parallware. 2014. <span>“Parallware: The OpenMP-Enabling Source-to-Source Compiler.”</span> <a href="http://www.appentra.com/parallel-computation-pi">http://www.appentra.com/parallel-computation-pi</a>.
+</div>
+<div id="ref-Passau" class="csl-entry" role="listitem">
+Passau, Universitat. n.d. <em>On the Space-Time Mapping of While-Loops</em>.
+</div>
+<div id="ref-patterson2009top" class="csl-entry" role="listitem">
+Patterson, David. 2009. <span>“The Top 10 Innovations in the New NVIDIA Fermi Architecture, and the Top 3 Next Challenges.”</span> <em>NVIDIA Whitepaper</em>.
 </div>
 <div id="ref-patterson:2005" class="csl-entry" role="listitem">
 PATTERSON, John L., David A.; HENNESSY. 2005. <em>Organização e Projeto de Computadores: A Interface Hardware/Software</em>. Campus.
 </div>
+<div id="ref-Pessoa2006" class="csl-entry" role="listitem">
+Pessoa, Tiago Carneiro. 2006. <em>Exploiting CUDA Dynamic Parallelism for Improving Parallel Backtracking Algorithms on GPUs</em>.
+</div>
+<div id="ref-pgi:user:guide:2010" class="csl-entry" role="listitem">
+PGROUP, The Portland Group. 2010. <em><span class="nocase">PGI User’s Guide</span></em>. <a href="http://www.pgroup.com/resources/docs.htm">http://www.pgroup.com/resources/docs.htm</a>.
+</div>
+<div id="ref-pgi:ref:manual:2013" class="csl-entry" role="listitem">
+PGROUP, The Portland Group. 2013. <em><span class="nocase">PGI(r) Compiler Reference Manual. Parallel Fortran, C and C++ for Scientists and Engineers</span></em>. <a href="http://www.pgroup.com/resources/docs.htm">http://www.pgroup.com/resources/docs.htm</a>.
+</div>
+<div id="ref-pgi:accel:2015" class="csl-entry" role="listitem">
+PGROUP, The Portland Group. 2015. <em><span class="nocase">PGI Accelerator Compilers with OpenACC Directives</span></em>. <a href="http://www.pgroup.com/resources/accel.htm">http://www.pgroup.com/resources/accel.htm</a>.
+</div>
+<div id="ref-Mucci99papi:a" class="csl-entry" role="listitem">
+Philip J. Mucci, Shirley Browne, Christine Deane, George Ho, Philip J Mucci, Shirley Browne, Christine Deane, and George Ho. 1999. <span>“<span class="nocase">PAPI: A Portable Interface to Hardware Performance Counters</span>.”</span> <em>In Proceedings of the Department of Defense HPCMP Users Group Conference</em>, 7–10. <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.117.6801">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.117.6801</a>.
+</div>
+<div id="ref-pips:site" class="csl-entry" role="listitem">
+PIPS, Site. 2012. <span>“The PIPS Workbench Project <span>@ONLINE</span>.”</span> <a href="http://www.cri.ensmp.fr/pips/">http://www.cri.ensmp.fr/pips/</a>.
+</div>
+<div id="ref-Pllana:2009" class="csl-entry" role="listitem">
+Pllana, Sabri, Siegfried Benkner, Eduard Mehofer, Lasse Natvig, and Fatos Xhafa. 2009. <span>“Towards an Intelligent Environment for Programming Multi-Core Computing Systems.”</span> In <em>Euro-Par 2008 Workshops - Parallel Processing</em>, edited by Eduardo César, Michael Alexander, Achim Streit, et al., vol. 5415. Lecture Notes in Computer Science. Springer Berlin Heidelberg. <a href="https://doi.org/10.1007/978-3-642-00955-6_19">https://doi.org/10.1007/978-3-642-00955-6_19</a>.
+</div>
+<div id="ref-Point2012" class="csl-entry" role="listitem">
+Point, Rond, Benjamin Franklin, Wild Systems, and Santa Clara. 2012. <em>Par4All — Open Source Parallelization for Heterogeneous Computing</em>.
+</div>
+<div id="ref-Potluri2012" class="csl-entry" role="listitem">
+Potluri, S., H. Wang, D. Bureddy, a.K. Singh, C. Rosales, and Dhabaleswar K. Panda. 2012. <span>“Optimizing MPI Communication on Multi-GPU Systems Using CUDA Inter-Process Communication.”</span> <em>2012 IEEE 26th International Parallel and Distributed Processing Symposium Workshops <span>&amp;</span> PhD Forum</em>, May, 1848–57. <a href="https://doi.org/10.1109/IPDPSW.2012.228">https://doi.org/10.1109/IPDPSW.2012.228</a>.
+</div>
+<div id="ref-pouchet2012polybench" class="csl-entry" role="listitem">
+Pouchet, L. N. 2012. <span>“PolyBench: The Polyhedral Benchmark Suite.”</span> In <em>URL: Http://Www. Cs. Ucla. Edu/~ Pouchet/Software/Polybench/[cited July,]</em>.
+</div>
+<div id="ref-PouchetBastoulBondhugula" class="csl-entry" role="listitem">
+Pouchet, Louis-Noel, Cédric Bastoul, and Uday Bondhugula. n.d.-a. <em>PoCC: The Polyhedral Compiler Collection, 2010</em>.
+</div>
+<div id="ref-pouchetpocc:2010" class="csl-entry" role="listitem">
+Pouchet, Louis-Noel, Cédric Bastoul, and Uday Bondhugula. n.d.-b. <em>PoCC: The Polyhedral Compiler Collection, 2010</em>.
+</div>
+<div id="ref-polybench:c:site" class="csl-entry" role="listitem">
+Pouchet, Louis-Noël, Uday Bondugula, and Tomofumi Yuki. 2012. <em><span class="nocase">PolyBench/C the Polyhedral Benchmark suite</span></em>. <a href="http://web.cse.ohio-state.edu/~pouchet/software/polybench/">http://web.cse.ohio-state.edu/~pouchet/software/polybench/</a>.
+</div>
+<div id="ref-Prema2015" class="csl-entry" role="listitem">
+Prema, S., R. Jehadeesan, B. K. Panigrahi, and S. A. V. Satya Murty. 2015. <span>“Dependency Analysis and Loop Transformation Characteristics of Auto-Parallelizers.”</span> <em>2015 National Conference on Parallel Computing Technologies (PARCOMPTECH)</em>, February, 1–6. <a href="https://doi.org/10.1109/PARCOMPTECH.2015.7084524">https://doi.org/10.1109/PARCOMPTECH.2015.7084524</a>.
+</div>
+<div id="ref-Presented2012" class="csl-entry" role="listitem">
+Presented, A Thesis Proposal. 2012. <em>Dynamic Translation of Runtime Environments for Heterogeneous Computing</em>. no. April.
+</div>
+<div id="ref-Processors2010" class="csl-entry" role="listitem">
+Processors, Graphics. 2010. <em>CUDA Advanced Features</em>. 1–11.
+</div>
 <div id="ref-threads_em_c" class="csl-entry" role="listitem">
 Programação Progressiva. 2019. <em>Threads Em c – Como Programar Usando Pthreads</em>. <a href="https://www.programacaoprogressiva.net/2019/02/Threads-em-C-Como-Programar-Usando-Pthreads.html">https://www.programacaoprogressiva.net/2019/02/Threads-em-C-Como-Programar-Usando-Pthreads.html</a>.
 </div>
+<div id="ref-Programming2011" class="csl-entry" role="listitem">
+Programming, Data Flow. 2011. <em>The x-k</em>. no. November.
+</div>
+<div id="ref-Project2010" class="csl-entry" role="listitem">
+Project, H P C, and C O M Bretagne. 2010. <em>Par4All — Automatic Parallelization for CPU <span>&amp;</span> GPU</em>.
+</div>
+<div id="ref-Project2012" class="csl-entry" role="listitem">
+Project, HPC. 2012. <em>Par4All — P4a Simple Command Line Interface</em>. 1–35.
+</div>
+<div id="ref-hicuda:site" class="csl-entry" role="listitem">
+PROJECT, THE hiCUDA. 2012. <span>“The hiCUDA Project Site <span>@ONLINE</span>.”</span> <a href="http://www.eecg.utoronto.ca/~tsa/hicuda/">http://www.eecg.utoronto.ca/~tsa/hicuda/</a>.
+</div>
+<div id="ref-pycuda:site" class="csl-entry" role="listitem">
+PyCUDA, Site. 2012. <span>“PyCUDA Site <span>@ONLINE</span>.”</span> June. <a href="http://documen.tician.de/pycuda/">http://documen.tician.de/pycuda/</a>.
+</div>
+<div id="ref-KISS:2004:inproc" class="csl-entry" role="listitem">
+Qadeer, Shaz, and Dinghao Wu. 2004. <span>“KISS: Keep It Simple and Sequential.”</span> <em>SIGPLAN Not.</em> (New York, NY, USA), PLDI ’04, vol. 39: 14–24. <a href="https://doi.org/10.1145/996841.996845">https://doi.org/10.1145/996841.996845</a>.
+</div>
+<div id="ref-Quint" class="csl-entry" role="listitem">
+Quint, Fernando Magno. n.d.-a. <em>Code Optimization Techniques for Graphics Processing Units</em>.
+</div>
+<div id="ref-Quinta" class="csl-entry" role="listitem">
+Quint, Fernando Magno. n.d.-b. <em>T<span>é</span>cnicas de Otimiza<span>ç</span><span>ã</span>o de c<span>ó</span>digo Para Placas de Processamento Gr<span>á</span>fico</em>. 1–72.
+</div>
+<div id="ref-Rajopadhye2007" class="csl-entry" role="listitem">
+Rajopadhye, S. 2007. <em>The z -Polyhedral Model ∗</em>. 237–48.
+</div>
+<div id="ref-Region2013" class="csl-entry" role="listitem">
+Region, Repeatable Simulation. 2013. <em>Deterministic PinPoints:</em>
+</div>
+<div id="ref-Report2013" class="csl-entry" role="listitem">
+Report, Openmp Technical, and Attached Accelerators. 2013. <em>OpenMP Technical Report 1 on Directives for Attached Accelerators</em>.
+</div>
+<div id="ref-Resch2015" class="csl-entry" role="listitem">
+Resch, Michael M., Wolfgang Bez, Erich Focht, Hiroaki Kobayashi, and Nisarg Patel, eds. 2015. <em>Sustained Simulation Performance 2014</em>. Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-10626-7">https://doi.org/10.1007/978-3-319-10626-7</a>.
+</div>
+<div id="ref-Reyes2012b" class="csl-entry" role="listitem">
+Reyes, Ruym’n, Iv’n Lopez, Juan J. Fumero, and Francisco de Sande. 2012. <span>“accULL: An User-Directed Approach to Heterogeneous Programming.”</span> <em>2012 IEEE 10th International Symposium on Parallel and Distributed Processing with Applications</em>, July, 654–61. <a href="https://doi.org/10.1109/ISPA.2012.97">https://doi.org/10.1109/ISPA.2012.97</a>.
+</div>
+<div id="ref-Reyes2012" class="csl-entry" role="listitem">
+Reyes, Ruym’n, Ivan Lopez, Juan J. Fumero, and Francisco de Sande. 2012. <span>“Directive-Based Programming for GPUs: A Comparative Study.”</span> <em>2012 IEEE 14th International Conference on High Performance Computing and Communication <span>&amp;</span> 2012 IEEE 9th International Conference on Embedded Software and Systems</em>, June, 410–17. <a href="https://doi.org/10.1109/HPCC.2012.62">https://doi.org/10.1109/HPCC.2012.62</a>.
+</div>
+<div id="ref-Reyes:2012:AOI:2402420.2402523" class="csl-entry" role="listitem">
+Reyes, Ruym$#225;n, Iv$#225;n López-Rodrı́guez, Juan J. Fumero, and Francisco de Sande. 2012. <span>“accULL: An OpenACC Implementation with CUDA and OpenCL Support.”</span> <em>Proceedings of the 18th International Conference on Parallel Processing</em> (Berlin, Heidelberg), Euro-par’12, 871–82. <a href="https://doi.org/10.1007/978-3-642-32820-6\_86">https://doi.org/10.1007/978-3-642-32820-6\_86</a>.
+</div>
+<div id="ref-accull:reyes:2012" class="csl-entry" role="listitem">
+Reyes, Ruymán, Iván López-Rodríguez, Juan J. Fumero, and Francisco de Sande. 2012. <span>“<span class="nocase">accULL: An OpenACC Implementation with CUDA and OpenCL Support</span>.”</span> In <em>Proceedings of the 18th International Conference on Parallel Processing (Euro-Par 2012)</em>, edited by Christos Kaklamanis, Theodore Papatheodorou, and Paul G. Spirakis, vol. 7484. Lecture Notes in Computer Science. Springer-Verlag. <a href="https://doi.org/10.1007/978-3-642-32820-6_86">https://doi.org/10.1007/978-3-642-32820-6_86</a>.
+</div>
+<div id="ref-Reyes2011" class="csl-entry" role="listitem">
+Reyes, Ruyman, and Francisco de Sande. 2011a. <span>“Automatic Code Generation for GPUs in Llc.”</span> <em>The Journal of Supercomputing</em> 58 (3): 349–56. <a href="https://doi.org/10.1007/s11227-011-0591-7">https://doi.org/10.1007/s11227-011-0591-7</a>.
+</div>
+<div id="ref-Reyes2011a" class="csl-entry" role="listitem">
+Reyes, Ruyman, and Francisco de Sande. 2011b. <span>“Optimize or Wait? Using Llc Fast-Prototyping Tool to Evaluate CUDA Optimizations.”</span> <em>2011 19th International Euromicro Conference on Parallel, Distributed and Network-Based Processing</em>, February, 257–61. <a href="https://doi.org/10.1109/PDP.2011.12">https://doi.org/10.1109/PDP.2011.12</a>.
+</div>
+<div id="ref-Reyes2012a" class="csl-entry" role="listitem">
+Reyes, Ruymán, and Francisco de Sande. 2012. <span>“Optimization Strategies in Different CUDA Architectures Using llCoMP.”</span> <em>Microprocessors and Microsystems</em> 36 (2): 78–87. <a href="https://doi.org/10.1016/j.micpro.2011.05.006">https://doi.org/10.1016/j.micpro.2011.05.006</a>.
+</div>
+<div id="ref-Rhodin" class="csl-entry" role="listitem">
+Rhodin, Helge. n.d. <em>A PTX Code Generator for LLVM</em>.
+</div>
+<div id="ref-Robert1992" class="csl-entry" role="listitem">
+Robert, Y, and SW Song. 1992. <span>“Revisiting Cycle Shrinking.”</span> <em>Parallel Computing</em>, no. 88. <a href="http://www.sciencedirect.com/science/article/pii/016781919290084K">http://www.sciencedirect.com/science/article/pii/016781919290084K</a>.
+</div>
+<div id="ref-Rohou2011" class="csl-entry" role="listitem">
+Rohou, Erven, Sergei Dyshel, Dorit Nuzman, et al. 2011a. <span>“Speculatively Vectorized Bytecode.”</span> <em>Proceedings of the 6th International Conference on High Performance and Embedded Architectures and Compilers - HiPEAC ’11</em> (New York, New York, USA), HiPEAC ’11, January, 35. <a href="https://doi.org/10.1145/1944862.1944871">https://doi.org/10.1145/1944862.1944871</a>.
+</div>
+<div id="ref-Rohou:2011:SVB:1944862.1944871" class="csl-entry" role="listitem">
+Rohou, Erven, Sergei Dyshel, Dorit Nuzman, et al. 2011b. <span>“Speculatively Vectorized Bytecode.”</span> <em>Proceedings of the 6th International Conference on High Performance and Embedded Architectures and Compilers</em> (New York, NY, USA), HiPEAC ’11, 35–44. <a href="https://doi.org/10.1145/1944862.1944871">https://doi.org/10.1145/1944862.1944871</a>.
+</div>
+<div id="ref-Rudy2010" class="csl-entry" role="listitem">
+Rudy, Gabe, and Computer Science. 2010. <em>CUDA-CHiLL: A PROGRAMMING LANGUAGE INTERFACE FOR GPGPU OPTIMIZATIONS AND CODE GENERATION</em>. no. August.
+</div>
+<div id="ref-Ruetsch2008" class="csl-entry" role="listitem">
+Ruetsch, Greg, and Brent Oster. 2008. <em>Getting Started with CUDA</em>.
+</div>
+<div id="ref-Runtime2009" class="csl-entry" role="listitem">
+Runtime, Equipe, Inria Bordeaux Sud-ouest, and Introduction Les. 2009. <em>Super-Lin´ Eaires</em>. 7–14.
+</div>
+<div id="ref-Ryoo2008" class="csl-entry" role="listitem">
+Ryoo, Shane, Christopher I. Rodrigues, Sara S. Baghsorkhi, Sam S. Stone, David B. Kirk, and Wen-mei W. Hwu. 2008. <span>“Optimization Principles and Application Performance Evaluation of a Multithreaded GPU Using CUDA.”</span> <em>Proceedings of the 13th ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming - PPoPP ’08</em> (New York, New York, USA), 73. <a href="https://doi.org/10.1145/1345206.1345220">https://doi.org/10.1145/1345206.1345220</a>.
+</div>
+<div id="ref-Beck2005" class="csl-entry" role="listitem">
+S. Beck, a.C., and L. Carro. 2005. <span>“Dynamic Reconfiguration with Binary Translation: Breaking the ILP Barrier with Software Compatibility.”</span> <em>Proceedings. 42nd Design Automation Conference, 2005.</em>, 732–37. <a href="https://doi.org/10.1109/DAC.2005.193908">https://doi.org/10.1109/DAC.2005.193908</a>.
+</div>
+<div id="ref-Saillard:2014" class="csl-entry" role="listitem">
+Saillard, Emmanuelle, Patrick Carribault, and Denis Barthou. 2014. <span>“Static Validation of Barriers and Worksharing Constructs in OpenMP Applications.”</span> In <em>Using and Improving OpenMP for Devices, Tasks, and More</em>, edited by Luiz DeRose, BronisR. de Supinski, StephenL. Olivier, BarbaraM. Chapman, and MatthiasS. Müller, vol. 8766. Lecture Notes in Computer Science. Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-11454-5{\_}6">https://doi.org/10.1007/978-3-319-11454-5{\_}6</a>.
+</div>
+<div id="ref-Sajjapongse2013a" class="csl-entry" role="listitem">
+Sajjapongse, Kittisak, Xiang Wang, and Michela Becchi. 2013. <span>“A Preemption-Based Runtime to Efficiently Schedule Multi-Process Applications on Heterogeneous Clusters with GPUs.”</span> <em>Proceedings of the 22nd International Symposium on High-Performance Parallel and Distributed Computing - HPDC ’13</em> (New York, New York, USA), June, 179. <a href="https://doi.org/10.1145/2493123.2462911">https://doi.org/10.1145/2493123.2462911</a>.
+</div>
+<div id="ref-Sands" class="csl-entry" role="listitem">
+Sands, Duncan, and Deep Blue Capital. n.d. <em>Reimplementing Llvm-Gcc as a Gcc Plugin</em>.
+</div>
+<div id="ref-Satish2009" class="csl-entry" role="listitem">
+Satish, Nadathur, Computer Sciences, Mark Harris, Michael Garland, and Santa Clara. 2009. <em>Designing Efficient Sorting Algorithms for Manycore GPUs</em>. no. May: 1–10.
+</div>
+<div id="ref-Schaa2011" class="csl-entry" role="listitem">
+Schaa, Dana, and David Kaeli. 2011. <em>Caracal: Dynamic Translation of Runtime Environments for GPUs</em>. no. March.
+</div>
+<div id="ref-Scheduling" class="csl-entry" role="listitem">
+Scheduling, Task. n.d. <em>Parallel Task Scheduling for the Block Data Flow Architecture *</em>. 1.
+</div>
+<div id="ref-Schroeder2011" class="csl-entry" role="listitem">
+Schroeder, Tim C. 2011a. <em>Peer-to-Peer <span>&amp;</span> Unified Virtual Addressing</em>.
+</div>
+<div id="ref-schroeder2011peer" class="csl-entry" role="listitem">
+Schroeder, Tim C. 2011b. <span>“Peer-to-Peer and Unified Virtual Addressing.”</span> <em>Cuda Webinar</em>.
+</div>
+<div id="ref-Science2012" class="csl-entry" role="listitem">
+Science, Computational. 2012. <em>A Simple Tutorial on Generating PTX Assembler Out of Ada Source Code Using LLVM NVPTX Backend</em>. 1–32.
+</div>
+<div id="ref-Science2014" class="csl-entry" role="listitem">
+Science, Computational. 2014. <em>Evaluating Manual and Compiler-Driven Parallelization of Stencil Micro-Applications on a GPU-Enabled Cluster</em>. 1–34.
+</div>
+<div id="ref-Science2011" class="csl-entry" role="listitem">
+Science, Computer. 2011. <em>The Polyhedral Compilation Framework</em>.
+</div>
+<div id="ref-Sclocco2014" class="csl-entry" role="listitem">
+Sclocco, Alessio, Henri E. Bal, Jason Hessels, Joeri van Leeuwen, and Rob V. van Nieuwpoort. 2014. <span>“Auto-Tuning Dedispersion for Many-Core Accelerators.”</span> <em>2014 IEEE 28th International Parallel and Distributed Processing Symposium</em>, May, 952–61. <a href="https://doi.org/10.1109/IPDPS.2014.101">https://doi.org/10.1109/IPDPS.2014.101</a>.
+</div>
+<div id="ref-LCCV:UFAL:Tutorial" class="csl-entry" role="listitem">
+Sena, M C R, J A C Costa, C A Thomaz, et al. 2008. <em>Tutorial de OpenMP c/c++</em>. 03/2008. Edition 1. LCCV-UFAL. <a href="http://www.lncc.br/pdf{\_}consultar.php?idt{\_}arquivo=4286">http://www.lncc.br/pdf{\_}consultar.php?idt{\_}arquivo=4286</a>.
+</div>
+<div id="ref-openmp:Flex" class="csl-entry" role="listitem">
+Shah, Sanjiv, Grant Haab, Paul Petersen, and Joe Throop. 2000. <span>“Flexible Control Structures for Parallelism in OpenMP.”</span> <em>Concurrency: Practice and Experience</em> 12 (12): 1219–39. <a href="https://doi.org/10.1002/1096-9128(200010)12:12<1219::AID-CPE530>3.0.CO;2-0">https://doi.org/10.1002/1096-9128(200010)12:12&lt;1219::AID-CPE530&gt;3.0.CO;2-0</a>.
+</div>
+<div id="ref-Sharp1994" class="csl-entry" role="listitem">
+Sharp, Oliver J. 1994. <em>Compiler Transformations</em>. 26 (4).
+</div>
+<div id="ref-Shi2007" class="csl-entry" role="listitem">
+Shi, Huihui, Yi Wang, Haibing Guan, and Alei Liang. 2007. <span>“An Intermediate Language Level Optimization Framework for Dynamic Binary Translation.”</span> <em>ACM SIGPLAN Notices</em> 42 (5): 3–9. <a href="https://doi.org/10.1145/1286341.1286342">https://doi.org/10.1145/1286341.1286342</a>.
+</div>
+<div id="ref-Li2014" class="csl-entry" role="listitem">
+Shi, Lin, Hao Chen, and Ting Li. 2014. <span>“Hybrid CPU/GPU Checkpoint for GPU-Based Heterogeneous Systems.”</span> In <em>Parallel Computational Fluid Dynamics</em>, edited by Kenli Li, Zheng Xiao, Yan Wang, Jiayi Du, and Keqin Li, vol. 405. Communications in Computer and Information Science. Springer Berlin Heidelberg. <a href="https://doi.org/10.1007/978-3-642-53962-6{\_}42">https://doi.org/10.1007/978-3-642-53962-6{\_}42</a>.
+</div>
+<div id="ref-Sidelnik" class="csl-entry" role="listitem">
+Sidelnik, Albert. n.d. <em>Targeting GPUs and Other Hierarchical Architectures in Chapel</em>. 1–20.
+</div>
+<div id="ref-Sidelnik2012" class="csl-entry" role="listitem">
+Sidelnik, Albert, Saeed Maleki, Bradford L. Chamberlain, Maria J. Garzar’n, and David Padua. 2012. <span>“Performance Portability with the Chapel Language.”</span> <em>2012 IEEE 26th International Parallel and Distributed Processing Symposium</em>, May, 582–94. <a href="https://doi.org/10.1109/IPDPS.2012.60">https://doi.org/10.1109/IPDPS.2012.60</a>.
+</div>
+<div id="ref-Siegl2015" class="csl-entry" role="listitem">
+Siegl, Patrick, Rainer Buchty, and Mladen Berekovic. 2015. <span>“Revealing Potential Performance Improvements by Utilizing Hybrid Work-Sharing for Resource-Intensive Seismic Applications.”</span> <em>2015 23rd Euromicro International Conference on Parallel, Distributed, and Network-Based Processing</em>, March, 659–63. <a href="https://doi.org/10.1109/PDP.2015.28">https://doi.org/10.1109/PDP.2015.28</a>.
+</div>
+<div id="ref-Simburger2013" class="csl-entry" role="listitem">
+Simbürger, A, and Sven Apel. 2013. <span>“The Potential of Polyhedral Optimization.”</span> <em>…</em>, no. February. <a href="http://www.infosun.fim.uni-passau.de/publications/docs/SAGL13tr.pdf">http://www.infosun.fim.uni-passau.de/publications/docs/SAGL13tr.pdf</a>.
+</div>
+<div id="ref-sjodin:hal-00408759" class="csl-entry" role="listitem">
+Sjödin, Jan, Sebastian Pop, Harsha Jagasia, Tobias Grosser, and Antoniu Pop. 2009. <span>“<span class="nocase">Design of graphite and the Polyhedral Compilation Package</span>.”</span> <em><span>GCC Developers’ Summit</span></em> (Montr<span>é</span>al, Canada), June. <a href="https://hal-mines-paristech.archives-ouvertes.fr/hal-00408759">https://hal-mines-paristech.archives-ouvertes.fr/hal-00408759</a>.
+</div>
 <div id="ref-smith:sohi:1995" class="csl-entry" role="listitem">
 Smith, J. E., and G. S. Sohi. 1995. <span>“The Microarchitecture of Superscalar Processors.”</span> <em>Proceedings of the IEEE</em> 83 (12): 1609–24. <a href="https://doi.org/10.1109/5.476078">https://doi.org/10.1109/5.476078</a>.
+</div>
+<div id="ref-BostonUniversity" class="csl-entry" role="listitem">
+Sondak, Doug. 2011. <span>“Parallel Processing with OpenMP.”</span> Scientific Computing; Visualization Office of Information Technology, Boston University. <a href="https://www.bu.edu/tech/files/2011/09/openmp.ppt">www.bu.edu/tech/files/2011/09/openmp.ppt</a>.
+</div>
+<div id="ref-Spampinato" class="csl-entry" role="listitem">
+Spampinato, Norwegian Daniele G, Anne C Elster, and Thorvald Natvig. n.d. <em>Modelling Multi-GPU Systems 1</em>.
+</div>
+<div id="ref-clan:2014" class="csl-entry" role="listitem">
+Specification, A, Polyhedral Representation Extractor, High Level, and Programs Edition. 2014. <em>Cédric Bastoul</em>. <a href="http://icps.u-strasbg.fr/~bastoul/development/clan/docs/clan.pdf">http://icps.u-strasbg.fr/~bastoul/development/clan/docs/clan.pdf</a>.
+</div>
+<div id="ref-Specification2000" class="csl-entry" role="listitem">
+Specification, Streamc Language. 2000. <em>1.0 StreamC Language Specification</em>. 3–8.
+</div>
+<div id="ref-4755913" class="csl-entry" role="listitem">
+Speyer, G, N Freed, R Akis, D Stanzione, and E Mack. 2008. <span>“Paradigms for Parallel Computation.”</span> <em>DoD HPCMP Users Group Conference, 2008. DOD HPCMP UGC</em>, 486–94. <a href="https://doi.org/10.1109/DoD.HPCMP.UGC.2008.18">https://doi.org/10.1109/DoD.HPCMP.UGC.2008.18</a>.
 </div>
 <div id="ref-10.1109/HPCA.2005.10" class="csl-entry" role="listitem">
 Spracklen, Lawrence, and Santosh G. Abraham. 2005. <span>“Chip Multithreading: Opportunities and Challenges.”</span> <em>Proceedings of the 11th International Symposium on High-Performance Computer Architecture</em> (USA), HPCA ’05, 248–52. <a href="https://doi.org/10.1109/HPCA.2005.10">https://doi.org/10.1109/HPCA.2005.10</a>.
@@ -256,11 +1671,113 @@ Spracklen, Lawrence, and Santosh G. Abraham. 2005. <span>“Chip Multithreading:
 <div id="ref-stallings:2002" class="csl-entry" role="listitem">
 STALLINGS, William. 2002. <em>Arquitetura e Organização de Computadores: Projeto Para o Desempenho</em>. 5th ed. Prentice-Hall.
 </div>
+<div id="ref-Stallman2004" class="csl-entry" role="listitem">
+Stallman, Richard M, G C C Developer, and Community Last. 2004. <em>GNU Compiler Collection Internals</em>. no. May.
+</div>
+<div id="ref-openacc:site" class="csl-entry" role="listitem">
+Standard, OpenACC. 2012. <span>“OpenACC Directives for Accelerators Site <span>@ONLINE</span>.”</span> March. <a href="http://www.openacc-standard.org/">http://www.openacc-standard.org/</a>.
+</div>
+<div id="ref-Stock" class="csl-entry" role="listitem">
+Stock, Kevin. n.d. <em>Automatic Transformations for Effective Parallel Execution on Intel Many Integrated Core</em>. 1–6.
+</div>
+<div id="ref-Stratton2012" class="csl-entry" role="listitem">
+Stratton, John A, Christopher Rodrigues, I-jui Sung, et al. 2012. <em>Parboil: A Revised Benchmark Suite for Scientific and Commercial Throughput Computing</em>.
+</div>
+<div id="ref-6270788" class="csl-entry" role="listitem">
+Strazdins, P E. 2012. <span>“Experiences in Teaching a Specialty Multicore Computing Course.”</span> <em>Parallel and Distributed Processing Symposium Workshops PhD Forum (IPDPSW), 2012 IEEE 26th International</em>, 1283–88. <a href="https://doi.org/10.1109/IPDPSW.2012.168">https://doi.org/10.1109/IPDPSW.2012.168</a>.
+</div>
+<div id="ref-Stuart" class="csl-entry" role="listitem">
+Stuart, Jeff A, Michael Cox, and John D Owens. n.d. <em>GPU-to-CPU Callbacks</em>.
+</div>
+<div id="ref-Submitted2005" class="csl-entry" role="listitem">
+Submitted, Dissertation, and Computer Science. 2005. <em>Macroscopic Data Structure Analysis and Optimization</em>.
+</div>
+<div id="ref-sukumaranrajam:hal-01070610" class="csl-entry" role="listitem">
+Sukumaran-Rajam, Aravind, Juan Manuel Martinez, Willy Wolff, Alexandra Jimborean, and Philippe Clauss. 2014. <span>“<span class="nocase">Speculative Program Parallelization with Scalable and Decentralized Runtime Verification</span>.”</span> In <em><span>Runtime Verification</span></em>, edited by Borzoo Bonakdarpour and Scott A. Smolka, vol. 8734. <span>Springer</span>. <a href="https://doi.org/10.1007/978-3-319-11164-3\_11">https://doi.org/10.1007/978-3-319-11164-3\_11</a>.
+</div>
+<div id="ref-Sumner2013" class="csl-entry" role="listitem">
+Sumner, Nick. 2013. <em>A Brief Introduction to Using LLVM</em>.
+</div>
+<div id="ref-Suß2005" class="csl-entry" role="listitem">
+Süß, Michael, and Claudia Leopold. 2005. <span>“Common Mistakes in OpenMP and How to Avoid Them: A Collection of Best Practices.”</span> <em>Proceedings of the 2005 and 2006 International Conference on OpenMP Shared Memory Parallel Programming</em> (Berlin, Heidelberg), IWOMP’05/IWOMP’06, June, 312–23. <a href="http://dl.acm.org/citation.cfm?id=1892830.1892863">http://dl.acm.org/citation.cfm?id=1892830.1892863</a>.
+</div>
+<div id="ref-Leopold:userOpenMP" class="csl-entry" role="listitem">
+Süß, Michael, and Claudia Leopold. 2010. <span>“A User’s Experience with Parallel Sorting and Openmp.”</span> <em>In Proceedings of the Sixth Workshop on OpenMP (EWOMP’04</em>.
+</div>
+<div id="ref-FreeLunchIsOver" class="csl-entry" role="listitem">
+Sutter, Herb. 2005. <span>“The Free Lunch Is over: A Fundamental Turn Toward Concurrency in Software.”</span> <em>Dr. Dobb’s Journal</em> 30 (3): 202–10. <a href="http://www.gotw.ca/publications/concurrency-ddj.htm">http://www.gotw.ca/publications/concurrency-ddj.htm</a>.
+</div>
+<div id="ref-Sutter:2005" class="csl-entry" role="listitem">
+Sutter, Herb, and James Larus. 2005. <span>“Software and the Concurrency Revolution.”</span> <em>Queue</em> (New York, NY, USA) 3 (7): 54–62. <a href="https://doi.org/10.1145/1095408.1095421">https://doi.org/10.1145/1095408.1095421</a>.
+</div>
+<div id="ref-Synthesis2011" class="csl-entry" role="listitem">
+Synthesis, Automatic Architecture, and Application Mapping. 2011. <em>Automatic Architecture Synthesis and Application Mapping D3.1: Method of and Report on Application Analysis/Profiling and Parallelization</em>. no. 100265: 1–98.
+</div>
+<div id="ref-7052220" class="csl-entry" role="listitem">
+Takeshima, R, and T Tsumura. 2014. <span>“Automatic Code Tuning for Improving GPU Resource Utilization.”</span> <em>Computing and Networking (CANDAR), 2014 Second International Symposium on</em>, 419–25. <a href="https://doi.org/10.1109/CANDAR.2014.48">https://doi.org/10.1109/CANDAR.2014.48</a>.
+</div>
+<div id="ref-Takizawa2009" class="csl-entry" role="listitem">
+Takizawa, Hiroyuki, Katsuto Sato, Kazuhiko Komatsu, and Hiroaki Kobayashi. 2009. <span>“CheCUDA: A Checkpoint/Restart Tool for CUDA Applications.”</span> <em>2009 International Conference on Parallel and Distributed Computing, Applications and Technologies</em>, December, 408–13. <a href="https://doi.org/10.1109/PDCAT.2009.78">https://doi.org/10.1109/PDCAT.2009.78</a>.
+</div>
+<div id="ref-Tanasic2014" class="csl-entry" role="listitem">
+Tanasic, Ivan, Isaac Gelado, Javier Cabezas, Alex Ramirez, Nacho Navarro, and Mateo Valero. 2014. <span>“Enabling Preemptive Multiprogramming on GPUs.”</span> <em>2014 ACM/IEEE 41st International Symposium on Computer Architecture (ISCA)</em>, June, 193–204. <a href="https://doi.org/10.1109/ISCA.2014.6853208">https://doi.org/10.1109/ISCA.2014.6853208</a>.
+</div>
+<div id="ref-Tang2011" class="csl-entry" role="listitem">
+Tang, Tao, Xuejun Yang, and Yisong Lin. 2011. <span>“Cache Miss Analysis for GPU Programs Based on Stack Distance Profile.”</span> <em>2011 31st International Conference on Distributed Computing Systems</em>, June, 623–34. <a href="https://doi.org/10.1109/ICDCS.2011.16">https://doi.org/10.1109/ICDCS.2011.16</a>.
+</div>
+<div id="ref-Taura" class="csl-entry" role="listitem">
+Taura, Kenjiro. n.d. <em>Programming in Chapel</em>.
+</div>
+<div id="ref-TheMendeleySupportTeam2011" class="csl-entry" role="listitem">
+Team, The Mendeley Support. 2011. <em>Getting Started with Mendeley</em>. Mendeley Ltd. <a href="http://www.mendeley.com">http://www.mendeley.com</a>.
+</div>
+<div id="ref-Tenerife" class="csl-entry" role="listitem">
+Tenerife, Santa Cruz De. n.d. <em>OpenACC Implementations Comparison</em>.
+</div>
 <div id="ref-posix_pthreads" class="csl-entry" role="listitem">
 The Open Group. 2018. <em>POSIX Threads Programming</em>. <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/pthread_create.html">https://pubs.opengroup.org/onlinepubs/009695399/functions/pthread_create.html</a>.
 </div>
+<div id="ref-Tomasoni" class="csl-entry" role="listitem">
+Tomasoni, Johannes, Sergei Gorlatch, and Christian Lengauer. n.d. <em>Loopo-Hoc: A Grid Component with Embedded Loop Parallelization</em>.
+</div>
 <div id="ref-tomasulo:1967" class="csl-entry" role="listitem">
-Tomasulo, R. M. 1967. <span>“An Efficient Algorithm for Exploiting Multiple Arithmetic Units.”</span> <em>IBM Journal of Research and Development</em> 11 (1): 25–33. <a href="https://doi.org/10.1147/rd.111.0025">https://doi.org/10.1147/rd.111.0025</a>.
+Tomasulo, R. M. 1967a. <span>“An Efficient Algorithm for Exploiting Multiple Arithmetic Units.”</span> <em>IBM Journal of Research and Development</em> 11 (1): 25–33. <a href="https://doi.org/10.1147/rd.111.0025">https://doi.org/10.1147/rd.111.0025</a>.
+</div>
+<div id="ref-tomasulo:algorithm:5392028" class="csl-entry" role="listitem">
+Tomasulo, R. M. 1967b. <span>“An Efficient Algorithm for Exploiting Multiple Arithmetic Units.”</span> <em>IBM Journal of Research and Development</em> 11 (1): 25–33. <a href="https://doi.org/10.1147/rd.111.0025">https://doi.org/10.1147/rd.111.0025</a>.
+</div>
+<div id="ref-Tong2015" class="csl-entry" role="listitem">
+Tong, Xin, and Andreas Moshovos. 2015. <span>“QTrace: A Framework for Customizable Full System Instrumentation.”</span> <em>2015 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)</em>, March, 245–55. <a href="https://doi.org/10.1109/ISPASS.2015.7095810">https://doi.org/10.1109/ISPASS.2015.7095810</a>.
+</div>
+<div id="ref-top500:site" class="csl-entry" role="listitem">
+TOP500. 2013, 2014. <span>“TOP500 Supercomputers Sites <span>@ONLINE</span>.”</span> 2013, 2014. <a href="http://www.top500.org/">http://www.top500.org/</a>.
+</div>
+<div id="ref-top500:site:2013" class="csl-entry" role="listitem">
+Top500. 2013. <em><span class="nocase">TOP500 List of Supercomputers Site</span></em>. <a href="http://www.top500.org/">http://www.top500.org/</a>.
+</div>
+<div id="ref-top500:site:2014" class="csl-entry" role="listitem">
+Top500. 2014. <em><span class="nocase">TOP500 List of Supercomputers Site</span></em>. <a href="http://www.top500.org/">http://www.top500.org/</a>.
+</div>
+<div id="ref-top500:site:2015" class="csl-entry" role="listitem">
+Top500. 2015. <em><span class="nocase">TOP500 List of Supercomputers Site</span></em>. <a href="http://www.top500.org/">http://www.top500.org/</a>.
+</div>
+<div id="ref-top500:site:2016" class="csl-entry" role="listitem">
+Top500. 2016. <em><span class="nocase">TOP500 List of Supercomputers Site</span></em>. <a href="http://www.top500.org/">http://www.top500.org/</a>.
+</div>
+<div id="ref-trahay:inria-00587216" class="csl-entry" role="listitem">
+Trahay, François, François Rue, Mathieu Faverge, Yutaka Ishikawa, Raymond Namyst, and Jack Dongarra. 2011. <span>“<span class="nocase">EZTrace: a generic framework for performance analysis</span>.”</span> <em><span class="nocase">IEEE/ACM International Symposium on Cluster, Cloud and Grid Computing (CCGrid)</span></em> (Newport Beach, CA, United States), May. <a href="https://hal.inria.fr/inria-00587216">https://hal.inria.fr/inria-00587216</a>.
+</div>
+<div id="ref-Transformations" class="csl-entry" role="listitem">
+Transformations, Loop. n.d. <em>Loop Transformations for Parallelism <span>&amp;</span> Locality</em>. 1–6.
+</div>
+<div id="ref-Triolet:1986:DPC:12276.13329" class="csl-entry" role="listitem">
+Triolet, Rémi, Francois Irigoin, and Paul Feautrier. 1986a. <span>“Direct Parallelization of Call Statements.”</span> <em>Proceedings of the 1986 SIGPLAN Symposium on Compiler Construction</em> (New York, NY, USA), SIGPLAN ’86, 176–85. <a href="https://doi.org/10.1145/12276.13329">https://doi.org/10.1145/12276.13329</a>.
+</div>
+<div id="ref-TrioletIrigoinFeautrier1986" class="csl-entry" role="listitem">
+Triolet, Rémi, Francois Irigoin, and Paul Feautrier. 1986c. <span>“Direct Parallelization of Call Statements.”</span> <em>SIGPLAN Not.</em> (New York, NY, USA) 21 (7): 176–85. <a href="https://doi.org/10.1145/13310.13329">https://doi.org/10.1145/13310.13329</a>.
+</div>
+<div id="ref-Triolet:1986:DPC:13310.13329" class="csl-entry" role="listitem">
+Triolet, Rémi, Francois Irigoin, and Paul Feautrier. 1986b. <span>“Direct Parallelization of Call Statements.”</span> <em>SIGPLAN Not.</em> (New York, NY, USA) 21 (7): 176–85. <a href="https://doi.org/10.1145/13310.13329">https://doi.org/10.1145/13310.13329</a>.
 </div>
 <div id="ref-Tullsen:1995:SMM:223982.224449" class="csl-entry" role="listitem">
 Tullsen, Dean M., Susan J. Eggers, and Henry M. Levy. 1995b. <span>“Simultaneous Multithreading: Maximizing on-Chip Parallelism.”</span> <em>Proceedings of the 22Nd Annual International Symposium on Computer Architecture</em> (New York, NY, USA), ISCA ’95, 392–403. <a href="https://doi.org/10.1145/223982.224449">https://doi.org/10.1145/223982.224449</a>.
@@ -274,8 +1791,95 @@ Tullsen, Dean M., Susan J. Eggers, and Henry M. Levy. 1995d. <span>“Simultaneo
 <div id="ref-10.1145/225830.224449" class="csl-entry" role="listitem">
 Tullsen, Dean M., Susan J. Eggers, and Henry M. Levy. 1995c. <span>“Simultaneous Multithreading: Maximizing on-Chip Parallelism.”</span> <em>SIGARCH Comput. Archit. News</em> (New York, NY, USA) 23 (2): 392–403. <a href="https://doi.org/10.1145/225830.224449">https://doi.org/10.1145/225830.224449</a>.
 </div>
+<div id="ref-Ujaldon" class="csl-entry" role="listitem">
+Ujaldon, Manuel. n.d. <em>Inside Kepler</em>.
+</div>
+<div id="ref-Upgrade" class="csl-entry" role="listitem">
+Upgrade, Why. n.d. <em>Why Upgrade?</em> 1–2.
+</div>
+<div id="ref-Valiant" class="csl-entry" role="listitem">
+Valiant, Leslie G. n.d. <em>A Bridging Model for Multi-Core Computing</em>. 5193: 13–28.
+</div>
+<div id="ref-Vancourt" class="csl-entry" role="listitem">
+Vancourt, Tom. n.d. <em>Research Program: FPGAs as Computation Accelerators</em>. 3–5.
+</div>
+<div id="ref-Ventroux2012" class="csl-entry" role="listitem">
+Ventroux, N, T Sassolas, A Guerre, B Creusillet, and R Keryell. 2012. <em>SESAM/Par4All: A Tool for Joint Exploration of MPSoC Architectures and Dynamic Dataflow Code Generation</em>. 0–7.
+</div>
+<div id="ref-Verdoolaege:2010:IIS:10.1007/978-3-642-15582-6_49" class="csl-entry" role="listitem">
+Verdoolaege, Sven. 2010a. <span>“Isl: An Integer Set Library for the Polyhedral Model.”</span> In <em>Mathematical Software ? ICMS 2010</em>, edited by Komei Fukuda, Jorisvander Hoeven, Michael Joswig, and Nobuki Takayama, vol. 6327. Lecture Notes in Computer Science. Springer Berlin Heidelberg. <a href="https://doi.org/10.1007/978-3-642-15582-6_49">https://doi.org/10.1007/978-3-642-15582-6_49</a>.
+</div>
+<div id="ref-isl:verdoolaege:2010" class="csl-entry" role="listitem">
+Verdoolaege, Sven. 2010b. <span>“<span class="nocase">isl: An Integer Set Library for the Polyhedral Model</span>.”</span> In <em>Proceedings of the Third International Congress Conference on Mathematical Software - ICMS 2010</em>, edited by Komei Fukuda, Jorisvander Hoeven, Michael Joswig, and Nobuki Takayama, vol. 6327. ICMS’10. Springer-Verlag. <a href="https://doi.org/10.1007/978-3-642-15582-6_49">https://doi.org/10.1007/978-3-642-15582-6_49</a>.
+</div>
+<div id="ref-Verdoolaege:2010:IIS:1888390.1888455" class="csl-entry" role="listitem">
+Verdoolaege, Sven. 2010c. <span>“Isl: An Integer Set Library for the Polyhedral Model.”</span> <em>Proceedings of the Third International Congress Conference on Mathematical Software</em> (Berlin, Heidelberg), ICMS’10, 299–302. <a href="http://dl.acm.org/citation.cfm?id=1888390.1888455">http://dl.acm.org/citation.cfm?id=1888390.1888455</a>.
+</div>
+<div id="ref-Verdoolaege:2013:PPC:2400682.2400713" class="csl-entry" role="listitem">
+Verdoolaege, Sven, Juan Carlos Juega, Albert Cohen, José Ignacio Gómez, Christian Tenllado, and Francky Catthoor. 2013. <span>“Polyhedral Parallel Code Generation for CUDA.”</span> <em>ACM Trans. Archit. Code Optim.</em> (New York, NY, USA) 9 (4): 54:1–23. <a href="https://doi.org/10.1145/2400682.2400713">https://doi.org/10.1145/2400682.2400713</a>.
+</div>
+<div id="ref-pet:verdoolaege:2012" class="csl-entry" role="listitem">
+Verdoolaege, Sven, and Tobias Grosser. 2012c. <span>“<span>Polyhedral Extraction Tool</span>.”</span> <em>Second Int. Workshop on Polyhedral Compilation Techniques (IMPACT’12)</em> (Paris, France), January.
+</div>
+<div id="ref-VerdoolaegeGrosser2012" class="csl-entry" role="listitem">
+Verdoolaege, Sven, and Tobias Grosser. 2012b. <span>“Polyhedral Extraction Tool.”</span> <em>Second Int. Workshop on Polyhedral Compilation Techniques (IMPACT’12)</em> (Paris, France), January.
+</div>
+<div id="ref-Verdoolaege2012pet" class="csl-entry" role="listitem">
+Verdoolaege, Sven, and Tobias Grosser. 2012a. <span>“Polyhedral Extraction Tool.”</span> <em>Second Int. Workshop on Polyhedral Compilation Techniques (IMPACT’12)</em> (Paris, France), January.
+</div>
+<div id="ref-ppcg:verdoolaege:2013" class="csl-entry" role="listitem">
+Verdoolaege, Sven, Juan Carlos Juega, Albert Cohen, José Ignacio Gómez, Christian Tenllado, and Francky Catthoor. 2013b. <span>“<span class="nocase">Polyhedral Parallel Code Generation for CUDA</span>.”</span> <em>ACM Trans. Archit. Code Optim.</em> (New York, NY, USA) 9 (4): 54:1–23. <a href="https://doi.org/10.1145/2400682.2400713">https://doi.org/10.1145/2400682.2400713</a>.
+</div>
+<div id="ref-Verdoolaege2013PPCG" class="csl-entry" role="listitem">
+Verdoolaege, Sven, Juan Carlos Juega, Albert Cohen, José Ignacio Gómez, Christian Tenllado, and Francky Catthoor. 2013a. <span>“Polyhedral Parallel Code Generation for CUDA.”</span> <em>ACM Trans. Archit. Code Optim.</em> (New York, NY, USA) 9 (4): 54:1–23. <a href="https://doi.org/10.1145/2400682.2400713">https://doi.org/10.1145/2400682.2400713</a>.
+</div>
+<div id="ref-Volkov2008" class="csl-entry" role="listitem">
+Volkov, V., and J. W. Demmel. 2008. <span>“Benchmarking GPUs to Tune Dense Linear Algebra.”</span> <em>2008 SC - International Conference for High Performance Computing, Networking, Storage and Analysis</em>, November, 1–11. <a href="https://doi.org/10.1109/SC.2008.5214359">https://doi.org/10.1109/SC.2008.5214359</a>.
+</div>
+<div id="ref-Wang2014" class="csl-entry" role="listitem">
+Wang, Jin, and Sudhakar Yalamanchili. 2014. <span>“Characterization and Analysis of Dynamic Parallelism in Unstructured GPU Applications.”</span> <em>2014 IEEE International Symposium on Workload Characterization (IISWC)</em>, October, 51–60. <a href="https://doi.org/10.1109/IISWC.2014.6983039">https://doi.org/10.1109/IISWC.2014.6983039</a>.
+</div>
+<div id="ref-5999803" class="csl-entry" role="listitem">
+Wang, Lingyuan, Miaoqing Huang, and T. El-Ghazawi. 2011. <span>“Exploiting Concurrent Kernel Execution on Graphic Processing Units.”</span> <em>High Performance Computing and Simulation (HPCS), 2011 International Conference on</em>, 24–32. <a href="https://doi.org/10.1109/HPCSim.2011.5999803">https://doi.org/10.1109/HPCSim.2011.5999803</a>.
+</div>
+<div id="ref-Wang2012" class="csl-entry" role="listitem">
+Wang, Xun, Degui Feng, Chen Tian-zhou, and Hu Tong-sen. 2012. <span>“Migration Between Software and Hardware Task on Preemptive Multitasking CPU/FPGA Hybrid Architecture.”</span> <em>2012 IEEE 14th International Conference on High Performance Computing and Communication <span>&amp;</span> 2012 IEEE 9th International Conference on Embedded Software and Systems</em>, June, 1329–36. <a href="https://doi.org/10.1109/HPCC.2012.196">https://doi.org/10.1109/HPCC.2012.196</a>.
+</div>
+<div id="ref-Weaver2015" class="csl-entry" role="listitem">
+Weaver, Vincent M. 2015. <span>“Self-Monitoring Overhead of the Linux Perf<span>_</span> Event Performance Counter Interface.”</span> <em>2015 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)</em>, March, 102–11. <a href="https://doi.org/10.1109/ISPASS.2015.7095789">https://doi.org/10.1109/ISPASS.2015.7095789</a>.
+</div>
+<div id="ref-Weaver2012" class="csl-entry" role="listitem">
+Weaver, Vincent M., Matt Johnson, Kiran Kasichayanula, et al. 2012. <span>“Measuring Energy and Power with PAPI.”</span> <em>2012 41st International Conference on Parallel Processing Workshops</em>, no. May (September): 262–68. <a href="https://doi.org/10.1109/ICPPW.2012.39">https://doi.org/10.1109/ICPPW.2012.39</a>.
+</div>
+<div id="ref-Weaver2013" class="csl-entry" role="listitem">
+Weaver, Vincent M., Dan Terpstra, Heike McCraw, et al. 2013. <span>“PAPI 5: Measuring Power, Energy, and the Cloud.”</span> <em>2013 IEEE International Symposium on Performance Analysis of Systems and Software (ISPASS)</em>, April, 124–25. <a href="https://doi.org/10.1109/ISPASS.2013.6557155">https://doi.org/10.1109/ISPASS.2013.6557155</a>.
+</div>
+<div id="ref-Werkhoven2014" class="csl-entry" role="listitem">
+Werkhoven, B. van, J. Maassen, F. J. Seinstra, and H. E. Bal. 2014. <span>“Performance Models for CPU-GPU Data Transfers.”</span> <em>2014 14th IEEE/ACM International Symposium on Cluster, Cloud and Grid Computing</em>, May, 11–20. <a href="https://doi.org/10.1109/CCGrid.2014.16">https://doi.org/10.1109/CCGrid.2014.16</a>.
+</div>
+<div id="ref-VanWerkhoven2014a" class="csl-entry" role="listitem">
+Werkhoven, Ben van, Jason Maassen, Henri E. Bal, and Frank J. Seinstra. 2014. <span>“Optimizing Convolution Operations on GPUs Using Adaptive Tiling.”</span> <em>Future Generation Computer Systems</em> 30 (January): 14–26. <a href="https://doi.org/10.1016/j.future.2013.09.003">https://doi.org/10.1016/j.future.2013.09.003</a>.
+</div>
+<div id="ref-Wienke2012" class="csl-entry" role="listitem">
+Wienke, Sandra, Paul Springer, Christian Terboven, and Dieter Mey. 2012. <em>LNCS 7484 - OpenACC — First Experiences with Real-World Applications</em>. nos. November 2011: 859–70.
+</div>
+<div id="ref-Williams:EECS-2008-134" class="csl-entry" role="listitem">
+Williams, Samuel Webb, Andrew Waterman, and David A. Patterson. 2008. <em>Roofline: An Insightful Visual Performance Model for Floating-Point Programs and Multicore Architectures</em>. UCB/EECS-2008-134. EECS Department, University of California, Berkeley. <a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-134.html">http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-134.html</a>.
+</div>
+<div id="ref-Williams2009" class="csl-entry" role="listitem">
+Williams, Samuel, Andrew Waterman, and David Patterson. 2009. <span>“<span class="nocase">Roofline: An Insightful Visual Performance Model for Multicore Architectures</span>.”</span> <em>Communications of the ACM</em> 52 (4): 65. <a href="https://doi.org/10.1145/1498765.1498785">https://doi.org/10.1145/1498765.1498785</a>.
+</div>
+<div id="ref-Wolfe:1996:PC:234313.234417" class="csl-entry" role="listitem">
+Wolfe, Michael. 1996. <span>“Parallelizing Compilers.”</span> <em>ACM Comput. Surv.</em> (New York, NY, USA) 28 (1): 261–62. <a href="https://doi.org/10.1145/234313.234417">https://doi.org/10.1145/234313.234417</a>.
+</div>
+<div id="ref-UniversityWayne" class="csl-entry" role="listitem">
+Xu, Cheng-Zhong. 2004. <span>“ECE561:introduction to Parallel and Distribution Systems. OpenMP Overview.”</span> <a href="http://www.ece.eng.wayne.edu/{~}czxu/ece561/lnotes/OpenMP.pdf">http://www.ece.eng.wayne.edu/{~}czxu/ece561/lnotes/OpenMP.pdf</a>.
+</div>
 <div id="ref-323172" class="csl-entry" role="listitem">
 Yamamoto, W., M. J. Serrano, A. R. Talcott, R. C. Wood, and M. Nemirosky. 1994. <span>“Performance Estimation of Multistreamed, Superscalar Processors.”</span> <em>1994 Proceedings of the Twenty-Seventh Hawaii International Conference on System Sciences</em> 1: 195–204. <a href="https://doi.org/10.1109/HICSS.1994.323172">https://doi.org/10.1109/HICSS.1994.323172</a>.
+</div>
+<div id="ref-Yan:2009:JPI:1616772.1616866" class="csl-entry" role="listitem">
+Yan, Yonghong, Max Grossman, and Vivek Sarkar. 2009. <span>“JCUDA: A Programmer-Friendly Interface for Accelerating Java Programs with CUDA.”</span> <em>Proceedings of the 15th International Euro-Par Conference on Parallel Processing</em> (Berlin, Heidelberg), Euro-par ’09, 887–99. <a href="https://doi.org/10.1007/978-3-642-03869-3_82">https://doi.org/10.1007/978-3-642-03869-3_82</a>.
 </div>
 </div>
 
@@ -684,8 +2288,8 @@ Yamamoto, W., M. J. Serrano, A. R. Talcott, R. C. Wood, and M. Nemirosky. 1994. 
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html" class="pagination-link" aria-label="Introdução à Computação Paralela">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela</span></span>
+      <a href="./cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.html" class="pagination-link" aria-label="Diretivas de Compilação para Regiões Paralelas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Regiões Paralelas</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

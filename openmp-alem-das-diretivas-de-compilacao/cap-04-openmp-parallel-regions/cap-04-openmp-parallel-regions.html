@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4&nbsp; Diretivas de Compilação para Regiões Paralelas – OpenMP: Além das Diretivas de Compilação</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../references.html" rel="next">
+<link href="../cap-03-openmp-intro/cap-03-openmp-intro.html" rel="prev">
+<link href="../images/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-aaa6b99a32e66148052db2563ee2fdad.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Regiões Paralelas</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">OpenMP: Além das Diretivas de Compilação</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução à Computação Paralela</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-02-pthreads/cap-02-pthreads.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Multithreading com Pthreads</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-03-openmp-intro/cap-03-openmp-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introdução ao OpenMP: Diretivas de Compilação, Variáveis de Ambiente e Funções de Biblioteca</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Regiões Paralelas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+  <li><a href="#sec-openmp-intro" id="toc-sec-openmp-intro" class="nav-link active" data-scroll-target="#sec-openmp-intro"><span class="header-section-number">4.1</span> Introdução</a></li>
+  <li><a href="#diretivas-de-compilação-para-regiões-paralelas-construtor-parallel" id="toc-diretivas-de-compilação-para-regiões-paralelas-construtor-parallel" class="nav-link" data-scroll-target="#diretivas-de-compilação-para-regiões-paralelas-construtor-parallel"><span class="header-section-number">4.2</span> Diretivas de Compilação para Regiões paralelas: construtor <code>parallel</code></a></li>
+  <li><a href="#cláusulas-do-construtor-parallel" id="toc-cláusulas-do-construtor-parallel" class="nav-link" data-scroll-target="#cláusulas-do-construtor-parallel"><span class="header-section-number">4.3</span> Cláusulas do Construtor <em>parallel</em></a></li>
+  <li><a href="#cláusula-num_threads-do-construtor-parallel" id="toc-cláusula-num_threads-do-construtor-parallel" class="nav-link" data-scroll-target="#cláusula-num_threads-do-construtor-parallel"><span class="header-section-number">4.4</span> Cláusula <em>num_threads</em> do Construtor <em>parallel</em></a></li>
+  <li><a href="#cláusula-if-do-construtor-parallel" id="toc-cláusula-if-do-construtor-parallel" class="nav-link" data-scroll-target="#cláusula-if-do-construtor-parallel"><span class="header-section-number">4.5</span> Cláusula <em>if</em> do Construtor <em>parallel</em></a></li>
+  <li><a href="#cláusulas-default-private-shared-do-construtor-parallel" id="toc-cláusulas-default-private-shared-do-construtor-parallel" class="nav-link" data-scroll-target="#cláusulas-default-private-shared-do-construtor-parallel"><span class="header-section-number">4.6</span> Cláusulas <em>default, private, shared</em> do Construtor <em>parallel</em></a></li>
+  <li><a href="#cláusula-reduction-do-construtor-parallel" id="toc-cláusula-reduction-do-construtor-parallel" class="nav-link" data-scroll-target="#cláusula-reduction-do-construtor-parallel"><span class="header-section-number">4.7</span> Cláusula <em>reduction</em> do Construtor <em>parallel</em></a></li>
+  <li><a href="#prática-exercício-de-implementação" id="toc-prática-exercício-de-implementação" class="nav-link" data-scroll-target="#prática-exercício-de-implementação"><span class="header-section-number">4.8</span> Prática: Exercício de Implementação</a></li>
+  <li><a href="#relatório" id="toc-relatório" class="nav-link" data-scroll-target="#relatório"><span class="header-section-number">4.9</span> Relatório</a></li>
+  <li><a href="#sec-openmp-consid-finais" id="toc-sec-openmp-consid-finais" class="nav-link" data-scroll-target="#sec-openmp-consid-finais"><span class="header-section-number">4.10</span> Considerações Finais</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">4.11</span> <em>Word Cloud</em></a></li>
+  <li><a href="#referências" id="toc-referências" class="nav-link" data-scroll-target="#referências">Referências</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao/edit/master/cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Regiões Paralelas</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<p><strong>Resumo:</strong> Regiões Paralelas são fundamentais para a execução de aplicações no contexto de Computação Paralela. Nessas regiões que o fluxo de execução principal da aplicação se divide entre mais <em>threads</em> e o paralelismo na execução de tarefas pode ser alcançado. Neste material apresentamos a Diretiva de Compilação para Regiões Paralelas, a diretiva <em>parallel</em> e as cláusulas que podem ser utilizadas. O objetivo é testar os efeitos da utilização da diretiva na criação de regiões paralelas, nas quais um time de <em>threads</em> é criado para a execução do código da região, e verificar os efeitos causados com a aplicação das cláusulas. Na prática desse capítulo, o objetivo é percebermos a redução da quantidade de código com o uso de diretivas de compilação. O estudo do código desse exemplo de soma de vetores, um exemplo simples, ajuda a percebermos a quantidade de código necessária para a criação das <em>threads</em>.</p>
+</blockquote>
+<section id="sec-openmp-intro" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="sec-openmp-intro"><span class="header-section-number">4.1</span> Introdução</h2>
+<p>Vamos explorar a diretiva de compilação com o construtor para Regiões Paralelas (<code>parallel</code>) e as cláusulas admitidas por ele<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Testando os efeitos das cláusulas.</p>
+<p>Este é um dos construtores mais importantes do <code>OpenMP</code>, pois ele é responsável pela demarcação de regiões paralelas, indicando a região de código que será executada em paralelo pelas <em>threads</em>.</p>
+<aside id="footnotes" class="footnotes footnotes-end-of-section" role="doc-footnote">
+<hr>
+<ol>
+<li id="fn1"><p>[<span class="citation" data-cites="openmp:api:2013">OpenMP-ARB (<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-openmp:api:2013" role="doc-biblioref">2013</a>)</span>]<span class="citation" data-cites="openmp:examples:2014">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-openmp:examples:2014" role="doc-biblioref">OpenMP-ARB 2014</a>)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</section>
+<section id="diretivas-de-compilação-para-regiões-paralelas-construtor-parallel" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="diretivas-de-compilação-para-regiões-paralelas-construtor-parallel"><span class="header-section-number">4.2</span> Diretivas de Compilação para Regiões paralelas: construtor <code>parallel</code></h2>
+<p>Quando uma região paralela é encontrada pela <em>thread</em> principal (<code>master</code>), é criado um time de <em>threads</em> que irão executar o código da região paralela. Se esse construtor não for especificado o programa será executado de forma sequencial, isto é, não será criada a região paralela.</p>
+<p>A <em>thread principal</em> do processo torna-se a <em>thread</em> mestre (<code>master thread</code>) para esse grupo.</p>
+<p>Regiões paralelas são criadas usando-se o construtor e cláusulas conforme apresentado na <a href="#nte-diretiva-construtor-paralelo" class="quarto-xref">Nota&nbsp;<span>4.II</span></a>. A diretiva <strong><code>parallel</code></strong> é responsável pela criação de regiões paralelas, indicando a região de código que será executada em paralelo.</p>
+<div id="nte-diretiva-construtor-paralelo" class="callout callout-style-default callout-note callout-titled" title="Diretiva com construtor `parallel`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota&nbsp;4.I: Diretiva com construtor <code>parallel</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel [clause[ [,] clause] ... ] new-line</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Bloco estruturado. */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>Quando a diretiva com o construtor de região paralela é inserida no código, conforme o <a href="#lst-cod-exe-construtor-paralelo" class="quarto-xref">Código&nbsp;<span>4.I</span></a>.</p>
+<div id="lst-cod-exe-construtor-paralelo" class="c listing quarto-float quarto-figure quarto-figure-left anchored">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-exe-construtor-paralelo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;4.I: Hello World em OpenMP
+</figcaption>
+<div aria-describedby="lst-cod-exe-construtor-paralelo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">/* Body */</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</figure>
+</div>
+<p>O compilador irá expandir o código da região paralela</p>
+<ul>
+<li><p>A diretiva <em>parallel</em> é implementada com a criação de uma nova função <em>(outlined function)</em> usando o código contido em <code>body</code>.</p></li>
+<li><p>A <code>libgomp</code> usa funções para delimitar a região. Chamadas a essas funções são colocadas no código para indicar o início e o fim de uma região paralela:</p></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled" title="A `libgomp` ABI">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>A <code>libgomp</code> ABI
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> GOMP_parallel_start<span class="op">(</span><span class="dt">void</span> <span class="op">(*</span>fn<span class="op">)(</span><span class="dt">void</span> <span class="op">*),</span> <span class="dt">void</span> <span class="op">*</span>data<span class="op">,</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">unsigned</span> num_threads<span class="op">)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> GOMP_parallel_end<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<ul>
+<li>O código expandido gerado assume o formato:</li>
+</ul>
+<div id="nte-diretiva-construtor-paralelo" class="callout callout-style-default callout-note callout-titled" title="Diretiva com construtor `parallel`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota&nbsp;4.II: Diretiva com construtor <code>parallel</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> subfunction <span class="op">(</span><span class="dt">void</span> <span class="op">*</span>data<span class="op">){</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  use data<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  body<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">// replace the annotated parallel region.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>setup data<span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>GOMP_parallel_start<span class="op">(</span>subfunction<span class="op">,</span> <span class="op">&amp;</span>data<span class="op">,</span> num threads<span class="op">);</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>subfunction<span class="op">(&amp;</span>data<span class="op">);</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>GOMP_parallel_end<span class="op">();</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>[exampleblock]{Comando do <code>GCC</code>}</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">${CC}</span> <span class="at">-fopenmp</span> <span class="at">-fdump-tree-ompexp</span> parallel-region.c</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>[/exampleblock]</p>
+<ul>
+<li>O código em <code>GIMPLE</code>, que é a representação intermediária do <code>GCC</code>:</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>main<span class="op">.</span>_omp_fn<span class="fl">.0</span> <span class="op">(</span><span class="dt">void</span> <span class="op">*</span> <span class="op">.</span>omp_data_i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>main <span class="op">()</span> <span class="op">{</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> D<span class="fl">.1803</span><span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>bb <span class="dv">2</span><span class="op">&gt;:</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    __builtin_GOMP_parallel_start <span class="op">(</span>main<span class="op">.</span>_omp_fn<span class="fl">.0</span><span class="op">,</span> <span class="dv">0</span><span class="er">B</span><span class="op">,</span> <span class="dv">0</span><span class="op">);</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    main<span class="op">.</span>_omp_fn<span class="fl">.0</span> <span class="op">(</span><span class="dv">0</span><span class="er">B</span><span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    __builtin_GOMP_parallel_end <span class="op">();</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    D<span class="fl">.1803</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">&lt;</span>L0<span class="op">&gt;:</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> D<span class="fl">.1803</span><span class="op">;</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>A representação gráfica do código <code>GIMPLE</code> pode ser gerada com o comando:</li>
+</ul>
+<p>[exampleblock]{Comando do <code>GCC</code>}</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">${CC}</span> <span class="at">-fopenmp</span> <span class="at">-fdump-tree-ompexp-graph</span> parallel-region.c</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>[/exampleblock]</p>
+<!--
+![Representação Gráfica do Código GIMPLE](figuras/parallel-region/parallel-region-c-015t-ompexp-dot.pdf)
+-->
+<ul>
+<li>Gerar o código em <em>Assembly</em>:</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Comando do `GCC`">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Comando do <code>GCC</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">${CC}</span> <span class="at">-fopenmp</span> parallel-region.c <span class="at">-fno-asynchronous-unwind-tables</span> <span class="at">-S</span> <span class="at">-o</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel-region.s</span>            </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<ul>
+<li>Código em <em>Assembly</em>:</li>
+</ul>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode .asm code-with-copy"><code class="sourceCode fasm"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>.<span class="dt">file</span>   <span class="st">"parallel-region.c"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>.text</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>.globl  main</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>.type   main<span class="op">,</span> <span class="fu">@f</span>unction</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">main:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    pushq <span class="op">%</span><span class="kw">rbp</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">movq</span>  <span class="op">%</span><span class="kw">rsp</span><span class="op">,</span> <span class="op">%</span><span class="kw">rbp</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    movl  <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">edx</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    movl  <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">esi</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    movl  <span class="op">$</span>main<span class="op">.</span>_omp_fn<span class="op">.</span><span class="dv">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">edi</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">call</span>  GOMP_parallel_start</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    movl  <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">edi</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">call</span>  main<span class="op">.</span>_omp_fn<span class="op">.</span><span class="dv">0</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">call</span>  GOMP_parallel_end</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    movl  <span class="op">$</span><span class="bn">0</span><span class="op">,</span> <span class="op">%</span><span class="kw">eax</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    popq  <span class="op">%</span><span class="kw">rbp</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ret</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>.size   main<span class="op">,</span> <span class="op">.-</span>main</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode .asm code-with-copy"><code class="sourceCode fasm"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>.type   main<span class="op">.</span>_omp_fn<span class="op">.</span><span class="dv">0</span><span class="op">,</span> <span class="fu">@f</span>unction</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">main._omp_fn.0:</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    pushq <span class="op">%</span><span class="kw">rbp</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">movq</span>  <span class="op">%</span><span class="kw">rsp</span><span class="op">,</span> <span class="op">%</span><span class="kw">rbp</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">movq</span>  <span class="op">%</span><span class="kw">rdi</span><span class="op">,</span> <span class="op">-</span><span class="dv">8</span><span class="op">(%</span><span class="kw">rbp</span><span class="op">)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    popq  <span class="op">%</span><span class="kw">rbp</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ret</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>.size   main<span class="op">.</span>_omp_fn<span class="op">.</span><span class="dv">0</span><span class="op">,</span> <span class="op">.-</span>main<span class="op">.</span>_omp_fn<span class="op">.</span><span class="dv">0</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>.ident  <span class="st">"GCC: (Debian 4.8.4-1) 4.8.4"</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>.<span class="bu">section</span>    <span class="op">.</span>note<span class="op">.</span>GNU<span class="op">-</span>stack<span class="op">,</span><span class="st">""</span><span class="op">,</span><span class="fu">@</span><span class="er">p</span>rogbits</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p>Porém, esse construtor não divide o trabalho entre as <em>threads</em>, apenas cria a região paralela.</p>
+</section>
+<section id="cláusulas-do-construtor-parallel" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="cláusulas-do-construtor-parallel"><span class="header-section-number">4.3</span> Cláusulas do Construtor <em>parallel</em></h2>
+<p>O Construtor para a definição de <strong>Regiões Paralelas</strong> admite algumas cláusulas. A sintaxe para o construtor <strong><em>parallel</em></strong> com clásulas:</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Sintaxe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Sintaxe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel [clause[ [,] clause] ... ] new-line</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  body<span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<ul>
+<li>Serão apresentadas aqui as cláusulas que podem ser utilizadas com o construtor <strong><em>parallel</em></strong>.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Cláusulas que podem ser utilizadas nesse construtor">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Cláusulas que podem ser utilizadas nesse construtor
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="op">(</span>scalar<span class="op">-</span>expression<span class="op">)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>num_threads <span class="op">(</span>variavel inteira<span class="op">)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">default</span> <span class="op">(</span>shared <span class="op">|</span> none<span class="op">)</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>private <span class="op">(</span>lista de variaveis<span class="op">)</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>firstprivate <span class="op">(</span>lista de variaveis<span class="op">)</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>shared <span class="op">(</span>lista de variaveis<span class="op">)</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>copyin <span class="op">(</span>lista de variaveis<span class="op">)</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>reduction <span class="op">(</span>operador<span class="op">:</span> lista de variaveis<span class="op">)</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>proc_bind<span class="op">(</span>master <span class="op">|</span> close <span class="op">|</span> spread<span class="op">)</span>      </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<p>Antes de testarmos cada uma das <em>cláusulas</em> do construtor <strong><em>parallel</em></strong>, vamos relembrar o exemplo básico <code>Hello World</code> que servirá de código de partida. O <a href="#lst-cod-exe-hello-world-seq" class="quarto-xref">Código&nbsp;<span>4.II</span></a> na linguagem <code>C</code> imprime a famosa e conhecida mensagem <code>Hello World!!!</code> que todo programador iniciante em uma linguagem de programação escreve como primeiro exemplo.</p>
+<div id="lst-cod-exe-hello-world-seq" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="helloworld-seq.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-exe-hello-world-seq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;4.II: Hello World em C
+</figcaption>
+<div aria-describedby="lst-cod-exe-hello-world-seq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>helloworld-seq.c</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" data-filename="helloworld-seq.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Hello World!!!</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<p>O mesmo programa em <code>OpenMP</code> ficaria em uma versão básica conforme o <a href="#lst-cod-exe-hello-world-omp-01" class="quarto-xref">Código&nbsp;<span>4.III</span></a>. A chamada à função <code>printf</code> foi colocada dentro de uma região paralela.</p>
+<div id="lst-cod-exe-hello-world-omp-01" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="helloworld-omp-01.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-exe-hello-world-omp-01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;4.III: Hello World em OpenMP
+</figcaption>
+<div aria-describedby="lst-cod-exe-hello-world-omp-01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>helloworld-omp-01.c</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" data-filename="helloworld-omp-01.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Compilar:</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * gcc -fopenmp helloworld-omp-01.c -o helloworld-omp-01.exe</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * ou </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * make omp-01</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;omp.h&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Hello World!!!</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<p>Notem que na versão apresentada acima, não foi especificada o número de threads que deverão ser criadas. O número de threads utilizadas será determinado pelo número de processadores disponíveis no sistema.</p>
+<p>A <a href="#fig-exec-make-hello-world" class="quarto-xref">Figure&nbsp;<span>4.I</span></a>.</p>
+<div id="fig-exec-make-hello-world" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-exec-make-hello-world-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/execucao-make-exemplo-hello-world.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-exec-make-hello-world-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.I: Execução do make
+</figcaption>
+</figure>
+</div>
+<ol class="example" type="1">
+<li></li>
+</ol>
+<div id="fig-exec-exe-hello-world-omp-01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-exec-exe-hello-world-omp-01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figuras/execucao-exemplo-hello-world-omp-01.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-exec-exe-hello-world-omp-01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4.II: Execução do hello world em OpenMP
+</figcaption>
+</figure>
+</div>
+<div id="lst-cod-exe-hello-world-omp-02" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="helloworld-omp-02.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-exe-hello-world-omp-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;4.IV: Hello World em OpenMP com cláusula num_threads
+</figcaption>
+<div aria-describedby="lst-cod-exe-hello-world-omp-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>helloworld-omp-02.c</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-filename="helloworld-omp-02.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Compilar:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * gcc -fopenmp helloworld-omp-02.c -o helloworld-omp-02.exe</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * ou </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * make omp-02</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;pthread.h&gt;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef _OPENMP</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;omp.h&gt;</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#define omp_get_thread_num</span><span class="op">()</span><span class="pp"> </span><span class="dv">0</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="pp">#pragma omp parallel</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">{</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> id_omp <span class="op">=</span> omp_get_thread_num<span class="op">();</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">long</span> <span class="dt">int</span> id_sys <span class="op">=</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">();</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%2d</span><span class="st">, </span><span class="sc">%lu</span><span class="st">]: Hello World!!!</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">);</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<ul>
+<li><strong>Condicional de Compilação</strong> - Para tornar possível a compilação de um programa <code>OpenMP</code> tanto na versão paralela quanto na versão sequencial.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef _OPENMP</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;omp.h&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define omp_get_thread_num</span><span class="op">()</span><span class="pp"> </span><span class="dv">0</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define omp_get_num_threads</span><span class="op">()</span><span class="pp"> </span><span class="dv">1</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#define omp_get_num_procs</span><span class="op">()</span><span class="pp"> </span><span class="op">(*(</span><span class="pp">system</span><span class="op">(</span><span class="st">"cat /proc/cpuinfo | </span><span class="op">\</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">                               grep 'processor' | wc -l"</span><span class="op">))*)</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li><code>Hello World</code> completo:</li>
+</ul>
+<p>O <a href="#lst-cod-exe-hello-world-01" class="quarto-xref">Código&nbsp;<span>4.V</span></a> ilustra o funcionamento do Hello World.</p>
+<div id="lst-cod-exe-hello-world-01" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="helloworld-omp-01.c">
+<figure class="quarto-float quarto-float-lst figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-cod-exe-hello-world-01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Código&nbsp;4.V: Hello World
+</figcaption>
+<div aria-describedby="lst-cod-exe-hello-world-01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>helloworld-omp-01.c</strong></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-filename="helloworld-omp-01.c"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Compilar:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"> * gcc -fopenmp helloworld-omp-01.c -o helloworld-omp-01.exe</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"> * ou </span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"> * make omp-01</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"> */</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;omp.h&gt;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Hello World!!!</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</figure>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#ifdef _OPENMP</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;omp.h&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#define omp_get_thread_num</span><span class="op">()</span><span class="pp"> </span><span class="dv">0</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#define omp_get_num_threads</span><span class="op">()</span><span class="pp"> </span><span class="dv">1</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="pp">#define omp_get_num_procs</span><span class="op">()</span><span class="pp"> </span><span class="op">(*(</span><span class="pp">system</span><span class="op">(</span><span class="st">"cat /proc/cpuinfo | </span><span class="op">\</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="st">                                grep 'processor' | wc -l"</span><span class="op">))*)</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> id_omp <span class="op">=</span> omp_get_thread_num<span class="op">();</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">int</span> id_sys <span class="op">=</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">();</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Hello World!!!</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">);</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="cláusula-num_threads-do-construtor-parallel" class="level2 fragile allowframebreaks" data-number="4.4">
+<h2 class="fragile allowframebreaks anchored" data-number="4.4" data-anchor-id="cláusula-num_threads-do-construtor-parallel"><span class="header-section-number">4.4</span> Cláusula <em>num_threads</em> do Construtor <em>parallel</em></h2>
+<ul>
+<li>A cláusula <code>num_threads</code> é utilizada para definir a quantidade de <em>threads</em> a serem criadas na <em>região paralela</em>:</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Sintaxe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Sintaxe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel num_threads(valor inteiro)</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  body<span class="op">;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Define o número de <em>threads</em> que serão criadas na seção paralela.</p>
+<p>A mesma definição pode ser feita pela variável de ambiente: <code>OMP_NUM_THREADS</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">setenv</span> OMP_NUM_THREADS 4,3,2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#M6.9.IDZ866058596"><em>Seção 4.2 OMP_NUM_THREADS</em></a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> da especificação.</p>
+<p>ou chamando-se a função:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> omp_set_num_threads<span class="op">(</span><span class="dt">int</span> num_threads<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><a href="http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#G5.1001042"><em>Seção 3.2.1 <strong>omp_set_num_threads</strong></em></a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> do documento de especificação.</p>
+</div>
+</div>
+<ul>
+<li>Um exemplo de uso de <code>num_threads</code>. Quatro <em>threads</em> serão criadas para executarem o código da região paralela.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Codigo suprimido. */</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel num_threads(4)</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> id_omp <span class="op">=</span> omp_get_thread_num<span class="op">();</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">int</span> id_sys <span class="op">=</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">();</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Hello World!!!</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">);</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>O resultado apresentado no terminal é a execução feita pelas <span class="math inline">\(4\)</span> <em>threads</em> criadas pelo <em>runtime</em> do <code>OpenMP</code>, com os <em>ids</em> de <span class="math inline">\(0\)</span> a <span class="math inline">\(3\)</span>.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-num_threads-clause]$</span> ./example-parallel-num-threads.exe </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">18446744072025257856</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">18446744072012752640</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">18446744071995967232</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">18446744072004359936</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-num_threads-clause]$</span> ./example-parallel-num-threads.exe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Um outra forma de definir o número de <em>threads</em> a serem criadas na região paralela é usar a função <code>omp_set_num_threads(int num_threads)</code> como pode ser visto no Código <span class="math inline">\(\ref{mycode}\)</span>.</li>
+</ul>
+<p>Código <span class="math inline">\(\ref{mycode}\)</span>. Uso da função <code>omp_set_num_threads(int num_threads)</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="mycode" data-caption="Uso da função `omp_set_num_threads(int num_threads)`" data-startfrom="1"><pre class="sourceCode numberSource C numberLines code-with-copy"><code class="sourceCode c"><span id="mycode-1"><a href="#mycode-1" aria-label="1"></a><span class="co">/* Codigo suprimido. */</span> </span>
+<span id="mycode-2"><a href="#mycode-2" aria-label="2"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span>        </span>
+<span id="mycode-3"><a href="#mycode-3" aria-label="3"></a>  omp_set_num_threads<span class="op">(</span><span class="dv">7</span><span class="op">);</span></span>
+<span id="mycode-4"><a href="#mycode-4" aria-label="4"></a><span class="pp">#pragma omp parallel</span></span>
+<span id="mycode-5"><a href="#mycode-5" aria-label="5"></a><span class="op">{</span></span>
+<span id="mycode-6"><a href="#mycode-6" aria-label="6"></a>  <span class="dt">int</span> id_omp <span class="op">=</span> omp_get_thread_num<span class="op">();</span></span>
+<span id="mycode-7"><a href="#mycode-7" aria-label="7"></a>  <span class="dt">long</span> <span class="dt">int</span> id_sys <span class="op">=</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">();</span></span>
+<span id="mycode-8"><a href="#mycode-8" aria-label="8"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Hello World!!!</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">);</span></span>
+<span id="mycode-9"><a href="#mycode-9" aria-label="9"></a><span class="op">}</span></span>
+<span id="mycode-10"><a href="#mycode-10" aria-label="10"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="mycode-11"><a href="#mycode-11" aria-label="11"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-num_threads-clause]$</span> ./example-parallel-omp_set_num_threads-function.exe </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">18446744073166374784</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">6</span><span class="op">][</span><span class="dv">18446744073111906048</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">18446744073137084160</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">4</span><span class="op">][</span><span class="dv">18446744073128691456</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">18446744073145476864</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">18446744073153869568</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">5</span><span class="op">][</span><span class="dv">18446744073120298752</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-num_threads-clause]$</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside id="footnotes-2" class="footnotes footnotes-end-of-section" role="doc-footnote">
+<hr>
+<ol start="2">
+<li id="fn2"><p><a href="http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#M6.9.IDZ866058596">http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#M6.9.IDZ866058596</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#G5.1001042">http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#G5.1001042</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
+</section>
+<section id="cláusula-if-do-construtor-parallel" class="level2 fragile allowframebreaks" data-number="4.5">
+<h2 class="fragile allowframebreaks anchored" data-number="4.5" data-anchor-id="cláusula-if-do-construtor-parallel"><span class="header-section-number">4.5</span> Cláusula <em>if</em> do Construtor <em>parallel</em></h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Sintaxe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Sintaxe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel if(expressao)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  body<span class="op">;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se a expressão retornar um valor verdadeiro o time de threads é criado conforme a definição de <code>num_threads</code>. Se o valor da expressão for falso apenas uma thread irá executar o código.</p>
+<p><em>Seção 2.5.1 Determining the Number of Threads for a parallel Region</em> do documento de especificação:<br>
+<a href="http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#G4.1027332" class="uri">http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#G4.1027332</a><br>
+Ver o <em>Algoritmo 2.1</em>.</p>
+</div>
+</div>
+<ul>
+<li>Um exemplo que <strong>expression</strong> retornará <em>false</em>.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Codigo suprimido. */</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel if(n&gt;10) num_threads(4)</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> id_omp <span class="op">=</span> omp_get_thread_num<span class="op">();</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">int</span> id_sys <span class="op">=</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">();</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Hello World!!!</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">);</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-if-clause]$</span> ./example-parallel-if-false.exe </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">340465536</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-if-clause]$</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Um exemplo que <strong>expression</strong> retornará <em>true</em>.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Codigo suprimido. */</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> <span class="dv">11</span><span class="op">;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel if(n&gt;10) num_threads(4)</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> id_omp <span class="op">=</span> omp_get_thread_num<span class="op">();</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">int</span> id_sys <span class="op">=</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">();</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Hello World!!!</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">);</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-if-clause]$</span> ./example-parallel-if-true.exe </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">1551517568</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">1530619648</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">1539012352</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">1522226944</span><span class="op">]</span><span class="ex">:</span> Hello World!!!</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-if-clause]$</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="cláusulas-default-private-shared-do-construtor-parallel" class="level2 fragile allowframebreaks" data-number="4.6">
+<h2 class="fragile allowframebreaks anchored" data-number="4.6" data-anchor-id="cláusulas-default-private-shared-do-construtor-parallel"><span class="header-section-number">4.6</span> Cláusulas <em>default, private, shared</em> do Construtor <em>parallel</em></h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Sintaxe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Sintaxe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel default(none) private(lista) shared(lista)</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  body<span class="op">;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A cláusula <code>default(none)</code> requer que cada variável referenciada no construtor tenha um atributo de compartilhamento determinado explicitamente.</p>
+<p><em>Seção 33 The default(none) Clause</em> do documento de especificação:<br>
+<a href="http://openmp.org/mp-documents/OpenMP_Examples_4.0.1.pdf#G3.1035623" class="uri">http://openmp.org/mp-documents/OpenMP_Examples_4.0.1.pdf#G3.1035623</a></p>
+</div>
+</div>
+<ul>
+<li>Um exemplo do uso das cláusulas de compartilhamento de dados.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Codigo suprimido. */</span> </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> id_omp<span class="op">,</span> n <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel default(none) private(id_omp) shared(n)</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  id_omp <span class="op">=</span> omp_get_thread_num<span class="op">();</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">int</span> id_sys <span class="op">=</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">();</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Valor de n: </span><span class="sc">%d</span><span class="st"> antes.</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  n <span class="op">=</span> n <span class="op">+</span> id<span class="op">;</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Valor de n: </span><span class="sc">%d</span><span class="st"> depois.</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Valor final de n: </span><span class="sc">%d</span><span class="st">.</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> omp_get_thread_num<span class="op">(),</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">(),</span> n<span class="op">);</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-data-share-clauses]$</span> ./example-parallel-data-share-clauses.exe </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">18446744073195390848</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">18446744073195390848</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 depois.</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">18446744073166100224</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">18446744073166100224</span><span class="op">]</span><span class="ex">:</span> Valor de n: 3 depois.</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">18446744073174492928</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">18446744073174492928</span><span class="op">]</span><span class="ex">:</span> Valor de n: 5 depois.</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">4</span><span class="op">][</span><span class="dv">18446744073157707520</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">4</span><span class="op">][</span><span class="dv">18446744073157707520</span><span class="op">]</span><span class="ex">:</span> Valor de n: 9 depois.</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">5</span><span class="op">][</span><span class="dv">18446744073149314816</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">5</span><span class="op">][</span><span class="dv">18446744073149314816</span><span class="op">]</span><span class="ex">:</span> Valor de n: 14 depois.</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">6</span><span class="op">][</span><span class="dv">18446744073140922112</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">6</span><span class="op">][</span><span class="dv">18446744073140922112</span><span class="op">]</span><span class="ex">:</span> Valor de n: 20 depois.</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">7</span><span class="op">][</span><span class="dv">18446744073132529408</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">7</span><span class="op">][</span><span class="dv">18446744073132529408</span><span class="op">]</span><span class="ex">:</span> Valor de n: 27 depois.</span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">18446744073182885632</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">18446744073182885632</span><span class="op">]</span><span class="ex">:</span> Valor de n: 28 depois.</span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">18446744073195390848</span><span class="op">]</span><span class="ex">:</span> Valor final de n: 28.</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-data-share-clauses]$</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="cláusula-reduction-do-construtor-parallel" class="level2 fragile allowframebreaks" data-number="4.7">
+<h2 class="fragile allowframebreaks anchored" data-number="4.7" data-anchor-id="cláusula-reduction-do-construtor-parallel"><span class="header-section-number">4.7</span> Cláusula <em>reduction</em> do Construtor <em>parallel</em></h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Sintaxe">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Sintaxe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel reduction(operador: variavel)</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  body<span class="op">;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Definição">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definição
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A cláusula <code>reduction(operador: variavel)</code> faz a operação de redução em uma variável com os valores parciais de cada uma das threads.</p>
+<p><em>2.14.3.6 reduction clause</em> do documento de especificação:<br>
+<a href="http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#G4.1014420" class="uri">http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf#G4.1014420</a></p>
+</div>
+</div>
+<ul>
+<li>Um exemplo do uso da cláusula <em>reduction</em>.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">/* Codigo suprimido. */</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> id_omp<span class="op">,</span> n <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#pragma omp parallel default(none) private(id_omp) reduction(+: n)</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  id_omp <span class="op">=</span> omp_get_thread_num<span class="op">();</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">long</span> <span class="dt">int</span> id_sys <span class="op">=</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">();</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Valor de n: </span><span class="sc">%d</span><span class="st"> antes.</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  n <span class="op">=</span> n <span class="op">+</span> id_omp<span class="op">;</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Valor de n: </span><span class="sc">%d</span><span class="st"> depois.</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> id_omp<span class="op">,</span> id_sys<span class="op">,</span> n<span class="op">);</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  printf<span class="op">(</span><span class="st">"Thread[</span><span class="sc">%d</span><span class="st">][</span><span class="sc">%lu</span><span class="st">]: Valor final de n: </span><span class="sc">%d</span><span class="st">.</span><span class="sc">\n</span><span class="st">"</span><span class="op">,</span> omp_get_thread_num<span class="op">(),</span> <span class="op">(</span><span class="dt">long</span> <span class="dt">int</span><span class="op">)</span> pthread_self<span class="op">(),</span> n<span class="op">);</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode .bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-reduction-clause]$</span> ./example-parallel-reduction-clauses.exe </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">1719039744</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">2</span><span class="op">][</span><span class="dv">1719039744</span><span class="op">]</span><span class="ex">:</span> Valor de n: 2 depois.</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">5</span><span class="op">][</span><span class="dv">1693861632</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">5</span><span class="op">][</span><span class="dv">1693861632</span><span class="op">]</span><span class="ex">:</span> Valor de n: 5 depois.</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">4</span><span class="op">][</span><span class="dv">1702254336</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">4</span><span class="op">][</span><span class="dv">1702254336</span><span class="op">]</span><span class="ex">:</span> Valor de n: 4 depois.</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">1710647040</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">3</span><span class="op">][</span><span class="dv">1710647040</span><span class="op">]</span><span class="ex">:</span> Valor de n: 3 depois.</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">7</span><span class="op">][</span><span class="dv">1677076224</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">7</span><span class="op">][</span><span class="dv">1677076224</span><span class="op">]</span><span class="ex">:</span> Valor de n: 7 depois.</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">1727432448</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">1</span><span class="op">][</span><span class="dv">1727432448</span><span class="op">]</span><span class="ex">:</span> Valor de n: 1 depois.</span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">6</span><span class="op">][</span><span class="dv">1685468928</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">6</span><span class="op">][</span><span class="dv">1685468928</span><span class="op">]</span><span class="ex">:</span> Valor de n: 6 depois.</span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">1739937664</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 antes.</span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">1739937664</span><span class="op">]</span><span class="ex">:</span> Valor de n: 0 depois.</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a><span class="va">Thread</span><span class="op">[</span><span class="dv">0</span><span class="op">][</span><span class="dv">1739937664</span><span class="op">]</span><span class="ex">:</span> Valor final de n: 28.</span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="ex">[parallel-reduction-clause]$</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="prática-exercício-de-implementação" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="prática-exercício-de-implementação"><span class="header-section-number">4.8</span> Prática: Exercício de Implementação</h2>
+<p>Soma de Vetores com Regiões Paralelas</p>
+<ol type="1">
+<li><p>Implementamos uma versões do exemplo <code>soma de vetores</code> utilizando processos com memória compartilhada e com <code>pthreads</code> <span class="math inline">\((\checkmark)\)</span></p></li>
+<li><p>Implemente uma versão do exemplo <code>soma de vetores</code> utilizando a diretiva <code>parallel</code> e recursos vistos até o momento.</p></li>
+<li><p>Execute os exemplos <code>vectoradd</code> utilizando o construtor <code>parallel</code> <span class="citation" data-cites="openmp:api:2011">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-openmp:api:2011" role="doc-biblioref">OpenMP-ARB 2011</a>)</span> <span class="citation" data-cites="openmp:api:2013">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-openmp:api:2013" role="doc-biblioref">OpenMP-ARB 2013</a>)</span> <span class="citation" data-cites="openmp:api:2015">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-openmp:api:2015" role="doc-biblioref">OpenMP-ARB 2015</a>)</span>, com particionamento de iterações <code>estática</code> e <code>dinâmica</code>.</p></li>
+</ol>
+</section>
+<section id="relatório" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="relatório"><span class="header-section-number">4.9</span> Relatório</h2>
+<ul>
+<li>Escreva sobre as alterações que foram necessárias para a execução das versões paralelas do soma de vetores utilizando <code>#pragma omp parallel</code> com particionamento estático e dinâmico. Complemente o relatório comparativo da prática anterior utilizando a versão sequencial e com <code>pthreads</code>.</li>
+</ul>
+<!--
+::: {.callout-note icon=false}
+
+## Pay Attention
+
+Using callouts is an effective way to highlight content that your reader give special consideration or attention.
+
+:::
+
+::: {#tip-example .callout-tip}
+## Cross-Referencing a Tip
+
+Add an ID starting with `#tip-` to reference a tip.
+:::
+
+See @tip-example...
+
+
+
+
+::: {.callout-note}
+Note that there are five types of callouts, including:
+`note`, `warning`, `important`, `tip`, and `caution`.
+:::
+
+::: {.callout-tip title="Tip with Title"}
+This is a callout with a title.
+:::
+
+::: {.callout-tip}
+## Tip with Title
+
+This is an example of a callout with a title.
+:::
+
+::: {.callout-important title="Importante"}
+This is a callout with a title.
+:::
+
+::: {.callout-warning title="Aviso"}
+This is a callout Warning a title.
+:::
+
+::: {.callout-caution collapse="true"}
+## Expand To Learn About Collapse
+
+This is an example of a 'folded' caution callout that can be expanded by the user. You can use `collapse="true"` to collapse it by default or `collapse="false"` to make a collapsible callout that is expanded by default.
+:::
+
+
+
+::: {.callout-note title="Sintaxe"}
+
+Bloco de Código com callout.
+
+```bash
+$ gcc -pthread programa.c -o programa
+$ ./programa
+Executando em paralelo...
+```
+
+:::
+
+
+::: {.callout-note icon=false title="Terminal"}
+```bash
+$ teste gcc -pthread programa.c -o programa
+$ ./programa
+```
+:::
+
+
+::: {.callout-tip icon=false title="Terminal"}
+```bash
+$ gcc -pthread programa.c -o programa
+$ ./programa
+```
+:::
+
+
+Conforme apresentado na @cau-comando-compilacao, bla
+
+::: {#cau-comando-compilacao .callout-note title="Sintaxe"}
+
+Bloco de Código com callout.
+
+```bash
+$ gcc -pthread programa.c -o programa
+$ ./programa
+Executando em paralelo...
+```
+
+:::
+
+
+::: {#cau-comando-compilacao .callout-caution icon=false title="Terminal"}
+```bash
+$ gcc -pthread programa.c -o programa
+$ ./programa
+```
+:::
+
+
+<!--
+Style
+
+::: {.terminal-window}
+```bash
+$ gcc -pthread programa.c -o programa
+$ ./programa
+Executando em paralelo...
+```
+:::
+
+
+
+::: {.callout-note title="Clique para expandir a solução" collapse="true"}
+Aqui fica o texto ou código oculto que se expande ao clicar.
+:::
+
+-->
+</section>
+<section id="sec-openmp-consid-finais" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="sec-openmp-consid-finais"><span class="header-section-number">4.10</span> Considerações Finais</h2>
+<p>O OpenMP permite identificar oportunidades de paralelismo, dividir o trabalho de forma equilibrada, sincronizar apenas quando necessário e medir continuamente o impacto das mudanças dentro do código. Sendo flexível e portátil, ele permite que você comece paralelizando um único laço e avançando para arquiteturas mais complexas, ajustando <code>scheduling</code>, explorando tarefas independentes e combinando paralelismo com outras técnicas de otimização.</p>
+<p>O próximo passo é continuar testando diferentes configurações, medindo resultados, identificando gargalos e refinando o código. A prática constante e a análise crítica são as chaves para dominar o OpenMP e, mais amplamente, a programação paralela.</p>
+</section>
+<section id="word-cloud" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">4.11</span> <em>Word Cloud</em></h2>
+<p><img src="figuras/aula-005-parallel-regions.md.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
+</section>
+<section id="referências" class="level1 unnumbered">
+<h1 class="unnumbered">Referências</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Nvidia2015" class="csl-entry" role="listitem">
+NVIDIA. 2015. <em><span>CUDA C Best Practices Guide</span></em>. NVIDIA. <a href="http://docs.nvidia.com/cuda/cuda-c-best-practices-guide">http://docs.nvidia.com/cuda/cuda-c-best-practices-guide</a>.
+</div>
+<div id="ref-openmp:api:2011" class="csl-entry" role="listitem">
+OpenMP-ARB. 2011. <em><span>OpenMP Application Program Interface Version 3.1</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/OpenMP3.1.pdf">http://www.openmp.org/mp-documents/OpenMP3.1.pdf</a>.
+</div>
+<div id="ref-openmp:api:2013" class="csl-entry" role="listitem">
+OpenMP-ARB. 2013. <em><span>OpenMP Application Program Interface Version 4.0</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf">http://www.openmp.org/mp-documents/OpenMP4.0.0.pdf</a>.
+</div>
+<div id="ref-openmp:examples:2014" class="csl-entry" role="listitem">
+OpenMP-ARB. 2014. <em><span>OpenMP Application Program Interface Examples 4.0.1</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://openmp.org/mp-documents/OpenMP_Examples_4.0.1.pdf">http://openmp.org/mp-documents/OpenMP_Examples_4.0.1.pdf</a>.
+</div>
+<div id="ref-openmp:api:2015" class="csl-entry" role="listitem">
+OpenMP-ARB. 2015. <em><span>OpenMP Application Program Interface Version 4.5</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/openmp-4.5.pdf">http://www.openmp.org/mp-documents/openmp-4.5.pdf</a>.
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rogerioag\.github\.io\/openmp-alem-das-diretivas-de-compilacao");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../cap-03-openmp-intro/cap-03-openmp-intro.html" class="pagination-link" aria-label="Introdução ao OpenMP: Diretivas de Compilação, Variáveis de Ambiente e Funções de Biblioteca">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introdução ao OpenMP: Diretivas de Compilação, Variáveis de Ambiente e Funções de Biblioteca</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../references.html" class="pagination-link" aria-label="Referências">
+        <span class="nav-page-text">Referências</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao/edit/master/cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
