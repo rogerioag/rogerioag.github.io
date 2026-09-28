@@ -256,6 +256,18 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../cap-05-openmp-master-single-critical-atomic-barrier/cap-05-openmp-master-single-critical-atomic-barrier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Construtores de Compartilhamento de Trabalho, <em>master, single, critical e barrier</em></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-06-openmp-for/cap-06-openmp-for.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Laços</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Referências</span></a>
   </div>
@@ -265,8 +277,14 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+  <li><a href="#referências-4" id="toc-referências-4" class="nav-link active" data-scroll-target="#referências-4">Referências</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao/edit/master/cap-02-pthreads/cap-02-pthreads.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -362,7 +380,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/threads_exemplo_1.png" class="img-fluid figure-img"></p>
-<figcaption>Processador de texto com três threads <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref"><strong>Tanenbaum?</strong></a>)</span>.</figcaption>
+<figcaption>Processador de texto com três threads <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref">Tanenbaum and Bos 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -371,7 +389,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/threads_exemplo_2.png" class="img-fluid figure-img" style="width:75.0%"></p>
-<figcaption>Servidor Web atendendo múltiplas requisições simultâneas <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref"><strong>Tanenbaum?</strong></a>)</span>.</figcaption>
+<figcaption>Servidor Web atendendo múltiplas requisições simultâneas <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref">Tanenbaum and Bos 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -383,7 +401,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/thread_modelos.png" class="img-fluid figure-img"></p>
-<figcaption>(a) Processo com uma thread. (b) Processo com três threads <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref"><strong>Tanenbaum?</strong></a>)</span>.</figcaption>
+<figcaption>(a) Processo com uma thread. (b) Processo com três threads <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref">Tanenbaum and Bos 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 <ul>
@@ -422,7 +440,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/thread_modelos_detalhe.png" class="img-fluid figure-img" style="width:85.0%"></p>
-<figcaption>(a) Processo com uma thread. (b) Processo com três threads <span class="citation" data-cites="Silberschatz">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Silberschatz" role="doc-biblioref"><strong>Silberschatz?</strong></a>)</span>.</figcaption>
+<figcaption>(a) Processo com uma thread. (b) Processo com três threads <span class="citation" data-cites="Silberschatz">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Silberschatz" role="doc-biblioref">Silberschatz et al. 2015</a>)</span>.</figcaption>
 </figure>
 </div>
 <ul>
@@ -442,7 +460,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/thread_tipos.png" class="img-fluid figure-img"></p>
-<figcaption>(a) Threads em nível de usuário. (b) Threads em nível de núcleo <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref"><strong>Tanenbaum?</strong></a>)</span>.</figcaption>
+<figcaption>(a) Threads em nível de usuário. (b) Threads em nível de núcleo <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref">Tanenbaum and Bos 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 </section>
@@ -501,7 +519,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figuras/thread_tipo_hibrido.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption>Threads de um processo mapeadas em duas threads de núcleo <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref"><strong>Tanenbaum?</strong></a>)</span>.</figcaption>
+<figcaption>Threads de um processo mapeadas em duas threads de núcleo <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref">Tanenbaum and Bos 2016</a>)</span>.</figcaption>
 </figure>
 </div>
 <p>[/columns]</p>
@@ -1284,7 +1302,7 @@ from time import sleep
 <section id="prática-soma-de-vetores-paralelo-versão-estática" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> Prática: Soma de Vetores Paralelo: Versão estática</h1>
 <ul>
-<li>Analise as alterações que foram feitas no código do exemplo <em>vectoradd</em> para a utilização de <em>pthreads</em> <span class="citation" data-cites="books/daglib/0085131">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-books/daglib/0085131" role="doc-biblioref"><strong>books/daglib/0085131?</strong></a>)</span>, com particionamento <code>estático</code> das iterações do laço.</li>
+<li>Analise as alterações que foram feitas no código do exemplo <em>vectoradd</em> para a utilização de <em>pthreads</em> <span class="citation" data-cites="books/daglib/0085131">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-books/daglib/0085131" role="doc-biblioref">Nichols et al. 1996</a>)</span>, com particionamento <code>estático</code> das iterações do laço.</li>
 <li>Código fonte em: <a href="https://moodle.utfpr.edu.br/mod/resource/view.php?id=677808"><code>src/vectoradd-pthreads-distribuicao-estatica</code></a></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1376,7 +1394,7 @@ from time import sleep
 <section id="prática-soma-de-vetores-paralelo-versão-dinâmica" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Prática: Soma de Vetores Paralelo: Versão dinâmica</h1>
 <ul>
-<li>Analise as alterações que foram feitas no código do exemplo <em>vectoradd</em> para a utilização de <em>pthreads</em> <span class="citation" data-cites="books/daglib/0085131">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-books/daglib/0085131" role="doc-biblioref"><strong>books/daglib/0085131?</strong></a>)</span>, com particionamento <code>dinâmico</code> das iterações do laço.</li>
+<li>Analise as alterações que foram feitas no código do exemplo <em>vectoradd</em> para a utilização de <em>pthreads</em> <span class="citation" data-cites="books/daglib/0085131">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-books/daglib/0085131" role="doc-biblioref">Nichols et al. 1996</a>)</span>, com particionamento <code>dinâmico</code> das iterações do laço.</li>
 <li>Código fonte em: <a href="https://moodle.utfpr.edu.br/mod/resource/view.php?id=677808"><code>src/vectoradd-pthreads-distribuicao-dinamica</code></a></li>
 </ul>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode .c code-with-copy"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> get_next_loop_partition<span class="op">(</span><span class="dt">long</span> <span class="op">*</span>ii<span class="op">,</span> <span class="dt">long</span> <span class="op">*</span>ff<span class="op">)</span> <span class="op">{</span></span>
@@ -1511,11 +1529,11 @@ from time import sleep
 <h2 data-number="12.1" class="anchored" data-anchor-id="leitura-recomendada-1"><span class="header-section-number">12.1</span> Leitura Recomendada</h2>
 <p>[alertblock]{Capítulo 2: Processos e Threads}</p>
 <p><code>Seção 2.2. Threads</code></p>
-<p>TANENBAUM, Andrew S. Sistemas operacionais modernos. 3. ed.~São Paulo, SP: Pearson, c2008. xvi, 654 p.~ISBN 9788576052371. <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref"><strong>Tanenbaum?</strong></a>)</span></p>
+<p>TANENBAUM, Andrew S. Sistemas operacionais modernos. 3. ed.~São Paulo, SP: Pearson, c2008. xvi, 654 p.~ISBN 9788576052371. <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref">Tanenbaum and Bos 2016</a>)</span></p>
 <p>[/alertblock]</p>
 <p>[exampleblock]{Capítulo 5: Implementação de tarefas}</p>
 <p><code>Seções 5.4. Threads</code></p>
-<p>MAZIERO, C. Sistemas Operacionais: Conceitos e Mecanismos. Editora da UFPR, 2019. 456 p.&nbsp;ISBN 978-85-7335-340-2. <span class="citation" data-cites="Maziero">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Maziero" role="doc-biblioref"><strong>Maziero?</strong></a>)</span></p>
+<p>MAZIERO, C. Sistemas Operacionais: Conceitos e Mecanismos. Editora da UFPR, 2019. 456 p.&nbsp;ISBN 978-85-7335-340-2. <span class="citation" data-cites="Maziero">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Maziero" role="doc-biblioref">Maziero 2017</a>)</span></p>
 <p>[/exampleblock]</p>
 </section>
 </section>
@@ -1541,11 +1559,11 @@ POSIX Programer's Manual, unistd(0P). Disponível em <http://man7.org/linux/man-
 <h2 data-number="13.2" class="anchored" data-anchor-id="leitura-recomendada-2"><span class="header-section-number">13.2</span> Leitura Recomendada</h2>
 <p>[alertblock]{Capítulo 2: Processos e Threads}</p>
 <p><code>Seção 2.2. Threads</code></p>
-<p>TANENBAUM, Andrew S. Sistemas operacionais modernos. 3. ed.~São Paulo, SP: Pearson, c2008. xvi, 654 p.~ISBN 9788576052371. <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref"><strong>Tanenbaum?</strong></a>)</span></p>
+<p>TANENBAUM, Andrew S. Sistemas operacionais modernos. 3. ed.~São Paulo, SP: Pearson, c2008. xvi, 654 p.~ISBN 9788576052371. <span class="citation" data-cites="Tanenbaum">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Tanenbaum" role="doc-biblioref">Tanenbaum and Bos 2016</a>)</span></p>
 <p>[/alertblock]</p>
 <p>[exampleblock]{Capítulo 5: Implementação de tarefas}</p>
 <p><code>Seções 5.4. Threads</code></p>
-<p>MAZIERO, C. Sistemas Operacionais: Conceitos e Mecanismos. Editora da UFPR, 2019. 456 p.&nbsp;ISBN 978-85-7335-340-2. <span class="citation" data-cites="Maziero">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Maziero" role="doc-biblioref"><strong>Maziero?</strong></a>)</span></p>
+<p>MAZIERO, C. Sistemas Operacionais: Conceitos e Mecanismos. Editora da UFPR, 2019. 456 p.&nbsp;ISBN 978-85-7335-340-2. <span class="citation" data-cites="Maziero">(<a href="../cap-01-introducao-visao-geral/cap-01-intro-visao-geral.html#ref-Maziero" role="doc-biblioref">Maziero 2017</a>)</span></p>
 <p>[/exampleblock]</p>
 </section>
 </section>
@@ -2137,7 +2155,7 @@ Código&nbsp;16.I: Comandos de compilação e execução do programa.
 </figure>
 </div>
 <p>O <a href="#lst-codigo" class="quarto-xref">Código&nbsp;<span>16.III</span></a> apresenta um exemplo de código que utiliza pthreads.</p>
-<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-code-file="./src/exemplo-pthreads/exemplo-thread.c" data-filename="Exemplo de Thread">
+<div id="lst-codigo" class="c listing quarto-float quarto-figure quarto-figure-left anchored" data-filename="Exemplo de Thread" data-code-file="./src/exemplo-pthreads/exemplo-thread.c">
 <figure class="quarto-float quarto-float-lst figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-lst" id="lst-codigo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Código&nbsp;16.II: Código do arquivo teste.c.
@@ -2284,24 +2302,40 @@ Aqui fica o texto ou código oculto que se expande ao clicar.
 </section>
 </section>
 </section>
-<section id="referências-4" class="level2" data-number="16.8">
-<h2 data-number="16.8" class="anchored" data-anchor-id="referências-4"><span class="header-section-number">16.8</span> Referências</h2>
+<section id="word-cloud-1" class="level2" data-number="16.8">
+<h2 data-number="16.8" class="anchored" data-anchor-id="word-cloud-1"><span class="header-section-number">16.8</span> <em>Word Cloud</em></h2>
+<p><img src="figuras/cap-02-pthreads.qmd.wordcloud.png" class="img-fluid" style="width:100.0%"></p>
+</section>
+</section>
+</div>
+<section id="referências-4" class="level1 unnumbered">
+<h1 class="unnumbered">Referências</h1>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-icmc_pthreads" class="csl-entry" role="listitem">
 ICMC-USP. 2020. <em>Aula 03 – Pthreads</em>. <a href="http://wiki.icmc.usp.br/images/3/30/Aula-03-_Pthreads.pdf">http://wiki.icmc.usp.br/images/3/30/Aula-03-_Pthreads.pdf</a>.
 </div>
+<div id="ref-Maziero" class="csl-entry" role="listitem">
+Maziero, Carlos Alberto. 2017. <em>Sistemas Operacionais: Conceitos e Mecanismos</em>. Online.
+</div>
+<div id="ref-books/daglib/0085131" class="csl-entry" role="listitem">
+Nichols, Bradford, Dick Buttlar, and Jacqueline Proulx Farrell. 1996. <em>Pthreads Programming - a POSIX Standard for Better Multiprocessing.</em> O’Reilly.
+</div>
 <div id="ref-threads_em_c" class="csl-entry" role="listitem">
 Programação Progressiva. 2019. <em>Threads Em c – Como Programar Usando Pthreads</em>. <a href="https://www.programacaoprogressiva.net/2019/02/Threads-em-C-Como-Programar-Usando-Pthreads.html">https://www.programacaoprogressiva.net/2019/02/Threads-em-C-Como-Programar-Usando-Pthreads.html</a>.
+</div>
+<div id="ref-Silberschatz" class="csl-entry" role="listitem">
+Silberschatz, Abraham, Peter Baer Galvin, and Greg Gagne. 2015. <em>Fundamentos de Sistemas Operacionais</em>. 9th ed. LTC.
+</div>
+<div id="ref-Tanenbaum" class="csl-entry" role="listitem">
+Tanenbaum, Andrew S., and Herbert Bos. 2016. <em>Sistemas Operacionais Modernos</em>. 4th ed. Pearson Education do Brasil.
 </div>
 <div id="ref-posix_pthreads" class="csl-entry" role="listitem">
 The Open Group. 2018. <em>POSIX Threads Programming</em>. <a href="https://pubs.opengroup.org/onlinepubs/009695399/functions/pthread_create.html">https://pubs.opengroup.org/onlinepubs/009695399/functions/pthread_create.html</a>.
 </div>
 </div>
-</section>
-</section>
-</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -2721,4 +2755,4 @@ The Open Group. 2018. <em>POSIX Threads Programming</em>. <a href="https://pubs.
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao/edit/master/cap-02-pthreads/cap-02-pthreads.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/rogerioag/openmp-alem-das-diretivas-de-compilacao/edit/master/cap-02-pthreads/cap-02-pthreads.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div></div></footer></body></html>

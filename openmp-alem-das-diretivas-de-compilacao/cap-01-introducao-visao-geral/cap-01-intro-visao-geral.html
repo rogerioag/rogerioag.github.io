@@ -256,6 +256,18 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../cap-05-openmp-master-single-critical-atomic-barrier/cap-05-openmp-master-single-critical-atomic-barrier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Construtores de Compartilhamento de Trabalho, <em>master, single, critical e barrier</em></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cap-06-openmp-for/cap-06-openmp-for.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Laços</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Referências</span></a>
   </div>
@@ -339,25 +351,25 @@ window.Quarto = {
 <p>A denominação <em>Simultaneous Multithreading</em> (SMT) teve origem na publicação de <span class="citation" data-cites="Tullsen:1995:SMM:225830.224449">(<a href="cap-01-intro-visao-geral.html#ref-Tullsen:1995:SMM:225830.224449" role="doc-biblioref">Tullsen et al. 1995</a>)</span>, embora o conceito tenha sido apresentado por idéias semelhantes em trabalhos anteriores como a arquitetura <em>Simultaneous Instruction Issuing</em> <span class="citation" data-cites="10.1145/139669.139710">(<a href="cap-01-intro-visao-geral.html#ref-10.1145/139669.139710" role="doc-biblioref">Hirata et al. 1992</a>)</span> e a arquitetura chamada <em>Multistreamed Superscalar</em> <span class="citation" data-cites="323172">(<a href="cap-01-intro-visao-geral.html#ref-323172" role="doc-biblioref">Yamamoto et al. 1994</a>)</span>, ambos com a capacidade de executar instruções provenientes de diferentes fluxos simultaneamente.</p>
 <p>As arquiteturas SMT têm como objetivo a execução simultânea de tarefas, remetendo à execução instruções de diferentes tarefas durante o mesmo ciclo do processador. Cada tarefa detém, durante a execução, o uso de alguns recursos que constituem o seu contexto de execução, compartilhando diversos outros com outras tarefas em execução. O contexto de cada tarefa é formado pelo conteúdo dos registradores que estão sendo utilizados, pelo seu contador de programa e pelos recursos que estão sob seu domínio.</p>
 <p>Através do embaralhamento das instruções das diversas tarefas em execução simultânea, a arquitetura explora o paralelismo em nível de tarefas (TLP), em adição ao ILP, o qual é típico das arquiteturas superescalares convencionais. Esta característica proporciona melhor aproveitamento dos recursos existentes, pois aqueles que estariam ociosos com a execução de uma única tarefa poderão ser aproveitados pela execução simultânea de outras tarefas.</p>
-<p>A execução de tarefas simultâneas garante um paralelismo maior em relação à execução convencional, permitindo uma exploração maior dos recursos do <em>hardware</em>. A unidade de busca, entre outros recursos é compartilhada pelas diversas tarefas, permite que as instruções das tarefas sejam buscadas e inseridas no caminho de execução, onde a coexistência de vários contextos permite aproveitar melhor as oportunidades de execução enquanto as tarefas concorrentes alternam seus momentos de <em>cpu-bound</em> e <em>io-bound</em>. A <a href="#fig-smt-arq" class="quarto-xref">Figure&nbsp;<span>1.I</span></a> apresenta o projeto arquitetural de uma arquitetura SMT.</p>
+<p>A execução de tarefas simultâneas garante um paralelismo maior em relação à execução convencional, permitindo uma exploração maior dos recursos do <em>hardware</em>. A unidade de busca, entre outros recursos é compartilhada pelas diversas tarefas, permite que as instruções das tarefas sejam buscadas e inseridas no caminho de execução, onde a coexistência de vários contextos permite aproveitar melhor as oportunidades de execução enquanto as tarefas concorrentes alternam seus momentos de <em>cpu-bound</em> e <em>io-bound</em>. A <a href="#fig-smt-arq" class="quarto-xref">Figura&nbsp;<span>1.I</span></a> apresenta o projeto arquitetural de uma arquitetura SMT.</p>
 <div id="fig-smt-arq" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-smt-arq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figuras/smt-01.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-smt-arq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.I: SMT
+Figura&nbsp;1.I: SMT
 </figcaption>
 </figure>
 </div>
-<p>A <a href="#fig-mixed-inst" class="quarto-xref">Figure&nbsp;<span>1.II</span></a> apresenta a ideia geral da utilização de recursos na execução em um núcleo SMT, fazendo um comparativo com a utilização dos recursos na execução em um processador de núcleo simples e em um processador de núcleo duplo. Os recursos são representados pelos quadrados, as linhas representam os recursos que podem ser utilizados em paralelo e as colunas mostram a utilização efetiva de cada recurso no decorrer do tempo.</p>
+<p>A <a href="#fig-mixed-inst" class="quarto-xref">Figura&nbsp;<span>1.II</span></a> apresenta a ideia geral da utilização de recursos na execução em um núcleo SMT, fazendo um comparativo com a utilização dos recursos na execução em um processador de núcleo simples e em um processador de núcleo duplo. Os recursos são representados pelos quadrados, as linhas representam os recursos que podem ser utilizados em paralelo e as colunas mostram a utilização efetiva de cada recurso no decorrer do tempo.</p>
 <div id="fig-mixed-inst" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mixed-inst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figuras/comparativoExecucaoModArq.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mixed-inst-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.II: Comparativo de Execução dos Modelos Arquiteturais
+Figura&nbsp;1.II: Comparativo de Execução dos Modelos Arquiteturais
 </figcaption>
 </figure>
 </div>
@@ -371,25 +383,25 @@ Figure&nbsp;1.II: Comparativo de Execução dos Modelos Arquiteturais
 </section>
 <section id="sec-multicore-smt" class="level3" data-number="1.2.3">
 <h3 data-number="1.2.3" class="anchored" data-anchor-id="sec-multicore-smt"><span class="header-section-number">1.2.3</span> Arquiteturas de Múltiplos Núcleos com SMT</h3>
-<p>Com o surgimento de arquiteturas de múltiplos núcleos em um único processador físico ou <em>Chip Multiprocessors</em> (CMP) <span class="citation" data-cites="10.1145/248209.237140">(<a href="cap-01-intro-visao-geral.html#ref-10.1145/248209.237140" role="doc-biblioref">Olukotun et al. 1996</a>)</span>, houve certa redução nas pesquisas em SMT. Entretanto, devido aos limites de desempenho alcançado por esta nova abordagem, o desejo atual é que os processadores passem a combinar as duas estratégias em uma única arquitetura. Com isso, surgem as arquiteturas <em>Chip Multi-Threaded</em> (CMT) <span class="citation" data-cites="10.1109/HPCA.2005.10">(<a href="cap-01-intro-visao-geral.html#ref-10.1109/HPCA.2005.10" role="doc-biblioref">Spracklen and Abraham 2005</a>)</span> como sendo processadores que suportam a execução simultânea de muitas tarefas via combinação do suporte a múltiplos núcleos com SMT. A aplicação de SMT em cada núcleo é feita para os mesmos fins que em processadores de núcleo único, melhor aproveitando os recursos e as oportunidades de execução durante a latência de operações de memória. A <a href="#fig-multicore" class="quarto-xref">Figure&nbsp;<span>1.III</span></a> apresenta o diagrama de um processador multinúcleos.</p>
+<p>Com o surgimento de arquiteturas de múltiplos núcleos em um único processador físico ou <em>Chip Multiprocessors</em> (CMP) <span class="citation" data-cites="10.1145/248209.237140">(<a href="cap-01-intro-visao-geral.html#ref-10.1145/248209.237140" role="doc-biblioref">Olukotun et al. 1996</a>)</span>, houve certa redução nas pesquisas em SMT. Entretanto, devido aos limites de desempenho alcançado por esta nova abordagem, o desejo atual é que os processadores passem a combinar as duas estratégias em uma única arquitetura. Com isso, surgem as arquiteturas <em>Chip Multi-Threaded</em> (CMT) <span class="citation" data-cites="10.1109/HPCA.2005.10">(<a href="cap-01-intro-visao-geral.html#ref-10.1109/HPCA.2005.10" role="doc-biblioref">Spracklen and Abraham 2005</a>)</span> como sendo processadores que suportam a execução simultânea de muitas tarefas via combinação do suporte a múltiplos núcleos com SMT. A aplicação de SMT em cada núcleo é feita para os mesmos fins que em processadores de núcleo único, melhor aproveitando os recursos e as oportunidades de execução durante a latência de operações de memória. A <a href="#fig-multicore" class="quarto-xref">Figura&nbsp;<span>1.III</span></a> apresenta o diagrama de um processador multinúcleos.</p>
 <div id="fig-multicore" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-multicore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figuras/multicore-01-1787174247423-5.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multicore-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.III: Multicore
+Figura&nbsp;1.III: Multicore
 </figcaption>
 </figure>
 </div>
-<p>A <a href="#fig-multicore-02" class="quarto-xref">Figure&nbsp;<span>1.IV</span></a> apresenta algumas imagens de <em>chips</em> de processadores que conhecidos.</p>
+<p>A <a href="#fig-multicore-02" class="quarto-xref">Figura&nbsp;<span>1.IV</span></a> apresenta algumas imagens de <em>chips</em> de processadores que conhecidos.</p>
 <div id="fig-multicore-02" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-multicore-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figuras/multicore-02.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multicore-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.IV: Multicore
+Figura&nbsp;1.IV: Multicore
 </figcaption>
 </figure>
 </div>
@@ -501,14 +513,14 @@ Código&nbsp;1.III: Exemplo do uso da chamada EXEC
 </div>
 </figure>
 </div>
-<p>A execução do exemplo do <a href="#lst-cod-fork" class="quarto-xref">Código&nbsp;<span>1.II</span></a> no terminal vai apresentar o resultado que aparece na <a href="#fig-execucao-exemplo-exec-comment" class="quarto-xref">Figure&nbsp;<span>1.V</span></a>.</p>
+<p>A execução do exemplo do <a href="#lst-cod-fork" class="quarto-xref">Código&nbsp;<span>1.II</span></a> no terminal vai apresentar o resultado que aparece na <a href="#fig-execucao-exemplo-exec-comment" class="quarto-xref">Figura&nbsp;<span>1.V</span></a>.</p>
 <div id="fig-execucao-exemplo-exec-comment" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-execucao-exemplo-exec-comment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figuras/execucao-exemplo-exec-comment.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-execucao-exemplo-exec-comment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.V: Execução do exec
+Figura&nbsp;1.V: Execução do exec
 </figcaption>
 </figure>
 </div>
@@ -550,14 +562,14 @@ Código&nbsp;1.IV: Exemplo do uso da chamada EXEC
 </div>
 </figure>
 </div>
-<p>A execução exemplo do <a href="#lst-cod-exec" class="quarto-xref">Código&nbsp;<span>1.IV</span></a> no terminal vai apresentar o resultado que aparece na <a href="#fig-execucao-exemplo-exec" class="quarto-xref">Figure&nbsp;<span>1.VI</span></a>.</p>
+<p>A execução exemplo do <a href="#lst-cod-exec" class="quarto-xref">Código&nbsp;<span>1.IV</span></a> no terminal vai apresentar o resultado que aparece na <a href="#fig-execucao-exemplo-exec" class="quarto-xref">Figura&nbsp;<span>1.VI</span></a>.</p>
 <div id="fig-execucao-exemplo-exec" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-execucao-exemplo-exec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figuras/execucao-exemplo-exec.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-execucao-exemplo-exec-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.VI: Execução do exec
+Figura&nbsp;1.VI: Execução do exec
 </figcaption>
 </figure>
 </div>
@@ -747,14 +759,14 @@ Código&nbsp;1.VI: Exemplo do uso Memória Compartilhada
 </div>
 </figure>
 </div>
-<p>A <a href="#fig-execucao-exemplo-shm" class="quarto-xref">Figure&nbsp;<span>1.VII</span></a> apresenta o resultado da execução do exemplo de compartilhamento de memória.</p>
+<p>A <a href="#fig-execucao-exemplo-shm" class="quarto-xref">Figura&nbsp;<span>1.VII</span></a> apresenta o resultado da execução do exemplo de compartilhamento de memória.</p>
 <div id="fig-execucao-exemplo-shm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-execucao-exemplo-shm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figuras/execucao-exemplo-shm.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-execucao-exemplo-shm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1.VII: Execução do SHM
+Figura&nbsp;1.VII: Execução do SHM
 </figcaption>
 </figure>
 </div>
@@ -829,6 +841,15 @@ Marr, Deborah T., Frank Binns, David L. Hill, et al. 2002.
 Microarchitecture.”</span> <em>Intel Technology Journal</em> 6 (1):
 4–15.
 </div>
+<div id="ref-Maziero" class="csl-entry" role="listitem">
+Maziero, Carlos Alberto. 2017. <em>Sistemas Operacionais: Conceitos e
+Mecanismos</em>. Online.
+</div>
+<div id="ref-books/daglib/0085131" class="csl-entry" role="listitem">
+Nichols, Bradford, Dick Buttlar, and Jacqueline Proulx Farrell. 1996.
+<em>Pthreads Programming - a POSIX Standard for Better
+Multiprocessing.</em> O’Reilly.
+</div>
 <div id="ref-10.1145/248209.237140" class="csl-entry" role="listitem">
 Olukotun, Kunle, Basem A. Nayfeh, Lance Hammond, Ken Wilson, and Kunyung
 Chang. 1996. <span>“The Case for a Single-Chip Multiprocessor.”</span>
@@ -854,6 +875,10 @@ Examples 4.0.1</span></em>. OpenMP Architecture Review Board (ARB). <a href="htt
 OpenMP-ARB. 2015. <em><span>OpenMP Application Program Interface Version
 4.5</span></em>. OpenMP Architecture Review Board (ARB). <a href="http://www.openmp.org/mp-documents/openmp-4.5.pdf">http://www.openmp.org/mp-documents/openmp-4.5.pdf</a>.
 </div>
+<div id="ref-Silberschatz" class="csl-entry" role="listitem">
+Silberschatz, Abraham, Peter Baer Galvin, and Greg Gagne. 2015.
+<em>Fundamentos de Sistemas Operacionais</em>. 9th ed. LTC.
+</div>
 <div id="ref-smith:sohi:1995" class="csl-entry" role="listitem">
 Smith, J. E., and G. S. Sohi. 1995. <span>“The Microarchitecture of
 Superscalar Processors.”</span> <em>Proceedings of the IEEE</em> 83
@@ -868,6 +893,10 @@ Architecture</em> (USA), HPCA ’05, 248–52. <a href="https://doi.org/10.1109/
 <div id="ref-openacc:site" class="csl-entry" role="listitem">
 Standard, OpenACC. 2012. <span>“OpenACC Directives for Accelerators Site
 <span>@ONLINE</span>.”</span> March. <a href="http://www.openacc-standard.org/">http://www.openacc-standard.org/</a>.
+</div>
+<div id="ref-Tanenbaum" class="csl-entry" role="listitem">
+Tanenbaum, Andrew S., and Herbert Bos. 2016. <em>Sistemas Operacionais
+Modernos</em>. 4th ed. Pearson Education do Brasil.
 </div>
 <div id="ref-tomasulo:1967" class="csl-entry" role="listitem">
 Tomasulo, R. M. 1967. <span>“An Efficient Algorithm for Exploiting

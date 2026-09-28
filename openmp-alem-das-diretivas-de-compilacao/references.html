@@ -55,7 +55,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.html" rel="prev">
+<link href="./cap-06-openmp-for/cap-06-openmp-for.html" rel="prev">
 <link href="./images/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -216,6 +216,18 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Regiões Paralelas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap-05-openmp-master-single-critical-atomic-barrier/cap-05-openmp-master-single-critical-atomic-barrier.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Construtores de Compartilhamento de Trabalho, <em>master, single, critical e barrier</em></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap-06-openmp-for/cap-06-openmp-for.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Laços</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -1188,6 +1200,9 @@ Maxwell, Featuring First-generation, G P U Technology, and Extreme Performance. 
 <div id="ref-May2001" class="csl-entry" role="listitem">
 May, J. M. 2001. <span>“MPX: Software for Multiplexing Hardware Performance Counters in Multithreaded Programs.”</span> <em>Proceedings 15th International Parallel and Distributed Processing Symposium. IPDPS 2001</em>, April, 8. <a href="https://doi.org/10.1109/IPDPS.2001.924955">https://doi.org/10.1109/IPDPS.2001.924955</a>.
 </div>
+<div id="ref-Maziero" class="csl-entry" role="listitem">
+Maziero, Carlos Alberto. 2017. <em>Sistemas Operacionais: Conceitos e Mecanismos</em>. Online.
+</div>
 <div id="ref-cilk:2012" class="csl-entry" role="listitem">
 Michael Graf, David Bunde, Andrei Papancea. 2012. <em>Cilk Tutorial</em>. <a href="http://faculty.knox.edu/dbunde/teaching/cilk/">http://faculty.knox.edu/dbunde/teaching/cilk/</a>.
 </div>
@@ -1247,6 +1262,9 @@ Newburn, Chris J., Rajiv Deodhar, Serguei Dmitriev, et al. 2013. <span>“<span 
 </div>
 <div id="ref-ni2009direct" class="csl-entry" role="listitem">
 Ni, Tianyun. 2009. <span>“Direct Compute–Bring GPU Computing to the Mainstream.”</span> <em>GPU Technology Conference</em>.
+</div>
+<div id="ref-books/daglib/0085131" class="csl-entry" role="listitem">
+Nichols, Bradford, Dick Buttlar, and Jacqueline Proulx Farrell. 1996. <em>Pthreads Programming - a POSIX Standard for Better Multiprocessing.</em> O’Reilly.
 </div>
 <div id="ref-Nickolls" class="csl-entry" role="listitem">
 Nickolls, John, and David Kirk. n.d. <em>Graphics and Computing GPUs</em>.
@@ -1641,6 +1659,9 @@ Sidelnik, Albert, Saeed Maleki, Bradford L. Chamberlain, Maria J. Garzar’n, an
 <div id="ref-Siegl2015" class="csl-entry" role="listitem">
 Siegl, Patrick, Rainer Buchty, and Mladen Berekovic. 2015. <span>“Revealing Potential Performance Improvements by Utilizing Hybrid Work-Sharing for Resource-Intensive Seismic Applications.”</span> <em>2015 23rd Euromicro International Conference on Parallel, Distributed, and Network-Based Processing</em>, March, 659–63. <a href="https://doi.org/10.1109/PDP.2015.28">https://doi.org/10.1109/PDP.2015.28</a>.
 </div>
+<div id="ref-Silberschatz" class="csl-entry" role="listitem">
+Silberschatz, Abraham, Peter Baer Galvin, and Greg Gagne. 2015. <em>Fundamentos de Sistemas Operacionais</em>. 9th ed. LTC.
+</div>
 <div id="ref-Simburger2013" class="csl-entry" role="listitem">
 Simbürger, A, and Sven Apel. 2013. <span>“The Potential of Polyhedral Optimization.”</span> <em>…</em>, no. February. <a href="http://www.infosun.fim.uni-passau.de/publications/docs/SAGL13tr.pdf">http://www.infosun.fim.uni-passau.de/publications/docs/SAGL13tr.pdf</a>.
 </div>
@@ -1721,6 +1742,9 @@ Takizawa, Hiroyuki, Katsuto Sato, Kazuhiko Komatsu, and Hiroaki Kobayashi. 2009.
 </div>
 <div id="ref-Tanasic2014" class="csl-entry" role="listitem">
 Tanasic, Ivan, Isaac Gelado, Javier Cabezas, Alex Ramirez, Nacho Navarro, and Mateo Valero. 2014. <span>“Enabling Preemptive Multiprogramming on GPUs.”</span> <em>2014 ACM/IEEE 41st International Symposium on Computer Architecture (ISCA)</em>, June, 193–204. <a href="https://doi.org/10.1109/ISCA.2014.6853208">https://doi.org/10.1109/ISCA.2014.6853208</a>.
+</div>
+<div id="ref-Tanenbaum" class="csl-entry" role="listitem">
+Tanenbaum, Andrew S., and Herbert Bos. 2016. <em>Sistemas Operacionais Modernos</em>. 4th ed. Pearson Education do Brasil.
 </div>
 <div id="ref-Tang2011" class="csl-entry" role="listitem">
 Tang, Tao, Xuejun Yang, and Yisong Lin. 2011. <span>“Cache Miss Analysis for GPU Programs Based on Stack Distance Profile.”</span> <em>2011 31st International Conference on Distributed Computing Systems</em>, June, 623–34. <a href="https://doi.org/10.1109/ICDCS.2011.16">https://doi.org/10.1109/ICDCS.2011.16</a>.
@@ -2288,8 +2312,8 @@ Yan, Yonghong, Max Grossman, and Vivek Sarkar. 2009. <span>“JCUDA: A Programme
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cap-04-openmp-parallel-regions/cap-04-openmp-parallel-regions.html" class="pagination-link" aria-label="Diretivas de Compilação para Regiões Paralelas">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Regiões Paralelas</span></span>
+      <a href="./cap-06-openmp-for/cap-06-openmp-for.html" class="pagination-link" aria-label="Diretivas de Compilação para Laços">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Diretivas de Compilação para Laços</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -72,7 +72,50 @@ p {
 }
 
 .terminal-window code {
-  color: #cdd6f4 !important;
+  color: hsl(0, 0%, 3%) !important;
   font-family: 'Fira Code', 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace !important;
   font-size: 0.9em;
+}
+
+/* Customização do Callout para parecer um Terminal Linux */
+.linux-terminal.callout {
+  background-color: #1e1e1e !important;
+  /* Fundo escuro do console */
+  border-left-color: #4af626 !important;
+  /* Borda esquerda verde clássica */
+  border-radius: 6px;
+  /*font-family: 'Courier New', Courier, monospace;*/
+  font-family: 'Fira Code', 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace !important;
+}
+
+/* Customização do título do Callout */
+.linux-terminal .callout-title,
+.linux-terminal .callout-title p {
+  color: #ffffff !important;
+  /* Texto do título em branco */
+  font-weight: bold;
+  border-bottom: 1px solid #333;
+  padding-bottom: 4px;
+}
+
+/* Ajuste do ícone para sumir ou mudar de cor (opcional) */
+.linux-terminal .callout-icon-container {
+  color: #4af626 !important;
+}
+
+/* Ajuste do bloco de código dentro do terminal */
+.linux-terminal .callout-body,
+.linux-terminal .callout-body-container,
+.linux-terminal div.sourceCode,
+.linux-terminal pre,
+.linux-terminal pre.sourceCode,
+.linux-terminal code,
+.linux-terminal code span,
+.linux-terminal pre code * {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #4af626 !important;
+  /* Texto verde estilo terminal clássico */
 }
